@@ -4,14 +4,19 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "lessc main.less dist/main.css",
-        "watch": "less-watch-compiler . dist main.less"
+        "start": "echo \"No start\"",
+        "build": "echo \"No build\"",
+        "css": "lessc main.less dist/main.css",
+        "css-min": "lessc main.less dist/main.min.css --clean-css",
+        "watch": "less-watch-compiler . dist main.less",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
     "author": "",
-    "license": "ISC",
+    "license": "MIT",
     "devDependencies": {
-        "less": "^4.2.0"
+        "express": "^4.21.1",
+        "less": "^4.2.0",
+        "less-plugin-clean-css": "^1.6.0"
     }
 }

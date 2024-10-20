@@ -4,11 +4,12 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "echo \"No start\"",
-        "build": "echo \"No build\"",
+        "start": "node ./src/main/js/server.js",
+        "build": "npm run css && npm run css-min && npm run copy-html",
         "css": "lessc main.less dist/main.css",
         "css-min": "lessc main.less dist/main.min.css --clean-css",
         "watch": "less-watch-compiler . dist main.less",
+        "copy-html": "cp ./src/main/html/index.html dist/",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],

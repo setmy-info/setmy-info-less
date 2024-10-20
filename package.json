@@ -1,15 +1,17 @@
 {
-  "name": "setmy-info-less",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "less": "^4.2.0"
-  }
+    "name": "setmy-info-less",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "lessc main.less dist/main.css",
+        "watch": "less-watch-compiler . dist main.less"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "less": "^4.2.0"
+    }
 }

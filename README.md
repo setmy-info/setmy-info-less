@@ -25,4 +25,5 @@ npm run pug
 npm test
 npm run e2e
 npm run cucumber
+npm pack
 ```

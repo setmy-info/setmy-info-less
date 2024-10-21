@@ -26,4 +26,6 @@ npm test
 npm run e2e
 npm run cucumber
 npm pack
+npm login
+npm publish
 ```

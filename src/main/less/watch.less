@@ -1,0 +1,17 @@
+/* watch */
+
+@media only screen and (max-width: 639px) {
+
+    .phone-hidden {
+        display: none;
+    }
+
+    #headerPanel {
+        height: auto;
+    }
+
+    main {
+        height:  ~"calc(" @maxHeigth  ~" - " @headerHeight ~")";
+        min-height: ~"calc(" @maxHeigth  ~" - " @headerHeight ~")";
+    }
+}

@@ -22,7 +22,6 @@ npx playwright install
 npm install
 npx playwright install
 npm run build
-npm run pug
 npm test
 npm run e2e
 npm run cucumber

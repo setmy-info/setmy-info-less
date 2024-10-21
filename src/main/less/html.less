@@ -1,0 +1,121 @@
+/* html.less */
+
+html {
+    height: @maxHeigth;
+    width:  @maxWidth;
+    padding: @zero;
+    margin: @zero;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    body {
+        height: @maxHeigth;
+        width:  @maxWidth;
+        padding: @zero;
+        margin: @zero;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        color: @textColor;
+        font-family: @fontFamily;
+    }
+}
+
+a, button, input {
+    padding: @zero;
+    margin: @zero;
+    //height: @defaultHeight;
+}
+
+a {
+    height: @defaultHeight;
+}
+
+button {
+    height: @defaultHeight;
+}
+
+ul {
+    padding: @zero;
+    margin: @zero;
+}
+
+li {
+    padding: @zero;
+    margin: @zero;
+}
+
+span {
+    height: @defaultHeight;
+}
+
+input {
+
+}
+
+p {
+    margin-top: @defaultPadding;
+    margin-bottom: @defaultPadding;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: @headingTextColor;
+    //font-weight: bold;// Values from FF
+    font-weight: normal;
+    display: block;
+    // Values from FF
+    letter-spacing: 0.09em;
+}
+
+// Values from FF
+
+h1 {
+    font-size: 2em;
+    margin-block-start: .67em;
+    margin-block-end: .67em;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-block-start: .83em;
+    margin-block-end: .83em;
+}
+
+h3 {
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
+h4 {
+    font-size: 1.00em;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+}
+
+h5 {
+    font-size: 0.83em;
+    margin-block-start: 1.67em;
+    margin-block-end: 1.67em;
+}
+
+h6 {
+    font-size: 0.67em;
+    margin-block-start: 2.33em;
+    margin-block-end: 2.33em;
+}
+
+small {
+    font-size: @smallFontSize;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: -moz-linear-gradient(left, #ccc, #333, #ccc);
+    /* TODO : need to be tested
+    background-image: linear-gradient(left, #ccc, #333, #ccc);
+    background: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+    */
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

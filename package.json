@@ -2,7 +2,7 @@
     "name": "setmy-info-less",
     "version": "1.0.0",
     "description": "SMI LESS project",
-    "main": "index.js",
+    "main": "dist/main.js",
     "scripts": {
         "start": "node src/test/js/server.js",
         "build": "npm run css && npm run css-min && npm run pug",

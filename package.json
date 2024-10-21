@@ -12,6 +12,7 @@
         "pug": "node src/test/js/pugHelper.js",
         "e2e": "npx playwright test src/test/js --config=playwright.config.js",
         "cucumber": "cucumber-js ./src/test/gherkin --require ./src/test/js/features/**/*.js",
+        "clean": "rimraf dist/index.html",
         "test": "jest"
     },
     "keywords": [
@@ -37,6 +38,7 @@
         "less": "^4.2.0",
         "less-plugin-clean-css": "^1.6.0",
         "playwright": "^1.48.1",
-        "pug": "^3.0.3"
+        "pug": "^3.0.3",
+        "rimraf": "^6.0.1"
     }
 }

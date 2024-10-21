@@ -12,6 +12,7 @@ npm i playwright --save-dev
 npm i @playwright/test@latest --save-dev
 npm i pug --save-dev
 npm i @cucumber/cucumber --save-dev
+npm i rimraf --save-dev
 npx playwright install
 ```
 
@@ -25,6 +26,7 @@ npm run pug
 npm test
 npm run e2e
 npm run cucumber
+npm run clean
 npm pack
 npm login
 npm publish

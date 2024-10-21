@@ -9,19 +9,22 @@
         "css": "lessc main.less dist/main.css",
         "css-min": "lessc main.less dist/main.min.css --clean-css",
         "watch": "less-watch-compiler . dist main.less",
-        "copy-html": "cp ./src/main/html/index.html dist/",
+        "pug": "node ./src/main/js/pugHelper.js",
         "e2e": "npx playwright test src/test/js --config=playwright.config.js",
+        "cucumber": "cucumber-js ./src/test/gherkin --require ./src/test/js/features/**/*.js",
         "test": "jest"
     },
     "keywords": [],
     "author": "",
     "license": "MIT",
     "devDependencies": {
+        "@cucumber/cucumber": "^11.0.1",
         "@playwright/test": "^1.48.1",
         "express": "^4.21.1",
         "jest": "^29.7.0",
         "less": "^4.2.0",
         "less-plugin-clean-css": "^1.6.0",
-        "playwright": "^1.48.1"
+        "playwright": "^1.48.1",
+        "pug": "^3.0.3"
     }
 }

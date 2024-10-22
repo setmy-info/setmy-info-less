@@ -10,5 +10,6 @@ function compilePug(name) {
     console.log('Pug template compiled to HTML successfully.');
 }
 
-compilePug("index");
-
+module.exports = {
+    compilePug
+};

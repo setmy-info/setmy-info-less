@@ -9,10 +9,11 @@
         "css": "lessc ./src/main/less/main.less dist/main.css",
         "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",
         "watch": "less-watch-compiler . dist main.less",
+        "clean": "rimraf dist/index.html",
+        "test": "jest",
         "e2e": "npx playwright test src/test/js --config=playwright.config.js",
         "cucumber": "cucumber-js ./src/test/gherkin --require ./src/test/js/features/**/*.js",
-        "clean": "rimraf dist/index.html",
-        "test": "jest"
+        "verify": "npm test && npm run e2e && npm run cucumber"
     },
     "keywords": [
         "less",

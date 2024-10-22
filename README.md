@@ -22,9 +22,9 @@ npx playwright install
 npm install
 npx playwright install
 npm run build
-npm test
-npm run e2e
-npm run cucumber
+npm run verify
+#npm run e2e
+#npm run cucumber
 npm run clean
 npm pack
 npm login

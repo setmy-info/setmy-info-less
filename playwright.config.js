@@ -1,4 +1,7 @@
 const {defineConfig} = require('@playwright/test');
+const firefoxHelper = require('./src/test/js/firefoxHelper');
+
+const firefoxPath = firefoxHelper.getFirefoxPath();
 
 module.exports = defineConfig({
     testDir: 'src/test/js',
@@ -6,7 +9,8 @@ module.exports = defineConfig({
     retries: 1,
     use: {
         headless: false,
-        browserName: 'firefox'
+        browserName: 'firefox',
+        executablePath: firefoxPath
     },
     testMatch: '**/*.e2e.js'
 });

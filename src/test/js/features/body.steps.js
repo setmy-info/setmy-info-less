@@ -2,7 +2,8 @@ const {firefox} = require('playwright');
 const {expect} = require('@playwright/test');
 const {Given, When, Then} = require('@cucumber/cucumber');
 const path = require('path');
-const pugHelper = require('../pugHelper')
+const pugHelper = require('../pugHelper');
+const firefoxHelper = require('../firefoxHelper');
 
 let data = {
     name: null,
@@ -12,7 +13,11 @@ let data = {
     context: null,
 };
 
-let browserConfig = {headless: false};
+let browserConfig = {
+    headless: false,
+    firefoxPath: firefoxHelper.getFirefoxPath()
+};
+
 let windowConfig = {
     viewport: {width: 2052, height: 1200}
 };

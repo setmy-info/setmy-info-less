@@ -25,7 +25,7 @@ Given('page name is {string}', function (name) {
 });
 
 When('page is compiled', function () {
-    pugHelper.compilePug(data.name);
+    pugHelper.compilePug(data.name, { title: "body.html" });
 });
 
 When('page is rendered', async function () {

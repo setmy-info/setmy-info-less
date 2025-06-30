@@ -49,3 +49,12 @@ npm pack
 npm login
 npm publish
 ```
+
+## Changed
+
+In case web development doesnt work, need to check:
+
+verticalStrechPanel -> verticalStretchPanel
+horisontalStrechPanel -> horizontalStretchPanel
+
++ some more other possible changes

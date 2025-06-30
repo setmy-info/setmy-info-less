@@ -424,3 +424,9 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
     display: none !important;
   }
 }
+html body #application {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}

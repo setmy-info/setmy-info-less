@@ -1,3 +1,3 @@
 const pugHelper = require("./pugHelper");
 
-pugHelper.compilePug("body", {title: "body.html"});
+pugHelper.compilePug("main", {title: "main.html"});

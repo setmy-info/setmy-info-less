@@ -9,7 +9,7 @@
 UI is divided in groups:
 
 * **Default** is PC or wide UI, no elements shrinking, collapsing and hiding needed. For full visibility.
-* **Phone**: is usual pocket and handheld smart phone devices.
+* **Phone**: is usual pocket and handheld smartphone devices.
 * **Pad** usually a little wider UI, that can handle more elements but not all. Something can be hidden/shrunken.
 * **Watch** usually hand watch UI-s.
 * **Print** system for printing.

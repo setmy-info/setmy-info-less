@@ -25,7 +25,7 @@ Given('page name is {string}', function (name) {
 });
 
 When('page is compiled', function () {
-    pugHelper.compilePug(data.name, { title: "body.html" });
+    pugHelper.compilePug(data.name, {title: data.name + ".html"});
 });
 
 When('page is rendered', async function () {
@@ -75,3 +75,42 @@ Then('page is closed', async function () {
     await data.page.close();
     await data.browser.close();
 });
+
+Then('element with id {string} should have margin {string}, padding {string}, font {string}, font size {string}, width {int}px, height {int}px, background color {string}, text color {string}',
+    async function (elementId, expectedMargin, expectedPadding, expectedFontFamily, expectedFontSize,
+                    expectedWidth, expectedHeight, expectedBackgroundColor, expectedTextColor
+    ) {
+        const selector = `#${elementId}`;
+        const elementHandle = await data.page.$(selector);
+
+        if (!elementHandle) {
+            throw new Error(`Element with ID '${elementId}' not found`);
+        }
+
+        const computedStyles = await data.page.evaluate((sel) => {
+            const el = document.querySelector(sel);
+            const style = window.getComputedStyle(el);
+            const rect = el.getBoundingClientRect();
+            return {
+                margin: `${style.marginTop} ${style.marginRight} ${style.marginBottom} ${style.marginLeft}`,
+                padding: `${style.paddingTop} ${style.paddingRight} ${style.paddingBottom} ${style.paddingLeft}`,
+                fontFamily: style.fontFamily,
+                fontSize: style.fontSize,
+                width: Math.round(rect.width),
+                height: Math.round(rect.height),
+                backgroundColor: style.backgroundColor,
+                color: style.color
+            };
+        }, selector);
+
+        console.log("Computed styles:", computedStyles);
+
+        expect(computedStyles.margin).toBe(expectedMargin);
+        expect(computedStyles.padding).toBe(expectedPadding);
+        expect(computedStyles.fontFamily).toContain(expectedFontFamily); // font-family võib sisaldada fallback'e
+        expect(computedStyles.fontSize).toBe(expectedFontSize);
+        expect(computedStyles.width).toBe(expectedWidth);
+        expect(computedStyles.height).toBe(expectedHeight);
+        expect(computedStyles.backgroundColor).toBe(expectedBackgroundColor);
+        expect(computedStyles.color).toBe(expectedTextColor);
+    });

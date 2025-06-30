@@ -1,0 +1,103 @@
+/* setmy-info-less Enhanced - Main Entry Point
+ * A modern, extensible CSS framework built on LESS
+ * Version: 2.0.0
+ * Author: Manus AI
+ * License: MIT
+ */
+
+// =============================================================================
+// FRAMEWORK CONFIGURATION
+// =============================================================================
+
+// Import configuration and extensibility system first
+@import "extensions/config.less";
+
+// =============================================================================
+// CORE FOUNDATION
+// =============================================================================
+
+// Core variables and theme system
+@import "core/variables.less";
+@import "core/themes.less";
+@import "core/mixins.less";
+
+// Base styles and resets
+@import "base/modern-css.less";
+
+// =============================================================================
+// LAYOUT SYSTEMS
+// =============================================================================
+
+// Responsive design and layout components
+@import "responsive/breakpoints.less";
+@import "layout/responsive-layouts.less";
+
+// =============================================================================
+// UTILITY CLASSES
+// =============================================================================
+
+// Utility classes for rapid prototyping
+@import "utilities/utilities.less";
+@import "utilities/spacing.less";
+@import "utilities/display.less";
+@import "utilities/colors.less";
+@import "utilities/typography.less";
+
+// =============================================================================
+// COMPONENTS (OPTIONAL)
+// =============================================================================
+
+// Enable components based on configuration
+.if-enabled(@enable-components; {
+    @import (optional) "components/buttons.less";
+    @import (optional) "components/cards.less";
+    @import (optional) "components/forms.less";
+    @import (optional) "components/navigation.less";
+    @import (optional) "components/modals.less";
+});
+
+// =============================================================================
+// EXTENSIONS AND CUSTOMIZATIONS
+// =============================================================================
+
+// User customizations (loaded last to allow overrides)
+@import (optional) "extensions/custom-variables.less";
+@import (optional) "extensions/custom-mixins.less";
+@import (optional) "extensions/custom-themes.less";
+@import (optional) "extensions/custom-components.less";
+@import (optional) "extensions/custom-utilities.less";
+
+// =============================================================================
+// FRAMEWORK INFORMATION
+// =============================================================================
+
+// Output framework information as CSS comment
+/*
+ * setmy-info-less Enhanced Framework
+ *
+ * Features:
+ * - Dark/Light theme system with CSS custom properties
+ * - Modern CSS features (clamp, :is, Grid, Flexbox)
+ * - Comprehensive utility classes for rapid prototyping
+ * - Enhanced responsive design with fluid typography
+ * - Extensible architecture with plugin system
+ * - Backward compatibility with older browsers
+ * - Progressive enhancement with feature detection
+ * - Accessibility-first design principles
+ *
+ * Modules Enabled:
+ * - Themes: @{enable-themes}
+ * - Utilities: @{enable-utilities}
+ * - Responsive: @{enable-responsive}
+ * - Modern CSS: @{enable-modern-css}
+ * - Components: @{enable-components}
+ * - Animations: @{enable-animations}
+ *
+ * Browser Support:
+ * - Modern browsers: Full feature support
+ * - Legacy browsers: Graceful degradation with fallbacks
+ *
+ * Documentation: https://github.com/setmy-info/setmy-info-less-enhanced
+ * Issues: https://github.com/setmy-info/setmy-info-less-enhanced/issues
+ */
+

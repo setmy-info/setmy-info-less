@@ -1,0 +1,1215 @@
+/* Modern CSS Features for setmy-info-less Enhanced
+ * Leverages cutting-edge CSS features while maintaining backward compatibility
+ */
+
+// =============================================================================
+// CSS CLAMP() UTILITIES
+// =============================================================================
+
+// Fluid sizing utilities using clamp()
+.clamp-text-xs {
+    font-size: clamp(0.625rem, 1.5vw, 0.75rem);
+}
+
+.clamp-text-sm {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+.clamp-text-base {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.clamp-text-lg {
+    font-size: clamp(1rem, 3vw, 1.125rem);
+}
+
+.clamp-text-xl {
+    font-size: clamp(1.125rem, 3.5vw, 1.25rem);
+}
+
+.clamp-text-2xl {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+}
+
+.clamp-text-3xl {
+    font-size: clamp(1.5rem, 4.5vw, 1.875rem);
+}
+
+.clamp-text-4xl {
+    font-size: clamp(1.875rem, 5vw, 2.25rem);
+}
+
+.clamp-text-5xl {
+    font-size: clamp(2.25rem, 6vw, 3rem);
+}
+
+.clamp-text-6xl {
+    font-size: clamp(3rem, 7vw, 3.75rem);
+}
+
+// Fluid spacing utilities using clamp()
+.clamp-p-sm {
+    padding: clamp(0.5rem, 2vw, 1rem);
+}
+
+.clamp-p-md {
+    padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.clamp-p-lg {
+    padding: clamp(1.5rem, 4vw, 2rem);
+}
+
+.clamp-p-xl {
+    padding: clamp(2rem, 5vw, 3rem);
+}
+
+.clamp-px-sm {
+    padding-left: clamp(0.5rem, 2vw, 1rem);
+    padding-right: clamp(0.5rem, 2vw, 1rem);
+}
+
+.clamp-px-md {
+    padding-left: clamp(1rem, 3vw, 1.5rem);
+    padding-right: clamp(1rem, 3vw, 1.5rem);
+}
+
+.clamp-px-lg {
+    padding-left: clamp(1.5rem, 4vw, 2rem);
+    padding-right: clamp(1.5rem, 4vw, 2rem);
+}
+
+.clamp-px-xl {
+    padding-left: clamp(2rem, 5vw, 3rem);
+    padding-right: clamp(2rem, 5vw, 3rem);
+}
+
+.clamp-py-sm {
+    padding-top: clamp(0.5rem, 2vw, 1rem);
+    padding-bottom: clamp(0.5rem, 2vw, 1rem);
+}
+
+.clamp-py-md {
+    padding-top: clamp(1rem, 3vw, 1.5rem);
+    padding-bottom: clamp(1rem, 3vw, 1.5rem);
+}
+
+.clamp-py-lg {
+    padding-top: clamp(1.5rem, 4vw, 2rem);
+    padding-bottom: clamp(1.5rem, 4vw, 2rem);
+}
+
+.clamp-py-xl {
+    padding-top: clamp(2rem, 5vw, 3rem);
+    padding-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.clamp-m-sm {
+    margin: clamp(0.5rem, 2vw, 1rem);
+}
+
+.clamp-m-md {
+    margin: clamp(1rem, 3vw, 1.5rem);
+}
+
+.clamp-m-lg {
+    margin: clamp(1.5rem, 4vw, 2rem);
+}
+
+.clamp-m-xl {
+    margin: clamp(2rem, 5vw, 3rem);
+}
+
+.clamp-mx-sm {
+    margin-left: clamp(0.5rem, 2vw, 1rem);
+    margin-right: clamp(0.5rem, 2vw, 1rem);
+}
+
+.clamp-mx-md {
+    margin-left: clamp(1rem, 3vw, 1.5rem);
+    margin-right: clamp(1rem, 3vw, 1.5rem);
+}
+
+.clamp-mx-lg {
+    margin-left: clamp(1.5rem, 4vw, 2rem);
+    margin-right: clamp(1.5rem, 4vw, 2rem);
+}
+
+.clamp-mx-xl {
+    margin-left: clamp(2rem, 5vw, 3rem);
+    margin-right: clamp(2rem, 5vw, 3rem);
+}
+
+.clamp-my-sm {
+    margin-top: clamp(0.5rem, 2vw, 1rem);
+    margin-bottom: clamp(0.5rem, 2vw, 1rem);
+}
+
+.clamp-my-md {
+    margin-top: clamp(1rem, 3vw, 1.5rem);
+    margin-bottom: clamp(1rem, 3vw, 1.5rem);
+}
+
+.clamp-my-lg {
+    margin-top: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: clamp(1.5rem, 4vw, 2rem);
+}
+
+.clamp-my-xl {
+    margin-top: clamp(2rem, 5vw, 3rem);
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+// Fluid width utilities using clamp()
+.clamp-w-sm {
+    width: clamp(200px, 40vw, 300px);
+}
+
+.clamp-w-md {
+    width: clamp(300px, 50vw, 500px);
+}
+
+.clamp-w-lg {
+    width: clamp(500px, 60vw, 700px);
+}
+
+.clamp-w-xl {
+    width: clamp(700px, 70vw, 900px);
+}
+
+.clamp-w-2xl {
+    width: clamp(900px, 80vw, 1200px);
+}
+
+// Fluid height utilities using clamp()
+.clamp-h-sm {
+    height: clamp(200px, 30vh, 300px);
+}
+
+.clamp-h-md {
+    height: clamp(300px, 40vh, 500px);
+}
+
+.clamp-h-lg {
+    height: clamp(500px, 50vh, 700px);
+}
+
+.clamp-h-xl {
+    height: clamp(700px, 60vh, 900px);
+}
+
+// Fluid border radius using clamp()
+.clamp-rounded-sm {
+    border-radius: clamp(0.125rem, 0.5vw, 0.375rem);
+}
+
+.clamp-rounded-md {
+    border-radius: clamp(0.375rem, 1vw, 0.5rem);
+}
+
+.clamp-rounded-lg {
+    border-radius: clamp(0.5rem, 1.5vw, 0.75rem);
+}
+
+.clamp-rounded-xl {
+    border-radius: clamp(0.75rem, 2vw, 1rem);
+}
+
+// =============================================================================
+// CSS :IS() SELECTOR UTILITIES
+// =============================================================================
+
+// Enhanced selector grouping with :is()
+:is(h1, h2, h3, h4, h5, h6) {
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    margin-bottom: var(--spacing-4);
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// Interactive elements styling with :is()
+:is(button, input, select, textarea) {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--border-radius-md);
+    transition: all 0.2s ease-in-out;
+
+    &:focus {
+        outline: none;
+        border-color: var(--color-border-focus);
+        box-shadow: 0 0 0 3px var(--color-primary-light);
+    }
+
+    &:disabled {
+        opacity: var(--opacity-disabled);
+        cursor: not-allowed;
+    }
+}
+
+// Link styling with :is()
+:is(a, .link) {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+        color: var(--color-primary-hover);
+        text-decoration: underline;
+    }
+
+    &:focus {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+
+    &:visited {
+        color: var(--color-primary-dark);
+    }
+}
+
+// List styling with :is()
+:is(ul, ol) {
+    padding-left: var(--spacing-6);
+    margin-bottom: var(--spacing-4);
+
+    :is(ul, ol) {
+        margin-bottom: var(--spacing-2);
+    }
+
+    li {
+        margin-bottom: var(--spacing-1);
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+// Table styling with :is()
+:is(table, .table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-4);
+    background-color: var(--color-background-elevated);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+
+    :is(th, td) {
+        padding: var(--spacing-3) var(--spacing-4);
+        text-align: left;
+        border-bottom: 1px solid var(--color-border-primary);
+    }
+
+    th {
+        background-color: var(--color-background-secondary);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-text-primary);
+    }
+
+    tbody tr:hover {
+        background-color: var(--color-background-secondary);
+    }
+
+    tbody tr:last-child :is(th, td) {
+        border-bottom: none;
+    }
+}
+
+// Form styling with :is()
+:is(.form, form) {
+    .form-group {
+        margin-bottom: var(--spacing-4);
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: var(--spacing-2);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-text-primary);
+    }
+
+    :is(.form-input, .form-select, .form-textarea) {
+        width: 100%;
+        padding: var(--spacing-3);
+        background-color: var(--color-background-primary);
+        border: 1px solid var(--color-border-primary);
+        border-radius: var(--border-radius-md);
+
+        &:focus {
+            border-color: var(--color-border-focus);
+            box-shadow: 0 0 0 3px var(--color-primary-light);
+        }
+
+        &::placeholder {
+            color: var(--color-text-tertiary);
+        }
+    }
+
+    .form-textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .form-help {
+        margin-top: var(--spacing-1);
+        font-size: var(--font-size-sm);
+        color: var(--color-text-secondary);
+    }
+
+    .form-error {
+        margin-top: var(--spacing-1);
+        font-size: var(--font-size-sm);
+        color: var(--color-danger);
+    }
+}
+
+// Card styling with :is()
+:is(.card, .panel, .widget) {
+    background-color: var(--color-background-elevated);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+
+    .card-header {
+        padding: var(--spacing-4) var(--spacing-6);
+        background-color: var(--color-background-secondary);
+        border-bottom: 1px solid var(--color-border-primary);
+
+        .card-title {
+            margin: 0;
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+        }
+    }
+
+    .card-body {
+        padding: var(--spacing-6);
+    }
+
+    .card-footer {
+        padding: var(--spacing-4) var(--spacing-6);
+        background-color: var(--color-background-secondary);
+        border-top: 1px solid var(--color-border-primary);
+    }
+}
+
+// =============================================================================
+// ENHANCED CSS GRID FEATURES
+// =============================================================================
+
+// Modern CSS Grid utilities
+.grid-modern {
+    display: grid;
+
+    // Subgrid support (future-ready)
+    &.grid-subgrid {
+        grid-template-columns: subgrid;
+        grid-template-rows: subgrid;
+    }
+
+    // Named grid lines
+    &.grid-named {
+        grid-template-columns: [sidebar-start] 250px [sidebar-end main-start] 1fr [main-end];
+        grid-template-rows: [header-start] auto [header-end content-start] 1fr [content-end footer-start] auto [footer-end];
+    }
+
+    // Grid areas with named templates
+    &.grid-layout {
+        grid-template-areas:
+      "header header header"
+      "sidebar main aside"
+      "footer footer footer";
+        grid-template-columns: 200px 1fr 200px;
+        grid-template-rows: auto 1fr auto;
+        min-height: 100vh;
+    }
+
+    // Dense grid packing
+    &.grid-dense {
+        grid-auto-flow: dense;
+    }
+
+    // Masonry-like layout (future-ready)
+    &.grid-masonry {
+        grid-template-rows: masonry;
+    }
+}
+
+// Grid area utilities for named grid
+.grid-header {
+    grid-area: header;
+}
+
+.grid-sidebar {
+    grid-area: sidebar;
+}
+
+.grid-main {
+    grid-area: main;
+}
+
+.grid-aside {
+    grid-area: aside;
+}
+
+.grid-footer {
+    grid-area: footer;
+}
+
+// Advanced grid item utilities
+.grid-item {
+    &.span-full {
+        grid-column: 1 / -1;
+    }
+
+    &.span-half {
+        grid-column: span 6;
+    }
+
+    &.span-third {
+        grid-column: span 4;
+    }
+
+    &.span-quarter {
+        grid-column: span 3;
+    }
+
+    // Row spanning
+    &.row-span-2 {
+        grid-row: span 2;
+    }
+
+    &.row-span-3 {
+        grid-row: span 3;
+    }
+
+    &.row-span-4 {
+        grid-row: span 4;
+    }
+
+    &.row-span-full {
+        grid-row: 1 / -1;
+    }
+}
+
+// Responsive grid with container queries (future-ready)
+@container (min-width: 400px) {
+    .grid-container-responsive {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@container (min-width: 600px) {
+    .grid-container-responsive {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+// =============================================================================
+// ENHANCED FLEXBOX FEATURES
+// =============================================================================
+
+// Modern Flexbox utilities
+.flex-modern {
+    display: flex;
+
+    // Flex gap support
+    &.flex-gap-1 {
+        gap: var(--spacing-1);
+    }
+
+    &.flex-gap-2 {
+        gap: var(--spacing-2);
+    }
+
+    &.flex-gap-3 {
+        gap: var(--spacing-3);
+    }
+
+    &.flex-gap-4 {
+        gap: var(--spacing-4);
+    }
+
+    &.flex-gap-5 {
+        gap: var(--spacing-5);
+    }
+
+    &.flex-gap-6 {
+        gap: var(--spacing-6);
+    }
+
+    &.flex-gap-8 {
+        gap: var(--spacing-8);
+    }
+
+    // Row and column gaps
+    &.flex-row-gap-2 {
+        row-gap: var(--spacing-2);
+    }
+
+    &.flex-row-gap-4 {
+        row-gap: var(--spacing-4);
+    }
+
+    &.flex-row-gap-6 {
+        row-gap: var(--spacing-6);
+    }
+
+    &.flex-col-gap-2 {
+        column-gap: var(--spacing-2);
+    }
+
+    &.flex-col-gap-4 {
+        column-gap: var(--spacing-4);
+    }
+
+    &.flex-col-gap-6 {
+        column-gap: var(--spacing-6);
+    }
+
+    // Advanced flex basis
+    &.flex-basis-0 {
+        flex-basis: 0;
+    }
+
+    &.flex-basis-auto {
+        flex-basis: auto;
+    }
+
+    &.flex-basis-full {
+        flex-basis: 100%;
+    }
+
+    &.flex-basis-1\/2 {
+        flex-basis: 50%;
+    }
+
+    &.flex-basis-1\/3 {
+        flex-basis: 33.333333%;
+    }
+
+    &.flex-basis-2\/3 {
+        flex-basis: 66.666667%;
+    }
+
+    &.flex-basis-1\/4 {
+        flex-basis: 25%;
+    }
+
+    &.flex-basis-3\/4 {
+        flex-basis: 75%;
+    }
+
+    // Flex grow and shrink
+    &.flex-grow-0 {
+        flex-grow: 0;
+    }
+
+    &.flex-grow-1 {
+        flex-grow: 1;
+    }
+
+    &.flex-grow-2 {
+        flex-grow: 2;
+    }
+
+    &.flex-grow-3 {
+        flex-grow: 3;
+    }
+
+    &.flex-shrink-0 {
+        flex-shrink: 0;
+    }
+
+    &.flex-shrink-1 {
+        flex-shrink: 1;
+    }
+
+    &.flex-shrink-2 {
+        flex-shrink: 2;
+    }
+
+    &.flex-shrink-3 {
+        flex-shrink: 3;
+    }
+}
+
+// Flex item utilities
+.flex-item-modern {
+    // Order utilities
+    &.order-first {
+        order: -9999;
+    }
+
+    &.order-last {
+        order: 9999;
+    }
+
+    &.order-none {
+        order: 0;
+    }
+
+    &.order-1 {
+        order: 1;
+    }
+
+    &.order-2 {
+        order: 2;
+    }
+
+    &.order-3 {
+        order: 3;
+    }
+
+    &.order-4 {
+        order: 4;
+    }
+
+    &.order-5 {
+        order: 5;
+    }
+
+    // Align self utilities
+    &.self-auto {
+        align-self: auto;
+    }
+
+    &.self-start {
+        align-self: flex-start;
+    }
+
+    &.self-end {
+        align-self: flex-end;
+    }
+
+    &.self-center {
+        align-self: center;
+    }
+
+    &.self-stretch {
+        align-self: stretch;
+    }
+
+    &.self-baseline {
+        align-self: baseline;
+    }
+}
+
+// =============================================================================
+// CSS CUSTOM PROPERTIES ENHANCEMENTS
+// =============================================================================
+
+// Dynamic custom properties for theming
+.theme-dynamic {
+    --dynamic-primary: var(--color-primary);
+    --dynamic-secondary: var(--color-secondary, var(--color-primary));
+    --dynamic-accent: var(--color-accent, var(--color-primary));
+
+    // Computed values
+    --computed-shadow: 0 4px 6px -1px rgb(from var(--color-primary) r g b / 0.1);
+    --computed-border: 1px solid rgb(from var(--color-primary) r g b / 0.2);
+    --computed-background: rgb(from var(--color-primary) r g b / 0.05);
+}
+
+// CSS custom properties with fallbacks
+.custom-props-enhanced {
+    // Color mixing (future-ready)
+    --mixed-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-secondary) 20%);
+
+    // Relative colors (future-ready)
+    --lighter-primary: rgb(from var(--color-primary) calc(r * 1.1) calc(g * 1.1) calc(b * 1.1));
+    --darker-primary: rgb(from var(--color-primary) calc(r * 0.9) calc(g * 0.9) calc(b * 0.9));
+
+    // Dynamic spacing based on content
+    --content-padding: max(var(--spacing-4), 2vw);
+    --content-margin: max(var(--spacing-6), 3vw);
+
+    // Responsive custom properties
+    --responsive-size: clamp(1rem, 2.5vw, 1.5rem);
+    --responsive-gap: clamp(var(--spacing-2), 2vw, var(--spacing-6));
+}
+
+// =============================================================================
+// MODERN CSS LOGICAL PROPERTIES
+// =============================================================================
+
+// Logical properties for better internationalization
+.logical-props {
+    // Margin logical properties
+    &.margin-inline-auto {
+        margin-inline: auto;
+    }
+
+    &.margin-block-auto {
+        margin-block: auto;
+    }
+
+    &.margin-inline-start-4 {
+        margin-inline-start: var(--spacing-4);
+    }
+
+    &.margin-inline-end-4 {
+        margin-inline-end: var(--spacing-4);
+    }
+
+    &.margin-block-start-4 {
+        margin-block-start: var(--spacing-4);
+    }
+
+    &.margin-block-end-4 {
+        margin-block-end: var(--spacing-4);
+    }
+
+    // Padding logical properties
+    &.padding-inline-4 {
+        padding-inline: var(--spacing-4);
+    }
+
+    &.padding-block-4 {
+        padding-block: var(--spacing-4);
+    }
+
+    &.padding-inline-start-4 {
+        padding-inline-start: var(--spacing-4);
+    }
+
+    &.padding-inline-end-4 {
+        padding-inline-end: var(--spacing-4);
+    }
+
+    &.padding-block-start-4 {
+        padding-block-start: var(--spacing-4);
+    }
+
+    &.padding-block-end-4 {
+        padding-block-end: var(--spacing-4);
+    }
+
+    // Border logical properties
+    &.border-inline {
+        border-inline: 1px solid var(--color-border-primary);
+    }
+
+    &.border-block {
+        border-block: 1px solid var(--color-border-primary);
+    }
+
+    &.border-inline-start {
+        border-inline-start: 1px solid var(--color-border-primary);
+    }
+
+    &.border-inline-end {
+        border-inline-end: 1px solid var(--color-border-primary);
+    }
+
+    &.border-block-start {
+        border-block-start: 1px solid var(--color-border-primary);
+    }
+
+    &.border-block-end {
+        border-block-end: 1px solid var(--color-border-primary);
+    }
+
+    // Size logical properties
+    &.inline-size-full {
+        inline-size: 100%;
+    }
+
+    &.block-size-full {
+        block-size: 100%;
+    }
+
+    &.min-inline-size-0 {
+        min-inline-size: 0;
+    }
+
+    &.min-block-size-0 {
+        min-block-size: 0;
+    }
+
+    &.max-inline-size-full {
+        max-inline-size: 100%;
+    }
+
+    &.max-block-size-full {
+        max-block-size: 100%;
+    }
+}
+
+// =============================================================================
+// CSS ASPECT RATIO UTILITIES
+// =============================================================================
+
+// Modern aspect ratio utilities
+.aspect-ratio {
+    &.aspect-square {
+        aspect-ratio: 1 / 1;
+    }
+
+    &.aspect-video {
+        aspect-ratio: 16 / 9;
+    }
+
+    &.aspect-cinema {
+        aspect-ratio: 21 / 9;
+    }
+
+    &.aspect-photo {
+        aspect-ratio: 4 / 3;
+    }
+
+    &.aspect-portrait {
+        aspect-ratio: 3 / 4;
+    }
+
+    &.aspect-golden {
+        aspect-ratio: 1.618 / 1;
+    }
+
+    // Custom aspect ratios
+    &.aspect-2-1 {
+        aspect-ratio: 2 / 1;
+    }
+
+    &.aspect-3-2 {
+        aspect-ratio: 3 / 2;
+    }
+
+    &.aspect-5-4 {
+        aspect-ratio: 5 / 4;
+    }
+
+    // Responsive aspect ratios
+    &.aspect-responsive {
+        aspect-ratio: 1 / 1;
+
+        @media (min-width: @breakpoint-md) {
+            aspect-ratio: 4 / 3;
+        }
+
+        @media (min-width: @breakpoint-lg) {
+            aspect-ratio: 16 / 9;
+        }
+    }
+}
+
+// =============================================================================
+// CSS SCROLL SNAP UTILITIES
+// =============================================================================
+
+// Scroll snap utilities for better scrolling experience
+.scroll-snap {
+    &.snap-x {
+        scroll-snap-type: x mandatory;
+        overflow-x: auto;
+    }
+
+    &.snap-y {
+        scroll-snap-type: y mandatory;
+        overflow-y: auto;
+    }
+
+    &.snap-both {
+        scroll-snap-type: both mandatory;
+        overflow: auto;
+    }
+
+    &.snap-proximity {
+        scroll-snap-type: both proximity;
+    }
+
+    .snap-start {
+        scroll-snap-align: start;
+    }
+
+    .snap-center {
+        scroll-snap-align: center;
+    }
+
+    .snap-end {
+        scroll-snap-align: end;
+    }
+
+    .snap-stop {
+        scroll-snap-stop: always;
+    }
+}
+
+// =============================================================================
+// MODERN CSS FILTERS AND EFFECTS
+// =============================================================================
+
+// Modern filter utilities
+.filter-modern {
+    &.blur-sm {
+        filter: blur(4px);
+    }
+
+    &.blur-md {
+        filter: blur(8px);
+    }
+
+    &.blur-lg {
+        filter: blur(16px);
+    }
+
+    &.blur-xl {
+        filter: blur(24px);
+    }
+
+    &.brightness-50 {
+        filter: brightness(0.5);
+    }
+
+    &.brightness-75 {
+        filter: brightness(0.75);
+    }
+
+    &.brightness-125 {
+        filter: brightness(1.25);
+    }
+
+    &.brightness-150 {
+        filter: brightness(1.5);
+    }
+
+    &.contrast-50 {
+        filter: contrast(0.5);
+    }
+
+    &.contrast-75 {
+        filter: contrast(0.75);
+    }
+
+    &.contrast-125 {
+        filter: contrast(1.25);
+    }
+
+    &.contrast-150 {
+        filter: contrast(1.5);
+    }
+
+    &.grayscale {
+        filter: grayscale(100%);
+    }
+
+    &.grayscale-50 {
+        filter: grayscale(50%);
+    }
+
+    &.sepia {
+        filter: sepia(100%);
+    }
+
+    &.sepia-50 {
+        filter: sepia(50%);
+    }
+
+    &.hue-rotate-90 {
+        filter: hue-rotate(90deg);
+    }
+
+    &.hue-rotate-180 {
+        filter: hue-rotate(180deg);
+    }
+
+    &.hue-rotate-270 {
+        filter: hue-rotate(270deg);
+    }
+
+    &.saturate-50 {
+        filter: saturate(0.5);
+    }
+
+    &.saturate-150 {
+        filter: saturate(1.5);
+    }
+
+    &.saturate-200 {
+        filter: saturate(2);
+    }
+
+    // Backdrop filters
+    &.backdrop-blur-sm {
+        backdrop-filter: blur(4px);
+    }
+
+    &.backdrop-blur-md {
+        backdrop-filter: blur(8px);
+    }
+
+    &.backdrop-blur-lg {
+        backdrop-filter: blur(16px);
+    }
+
+    &.backdrop-brightness-50 {
+        backdrop-filter: brightness(0.5);
+    }
+
+    &.backdrop-brightness-125 {
+        backdrop-filter: brightness(1.25);
+    }
+
+    &.backdrop-contrast-50 {
+        backdrop-filter: contrast(0.5);
+    }
+
+    &.backdrop-contrast-125 {
+        backdrop-filter: contrast(1.25);
+    }
+
+    &.backdrop-grayscale {
+        backdrop-filter: grayscale(100%);
+    }
+
+    &.backdrop-sepia {
+        backdrop-filter: sepia(100%);
+    }
+
+    &.backdrop-saturate-150 {
+        backdrop-filter: saturate(1.5);
+    }
+}
+
+// =============================================================================
+// FEATURE DETECTION AND PROGRESSIVE ENHANCEMENT
+// =============================================================================
+
+// Progressive enhancement with @supports
+@supports (display: grid) {
+    .progressive-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--spacing-4);
+    }
+}
+
+@supports not (display: grid) {
+    .progressive-grid {
+        display: flex;
+        flex-wrap: wrap;
+        margin: calc(var(--spacing-4) * -0.5);
+
+        > * {
+            flex: 1 1 250px;
+            margin: calc(var(--spacing-4) * 0.5);
+        }
+    }
+}
+
+@supports (gap: 1rem) {
+    .progressive-flex {
+        display: flex;
+        gap: var(--spacing-4);
+    }
+}
+
+@supports not (gap: 1rem) {
+    .progressive-flex {
+        display: flex;
+        margin: calc(var(--spacing-4) * -0.5);
+
+        > * {
+            margin: calc(var(--spacing-4) * 0.5);
+        }
+    }
+}
+
+@supports (clamp(1rem, 2vw, 2rem)) {
+    .progressive-clamp {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        padding: clamp(1rem, 3vw, 2rem);
+    }
+}
+
+@supports not (clamp(1rem, 2vw, 2rem)) {
+    .progressive-clamp {
+        font-size: 1rem;
+        padding: 1rem;
+
+        @media (min-width: @breakpoint-md) {
+            font-size: 1.25rem;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: @breakpoint-lg) {
+            font-size: 1.5rem;
+            padding: 2rem;
+        }
+    }
+}
+
+// =============================================================================
+// ACCESSIBILITY ENHANCEMENTS
+// =============================================================================
+
+// Modern accessibility utilities
+.a11y-modern {
+    // Focus visible for better keyboard navigation
+    &.focus-visible-only {
+        &:focus {
+            outline: none;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+    }
+
+    // Reduced motion support
+    &.motion-safe {
+        @media (prefers-reduced-motion: no-preference) {
+            transition: all 0.2s ease-in-out;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+    }
+
+    &.motion-reduce {
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+            animation: none;
+        }
+    }
+
+    // High contrast support
+    &.contrast-more {
+        @media (prefers-contrast: more) {
+            border: 2px solid var(--color-text-primary);
+            background-color: var(--color-background-primary);
+            color: var(--color-text-primary);
+        }
+    }
+
+    // Color scheme preference
+    &.color-scheme-light {
+        color-scheme: light;
+    }
+
+    &.color-scheme-dark {
+        color-scheme: dark;
+    }
+
+    &.color-scheme-auto {
+        color-scheme: light dark;
+    }
+}
+

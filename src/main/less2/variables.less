@@ -1,0 +1,390 @@
+/* Enhanced Variables System for setmy-info-less
+ * Provides backward compatibility while adding modern CSS custom properties
+ * and comprehensive design tokens
+ */
+
+// =============================================================================
+// BACKWARD COMPATIBILITY VARIABLES
+// =============================================================================
+// These maintain compatibility with existing setmy-info-less implementations
+
+// Basic values (original)
+@zero: 0;
+@half: 50%;
+@max: 2 * @half; // 100%
+
+// Size related values (original)
+@maxWidth: @max;
+@maxHeight: @max;
+@halfWidth: @half;
+@halfHeigth: @half; // Note: keeping original typo for compatibility
+@defaultMargin: 10px;
+@defaultPadding: 10px;
+@doubleDefaultMargin: @defaultMargin * 2;
+@doubleDefaultPadding: @defaultPadding * 2;
+@defaultHeight: 50px;
+@iconedRowHeight: @defaultHeight - 10px;
+
+// UI item sizes (original)
+@headerPanelHeight: @headerHeight + @navigationHeight;
+@headerHeight: @defaultHeight;
+@navigationHeight: @defaultHeight;
+@footerHeight: @defaultHeight;
+
+// Menu selection borders (original)
+@menuDefaultSelectionBorderWidth: 4px;
+@menuItemSelectionHorizontalBorderWidth: @menuDefaultSelectionBorderWidth;
+@menuItemSelectionVerticalBorderWidth: @menuDefaultSelectionBorderWidth;
+
+// Original colors (maintained for compatibility)
+@primaryColor: #000000;
+@secondaryColor: #ffffff;
+@tertiaryColor: #cccccc;
+@quaternaryColor: #999999;
+@quinaryColor: #666666;
+@senaryColor: #333333;
+
+@primaryFontColor: @secondaryColor;
+@secondaryFontColor: @primaryColor;
+
+@primaryBackgroundColor: @primaryColor;
+@secondaryBackgroundColor: @secondaryColor;
+
+@primaryBorderColor: @primaryColor;
+@secondaryBorderColor: @secondaryColor;
+
+// Original font sizes (maintained for compatibility)
+@defaultFontSize: 16px;
+@h1FontSize: @defaultFontSize * 2;
+@h2FontSize: @defaultFontSize * 1.5;
+@h3FontSize: @defaultFontSize * 1.17;
+@h4FontSize: @defaultFontSize;
+@h5FontSize: @defaultFontSize * 0.83;
+@h6FontSize: @defaultFontSize * 0.67;
+
+// Original z-index values (maintained for compatibility)
+@z-index-1: 100;
+@z-index-2: 200;
+@z-index-3: 300;
+@z-index-4: 400;
+@z-index-5: 500;
+@z-index-6: 600;
+@z-index-7: 700;
+@z-index-8: 800;
+@z-index-9: 900;
+
+// =============================================================================
+// ENHANCED DESIGN SYSTEM
+// =============================================================================
+// Modern design tokens with comprehensive color, spacing, and typography scales
+
+// -----------------------------------------------------------------------------
+// Color System - Comprehensive palette with semantic mappings
+// -----------------------------------------------------------------------------
+
+// Gray scale
+@gray-50: #f9fafb;
+@gray-100: #f3f4f6;
+@gray-200: #e5e7eb;
+@gray-300: #d1d5db;
+@gray-400: #9ca3af;
+@gray-500: #6b7280;
+@gray-600: #4b5563;
+@gray-700: #374151;
+@gray-800: #1f2937;
+@gray-900: #111827;
+
+// Primary color scale (Blue)
+@blue-50: #eff6ff;
+@blue-100: #dbeafe;
+@blue-200: #bfdbfe;
+@blue-300: #93c5fd;
+@blue-400: #60a5fa;
+@blue-500: #3b82f6;
+@blue-600: #2563eb;
+@blue-700: #1d4ed8;
+@blue-800: #1e40af;
+@blue-900: #1e3a8a;
+
+// Secondary color scale (Slate)
+@slate-50: #f8fafc;
+@slate-100: #f1f5f9;
+@slate-200: #e2e8f0;
+@slate-300: #cbd5e1;
+@slate-400: #94a3b8;
+@slate-500: #64748b;
+@slate-600: #475569;
+@slate-700: #334155;
+@slate-800: #1e293b;
+@slate-900: #0f172a;
+
+// Accent colors
+@emerald-50: #ecfdf5;
+@emerald-100: #d1fae5;
+@emerald-200: #a7f3d0;
+@emerald-300: #6ee7b7;
+@emerald-400: #34d399;
+@emerald-500: #10b981;
+@emerald-600: #059669;
+@emerald-700: #047857;
+@emerald-800: #065f46;
+@emerald-900: #064e3b;
+
+@red-50: #fef2f2;
+@red-100: #fee2e2;
+@red-200: #fecaca;
+@red-300: #fca5a5;
+@red-400: #f87171;
+@red-500: #ef4444;
+@red-600: #dc2626;
+@red-700: #b91c1c;
+@red-800: #991b1b;
+@red-900: #7f1d1d;
+
+@amber-50: #fffbeb;
+@amber-100: #fef3c7;
+@amber-200: #fde68a;
+@amber-300: #fcd34d;
+@amber-400: #fbbf24;
+@amber-500: #f59e0b;
+@amber-600: #d97706;
+@amber-700: #b45309;
+@amber-800: #92400e;
+@amber-900: #78350f;
+
+// Semantic color mappings
+@color-primary: @blue-600;
+@color-primary-hover: @blue-700;
+@color-primary-active: @blue-800;
+@color-primary-light: @blue-100;
+@color-primary-dark: @blue-900;
+
+@color-secondary: @slate-600;
+@color-secondary-hover: @slate-700;
+@color-secondary-active: @slate-800;
+@color-secondary-light: @slate-100;
+@color-secondary-dark: @slate-900;
+
+@color-success: @emerald-600;
+@color-success-hover: @emerald-700;
+@color-success-light: @emerald-100;
+
+@color-warning: @amber-500;
+@color-warning-hover: @amber-600;
+@color-warning-light: @amber-100;
+
+@color-danger: @red-600;
+@color-danger-hover: @red-700;
+@color-danger-light: @red-100;
+
+// Theme-aware colors (using CSS custom properties with LESS fallbacks)
+@color-text-primary: var(--color-text-primary, @gray-900);
+@color-text-secondary: var(--color-text-secondary, @gray-600);
+@color-text-tertiary: var(--color-text-tertiary, @gray-500);
+@color-text-inverse: var(--color-text-inverse, @gray-50);
+
+@color-background-primary: var(--color-background-primary, #ffffff);
+@color-background-secondary: var(--color-background-secondary, @gray-50);
+@color-background-tertiary: var(--color-background-tertiary, @gray-100);
+@color-background-inverse: var(--color-background-inverse, @gray-900);
+
+@color-border-primary: var(--color-border-primary, @gray-200);
+@color-border-secondary: var(--color-border-secondary, @gray-300);
+@color-border-tertiary: var(--color-border-tertiary, @gray-400);
+
+// -----------------------------------------------------------------------------
+// Spacing System - 4px baseline grid
+// -----------------------------------------------------------------------------
+
+@spacing-0: 0;
+@spacing-px: 1px;
+@spacing-0-5: 0.125rem; // 2px
+@spacing-1: 0.25rem; // 4px
+@spacing-1-5: 0.375rem; // 6px
+@spacing-2: 0.5rem; // 8px
+@spacing-2-5: 0.625rem; // 10px
+@spacing-3: 0.75rem; // 12px
+@spacing-3-5: 0.875rem; // 14px
+@spacing-4: 1rem; // 16px
+@spacing-5: 1.25rem; // 20px
+@spacing-6: 1.5rem; // 24px
+@spacing-7: 1.75rem; // 28px
+@spacing-8: 2rem; // 32px
+@spacing-9: 2.25rem; // 36px
+@spacing-10: 2.5rem; // 40px
+@spacing-11: 2.75rem; // 44px
+@spacing-12: 3rem; // 48px
+@spacing-14: 3.5rem; // 56px
+@spacing-16: 4rem; // 64px
+@spacing-20: 5rem; // 80px
+@spacing-24: 6rem; // 96px
+@spacing-28: 7rem; // 112px
+@spacing-32: 8rem; // 128px
+@spacing-36: 9rem; // 144px
+@spacing-40: 10rem; // 160px
+@spacing-44: 11rem; // 176px
+@spacing-48: 12rem; // 192px
+@spacing-52: 13rem; // 208px
+@spacing-56: 14rem; // 224px
+@spacing-60: 15rem; // 240px
+@spacing-64: 16rem; // 256px
+@spacing-72: 18rem; // 288px
+@spacing-80: 20rem; // 320px
+@spacing-96: 24rem; // 384px
+
+// Semantic spacing mappings
+@spacing-xs: @spacing-1;
+@spacing-sm: @spacing-2;
+@spacing-md: @spacing-4;
+@spacing-lg: @spacing-6;
+@spacing-xl: @spacing-8;
+@spacing-2xl: @spacing-12;
+@spacing-3xl: @spacing-16;
+
+// -----------------------------------------------------------------------------
+// Typography System
+// -----------------------------------------------------------------------------
+
+// Font families
+@font-family-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+@font-family-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+@font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+
+// Font sizes
+@font-size-xs: 0.75rem; // 12px
+@font-size-sm: 0.875rem; // 14px
+@font-size-base: 1rem; // 16px
+@font-size-lg: 1.125rem; // 18px
+@font-size-xl: 1.25rem; // 20px
+@font-size-2xl: 1.5rem; // 24px
+@font-size-3xl: 1.875rem; // 30px
+@font-size-4xl: 2.25rem; // 36px
+@font-size-5xl: 3rem; // 48px
+@font-size-6xl: 3.75rem; // 60px
+@font-size-7xl: 4.5rem; // 72px
+@font-size-8xl: 6rem; // 96px
+@font-size-9xl: 8rem; // 128px
+
+// Line heights
+@line-height-none: 1;
+@line-height-tight: 1.25;
+@line-height-snug: 1.375;
+@line-height-normal: 1.5;
+@line-height-relaxed: 1.625;
+@line-height-loose: 2;
+
+// Font weights
+@font-weight-thin: 100;
+@font-weight-extralight: 200;
+@font-weight-light: 300;
+@font-weight-normal: 400;
+@font-weight-medium: 500;
+@font-weight-semibold: 600;
+@font-weight-bold: 700;
+@font-weight-extrabold: 800;
+@font-weight-black: 900;
+
+// Letter spacing
+@letter-spacing-tighter: -0.05em;
+@letter-spacing-tight: -0.025em;
+@letter-spacing-normal: 0em;
+@letter-spacing-wide: 0.025em;
+@letter-spacing-wider: 0.05em;
+@letter-spacing-widest: 0.1em;
+
+// -----------------------------------------------------------------------------
+// Breakpoints - Mobile-first responsive design
+// -----------------------------------------------------------------------------
+
+@breakpoint-xs: 0px;
+@breakpoint-sm: 640px;
+@breakpoint-md: 768px;
+@breakpoint-lg: 1024px;
+@breakpoint-xl: 1280px;
+@breakpoint-2xl: 1536px;
+
+// Container max-widths
+@container-sm: 640px;
+@container-md: 768px;
+@container-lg: 1024px;
+@container-xl: 1280px;
+@container-2xl: 1536px;
+
+// -----------------------------------------------------------------------------
+// Shadows and Effects
+// -----------------------------------------------------------------------------
+
+@shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+@shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+@shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+@shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+@shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+@shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+@shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+@shadow-none: 0 0 #0000;
+
+// Theme-aware shadows
+@shadow-primary: var(--shadow-primary, @shadow-md);
+@shadow-secondary: var(--shadow-secondary, @shadow-sm);
+
+// -----------------------------------------------------------------------------
+// Border Radius
+// -----------------------------------------------------------------------------
+
+@border-radius-none: 0px;
+@border-radius-sm: 0.125rem; // 2px
+@border-radius-md: 0.375rem; // 6px
+@border-radius-lg: 0.5rem; // 8px
+@border-radius-xl: 0.75rem; // 12px
+@border-radius-2xl: 1rem; // 16px
+@border-radius-3xl: 1.5rem; // 24px
+@border-radius-full: 9999px;
+
+// Default border radius
+@border-radius-default: @border-radius-md;
+
+// -----------------------------------------------------------------------------
+// Transitions and Animations
+// -----------------------------------------------------------------------------
+
+@transition-duration-75: 75ms;
+@transition-duration-100: 100ms;
+@transition-duration-150: 150ms;
+@transition-duration-200: 200ms;
+@transition-duration-300: 300ms;
+@transition-duration-500: 500ms;
+@transition-duration-700: 700ms;
+@transition-duration-1000: 1000ms;
+
+@transition-timing-linear: linear;
+@transition-timing-ease-in: cubic-bezier(0.4, 0, 1, 1);
+@transition-timing-ease-out: cubic-bezier(0, 0, 0.2, 1);
+@transition-timing-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+// Default transitions
+@transition-default: all @transition-duration-150 @transition-timing-ease-in-out;
+@transition-colors: color @transition-duration-150 @transition-timing-ease-in-out,
+background-color @transition-duration-150 @transition-timing-ease-in-out,
+border-color @transition-duration-150 @transition-timing-ease-in-out;
+
+// -----------------------------------------------------------------------------
+// Z-Index Scale
+// -----------------------------------------------------------------------------
+
+@z-index-auto: auto;
+@z-index-0: 0;
+@z-index-10: 10;
+@z-index-20: 20;
+@z-index-30: 30;
+@z-index-40: 40;
+@z-index-50: 50;
+
+// Semantic z-index values
+@z-index-dropdown: 1000;
+@z-index-sticky: 1020;
+@z-index-fixed: 1030;
+@z-index-modal-backdrop: 1040;
+@z-index-modal: 1050;
+@z-index-popover: 1060;
+@z-index-tooltip: 1070;
+

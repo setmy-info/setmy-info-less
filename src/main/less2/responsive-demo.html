@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>setmy-info-less Enhanced - Responsive Design Demo</title>
+    <style>
+        /* Import enhanced responsive system */
+        :root {
+            /* Enhanced breakpoint system */
+            --breakpoint-xs: 475px;
+            --breakpoint-sm: 640px;
+            --breakpoint-md: 768px;
+            --breakpoint-lg: 1024px;
+            --breakpoint-xl: 1280px;
+            --breakpoint-2xl: 1536px;
+            --breakpoint-3xl: 1920px;
+
+            /* Spacing system */
+            --spacing-0: 0px;
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 0.75rem;
+            --spacing-4: 1rem;
+            --spacing-5: 1.25rem;
+            --spacing-6: 1.5rem;
+            --spacing-7: 1.75rem;
+            --spacing-8: 2rem;
+            --spacing-10: 2.5rem;
+            --spacing-12: 3rem;
+            --spacing-16: 4rem;
+            --spacing-20: 5rem;
+            --spacing-24: 6rem;
+            --spacing-32: 8rem;
+
+            /* Container max-widths */
+            --container-xs: 100%;
+            --container-sm: 640px;
+            --container-md: 768px;
+            --container-lg: 1024px;
+            --container-xl: 1280px;
+            --container-2xl: 1536px;
+
+            /* Font weights */
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+
+            /* Line heights */
+            --line-height-tight: 1.25;
+            --line-height-snug: 1.375;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.625;
+
+            /* Border radius */
+            --border-radius-sm: 0.125rem;
+            --border-radius-md: 0.375rem;
+            --border-radius-lg: 0.5rem;
+            --border-radius-xl: 0.75rem;
+
+            /* Colors - Light theme */
+            --color-text-primary: #1f2937;
+            --color-text-secondary: #6b7280;
+            --color-text-tertiary: #9ca3af;
+            --color-background-primary: #ffffff;
+            --color-background-secondary: #f9fafb;
+            --color-background-tertiary: #f3f4f6;
+            --color-background-elevated: #ffffff;
+            --color-border-primary: #e5e7eb;
+            --color-border-secondary: #d1d5db;
+            --color-primary: #3b82f6;
+            --color-primary-hover: #2563eb;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        /* Dark theme */
+        [data-theme="dark"] {
+            --color-text-primary: #f9fafb;
+            --color-text-secondary: #d1d5db;
+            --color-text-tertiary: #9ca3af;
+            --color-background-primary: #111827;
+            --color-background-secondary: #1f2937;
+            --color-background-tertiary: #374151;
+            --color-background-elevated: #1f2937;
+            --color-border-primary: #374151;
+            --color-border-secondary: #4b5563;
+            --color-primary: #60a5fa;
+            --color-primary-hover: #3b82f6;
+            --color-success: #34d399;
+            --color-warning: #fbbf24;
+            --color-danger: #f87171;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+        }
+
+        /* System preference detection */
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme]) {
+                --color-text-primary: #f9fafb;
+                --color-text-secondary: #d1d5db;
+                --color-text-tertiary: #9ca3af;
+                --color-background-primary: #111827;
+                --color-background-secondary: #1f2937;
+                --color-background-tertiary: #374151;
+                --color-background-elevated: #1f2937;
+                --color-border-primary: #374151;
+                --color-border-secondary: #4b5563;
+                --color-primary: #60a5fa;
+                --color-primary-hover: #3b82f6;
+                --color-success: #34d399;
+                --color-warning: #fbbf24;
+                --color-danger: #f87171;
+                --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+                --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+                --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+                --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+            }
+        }
+
+        /* Base styles */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--color-background-primary);
+            color: var(--color-text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: var(--line-height-normal);
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+
+        /* Enhanced Container System */
+        .container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: var(--spacing-4);
+            padding-right: var(--spacing-4);
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                max-width: var(--container-sm);
+                padding-left: var(--spacing-6);
+                padding-right: var(--spacing-6);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: var(--container-md);
+                padding-left: var(--spacing-8);
+                padding-right: var(--spacing-8);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                max-width: var(--container-lg);
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .container {
+                max-width: var(--container-xl);
+            }
+        }
+
+        @media (min-width: 1536px) {
+            .container {
+                max-width: var(--container-2xl);
+            }
+        }
+
+        .container-fluid {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: var(--spacing-4);
+            padding-right: var(--spacing-4);
+        }
+
+        @media (min-width: 640px) {
+            .container-fluid {
+                max-width: 90%;
+                padding-left: var(--spacing-6);
+                padding-right: var(--spacing-6);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container-fluid {
+                max-width: 85%;
+                padding-left: var(--spacing-8);
+                padding-right: var(--spacing-8);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container-fluid {
+                max-width: 80%;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .container-fluid {
+                max-width: 75%;
+            }
+        }
+
+        /* Fluid Typography */
+        .responsive-h1 {
+            font-size: clamp(1.75rem, 4vw, 3rem);
+            font-weight: var(--font-weight-bold);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .responsive-h2 {
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+            font-weight: var(--font-weight-bold);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .responsive-h3 {
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            font-weight: var(--font-weight-semibold);
+            line-height: var(--line-height-snug);
+            margin-bottom: var(--spacing-3);
+        }
+
+        .responsive-h4 {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            font-weight: var(--font-weight-semibold);
+            line-height: var(--line-height-snug);
+            margin-bottom: var(--spacing-3);
+        }
+
+        .responsive-body {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .responsive-body-large {
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            line-height: var(--line-height-relaxed);
+        }
+
+        /* Responsive Spacing */
+        .responsive-py {
+            padding-top: clamp(1rem, 4vw, 2rem);
+            padding-bottom: clamp(1rem, 4vw, 2rem);
+        }
+
+        .responsive-py-lg {
+            padding-top: clamp(3rem, 6vw, 6rem);
+            padding-bottom: clamp(3rem, 6vw, 6rem);
+        }
+
+        .responsive-my {
+            margin-top: clamp(1rem, 4vw, 2rem);
+            margin-bottom: clamp(1rem, 4vw, 2rem);
+        }
+
+        .responsive-my-lg {
+            margin-top: clamp(2rem, 6vw, 4rem);
+            margin-bottom: clamp(2rem, 6vw, 4rem);
+        }
+
+        /* Enhanced Grid System */
+        .grid {
+            display: grid;
+            gap: var(--spacing-4);
+        }
+
+        .grid-responsive {
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 640px) {
+            .grid-responsive {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .grid-responsive {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .grid-responsive-4 {
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 640px) {
+            .grid-responsive-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .grid-responsive-4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .grid-auto-fit {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .grid-auto-fit-sm {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .grid-auto-fit-lg {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        /* Enhanced Flexbox */
+        .flex {
+            display: flex;
+        }
+
+        .flex-responsive {
+            flex-direction: column;
+            gap: var(--spacing-4);
+        }
+
+        @media (min-width: 1024px) {
+            .flex-responsive {
+                flex-direction: row;
+            }
+        }
+
+        .flex-responsive-reverse {
+            flex-direction: column-reverse;
+            gap: var(--spacing-4);
+        }
+
+        @media (min-width: 1024px) {
+            .flex-responsive-reverse {
+                flex-direction: row-reverse;
+            }
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .items-start {
+            align-items: flex-start;
+        }
+
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+
+        .flex-1 {
+            flex: 1;
+        }
+
+        /* Card Component */
+        .card {
+            background-color: var(--color-background-elevated);
+            border: 1px solid var(--color-border-primary);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+            padding: clamp(1rem, 3vw, 1.5rem);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .card-elevated {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-elevated:hover {
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            background-color: var(--color-background-secondary);
+            padding: clamp(3rem, 8vw, 6rem) 0;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: var(--font-weight-bold);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--spacing-4);
+            color: var(--color-text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            color: var(--color-text-secondary);
+            margin-bottom: clamp(1.5rem, 4vw, 2rem);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--spacing-4);
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media (min-width: 640px) {
+            .hero-actions {
+                flex-direction: row;
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            align-items: center;
+            padding: clamp(0.75rem, 2vw, 1rem);
+            background-color: var(--color-background-elevated);
+            border-bottom: 1px solid var(--color-border-primary);
+            flex-direction: column;
+            gap: var(--spacing-2);
+        }
+
+        @media (min-width: 768px) {
+            .nav {
+                flex-direction: row;
+                justify-content: space-between;
+                gap: var(--spacing-4);
+            }
+        }
+
+        .nav-items {
+            display: flex;
+            gap: var(--spacing-2);
+            flex-direction: column;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .nav-items {
+                flex-direction: row;
+                width: auto;
+            }
+        }
+
+        .nav-item {
+            padding: var(--spacing-2) var(--spacing-3);
+            border-radius: var(--border-radius-md);
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .nav-item:hover {
+            background-color: var(--color-background-secondary);
+            color: var(--color-text-primary);
+        }
+
+        .nav-item.active {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        /* Sidebar Layout */
+        .layout-sidebar {
+            display: grid;
+            gap: var(--spacing-6);
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 768px) {
+            .layout-sidebar {
+                grid-template-columns: 250px 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .layout-sidebar {
+                grid-template-columns: 300px 1fr;
+            }
+        }
+
+        .sidebar {
+            background-color: var(--color-background-secondary);
+            border-radius: var(--border-radius-lg);
+            padding: clamp(1rem, 3vw, 1.5rem);
+        }
+
+        .sidebar-title {
+            font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-4);
+            color: var(--color-text-primary);
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-1);
+        }
+
+        .sidebar-item {
+            padding: var(--spacing-2) var(--spacing-3);
+            border-radius: var(--border-radius-md);
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--color-background-tertiary);
+            color: var(--color-text-primary);
+        }
+
+        .sidebar-item.active {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        /* Section */
+        .section {
+            padding: clamp(3rem, 8vw, 6rem) 0;
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: var(--font-weight-bold);
+            text-align: center;
+            margin-bottom: var(--spacing-6);
+            color: var(--color-text-primary);
+        }
+
+        .section-subtitle {
+            font-size: clamp(1rem, 3vw, 1.125rem);
+            text-align: center;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-8);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Responsive Visibility */
+        .visible-mobile {
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .visible-mobile {
+                display: none;
+            }
+        }
+
+        .visible-tablet {
+            display: none;
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .visible-tablet {
+                display: block;
+            }
+        }
+
+        .visible-desktop {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .visible-desktop {
+                display: block;
+            }
+        }
+
+        .hidden-mobile {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .hidden-mobile {
+                display: block;
+            }
+        }
+
+        /* Button Component */
+        .btn {
+            padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+            border: 1px solid var(--color-border-primary);
+            border-radius: var(--border-radius-md);
+            background-color: var(--color-background-elevated);
+            color: var(--color-text-primary);
+            cursor: pointer;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            font-weight: var(--font-weight-medium);
+            transition: all 0.15s ease-in-out;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--color-background-tertiary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-hover);
+            border-color: var(--color-primary-hover);
+        }
+
+        /* Utility classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .mb-4 {
+            margin-bottom: var(--spacing-4);
+        }
+
+        .mb-6 {
+            margin-bottom: var(--spacing-6);
+        }
+
+        .mb-8 {
+            margin-bottom: var(--spacing-8);
+        }
+
+        .mt-8 {
+            margin-top: var(--spacing-8);
+        }
+
+        .p-4 {
+            padding: var(--spacing-4);
+        }
+
+        .p-6 {
+            padding: var(--spacing-6);
+        }
+
+        .bg-secondary {
+            background-color: var(--color-background-secondary);
+        }
+
+        .text-secondary {
+            color: var(--color-text-secondary);
+        }
+
+        .text-primary {
+            color: var(--color-text-primary);
+        }
+
+        .border {
+            border: 1px solid var(--color-border-primary);
+        }
+
+        .rounded {
+            border-radius: var(--border-radius-md);
+        }
+
+        .rounded-lg {
+            border-radius: var(--border-radius-lg);
+        }
+
+        .shadow-sm {
+            box-shadow: var(--shadow-sm);
+        }
+
+        .shadow-md {
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Responsive text alignment */
+        .text-center-mobile {
+            text-align: center;
+        }
+
+        @media (min-width: 1024px) {
+            .text-center-mobile {
+                text-align: left;
+            }
+        }
+
+        /* Theme indicator */
+        .theme-indicator {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--color-background-elevated);
+            border: 1px solid var(--color-border-primary);
+            border-radius: var(--border-radius-md);
+            font-size: 0.75rem;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+        }
+
+        /* Breakpoint indicator */
+        .breakpoint-indicator {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--color-background-elevated);
+            border: 1px solid var(--color-border-primary);
+            border-radius: var(--border-radius-md);
+            font-size: 0.75rem;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+        }
+
+        .breakpoint-indicator::before {
+            content: "XS";
+        }
+
+        @media (min-width: 475px) {
+            .breakpoint-indicator::before {
+                content: "XS+";
+            }
+        }
+
+        @media (min-width: 640px) {
+            .breakpoint-indicator::before {
+                content: "SM";
+            }
+        }
+
+        @media (min-width: 768px) {
+            .breakpoint-indicator::before {
+                content: "MD";
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .breakpoint-indicator::before {
+                content: "LG";
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .breakpoint-indicator::before {
+                content: "XL";
+            }
+        }
+
+        @media (min-width: 1536px) {
+            .breakpoint-indicator::before {
+                content: "2XL";
+            }
+        }
+
+        @media (min-width: 1920px) {
+            .breakpoint-indicator::before {
+                content: "3XL";
+            }
+        }
+
+        /* Demo specific styles */
+        .demo-box {
+            background-color: var(--color-primary);
+            color: white;
+            padding: var(--spacing-4);
+            border-radius: var(--border-radius-md);
+            text-align: center;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .demo-box-secondary {
+            background-color: var(--color-success);
+            color: white;
+            padding: var(--spacing-4);
+            border-radius: var(--border-radius-md);
+            text-align: center;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .demo-box-tertiary {
+            background-color: var(--color-warning);
+            color: white;
+            padding: var(--spacing-4);
+            border-radius: var(--border-radius-md);
+            text-align: center;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .demo-box-quaternary {
+            background-color: var(--color-danger);
+            color: white;
+            padding: var(--spacing-4);
+            border-radius: var(--border-radius-md);
+            text-align: center;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .code-example {
+            background-color: var(--color-background-secondary);
+            border: 1px solid var(--color-border-primary);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-4);
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            margin: var(--spacing-4) 0;
+        }
+    </style>
+</head>
+<body>
+<div class="theme-indicator" id="themeIndicator">
+    Theme: <span id="currentTheme">Loading...</span>
+</div>
+
+<div class="breakpoint-indicator" title="Current breakpoint"></div>
+
+<!-- Navigation -->
+<nav class="nav">
+    <div class="nav-brand">
+        <h2 class="responsive-h4" style="margin: 0;">setmy-info-less Enhanced</h2>
+    </div>
+    <div class="nav-items">
+        <a href="#hero" class="nav-item active">Home</a>
+        <a href="#containers" class="nav-item">Containers</a>
+        <a href="#typography" class="nav-item">Typography</a>
+        <a href="#layouts" class="nav-item">Layouts</a>
+        <a href="#components" class="nav-item">Components</a>
+    </div>
+    <div class="flex gap-2">
+        <button class="btn" data-theme-toggle="light">☀️</button>
+        <button class="btn" data-theme-toggle="dark">🌙</button>
+        <button class="btn btn-primary" data-theme-toggle="">🔄</button>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="hero" class="hero">
+    <div class="container">
+        <h1 class="hero-title">Enhanced Responsive Design</h1>
+        <p class="hero-subtitle">
+            Experience modern responsive design with fluid typography, enhanced breakpoints,
+            and intelligent layout systems that adapt beautifully to any screen size.
+        </p>
+        <div class="hero-actions">
+            <button class="btn btn-primary">Get Started</button>
+            <button class="btn">View Documentation</button>
+        </div>
+    </div>
+</section>
+
+<!-- Container System Demo -->
+<section id="containers" class="section">
+    <div class="container">
+        <h2 class="section-title">Enhanced Container System</h2>
+        <p class="section-subtitle">
+            Responsive containers with fluid sizing and intelligent breakpoint behavior
+        </p>
+
+        <div class="responsive-my-lg">
+            <h3 class="responsive-h3 mb-4">Standard Container</h3>
+            <div class="container bg-secondary border rounded-lg p-4">
+                <div class="demo-box">
+                    Standard container with responsive max-widths and padding
+                </div>
+            </div>
+        </div>
+
+        <div class="responsive-my-lg">
+            <h3 class="responsive-h3 mb-4">Fluid Container</h3>
+            <div class="container-fluid bg-secondary border rounded-lg p-4">
+                <div class="demo-box-secondary">
+                    Fluid container with percentage-based max-widths
+                </div>
+            </div>
+        </div>
+
+        <div class="code-example">
+            &lt;div class="container"&gt;
+            Standard responsive container
+            &lt;/div&gt;
+
+            &lt;div class="container-fluid"&gt;
+            Fluid responsive container
+            &lt;/div&gt;
+        </div>
+    </div>
+</section>
+
+<!-- Typography Demo -->
+<section id="typography" class="section">
+    <div class="container">
+        <h2 class="section-title">Fluid Typography System</h2>
+        <p class="section-subtitle">
+            Typography that scales smoothly across all screen sizes using CSS clamp()
+        </p>
+
+        <div class="responsive-my-lg">
+            <h1 class="responsive-h1">Responsive Heading 1</h1>
+            <h2 class="responsive-h2">Responsive Heading 2</h2>
+            <h3 class="responsive-h3">Responsive Heading 3</h3>
+            <h4 class="responsive-h4">Responsive Heading 4</h4>
+
+            <p class="responsive-body-large">
+                This is responsive body text (large) that scales fluidly between minimum and maximum sizes
+                based on the viewport width. The text remains readable at all screen sizes.
+            </p>
+
+            <p class="responsive-body">
+                This is standard responsive body text that also scales smoothly.
+                Notice how the font size adjusts as you resize your browser window.
+            </p>
+        </div>
+
+        <div class="code-example">
+            &lt;h1 class="responsive-h1"&gt;Fluid heading&lt;/h1&gt;
+            &lt;p class="responsive-body-large"&gt;
+            Fluid body text that scales smoothly
+            &lt;/p&gt;
+        </div>
+    </div>
+</section>
+
+<!-- Layout Systems Demo -->
+<section id="layouts" class="section">
+    <div class="container">
+        <h2 class="section-title">Advanced Layout Systems</h2>
+        <p class="section-subtitle">
+            Modern CSS Grid and Flexbox layouts with intelligent responsive behavior
+        </p>
+
+        <!-- Responsive Grid -->
+        <div class="responsive-my-lg">
+            <h3 class="responsive-h3 mb-4">Responsive Grid (1→2→3 columns)</h3>
+            <div class="grid grid-responsive">
+                <div class="demo-box">Grid Item 1</div>
+                <div class="demo-box-secondary">Grid Item 2</div>
+                <div class="demo-box-tertiary">Grid Item 3</div>
+                <div class="demo-box-quaternary">Grid Item 4</div>
+                <div class="demo-box">Grid Item 5</div>
+                <div class="demo-box-secondary">Grid Item 6</div>
+            </div>
+        </div>
+
+        <!-- Auto-fit Grid -->
+        <div class="responsive-my-lg">
+            <h3 class="responsive-h3 mb-4">Auto-fit Grid (250px minimum)</h3>
+            <div class="grid grid-auto-fit">
+                <div class="demo-box">Auto Item 1</div>
+                <div class="demo-box-secondary">Auto Item 2</div>
+                <div class="demo-box-tertiary">Auto Item 3</div>
+                <div class="demo-box-quaternary">Auto Item 4</div>
+                <div class="demo-box">Auto Item 5</div>
+            </div>
+        </div>
+
+        <!-- Responsive Flexbox -->
+        <div class="responsive-my-lg">
+            <h3 class="responsive-h3 mb-4">Responsive Flexbox (Column→Row)</h3>
+            <div class="flex flex-responsive">
+                <div class="demo-box flex-1">Flex Item 1</div>
+                <div class="demo-box-secondary flex-1">Flex Item 2</div>
+                <div class="demo-box-tertiary flex-1">Flex Item 3</div>
+            </div>
+        </div>
+
+        <div class="code-example">
+            &lt;div class="grid grid-responsive"&gt;
+            &lt;div&gt;Responsive grid item&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class="grid grid-auto-fit"&gt;
+            &lt;div&gt;Auto-fit grid item&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class="flex flex-responsive"&gt;
+            &lt;div class="flex-1"&gt;Responsive flex item&lt;/div&gt;
+            &lt;/div&gt;
+        </div>
+    </div>
+</section>
+
+<!-- Component Layouts -->
+<section id="components" class="section">
+    <div class="container">
+        <h2 class="section-title">Responsive Components</h2>
+        <p class="section-subtitle">
+            Pre-built components that adapt intelligently to different screen sizes
+        </p>
+
+        <!-- Card Grid -->
+        <div class="responsive-my-lg">
+            <h3 class="responsive-h3 mb-6">Responsive Card Grid</h3>
+            <div class="grid grid-responsive">
+                <div class="card">
+                    <h4 class="responsive-h4">Card Title 1</h4>
+                    <p class="responsive-body text-secondary">
+                        This card adapts its padding and typography based on screen size.
+                    </p>
+                    <button class="btn btn-primary">Learn More</button>
+                </div>
+                <div class="card card-elevated">
+                    <h4 class="responsive-h4">Card Title 2</h4>
+                    <p class="responsive-body text-secondary">
+                        This elevated card has enhanced shadows and hover effects.
+                    </p>
+                    <button class="btn">Explore</button>
+                </div>
+                <div class="card">
+                    <h4 class="responsive-h4">Card Title 3</h4>
+                    <p class="responsive-body text-secondary">
+                        All cards maintain consistent spacing and proportions.
+                    </p>
+                    <button class="btn btn-primary">Discover</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Layout -->
+        <div class="responsive-my-lg">
+            <h3 class="responsive-h3 mb-6">Responsive Sidebar Layout</h3>
+            <div class="layout-sidebar">
+                <aside class="sidebar">
+                    <h4 class="sidebar-title">Navigation</h4>
+                    <nav class="sidebar-nav">
+                        <a href="#" class="sidebar-item active">Dashboard</a>
+                        <a href="#" class="sidebar-item">Projects</a>
+                        <a href="#" class="sidebar-item">Team</a>
+                        <a href="#" class="sidebar-item">Settings</a>
+                        <a href="#" class="sidebar-item">Help</a>
+                    </nav>
+                </aside>
+                <main class="card">
+                    <h4 class="responsive-h4">Main Content Area</h4>
+                    <p class="responsive-body text-secondary mb-4">
+                        This layout stacks vertically on mobile and becomes a sidebar layout on larger screens.
+                        The sidebar automatically adjusts its width based on the breakpoint.
+                    </p>
+                    <p class="responsive-body text-secondary">
+                        Try resizing your browser window to see how the layout adapts seamlessly
+                        between different screen sizes.
+                    </p>
+                </main>
+            </div>
+        </div>
+
+        <div class="code-example">
+            &lt;div class="card"&gt;
+            &lt;h4 class="responsive-h4"&gt;Card Title&lt;/h4&gt;
+            &lt;p class="responsive-body"&gt;Responsive card content&lt;/p&gt;
+            &lt;/div&gt;
+
+            &lt;div class="layout-sidebar"&gt;
+            &lt;aside class="sidebar"&gt;Sidebar content&lt;/aside&gt;
+            &lt;main&gt;Main content&lt;/main&gt;
+            &lt;/div&gt;
+        </div>
+    </div>
+</section>
+
+<!-- Responsive Visibility Demo -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Responsive Visibility</h2>
+        <p class="section-subtitle">
+            Content that shows and hides intelligently based on screen size
+        </p>
+
+        <div class="responsive-my-lg">
+            <div class="grid grid-responsive">
+                <div class="card visible-mobile">
+                    <h4 class="responsive-h4">📱 Mobile Only</h4>
+                    <p class="responsive-body text-secondary">
+                        This card is only visible on mobile devices (below 768px).
+                    </p>
+                </div>
+                <div class="card visible-tablet">
+                    <h4 class="responsive-h4">📟 Tablet Only</h4>
+                    <p class="responsive-body text-secondary">
+                        This card is only visible on tablet devices (768px - 1023px).
+                    </p>
+                </div>
+                <div class="card visible-desktop">
+                    <h4 class="responsive-h4">🖥️ Desktop Only</h4>
+                    <p class="responsive-body text-secondary">
+                        This card is only visible on desktop devices (1024px and up).
+                    </p>
+                </div>
+                <div class="card hidden-mobile">
+                    <h4 class="responsive-h4">🚫📱 Hidden on Mobile</h4>
+                    <p class="responsive-body text-secondary">
+                        This card is hidden on mobile devices but visible on larger screens.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="code-example">
+            &lt;div class="visible-mobile"&gt;Mobile only content&lt;/div&gt;
+            &lt;div class="visible-tablet"&gt;Tablet only content&lt;/div&gt;
+            &lt;div class="visible-desktop"&gt;Desktop only content&lt;/div&gt;
+            &lt;div class="hidden-mobile"&gt;Hidden on mobile&lt;/div&gt;
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="section bg-secondary">
+    <div class="container">
+        <div class="text-center">
+            <h3 class="responsive-h3 mb-4">🎉 Responsive Design Mastery</h3>
+            <p class="responsive-body-large text-secondary mb-6">
+                You've experienced the power of modern responsive design with setmy-info-less Enhanced.
+                Every element adapts intelligently to provide the best user experience across all devices.
+            </p>
+            <div class="flex justify-center flex-wrap" style="gap: var(--spacing-4);">
+                <button class="btn btn-primary">Start Building</button>
+                <button class="btn">View Source Code</button>
+                <button class="btn">Read Documentation</button>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="theme-switcher.js"></script>
+<script>
+    // Initialize theme switcher
+    const themeSwitcher = new ThemeSwitcher({
+        defaultTheme: 'system',
+        onThemeChange: (theme, preference) => {
+            updateThemeIndicator(theme, preference);
+        }
+    });
+
+    // Update theme indicator
+    function updateThemeIndicator(theme, preference) {
+        const indicator = document.getElementById('currentTheme');
+        if (indicator) {
+            indicator.textContent = preference === 'system' ? `${theme} (system)` : theme;
+        }
+    }
+
+    // Initial update
+    updateThemeIndicator(themeSwitcher.getResolvedTheme(), themeSwitcher.getTheme());
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Update active navigation item based on scroll position
+    function updateActiveNavItem() {
+        const sections = document.querySelectorAll('section[id]');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        let currentSection = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            if (window.scrollY >= sectionTop) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href') === `#${currentSection}`) {
+                item.classList.add('active');
+            }
+        });
+    }
+
+    // Update active nav item on scroll
+    window.addEventListener('scroll', updateActiveNavItem);
+
+    // Initial update
+    updateActiveNavItem();
+
+    // Add resize event listener to demonstrate responsive behavior
+    let resizeTimeout;
+    window.addEventListener('resize', function () {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function () {
+            console.log('Window resized to:', window.innerWidth + 'x' + window.innerHeight);
+        }, 250);
+    });
+</script>
+</body>
+</html>
+

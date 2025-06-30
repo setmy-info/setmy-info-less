@@ -1,0 +1,1348 @@
+/* Main Utilities File for setmy-info-less Enhanced
+ * Imports all utility modules for rapid prototyping
+ *
+ * This file provides comprehensive utility classes for:
+ * - Spacing (margin, padding)
+ * - Display and layout (flexbox, grid, positioning)
+ * - Colors (text, background, borders)
+ * - Typography (fonts, sizes, alignment)
+ *
+ * Usage:
+ * @import "utilities/utilities.less";
+ */
+
+// =============================================================================
+// IMPORT UTILITY MODULES
+// =============================================================================
+
+// Spacing utilities (margin, padding, negative margins)
+@import "spacing.less";
+
+// Display and layout utilities (flexbox, grid, positioning)
+@import "display.less";
+
+// Color utilities (text, background, border colors)
+@import "colors.less";
+
+// Typography utilities (fonts, text styling)
+@import "typography.less";
+
+// =============================================================================
+// RESPONSIVE UTILITY VARIANTS
+// =============================================================================
+
+// Generate responsive variants for key utilities
+// These allow utilities to be applied at specific breakpoints
+
+// Small screens and up (sm:)
+@media (min-width: @breakpoint-sm) {
+    // Display utilities
+    .sm\:d-block {
+        display: block;
+    }
+
+    .sm\:d-inline-block {
+        display: inline-block;
+    }
+
+    .sm\:d-inline {
+        display: inline;
+    }
+
+    .sm\:d-flex {
+        display: flex;
+    }
+
+    .sm\:d-inline-flex {
+        display: inline-flex;
+    }
+
+    .sm\:d-grid {
+        display: grid;
+    }
+
+    .sm\:d-none {
+        display: none;
+    }
+
+    // Flexbox utilities
+    .sm\:flex-row {
+        flex-direction: row;
+    }
+
+    .sm\:flex-row-reverse {
+        flex-direction: row-reverse;
+    }
+
+    .sm\:flex-col {
+        flex-direction: column;
+    }
+
+    .sm\:flex-col-reverse {
+        flex-direction: column-reverse;
+    }
+
+    .sm\:flex-wrap {
+        flex-wrap: wrap;
+    }
+
+    .sm\:flex-nowrap {
+        flex-wrap: nowrap;
+    }
+
+    .sm\:justify-start {
+        justify-content: flex-start;
+    }
+
+    .sm\:justify-end {
+        justify-content: flex-end;
+    }
+
+    .sm\:justify-center {
+        justify-content: center;
+    }
+
+    .sm\:justify-between {
+        justify-content: space-between;
+    }
+
+    .sm\:justify-around {
+        justify-content: space-around;
+    }
+
+    .sm\:justify-evenly {
+        justify-content: space-evenly;
+    }
+
+    .sm\:items-start {
+        align-items: flex-start;
+    }
+
+    .sm\:items-end {
+        align-items: flex-end;
+    }
+
+    .sm\:items-center {
+        align-items: center;
+    }
+
+    .sm\:items-baseline {
+        align-items: baseline;
+    }
+
+    .sm\:items-stretch {
+        align-items: stretch;
+    }
+
+    // Grid utilities
+    .sm\:grid-cols-1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .sm\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sm\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .sm\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .sm\:grid-cols-5 {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .sm\:grid-cols-6 {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .sm\:grid-cols-12 {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    // Text alignment
+    .sm\:text-left {
+        text-align: left;
+    }
+
+    .sm\:text-center {
+        text-align: center;
+    }
+
+    .sm\:text-right {
+        text-align: right;
+    }
+
+    .sm\:text-justify {
+        text-align: justify;
+    }
+
+    // Common spacing utilities
+    .sm\:m-0 {
+        margin: @spacing-0;
+    }
+
+    .sm\:m-1 {
+        margin: @spacing-1;
+    }
+
+    .sm\:m-2 {
+        margin: @spacing-2;
+    }
+
+    .sm\:m-3 {
+        margin: @spacing-3;
+    }
+
+    .sm\:m-4 {
+        margin: @spacing-4;
+    }
+
+    .sm\:m-5 {
+        margin: @spacing-5;
+    }
+
+    .sm\:m-6 {
+        margin: @spacing-6;
+    }
+
+    .sm\:m-8 {
+        margin: @spacing-8;
+    }
+
+    .sm\:m-10 {
+        margin: @spacing-10;
+    }
+
+    .sm\:m-12 {
+        margin: @spacing-12;
+    }
+
+    .sm\:m-16 {
+        margin: @spacing-16;
+    }
+
+    .sm\:m-20 {
+        margin: @spacing-20;
+    }
+
+    .sm\:m-24 {
+        margin: @spacing-24;
+    }
+
+    .sm\:m-32 {
+        margin: @spacing-32;
+    }
+
+    .sm\:m-auto {
+        margin: auto;
+    }
+
+    .sm\:mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .sm\:my-auto {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .sm\:p-0 {
+        padding: @spacing-0;
+    }
+
+    .sm\:p-1 {
+        padding: @spacing-1;
+    }
+
+    .sm\:p-2 {
+        padding: @spacing-2;
+    }
+
+    .sm\:p-3 {
+        padding: @spacing-3;
+    }
+
+    .sm\:p-4 {
+        padding: @spacing-4;
+    }
+
+    .sm\:p-5 {
+        padding: @spacing-5;
+    }
+
+    .sm\:p-6 {
+        padding: @spacing-6;
+    }
+
+    .sm\:p-8 {
+        padding: @spacing-8;
+    }
+
+    .sm\:p-10 {
+        padding: @spacing-10;
+    }
+
+    .sm\:p-12 {
+        padding: @spacing-12;
+    }
+
+    .sm\:p-16 {
+        padding: @spacing-16;
+    }
+
+    .sm\:p-20 {
+        padding: @spacing-20;
+    }
+
+    .sm\:p-24 {
+        padding: @spacing-24;
+    }
+
+    .sm\:p-32 {
+        padding: @spacing-32;
+    }
+}
+
+// Medium screens and up (md:)
+@media (min-width: @breakpoint-md) {
+    // Display utilities
+    .md\:d-block {
+        display: block;
+    }
+
+    .md\:d-inline-block {
+        display: inline-block;
+    }
+
+    .md\:d-inline {
+        display: inline;
+    }
+
+    .md\:d-flex {
+        display: flex;
+    }
+
+    .md\:d-inline-flex {
+        display: inline-flex;
+    }
+
+    .md\:d-grid {
+        display: grid;
+    }
+
+    .md\:d-none {
+        display: none;
+    }
+
+    // Flexbox utilities
+    .md\:flex-row {
+        flex-direction: row;
+    }
+
+    .md\:flex-row-reverse {
+        flex-direction: row-reverse;
+    }
+
+    .md\:flex-col {
+        flex-direction: column;
+    }
+
+    .md\:flex-col-reverse {
+        flex-direction: column-reverse;
+    }
+
+    .md\:flex-wrap {
+        flex-wrap: wrap;
+    }
+
+    .md\:flex-nowrap {
+        flex-wrap: nowrap;
+    }
+
+    .md\:justify-start {
+        justify-content: flex-start;
+    }
+
+    .md\:justify-end {
+        justify-content: flex-end;
+    }
+
+    .md\:justify-center {
+        justify-content: center;
+    }
+
+    .md\:justify-between {
+        justify-content: space-between;
+    }
+
+    .md\:justify-around {
+        justify-content: space-around;
+    }
+
+    .md\:justify-evenly {
+        justify-content: space-evenly;
+    }
+
+    .md\:items-start {
+        align-items: flex-start;
+    }
+
+    .md\:items-end {
+        align-items: flex-end;
+    }
+
+    .md\:items-center {
+        align-items: center;
+    }
+
+    .md\:items-baseline {
+        align-items: baseline;
+    }
+
+    .md\:items-stretch {
+        align-items: stretch;
+    }
+
+    // Grid utilities
+    .md\:grid-cols-1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .md\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .md\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .md\:grid-cols-5 {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .md\:grid-cols-6 {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .md\:grid-cols-12 {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    // Text alignment
+    .md\:text-left {
+        text-align: left;
+    }
+
+    .md\:text-center {
+        text-align: center;
+    }
+
+    .md\:text-right {
+        text-align: right;
+    }
+
+    .md\:text-justify {
+        text-align: justify;
+    }
+
+    // Common spacing utilities
+    .md\:m-0 {
+        margin: @spacing-0;
+    }
+
+    .md\:m-1 {
+        margin: @spacing-1;
+    }
+
+    .md\:m-2 {
+        margin: @spacing-2;
+    }
+
+    .md\:m-3 {
+        margin: @spacing-3;
+    }
+
+    .md\:m-4 {
+        margin: @spacing-4;
+    }
+
+    .md\:m-5 {
+        margin: @spacing-5;
+    }
+
+    .md\:m-6 {
+        margin: @spacing-6;
+    }
+
+    .md\:m-8 {
+        margin: @spacing-8;
+    }
+
+    .md\:m-10 {
+        margin: @spacing-10;
+    }
+
+    .md\:m-12 {
+        margin: @spacing-12;
+    }
+
+    .md\:m-16 {
+        margin: @spacing-16;
+    }
+
+    .md\:m-20 {
+        margin: @spacing-20;
+    }
+
+    .md\:m-24 {
+        margin: @spacing-24;
+    }
+
+    .md\:m-32 {
+        margin: @spacing-32;
+    }
+
+    .md\:m-auto {
+        margin: auto;
+    }
+
+    .md\:mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .md\:my-auto {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .md\:p-0 {
+        padding: @spacing-0;
+    }
+
+    .md\:p-1 {
+        padding: @spacing-1;
+    }
+
+    .md\:p-2 {
+        padding: @spacing-2;
+    }
+
+    .md\:p-3 {
+        padding: @spacing-3;
+    }
+
+    .md\:p-4 {
+        padding: @spacing-4;
+    }
+
+    .md\:p-5 {
+        padding: @spacing-5;
+    }
+
+    .md\:p-6 {
+        padding: @spacing-6;
+    }
+
+    .md\:p-8 {
+        padding: @spacing-8;
+    }
+
+    .md\:p-10 {
+        padding: @spacing-10;
+    }
+
+    .md\:p-12 {
+        padding: @spacing-12;
+    }
+
+    .md\:p-16 {
+        padding: @spacing-16;
+    }
+
+    .md\:p-20 {
+        padding: @spacing-20;
+    }
+
+    .md\:p-24 {
+        padding: @spacing-24;
+    }
+
+    .md\:p-32 {
+        padding: @spacing-32;
+    }
+}
+
+// Large screens and up (lg:)
+@media (min-width: @breakpoint-lg) {
+    // Display utilities
+    .lg\:d-block {
+        display: block;
+    }
+
+    .lg\:d-inline-block {
+        display: inline-block;
+    }
+
+    .lg\:d-inline {
+        display: inline;
+    }
+
+    .lg\:d-flex {
+        display: flex;
+    }
+
+    .lg\:d-inline-flex {
+        display: inline-flex;
+    }
+
+    .lg\:d-grid {
+        display: grid;
+    }
+
+    .lg\:d-none {
+        display: none;
+    }
+
+    // Flexbox utilities
+    .lg\:flex-row {
+        flex-direction: row;
+    }
+
+    .lg\:flex-row-reverse {
+        flex-direction: row-reverse;
+    }
+
+    .lg\:flex-col {
+        flex-direction: column;
+    }
+
+    .lg\:flex-col-reverse {
+        flex-direction: column-reverse;
+    }
+
+    .lg\:flex-wrap {
+        flex-wrap: wrap;
+    }
+
+    .lg\:flex-nowrap {
+        flex-wrap: nowrap;
+    }
+
+    .lg\:justify-start {
+        justify-content: flex-start;
+    }
+
+    .lg\:justify-end {
+        justify-content: flex-end;
+    }
+
+    .lg\:justify-center {
+        justify-content: center;
+    }
+
+    .lg\:justify-between {
+        justify-content: space-between;
+    }
+
+    .lg\:justify-around {
+        justify-content: space-around;
+    }
+
+    .lg\:justify-evenly {
+        justify-content: space-evenly;
+    }
+
+    .lg\:items-start {
+        align-items: flex-start;
+    }
+
+    .lg\:items-end {
+        align-items: flex-end;
+    }
+
+    .lg\:items-center {
+        align-items: center;
+    }
+
+    .lg\:items-baseline {
+        align-items: baseline;
+    }
+
+    .lg\:items-stretch {
+        align-items: stretch;
+    }
+
+    // Grid utilities
+    .lg\:grid-cols-1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .lg\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .lg\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .lg\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .lg\:grid-cols-5 {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .lg\:grid-cols-6 {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .lg\:grid-cols-12 {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    // Text alignment
+    .lg\:text-left {
+        text-align: left;
+    }
+
+    .lg\:text-center {
+        text-align: center;
+    }
+
+    .lg\:text-right {
+        text-align: right;
+    }
+
+    .lg\:text-justify {
+        text-align: justify;
+    }
+
+    // Common spacing utilities
+    .lg\:m-0 {
+        margin: @spacing-0;
+    }
+
+    .lg\:m-1 {
+        margin: @spacing-1;
+    }
+
+    .lg\:m-2 {
+        margin: @spacing-2;
+    }
+
+    .lg\:m-3 {
+        margin: @spacing-3;
+    }
+
+    .lg\:m-4 {
+        margin: @spacing-4;
+    }
+
+    .lg\:m-5 {
+        margin: @spacing-5;
+    }
+
+    .lg\:m-6 {
+        margin: @spacing-6;
+    }
+
+    .lg\:m-8 {
+        margin: @spacing-8;
+    }
+
+    .lg\:m-10 {
+        margin: @spacing-10;
+    }
+
+    .lg\:m-12 {
+        margin: @spacing-12;
+    }
+
+    .lg\:m-16 {
+        margin: @spacing-16;
+    }
+
+    .lg\:m-20 {
+        margin: @spacing-20;
+    }
+
+    .lg\:m-24 {
+        margin: @spacing-24;
+    }
+
+    .lg\:m-32 {
+        margin: @spacing-32;
+    }
+
+    .lg\:m-auto {
+        margin: auto;
+    }
+
+    .lg\:mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .lg\:my-auto {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .lg\:p-0 {
+        padding: @spacing-0;
+    }
+
+    .lg\:p-1 {
+        padding: @spacing-1;
+    }
+
+    .lg\:p-2 {
+        padding: @spacing-2;
+    }
+
+    .lg\:p-3 {
+        padding: @spacing-3;
+    }
+
+    .lg\:p-4 {
+        padding: @spacing-4;
+    }
+
+    .lg\:p-5 {
+        padding: @spacing-5;
+    }
+
+    .lg\:p-6 {
+        padding: @spacing-6;
+    }
+
+    .lg\:p-8 {
+        padding: @spacing-8;
+    }
+
+    .lg\:p-10 {
+        padding: @spacing-10;
+    }
+
+    .lg\:p-12 {
+        padding: @spacing-12;
+    }
+
+    .lg\:p-16 {
+        padding: @spacing-16;
+    }
+
+    .lg\:p-20 {
+        padding: @spacing-20;
+    }
+
+    .lg\:p-24 {
+        padding: @spacing-24;
+    }
+
+    .lg\:p-32 {
+        padding: @spacing-32;
+    }
+}
+
+// Extra large screens and up (xl:)
+@media (min-width: @breakpoint-xl) {
+    // Display utilities
+    .xl\:d-block {
+        display: block;
+    }
+
+    .xl\:d-inline-block {
+        display: inline-block;
+    }
+
+    .xl\:d-inline {
+        display: inline;
+    }
+
+    .xl\:d-flex {
+        display: flex;
+    }
+
+    .xl\:d-inline-flex {
+        display: inline-flex;
+    }
+
+    .xl\:d-grid {
+        display: grid;
+    }
+
+    .xl\:d-none {
+        display: none;
+    }
+
+    // Flexbox utilities
+    .xl\:flex-row {
+        flex-direction: row;
+    }
+
+    .xl\:flex-row-reverse {
+        flex-direction: row-reverse;
+    }
+
+    .xl\:flex-col {
+        flex-direction: column;
+    }
+
+    .xl\:flex-col-reverse {
+        flex-direction: column-reverse;
+    }
+
+    .xl\:flex-wrap {
+        flex-wrap: wrap;
+    }
+
+    .xl\:flex-nowrap {
+        flex-wrap: nowrap;
+    }
+
+    .xl\:justify-start {
+        justify-content: flex-start;
+    }
+
+    .xl\:justify-end {
+        justify-content: flex-end;
+    }
+
+    .xl\:justify-center {
+        justify-content: center;
+    }
+
+    .xl\:justify-between {
+        justify-content: space-between;
+    }
+
+    .xl\:justify-around {
+        justify-content: space-around;
+    }
+
+    .xl\:justify-evenly {
+        justify-content: space-evenly;
+    }
+
+    .xl\:items-start {
+        align-items: flex-start;
+    }
+
+    .xl\:items-end {
+        align-items: flex-end;
+    }
+
+    .xl\:items-center {
+        align-items: center;
+    }
+
+    .xl\:items-baseline {
+        align-items: baseline;
+    }
+
+    .xl\:items-stretch {
+        align-items: stretch;
+    }
+
+    // Grid utilities
+    .xl\:grid-cols-1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .xl\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .xl\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .xl\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .xl\:grid-cols-5 {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .xl\:grid-cols-6 {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .xl\:grid-cols-12 {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    // Text alignment
+    .xl\:text-left {
+        text-align: left;
+    }
+
+    .xl\:text-center {
+        text-align: center;
+    }
+
+    .xl\:text-right {
+        text-align: right;
+    }
+
+    .xl\:text-justify {
+        text-align: justify;
+    }
+
+    // Common spacing utilities
+    .xl\:m-0 {
+        margin: @spacing-0;
+    }
+
+    .xl\:m-1 {
+        margin: @spacing-1;
+    }
+
+    .xl\:m-2 {
+        margin: @spacing-2;
+    }
+
+    .xl\:m-3 {
+        margin: @spacing-3;
+    }
+
+    .xl\:m-4 {
+        margin: @spacing-4;
+    }
+
+    .xl\:m-5 {
+        margin: @spacing-5;
+    }
+
+    .xl\:m-6 {
+        margin: @spacing-6;
+    }
+
+    .xl\:m-8 {
+        margin: @spacing-8;
+    }
+
+    .xl\:m-10 {
+        margin: @spacing-10;
+    }
+
+    .xl\:m-12 {
+        margin: @spacing-12;
+    }
+
+    .xl\:m-16 {
+        margin: @spacing-16;
+    }
+
+    .xl\:m-20 {
+        margin: @spacing-20;
+    }
+
+    .xl\:m-24 {
+        margin: @spacing-24;
+    }
+
+    .xl\:m-32 {
+        margin: @spacing-32;
+    }
+
+    .xl\:m-auto {
+        margin: auto;
+    }
+
+    .xl\:mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .xl\:my-auto {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .xl\:p-0 {
+        padding: @spacing-0;
+    }
+
+    .xl\:p-1 {
+        padding: @spacing-1;
+    }
+
+    .xl\:p-2 {
+        padding: @spacing-2;
+    }
+
+    .xl\:p-3 {
+        padding: @spacing-3;
+    }
+
+    .xl\:p-4 {
+        padding: @spacing-4;
+    }
+
+    .xl\:p-5 {
+        padding: @spacing-5;
+    }
+
+    .xl\:p-6 {
+        padding: @spacing-6;
+    }
+
+    .xl\:p-8 {
+        padding: @spacing-8;
+    }
+
+    .xl\:p-10 {
+        padding: @spacing-10;
+    }
+
+    .xl\:p-12 {
+        padding: @spacing-12;
+    }
+
+    .xl\:p-16 {
+        padding: @spacing-16;
+    }
+
+    .xl\:p-20 {
+        padding: @spacing-20;
+    }
+
+    .xl\:p-24 {
+        padding: @spacing-24;
+    }
+
+    .xl\:p-32 {
+        padding: @spacing-32;
+    }
+}
+
+// =============================================================================
+// HOVER AND FOCUS VARIANTS
+// =============================================================================
+
+// Hover variants for interactive elements
+.hover\:bg-primary:hover {
+    background-color: var(--color-background-primary);
+}
+
+.hover\:bg-secondary:hover {
+    background-color: var(--color-background-secondary);
+}
+
+.hover\:bg-brand:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.hover\:bg-success:hover {
+    background-color: var(--color-success-hover);
+}
+
+.hover\:bg-warning:hover {
+    background-color: var(--color-warning-hover);
+}
+
+.hover\:bg-danger:hover {
+    background-color: var(--color-danger-hover);
+}
+
+.hover\:text-primary:hover {
+    color: var(--color-text-primary);
+}
+
+.hover\:text-secondary:hover {
+    color: var(--color-text-secondary);
+}
+
+.hover\:text-brand:hover {
+    color: var(--color-primary-hover);
+}
+
+.hover\:text-success:hover {
+    color: var(--color-success-hover);
+}
+
+.hover\:text-warning:hover {
+    color: var(--color-warning-hover);
+}
+
+.hover\:text-danger:hover {
+    color: var(--color-danger-hover);
+}
+
+.hover\:border-primary:hover {
+    border-color: var(--color-border-primary);
+}
+
+.hover\:border-brand:hover {
+    border-color: var(--color-primary-hover);
+}
+
+.hover\:border-success:hover {
+    border-color: var(--color-success-hover);
+}
+
+.hover\:border-warning:hover {
+    border-color: var(--color-warning-hover);
+}
+
+.hover\:border-danger:hover {
+    border-color: var(--color-danger-hover);
+}
+
+.hover\:shadow-sm:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+.hover\:shadow-md:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.hover\:shadow-lg:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.hover\:shadow-xl:hover {
+    box-shadow: var(--shadow-xl);
+}
+
+.hover\:opacity-75:hover {
+    opacity: 0.75;
+}
+
+.hover\:opacity-50:hover {
+    opacity: 0.5;
+}
+
+.hover\:opacity-25:hover {
+    opacity: 0.25;
+}
+
+// Focus variants for accessibility
+.focus\:bg-primary:focus {
+    background-color: var(--color-background-primary);
+}
+
+.focus\:bg-secondary:focus {
+    background-color: var(--color-background-secondary);
+}
+
+.focus\:bg-brand:focus {
+    background-color: var(--color-primary-hover);
+}
+
+.focus\:text-primary:focus {
+    color: var(--color-text-primary);
+}
+
+.focus\:text-secondary:focus {
+    color: var(--color-text-secondary);
+}
+
+.focus\:text-brand:focus {
+    color: var(--color-primary-hover);
+}
+
+.focus\:border-primary:focus {
+    border-color: var(--color-border-focus);
+}
+
+.focus\:border-brand:focus {
+    border-color: var(--color-primary);
+}
+
+.focus\:outline-none:focus {
+    outline: none;
+}
+
+.focus\:outline-brand:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+// =============================================================================
+// DARK MODE VARIANTS
+// =============================================================================
+
+// Dark mode specific utilities
+@media (prefers-color-scheme: dark) {
+    .dark\:bg-primary {
+        background-color: var(--color-background-primary);
+    }
+
+    .dark\:bg-secondary {
+        background-color: var(--color-background-secondary);
+    }
+
+    .dark\:bg-tertiary {
+        background-color: var(--color-background-tertiary);
+    }
+
+    .dark\:text-primary {
+        color: var(--color-text-primary);
+    }
+
+    .dark\:text-secondary {
+        color: var(--color-text-secondary);
+    }
+
+    .dark\:text-tertiary {
+        color: var(--color-text-tertiary);
+    }
+
+    .dark\:border-primary {
+        border-color: var(--color-border-primary);
+    }
+
+    .dark\:border-secondary {
+        border-color: var(--color-border-secondary);
+    }
+}
+
+[data-theme="dark"] {
+    .dark\:bg-primary {
+        background-color: var(--color-background-primary);
+    }
+
+    .dark\:bg-secondary {
+        background-color: var(--color-background-secondary);
+    }
+
+    .dark\:bg-tertiary {
+        background-color: var(--color-background-tertiary);
+    }
+
+    .dark\:text-primary {
+        color: var(--color-text-primary);
+    }
+
+    .dark\:text-secondary {
+        color: var(--color-text-secondary);
+    }
+
+    .dark\:text-tertiary {
+        color: var(--color-text-tertiary);
+    }
+
+    .dark\:border-primary {
+        border-color: var(--color-border-primary);
+    }
+
+    .dark\:border-secondary {
+        border-color: var(--color-border-secondary);
+    }
+}
+

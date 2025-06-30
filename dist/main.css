@@ -103,6 +103,10 @@ hr {
 }
 /* html-extended.less */
 /* html-frames */
+/*
+Mostly different "driving" items are here.
+Possibly successor was HTML NetBeans implementation - requires verification check.
+*/
 body > noscript > ul {
   padding-left: 50px;
 }
@@ -387,9 +391,6 @@ body > noscript > ul {
 .minifiedText {
   font-size: xx-small;
 }
-/* COMPONENTS PLACEHOLDER */
-/* PAGES PLACEHOLDER */
-/* MATERIALS ICONS PLACEHOLDER */
 /* print */
 /* watch */
 @media only screen and (max-width: 639px) {

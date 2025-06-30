@@ -326,12 +326,12 @@ body > noscript > ul {
 .lineHeight {
   line-height: 50px;
 }
-.verticalStrechPanel {
+.verticalStretchPanel {
   min-height: 0px !important;
   height: auto !important;
   overflow: hidden;
 }
-.horisontalStrechPanel {
+.horizontalStretchPanel {
   min-width: 0px !important;
   width: auto !important;
   overflow: hidden;

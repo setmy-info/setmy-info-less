@@ -101,15 +101,15 @@ hr {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+body > noscript > ul {
+  padding-left: 50px;
+}
 /* html-extended.less */
 /* html-frames */
 /*
 Mostly different "driving" items are here.
 Possibly successor was HTML NetBeans implementation - requires verification check.
 */
-body > noscript > ul {
-  padding-left: 50px;
-}
 .hidden {
   display: none;
 }

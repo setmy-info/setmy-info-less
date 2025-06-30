@@ -6,9 +6,9 @@
 
 // ---- Size related values, measurements, parameters and properties
 @maxWidth: @max;
-@maxHeigth: @max;
+@maxHeight: @max;
 @halfWidth: @half;
-@halfHeigth: @half;
+@halfHeight: @half;
 @defaultMargin: 10px;
 @defaultPadding: 10px;
 @doubleDefaultMargin: @defaultMargin * 2;
@@ -34,10 +34,9 @@
 
 @sectionHeaderPictureHeight: 200px;
 
-// ---- Text related values, measurements, parameters and properties
-@headingTextColor: dimgray;
-//@headingTextColor: #594D49; // From Info project (Cicero, Pseudonymous)
-@textColor: black; //dimgray;//#666666
+// ---- Colors
+@import "colors/main.less";
+
 @fontFamily: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif; //"Source Sans Pro", Helvetica, sans-serif;//Roboto, Arial, Noto Sans,Noto,sans-serif;//"Open Sans", "Source Sans Pro", Helvetica, sans-serif ... "Open Sans", sans-serif ... Arial,Helvetica,Sans-serif,Tahoma;..."Open Sans", "Source Sans Pro", Helvetica, sans-serif;//
 @defaultFontSize: 14px;
 @defaultFontWeight: 800;
@@ -50,22 +49,17 @@
 @largeFontSize: 105%; // TODO
 @xlargeFontSize: 105%; // TODO
 
-@iconColor: gray; //white;
-@backgroundColor: white; //#dfdfdf;//#F8F8F8;
-@articleBackgroundColor: @backgroundColor;
-@articleTextColor: #141412;
 @articleLineHeight: 1.7;
-@headerBackgroundColor: @backgroundColor; //#1976d2;
-@headerTextColor: rgba(75, 75, 75, 0.87); //rgba(255, 255, 255, 0.87);
-@navigationBackgroundColor: @backgroundColor;
-@navigationHighLightTextColor: DarkSlateGray; // rgba(95, 95, 95, 0.54);//rgba(255, 255, 255, 0.54);
-@navigationInactiveTextColor: MidnightBlue; //DarkCyan;//black;//@headerTextColor;
-@footerBackgroundColor: @headerBackgroundColor;
-@footerTextColor: @headerTextColor;
-@sideNavHeaderTextColor: rgba(255, 255, 255, 0.87);
-@sideNavHeaderBackgroundColor: gray; //#1976d2;//@headerTextColor;
-
-@activeSelectedMenuItemColor: rgba(237, 38, 61, 0.87);
-@cursorSelectableMenuItemColor: rgba(255, 157, 0, 0.87);
 
 @buttonBorderWidth: 1px;
+
+// z-index
+@z-index-1: 100;
+@z-index-2: 200;
+@z-index-3: 300;
+@z-index-4: 400;
+@z-index-5: 500;
+@z-index-6: 600;
+@z-index-7: 700;
+@z-index-8: 800;
+@z-index-9: 900;

@@ -32,6 +32,8 @@ npx playwright install
 
 ## Development
 
+NB! Right now cucumber and build are making pug to html builds. Need to simplify.
+
 ```
 npm install
 # Or use 'ci' cub-command, to install by lock file. 
@@ -39,6 +41,7 @@ npm ci
 npx playwright install
 npm run build
 npm run verify
+#Inside verify
 #npm run e2e
 #npm run cucumber
 npm run clean

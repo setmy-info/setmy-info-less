@@ -50,6 +50,43 @@ npm login
 npm publish
 ```
 
+## Load order
+
+@import "values.less";
+    ...
+    @import "colors/index.less";
+    @import "fonts/index.less";
+    ...
+@import "html/index.less";
+    @import "html.less";
+    @import "html-extended.less";
+@import "utility/index.less";
+    @import "visibility.less";
+    @import "spacing.less";
+    @import "spacing2.less";
+    @import "sizing.less";
+    @import "spacing3.less";
+    @import "layout.less";
+    @import "scroll.less";
+    @import "text.less";
+    @import "cursor.less";
+    @import "layout2.less";
+    @import "text2.less";
+    @import "sizing3.less";
+    @import "panels.less";
+    @import "sizing2.less";
+    @import "visual-style.less";
+    @import "layout3.less";
+    @import "notes.less";
+    @import "visual-style2.less";
+@import "devices/index.less";
+    @import "print.less";
+    @import "watch.less";
+    @import "phone.less";
+    @import "pad.less";
+@import "components/application.less";
+
+
 ## Changed
 
 In case web development doesnt work, need to check:

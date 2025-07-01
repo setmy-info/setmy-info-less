@@ -76,9 +76,11 @@ Then('page is closed', async function () {
     await data.browser.close();
 });
 
-Then('element with id {string} should have margin {string}, padding {string}, font {string}, font size {string}, width {int}px, height {int}px, background color {string}, text color {string}',
+Then('element with id {string} should have margin {string}, padding {string}, font {string}, font size {string}, top {int}px, left {int}px, width {int}px, height {int}px, background color {string}, text color {string}',
     async function (elementId, expectedMargin, expectedPadding, expectedFontFamily, expectedFontSize,
-                    expectedWidth, expectedHeight, expectedBackgroundColor, expectedTextColor
+                    expectedTop, expectedLeft,
+                    expectedWidth, expectedHeight,
+                    expectedBackgroundColor, expectedTextColor
     ) {
         const selector = `#${elementId}`;
         const elementHandle = await data.page.$(selector);
@@ -91,15 +93,23 @@ Then('element with id {string} should have margin {string}, padding {string}, fo
             const el = document.querySelector(sel);
             const style = window.getComputedStyle(el);
             const rect = el.getBoundingClientRect();
+            const allStyles = {};
+            for (let i = 0; i < style.length; i++) {
+                const prop = style[i];
+                allStyles[prop] = style.getPropertyValue(prop);
+            }
             return {
                 margin: `${style.marginTop} ${style.marginRight} ${style.marginBottom} ${style.marginLeft}`,
                 padding: `${style.paddingTop} ${style.paddingRight} ${style.paddingBottom} ${style.paddingLeft}`,
                 fontFamily: style.fontFamily,
                 fontSize: style.fontSize,
+                top: Math.round(rect.top),
+                left: Math.round(rect.left),
                 width: Math.round(rect.width),
                 height: Math.round(rect.height),
                 backgroundColor: style.backgroundColor,
-                color: style.color
+                color: style.color,
+                allStyles: allStyles
             };
         }, selector);
 

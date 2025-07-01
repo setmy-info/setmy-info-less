@@ -105,8 +105,8 @@ body > noscript > ul {
   padding-left: 50px;
 }
 /* html-extended.less */
-/* html-frames */
-/*
+/* html-frames
+
 Mostly different "driving" items are here.
 Possibly successor was HTML NetBeans implementation - requires verification check.
 */
@@ -424,6 +424,9 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
     display: none !important;
   }
 }
+/**
+Base components, for use in most of the Templating frameworks like Angular, Vue and similar.
+*/
 html body #application {
   height: 100%;
   width: 100%;

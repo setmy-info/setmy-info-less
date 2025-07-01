@@ -17,11 +17,48 @@ let data = {
     },
     windowConfig: {
         viewport: {width: 2000, height: 1200}
-    }
+    },
+    elementId: null,
+    selector: null,
+    elementHandle: null,
+    computedStyles: null
 };
 
 Given('page name is {string}', function (name) {
     data.name = name;
+});
+
+Given('element id is {string}', async function (elementId) {
+    data.elementId = elementId;
+    data.selector = `#${data.elementId}`;
+    const elementHandle = await data.page.$(selector);
+    if (!elementHandle) {
+        throw new Error(`Element with ID '${data.elementId}' not found`);
+    }
+    data.elementHandle = elementHandle;
+    data.computedStyles = await data.page.evaluate((sel) => {
+        const el = document.querySelector(sel);
+        const style = window.getComputedStyle(el);
+        const rect = el.getBoundingClientRect();
+        const allStyles = {};
+        for (let i = 0; i < style.length; i++) {
+            const prop = style[i];
+            allStyles[prop] = style.getPropertyValue(prop);
+        }
+        return {
+            margin: `${style.marginTop} ${style.marginRight} ${style.marginBottom} ${style.marginLeft}`,
+            padding: `${style.paddingTop} ${style.paddingRight} ${style.paddingBottom} ${style.paddingLeft}`,
+            fontFamily: style.fontFamily,
+            fontSize: style.fontSize,
+            top: Math.round(rect.top),
+            left: Math.round(rect.left),
+            width: Math.round(rect.width),
+            height: Math.round(rect.height),
+            backgroundColor: style.backgroundColor,
+            color: style.color,
+            allStyles: allStyles
+        };
+    }, data.selector);
 });
 
 When('page is compiled', function () {
@@ -123,4 +160,22 @@ Then('element with id {string} should have margin {string}, padding {string}, fo
         expect(computedStyles.height).toBe(expectedHeight);
         expect(computedStyles.backgroundColor).toBe(expectedBackgroundColor);
         expect(computedStyles.color).toBe(expectedTextColor);
+    });
+
+
+Then('element should have margin {string}, padding {string}, font {string}, font size {string}, top {int}px, left {int}px, width {int}px, height {int}px, background color {string}, text color {string}',
+    async function (elementId, expectedMargin, expectedPadding, expectedFontFamily, expectedFontSize,
+                    expectedTop, expectedLeft,
+                    expectedWidth, expectedHeight,
+                    expectedBackgroundColor, expectedTextColor
+    ) {
+        console.log("Computed styles:", data.computedStyles);
+        expect(data.computedStyles.margin).toBe(expectedMargin);
+        expect(data.computedStyles.padding).toBe(expectedPadding);
+        expect(data.computedStyles.fontFamily).toContain(expectedFontFamily); // font-family võib sisaldada fallback'e
+        expect(data.computedStyles.fontSize).toBe(expectedFontSize);
+        expect(data.computedStyles.width).toBe(expectedWidth);
+        expect(data.computedStyles.height).toBe(expectedHeight);
+        expect(data.computedStyles.backgroundColor).toBe(expectedBackgroundColor);
+        expect(data.computedStyles.color).toBe(expectedTextColor);
     });

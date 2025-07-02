@@ -5,9 +5,10 @@
     "main": "dist/main.js",
     "scripts": {
         "start": "node ./src/test/js/server.js",
-        "build": "npm run css && npm run css-min",
+        "build": "npm run css && npm run css-min && npm rpugun build:",
         "css": "lessc ./src/main/less/main.less dist/main.css",
         "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",
+        "build:pug": "node ./src/test/js/pugHelper.js",
         "watch": "less-watch-compiler . dist main.less",
         "clean": "rimraf dist/index.html",
         "test": "jest",

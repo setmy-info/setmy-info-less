@@ -424,15 +424,11 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
     display: none !important;
   }
 }
-/*
-.@{flex-prefix} {
-
-    display: flex;
-
-    &-column {
-        flex-direction: column;
-    }
-
+.smi-flex-panel {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  /*
     &-row {
         flex-direction: row;
     }
@@ -442,8 +438,11 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
         justify-content: center;
         align-items: center;
     }
+    */
 }
-*/
+.smi-flex-panel-box {
+  flex-direction: column;
+}
 /**
 * Components directed to use for concrete systems.
 */

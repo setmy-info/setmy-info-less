@@ -1,9 +1,9 @@
 const {test, expect} = require('@playwright/test');
 const pageHelper = require('./pageHelper');
 
-const pageName = 'main';
+const pageName = 'application';
 
-test.describe('Main page layout tests', async () => {
+test.describe('application page layout tests', async () => {
 
     test.beforeAll(async () => {
         pageHelper.pageName(pageName);
@@ -15,7 +15,7 @@ test.describe('Main page layout tests', async () => {
     test('should load the page and check title', async () => {
 
         const title = await pageHelper.data.page.title();
-        expect(title).toBe('main.html');
+        expect(title).toBe('application.html');
 
         await pageHelper.elementExpectations(
             'body',

@@ -61,6 +61,8 @@ async function elementIdIs(elementId) {
             padding: `${style.paddingTop} ${style.paddingRight} ${style.paddingBottom} ${style.paddingLeft}`,
             fontFamily: style.fontFamily,
             fontSize: style.fontSize,
+            x: rect.x,
+            y: rect.y,
             top: Math.round(rect.top),
             left: Math.round(rect.left),
             width: Math.round(rect.width),
@@ -83,6 +85,8 @@ function expectations(ex) {
     expect(data.computedStyles.color).toBe(ex.color);
     expect(data.computedStyles.top).toBe(ex.top);
     expect(data.computedStyles.left).toBe(ex.left);
+    expect(data.computedStyles.x).toBe(ex.x);
+    expect(data.computedStyles.y).toBe(ex.y);
 }
 
 module.exports = {

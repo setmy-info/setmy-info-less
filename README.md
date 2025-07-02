@@ -25,14 +25,11 @@ npm i jest --save-dev
 npm i playwright --save-dev
 npm i @playwright/test@latest --save-dev
 npm i pug --save-dev
-npm i @cucumber/cucumber --save-dev
 npm i rimraf --save-dev
 npx playwright install
 ```
 
 ## Development
-
-NB! Right now cucumber and build are making pug to html builds. Need to simplify.
 
 ```
 npm install
@@ -43,7 +40,6 @@ npm run build
 npm run verify
 #Inside verify
 #npm run e2e
-#npm run cucumber
 npm run clean
 npm pack
 npm login

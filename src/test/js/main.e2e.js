@@ -1,20 +1,52 @@
 const {test, expect} = require('@playwright/test');
-const path = require('path');
+const pageHelper = require('./pageHelper');
 
-test('should load the page and check title', async ({page}) => {
-    const filePath = 'file://' + path.resolve(__dirname, '../../../dist/main.html');
-    await page.goto(filePath);
+const pageName = 'main';
 
-    const title = await page.title();
-    expect(title).toBe('main.html');
-});
+test.describe('Main page layout tests', async () => {
 
-test('should check if <h1> has correct text', async ({page}) => {
-    /*
-    const filePath = 'file://' + path.resolve(__dirname, '../../../dist/main.html');
-    await page.goto(filePath);
+    test.beforeAll(async () => {
+        pageHelper.pageName(pageName);
+        pageHelper.getPath();
+        pageHelper.pageIsCompiled();
+        await pageHelper.pageIsRendered();
+    });
 
-    const headingText = await page.textContent('h1');
-    expect(headingText).toBe('body.html');
-    */
+    test('should load the page and check title', async () => {
+
+        const title = await pageHelper.data.page.title();
+        expect(title).toBe('main.html');
+
+        await pageHelper.elementExpectations(
+            'body',
+            {
+                margin: '0px 0px 0px 0px',
+                padding: '0px 0px 0px 0px',
+                fontFamily: 'DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif',
+                fontSize: '16px',
+                width: 2000,
+                height: 1200,
+                top: 0,
+                left: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                color: 'rgb(0, 0, 0)'
+            }
+        );
+
+        await pageHelper.elementExpectations(
+            'application',
+            {
+                margin: '0px 0px 0px 0px',
+                padding: '0px 0px 0px 0px',
+                fontFamily: 'DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif',
+                fontSize: '16px',
+                width: 2000,
+                height: 1200,
+                top: 0,
+                left: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                color: 'rgb(0, 0, 0)'
+            }
+        );
+    });
 });

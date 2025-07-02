@@ -6,7 +6,7 @@ const firefoxPath = firefoxHelper.getFirefoxPath();
 module.exports = defineConfig({
     testDir: 'src/test/js',
     timeout: 30000,
-    retries: 1,
+    retries: 0,
     use: {
         headless: false,
         browserName: 'firefox',

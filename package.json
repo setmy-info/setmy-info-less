@@ -5,23 +5,20 @@
     "main": "dist/main.js",
     "scripts": {
         "start": "node ./src/test/js/server.js",
-        "build": "npm run css && npm run css-min && npm run build:pug",
+        "build": "npm run css && npm run css-min",
         "css": "lessc ./src/main/less/main.less dist/main.css",
         "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",
-        "build:pug": "node ./src/test/js/build-pug.js",
         "watch": "less-watch-compiler . dist main.less",
         "clean": "rimraf dist/index.html",
         "test": "jest",
-        "e2e": "npx playwright test src/test/js --config=playwright.config.js",
-        "cucumber": "cucumber-js ./src/test/gherkin --require ./src/test/js/features/**/*.js",
-        "verify": "npm test && npm run e2e && npm run cucumber"
+        "e2e": "npx playwright test --config=playwright.config.js",
+        "verify": "npm test && npm run e2e"
     },
     "keywords": [
         "less",
         "css",
         "pug",
         "playwright",
-        "cucumber",
         "jest"
     ],
     "author": "Imre Tabur <imre.tabur@mail.ee>",
@@ -32,7 +29,6 @@
     },
     "homepage": "https://github.com/setmy-info/setmy-info-less",
     "devDependencies": {
-        "@cucumber/cucumber": "^11.3.0",
         "@playwright/test": "^1.53.1",
         "express": "^5.1.0",
         "jest": "^30.0.3",

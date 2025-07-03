@@ -24,10 +24,6 @@ function getPath() {
     return data.filePath;
 }
 
-function pageIsCompiled() {
-    pugHelper.compilePug(data.name, {title: data.name + ".html"});
-}
-
 async function pageIsRendered() {
     data.browser = await firefox.launch(data.browserConfig);
     data.context = await data.browser.newContext(data.windowConfig);
@@ -92,7 +88,6 @@ function expectations(ex) {
 module.exports = {
     pageName,
     getPath,
-    pageIsCompiled,
     pageIsRendered,
     elementIdIs,
     data,

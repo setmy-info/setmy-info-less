@@ -1,9 +1,9 @@
 const {test, expect} = require('@playwright/test');
 const pageHelper = require('./pageHelper');
 
-const pageName = 'application';
+const pageName = 'centerText';
 
-test.describe('application page layout tests', async () => {
+test.describe('centerText page layout tests', async () => {
 
     test.beforeAll(async () => {
         pageHelper.pageName(pageName);
@@ -14,10 +14,10 @@ test.describe('application page layout tests', async () => {
     test('should load the page and check title', async () => {
 
         const title = await pageHelper.data.page.title();
-        expect(title).toBe('application.html');
+        expect(title).toBe('centerText.html');
 
         await pageHelper.elementExpectations(
-            'body',
+            'centerText',
             {
                 margin: '0px 0px 0px 0px',
                 padding: '0px 0px 0px 0px',
@@ -26,7 +26,7 @@ test.describe('application page layout tests', async () => {
                 x: 0,
                 y: 0,
                 width: 2000,
-                height: 1200,
+                height: 19,
                 top: 0,
                 left: 0,
                 backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -35,18 +35,18 @@ test.describe('application page layout tests', async () => {
         );
 
         await pageHelper.elementExpectations(
-            'application',
+            'spanCenterText',
             {
                 margin: '0px 0px 0px 0px',
                 padding: '0px 0px 0px 0px',
                 fontFamily: 'DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif',
                 fontSize: '16px',
-                x: 0,
+                x: 961.25,
                 y: 0,
-                width: 2000,
-                height: 1200,
+                width: 77,
+                height: 19,
                 top: 0,
-                left: 0,
+                left: 961,
                 backgroundColor: 'rgba(0, 0, 0, 0)',
                 color: 'rgb(0, 0, 0)'
             }

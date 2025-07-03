@@ -8,7 +8,6 @@ test.describe('flex-center page layout tests', async () => {
     test.beforeAll(async () => {
         pageHelper.pageName(pageName);
         pageHelper.getPath();
-        pageHelper.pageIsCompiled();
         await pageHelper.pageIsRendered();
     });
 

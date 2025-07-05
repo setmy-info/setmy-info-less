@@ -18,7 +18,7 @@
         "watch:pug": "node ./src/test/js/pugWatch.js",
         "clean": "rimraf dist",
         "clean:all": "rimraf dist node_modules",
-        "verify": "npm test && npm run e2e && npm run lint:less",
+        "verify": "npm test && npm run e2e && npm run lint:less && npm run cucumber",
         "test": "jest",
         "e2e": "npx playwright test --config=playwright.config.js",
         "e2e:one": "npx playwright test --config=playwright.config.js",

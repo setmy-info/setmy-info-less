@@ -67,6 +67,10 @@ Then('xxxxxxxxxxxxx {string}', async function (expectedBackColor) {
 Then('xxxxxxxxxxxxxx {string}', async function (expectedColor) {
 
 });
+
+Then('xxxxxxxxxxxxxx {string}', async function (expectedColor) {
+
+});
 */
 Then('page is closed', async function () {
     await pageHelper.pageClose();

@@ -13,12 +13,12 @@
         "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",
         "html": "node ./src/test/js/pugBuild.js",
         "start": "node ./src/test/js/server.js",
-        "watch": "less-watch-compiler . dist main.less",
+        "watch": "less-watch-compiler ./src/main/less dist main.less",
         "clean": "rimraf dist",
         "clean:all": "rimraf dist node_modules",
+        "verify": "npm test && npm run e2e",
         "test": "jest",
-        "e2e": "npx playwright test --config=playwright.config.js",
-        "verify": "npm test && npm run e2e"
+        "e2e": "npx playwright test --config=playwright.config.js"
     },
     "keywords": [
         "less",
@@ -40,6 +40,7 @@
         "jest": "^30.0.3",
         "less": "^4.3.0",
         "less-plugin-clean-css": "^1.6.0",
+        "less-watch-compiler": "^1.16.3",
         "playwright": "^1.53.1",
         "pug": "^3.0.3",
         "rimraf": "^6.0.1"

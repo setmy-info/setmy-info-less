@@ -36,6 +36,7 @@ Project creation steps and commands:
 npm init --yes
 npm i less --save-dev
 npm i less-plugin-clean-css --save-dev
+npm i less-watch-compiler --save-dev
 npm i express --save-dev
 npm i jest --save-dev
 npm i playwright --save-dev
@@ -97,10 +98,23 @@ npm run e2e
 npm run verify
 ```
 
+### Run local server
+
+```
+npm run start
+```
+
+### Continuous building
+
+```
+npm run watch
+```
+
 ### Packaging
 
 ```
 npm pack
+npm pack --dry-run
 ```
 
 ### Cleaning

@@ -1,4 +1,4 @@
-const pugHelper = require('./pugHelper');
+//const pugTranspile = require('./pugTranspile');
 const path = require("path");
 const {firefox} = require('playwright');
 const firefoxHelper = require("./firefoxHelper");
@@ -121,7 +121,7 @@ Given('page name is {string}', function (name) {
 });
 
 When('page is compiled', function () {
-    pugHelper.compilePug(data.name, {title: data.name + ".html"});
+    pugTranspile.compilePug(data.name, {title: data.name + ".html"});
 });
 
 When('page is rendered', async function () {

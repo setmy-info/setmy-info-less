@@ -1,8 +1,12 @@
-const pug = require('pug');
+//const pug = require('pug');
 const fs = require('fs');
 const path = require('path');
-const pugHelper = require('./pugHelper');
+const pugTranspile = require('./pugTranspile');
 
+const inputDir = path.join(__dirname, '../pug');
+//const outputDir = path.join(__dirname, '../../../dist');
+
+/*
 const pageNames = [
     "body",
     "app",
@@ -11,12 +15,27 @@ const pageNames = [
     "layoutCenterBox2",
     "centerText"
 ];
+*/
 
 function main() {
+    const dir = inputDir;
+    const files = fs.readdirSync(dir);
+    files.forEach((file) => {
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+        if (stat.isFile() && file.endsWith('.pug')) {
+            const relPath = path.relative(inputDir, filePath);
+            //const pageName = path.basename(filePath);
+            const pageName = path.basename(filePath, path.extname(filePath));
+            pugTranspile.transpileHtml(pageName, {title: pageName + ".html"});
+        }
+    });
+    /*
     for (let i = 0; i < pageNames.length; i++) {
         let pageName = pageNames[i];
-        pugHelper.compilePug(pageName, {title: pageName + ".html"});
+        pugTranspile.transpileHtml(pageName, {title: pageName + ".html"});
     }
+    */
 }
 
 main();

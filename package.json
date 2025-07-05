@@ -1,16 +1,21 @@
 {
     "name": "setmy-info-less",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "SMI LESS project",
-    "main": "dist/main.js",
+    "main": "dist/main.css",
+    "files": [
+        "dist/*.css",
+        "README.md"
+    ],
     "scripts": {
-        "start": "node ./src/test/js/server.js",
-        "build": "npm run css && npm run css-min && npm run build:pug",
+        "build": "npm run css && npm run css-min && npm run html",
         "css": "lessc ./src/main/less/main.less dist/main.css",
         "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",
-        "build:pug": "node ./src/test/js/pugBuild.js",
+        "html": "node ./src/test/js/pugBuild.js",
+        "start": "node ./src/test/js/server.js",
         "watch": "less-watch-compiler . dist main.less",
-        "clean": "rimraf dist/index.html",
+        "clean": "rimraf dist",
+        "clean:all": "rimraf dist node_modules",
         "test": "jest",
         "e2e": "npx playwright test --config=playwright.config.js",
         "verify": "npm test && npm run e2e"

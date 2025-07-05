@@ -1,12 +1,24 @@
 # setmy-info-less
 
-## Notes
+A modular and testable LESS-based styling framework for web projects. This project provides a structured system for
+managing CSS using LESS, generating HTML with Pug, and ensuring quality through unit and end-to-end testing.
+
+## 📦 Project
+
+This project includes:
+
+- `LESS` – for managing styles
+- `Pug` – for generating HTML
+- `Playwright` – for end-to-end (e2e) testing
+- `Jest` – for JavaScript unit testing
+- `Express` – for simple local serving
+- `npm scripts` – for build and test workflows
 
 **main.less** is starting point, that includes the rest of the files in correct order.
 
-### Priciles
+### Principles
 
-UI is divided in groups:
+UI is divided in (breaking point) groups:
 
 * **Default** is PC or wide UI, no elements shrinking, collapsing and hiding needed. For full visibility.
 * **Phone**: is usual pocket and handheld smartphone devices.
@@ -14,7 +26,11 @@ UI is divided in groups:
 * **Watch** usually hand watch UI-s.
 * **Print** system for printing.
 
-## Created
+Utility CSS classes are switches to apply some CSS rules on elements.
+
+### Project creation process
+
+Project creation steps and commands:
 
 ```
 npm init --yes
@@ -31,32 +47,94 @@ npx playwright install
 
 ## Development
 
+### 🔧 Setup
+
 ```
 npm install
 # Or use 'ci' cub-command, to install by lock file. 
 npm ci
 npx playwright install
+```
+
+### LESS to CSS transpiling
+
+```
+npm run css
+npm run css-min
+```
+
+### Pug to HTML transpiling
+
+```
+npm run html
+```
+
+### Full build
+
+```
 npm run build
+```
+
+### 🧪 Test execution
+
+Currently, no useful unit tests, just working placeholder.
+
+#### Unit test execution
+
+```
+npm test
+```
+
+### E2E test execution
+
+```
+npm run e2e
+```
+
+### Combined test execution
+
+```
 npm run verify
-#Inside verify
-#npm run e2e
-npm run clean
+```
+
+### Packaging
+
+```
 npm pack
+```
+
+### Cleaning
+
+### Dist folder removal
+
+```
+npm run clean
+```
+
+### Clean project removal
+
+```
+npm run clean:all
+```
+
+## Publishing
+
+```
 npm login
 npm publish
 ```
 
 ## Load order
 
-@import "values.less";
+    @import "values.less";
     ...
     @import "colors/index.less";
     @import "fonts/index.less";
     ...
-@import "html/index.less";
+    @import "html/index.less";
     @import "html.less";
     @import "html-extended.less";
-@import "utility/index.less";
+    @import "utility/index.less";
     @import "visibility.less";
     @import "spacing.less";
     @import "spacing2.less";
@@ -75,19 +153,19 @@ npm publish
     @import "layout3.less";
     @import "notes.less";
     @import "visual-style2.less";
-@import "devices/index.less";
+    @import "devices/index.less";
     @import "print.less";
     @import "watch.less";
     @import "phone.less";
     @import "pad.less";
-@import "components/application.less";
-
+    @import "components/application.less";
 
 ## Changed
 
-In case web development doesnt work, need to check:
+Some classes were changed after 1.0.0 release. On case of using upgraded changes in depending code need to search and
+replace.
 
-verticalStrechPanel -> verticalStretchPanel
-horisontalStrechPanel -> horizontalStretchPanel
+* verticalStrechPanel -> verticalStretchPanel
+* horisontalStrechPanel -> horizontalStretchPanel
 
 + some more other possible changes

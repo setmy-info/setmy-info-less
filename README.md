@@ -92,6 +92,12 @@ npm test
 npm run e2e
 ```
 
+### Specific E2E test execution
+
+```
+npm run e2e:one -- src/test/js/e2e/application.e2e.js
+```
+
 ### Combined test execution
 
 ```

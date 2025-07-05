@@ -18,7 +18,8 @@
         "clean:all": "rimraf dist node_modules",
         "verify": "npm test && npm run e2e",
         "test": "jest",
-        "e2e": "npx playwright test --config=playwright.config.js"
+        "e2e": "npx playwright test --config=playwright.config.js",
+        "e2e:one": "npx playwright test --config=playwright.config.js"
     },
     "keywords": [
         "less",

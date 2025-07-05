@@ -1,9 +1,10 @@
 const {test, expect} = require('@playwright/test');
 const pageHelper = require('../pageHelper');
+const getTestPageName = require('../testPageName');
 
-const pageName = 'layoutCenterBox';
+const pageName = getTestPageName();
 
-test.describe('layoutCenterBox page layout tests', async () => {
+test.describe(pageName + ' page layout tests', async () => {
 
     test.beforeAll(async () => {
         pageHelper.pageName(pageName);

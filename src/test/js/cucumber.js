@@ -23,19 +23,19 @@ Then('page element ID is {string}', async function (elementId) {
 Then('that element margin should be {string}', function (expectedMargin) {
     expect(pageHelper.data.computedStyles.margin).toBe(expectedMargin);
 });
+
+Then('that element padding should be {string}', async function (expectedPadding) {
+    expect(pageHelper.data.computedStyles.padding).toBe(expectedPadding);
+});
+
+Then('that element font family should be {string}', async function (expectedFontFamily) {
+    expect(pageHelper.data.computedStyles.fontFamily).toBe(expectedFontFamily);
+});
+
+Then('that element font size should be {string}', async function (expectedFontSize) {
+    expect(pageHelper.data.computedStyles.fontSize).toBe(expectedFontSize);
+});
 /*
-Then('xxxx {string}', async function (expectedPadding) {
-
-});
-
-Then('xxxxx {string}', async function (expectedFontFamily) {
-
-});
-
-Then('xxxxxx {string}', async function (expectedFontSize) {
-
-});
-
 Then('xxxxxxx {int}', async function (expectedX) {
 
 });

@@ -1,53 +1,34 @@
 # setmy-info-less
 
-A modular and testable LESS-based styling framework for web projects. This project provides a structured system for
-managing CSS using LESS, generating HTML with Pug, and ensuring quality through unit and end-to-end testing.
-
-As SMI standard browser is Firefox, then values can be taken from FF development tool and make these similar for all
+A modular, testable, and structured LESS-based styling framework for web projects. This project provides a clean system
+for managing styles with LESS, generating HTML using Pug, and ensuring quality with both unit and end-to-end tests.
+As the SMI standard browser is Firefox, values can be taken directly from Firefox DevTools and unified across all
 browsers.
 
 ## 📦 Project
 
 This project includes:
 
-- `LESS` – for managing styles
-- `Pug` – for generating HTML
-- `Playwright` – for end-to-end (e2e) testing
-- `Jest` – for JavaScript unit testing
-- `Express` – for simple local serving
-- `npm scripts` – for build and test workflows
+- `LESS` – for modular and extendable CSS
+- `Pug` – for HTML generation
+- `Playwright` – for end-to-end (E2E) testing
+- `Jest` – for unit testing JavaScript
+- `Express` – for local development server
+- `npm scripts` – for build and test automation
 
-**main.less** is starting point, that includes the rest of the files in correct order.
+**main.less** is the entry point, which includes other files in the correct order.
 
 ### Principles
 
-UI is divided in (breaking point) groups:
+UI is grouped based on breakpoints:
 
-* **Default** is PC or wide UI, no elements shrinking, collapsing and hiding needed. For full visibility.
-* **Phone**: is usual pocket and handheld smartphone devices.
-* **Pad** usually a little wider UI, that can handle more elements but not all. Something can be hidden/shrunken.
-* **Watch** usually hand watch UI-s.
-* **Print** system for printing.
+* **Default** – Desktop / wide UI (full visibility, no collapsing)
+* **Phone** – Small screen (pocket) devices
+* **Pad** – Medium-width UIs (tablet-like), may hide or shrink some elements
+* **Watch** – Minimal UI for small displays
+* **Print** – Styles for printable documents
 
-Utility CSS classes are switches to apply some CSS rules on elements.
-
-### Project creation process
-
-Project creation steps and commands:
-
-```shell
-npm init --yes
-npm i less --save-dev
-npm i less-plugin-clean-css --save-dev
-npm i less-watch-compiler --save-dev
-npm i express --save-dev
-npm i jest --save-dev
-npm i playwright --save-dev
-npm i @playwright/test@latest --save-dev
-npm i pug --save-dev
-npm i rimraf --save-dev
-npx playwright install
-```
+Utility CSS classes are provided to toggle CSS rules per element.
 
 ## Development
 
@@ -107,26 +88,26 @@ npm run e2e:one -- src/test/js/e2e/application.e2e.js
 npm run verify
 ```
 
-### Run local server
+### 🌐 Local Development Server
 
 ```shell
 npm run start
 ```
 
-### Continuous building
+### 🔄 Watch for changes
 
 ```shell
 npm run watch
 ```
 
-### Packaging
+### 📦 Packaging
 
 ```shell
 npm pack
 npm pack --dry-run
 ```
 
-### Cleaning
+### 🧹 Cleaning
 
 ### Dist folder removal
 
@@ -140,13 +121,13 @@ npm run clean
 npm run clean:all
 ```
 
-### Full build for CI and build checkup
+### 🏗 Full build for CI and build checkup
 
 ```shell
 npm run clean:all && npm ci && npm run build && npm run verify && npm pack && npm pack --dry-run
 ```
 
-## Publishing
+## 📤 Publishing
 
 ```shell
 npm login
@@ -191,13 +172,30 @@ npm publish
 
 ## Changed
 
-Some classes were changed after 1.0.0 release. On case of using upgraded changes in depending code need to search and
-replace.
+Some class names were updated after v1.0.0. If you're upgrading, search and replace as needed:
 
 * verticalStrechPanel -> verticalStretchPanel
 * horisontalStrechPanel -> horizontalStretchPanel
 
-+ some more other possible changes
+(+ other possible minor updates)
+
+## Project was created
+
+Project creation steps and commands:
+
+```shell
+npm init --yes
+npm i less --save-dev
+npm i less-plugin-clean-css --save-dev
+npm i less-watch-compiler --save-dev
+npm i express --save-dev
+npm i jest --save-dev
+npm i playwright --save-dev
+npm i @playwright/test@latest --save-dev
+npm i pug --save-dev
+npm i rimraf --save-dev
+npx playwright install
+```
 
 ## TODO
 
@@ -207,4 +205,4 @@ replace.
 @fontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 ```
 
-* get rid of !important. Probably right order helps here.
+* Eliminate use of !important — proper load order should help avoid it.

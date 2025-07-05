@@ -1,4 +1,6 @@
-/* values.less */
+/* values/index.less */
+/* values/colors/index.less */
+/* values/fonts/index.less */
 /* html.less */
 html {
   height: 100%;
@@ -93,11 +95,9 @@ hr {
   border: 0;
   height: 1px;
   background: #333;
-  background-image: -moz-linear-gradient(left, #ccc, #333, #ccc);
-  /* TODO : need to be tested
-    background-image: linear-gradient(left, #ccc, #333, #ccc);
-    background: -webkit-linear-gradient(left, #ccc, #333, #ccc);
-    */
+  background-image: -webkit-linear-gradient(to right, #ccc, #333, #ccc);
+  background-image: -moz-linear-gradient(to right, #ccc, #333, #ccc);
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -105,83 +105,86 @@ body > noscript > ul {
   padding-left: 50px;
 }
 /* html-extended.less */
-/* html-frames
+/*
+html-frames
 
 Mostly different "driving" items are here.
 Possibly successor was HTML NetBeans implementation - requires verification check.
 */
+/* visibility.less */
 .hidden {
   display: none;
 }
+/* spacing.less */
 .noPadding {
-  padding: 0px;
+  padding: 0;
 }
 .noMargin {
-  margin: 0px;
+  margin: 0;
 }
 .noPaddingMargin {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
 }
 .noMarginFirstChild *:first-child {
-  margin: 0px;
+  margin: 0;
 }
 .noTopMarginFirstChild *:first-child {
-  margin-top: 0px;
+  margin-top: 0;
 }
 .noRightMarginFirstChild *:first-child {
-  margin-right: 0px;
+  margin-right: 0;
 }
 .noBottomMarginFirstChild *:first-child {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 .noLeftMarginFirstChild *:first-child {
-  margin-left: 0px;
+  margin-left: 0;
 }
 .noMarginLastChild *:last-child {
-  margin: 0px;
+  margin: 0;
 }
 .noTopMarginLastChild *:last-child {
-  margin-top: 0px;
+  margin-top: 0;
 }
 .noRightMarginLastChild *:last-child {
-  margin-right: 0px;
+  margin-right: 0;
 }
 .noBottomMarginLastChild *:last-child {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 .noLeftMarginLastChild *:last-child {
-  margin-left: 0px;
+  margin-left: 0;
 }
 .noPaddingFirstChild *:first-child {
-  padding: 0px;
+  padding: 0;
 }
 .noTopPaddingFirstChild *:first-child {
-  padding-top: 0px;
+  padding-top: 0;
 }
 .noRightPaddingFirstChild *:first-child {
-  padding-right: 0px;
+  padding-right: 0;
 }
 .noBottomPaddingFirstChild *:first-child {
-  padding-bottom: 0px;
+  padding-bottom: 0;
 }
 .noLeftPaddingFirstChild *:first-child {
-  padding-left: 0px;
+  padding-left: 0;
 }
 .noPaddingLastChild *:last-child {
-  padding: 0px;
+  padding: 0;
 }
 .noTopPaddingLastChild *:last-child {
-  padding-top: 0px;
+  padding-top: 0;
 }
 .noRightPaddingLastChild *:last-child {
-  padding-right: 0px;
+  padding-right: 0;
 }
 .noBottomPaddingLastChild *:last-child {
-  padding-bottom: 0px;
+  padding-bottom: 0;
 }
 .noLeftPaddingLastChild *:last-child {
-  padding-left: 0px;
+  padding-left: 0;
 }
 .defaultPadding {
   padding: 10px;
@@ -243,6 +246,17 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 .doubleBottomMargin {
   margin-bottom: 20px;
 }
+.elementLeftPadding {
+  padding-left: 10px;
+}
+.elementRightPadding {
+  padding-right: 10px;
+}
+.elementLeftRightPatting {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+/* sizing.less */
 .maxWidth {
   width: 100%;
 }
@@ -256,16 +270,19 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 .elementHeight {
   height: 50px;
 }
-.elementLeftPadding {
-  padding-left: 10px;
+.halfWidth {
+  width: 50%;
 }
-.elementRightPadding {
-  padding-right: 10px;
+.quarterWidth {
+  width: 25%;
 }
-.elementLeftRightPatting {
-  padding-left: 10px;
-  padding-right: 10px;
+.threeQuartersWidth {
+  width: 75%;
 }
+.lineHeight {
+  line-height: 50px;
+}
+/* layout.less */
 .floatLeft {
   float: left;
 }
@@ -281,6 +298,18 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 .noWrap {
   white-space: nowrap;
 }
+.tableElement {
+  display: table;
+}
+.centerBox {
+  margin: auto;
+  max-width: 1024px;
+  width: auto;
+}
+.centerText {
+  text-align: center;
+}
+/* scroll.less */
 .autoScrollBars {
   overflow: auto;
 }
@@ -299,6 +328,7 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 .noHorizontalScrollBar {
   overflow-x: hidden;
 }
+/* text.less */
 .asUppercase {
   text-transform: uppercase;
 }
@@ -308,43 +338,28 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 .firstAsUppercase {
   text-transform: capitalize;
 }
+.textColorGray {
+  color: dimgray;
+}
+/* cursor.less */
 .textCursor {
   cursor: text;
 }
 .pointerCursor {
   cursor: pointer;
 }
-.tableElement {
-  display: table;
-}
-/*.tableCellElement {
-    display: table-cell !important;
-}*/
-.textColorGray {
-  color: dimgray;
-}
-.lineHeight {
-  line-height: 50px;
-}
+/* panels.less */
 .verticalStretchPanel {
-  min-height: 0px !important;
+  min-height: 0 !important;
   height: auto !important;
   overflow: hidden;
 }
 .horizontalStretchPanel {
-  min-width: 0px !important;
+  min-width: 0 !important;
   width: auto !important;
   overflow: hidden;
 }
-.halfWidth {
-  width: 50%;
-}
-.quarterWidth {
-  width: 25%;
-}
-.threeQuartersWidth {
-  width: 75%;
-}
+/* visual-style.less */
 .normalBackground {
   background: white;
 }
@@ -352,9 +367,6 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
   border: solid 2px steelblue;
 }
 .defaultShadow {
-  /*box-shadow: 2px 2px 2px #333333;
-    -moz-box-shadow: 2px 2px 2px #333333;
-    -webkit-box-shadow: 2px 2px 2px #333333;*/
   -moz-box-shadow: 0 0 2px #333333;
   -webkit-box-shadow: 0 0 2px #333333;
   box-shadow: 0 0 2px #333333;
@@ -367,14 +379,10 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 .defaultTextBackground {
   background: white;
 }
-.centerBox {
-  margin: auto;
-  max-width: 1024px;
-  width: auto;
+.minifiedText {
+  font-size: xx-small;
 }
-.centerText {
-  text-align: center;
-}
+/* notes.less */
 .importantNote {
   color: red;
   font-weight: bold;
@@ -388,11 +396,8 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
   border-left-color: #73d073;
   padding-left: 5px;
 }
-.minifiedText {
-  font-size: xx-small;
-}
-/* print */
-/* watch */
+/* print.less */
+/* watch.less */
 @media only screen and (max-width: 639px) {
   .phone-hidden {
     display: none;
@@ -405,7 +410,7 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
     min-height: calc( 100%  -  50px );
   }
 }
-/* phone*/
+/* phone.less */
 @media only screen and (min-width: 640px) and (max-width: 1023px) {
   .phone-hidden {
     display: none;
@@ -418,34 +423,28 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
     min-height: calc( 100%  -  50px );
   }
 }
-/* pad */
+/* pad.less */
 @media only screen and (min-width: 1024px) {
   .pc-hidden {
     display: none !important;
   }
 }
+/* flex/index.less */
 .smi-flex-panel {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  /*
-    &-row {
-        flex-direction: row;
-    }
-
-    &-center {
-        //display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    */
 }
 .smi-flex-panel-box {
   flex-direction: column;
 }
+.smi-flex-panel-row {
+  flex-direction: row;
+}
 /**
 * Components directed to use for concrete systems.
 */
+/* application.less */
 /**
 Base components, for use in most of the Templating frameworks like Angular, Vue and similar.
 */
@@ -455,6 +454,7 @@ html body #application {
   padding: 0;
   margin: 0;
 }
+/* background.less */
 canvas#background {
   width: 100%;
   height: 100%;

@@ -1,25 +1,16 @@
-@flex-prefix: @{prefix}-flex;
+/* flex/index.less */
 
 .@{flex-prefix}-panel {
 
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    //gap: 10px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 
-    &-box {
-        flex-direction: column;
-    }
+  &-box {
+    flex-direction: column;
+  }
 
-    /*
-    &-row {
-        flex-direction: row;
-    }
-
-    &-center {
-        //display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    */
+  &-row {
+    flex-direction: row;
+  }
 }

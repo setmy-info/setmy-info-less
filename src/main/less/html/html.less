@@ -23,7 +23,6 @@ html {
 a, button, input {
     padding: @zero;
     margin: @zero;
-    //height: @defaultHeight;
 }
 
 a {
@@ -59,14 +58,10 @@ p {
 
 h1, h2, h3, h4, h5, h6 {
     color: @headingTextColor;
-    //font-weight: bold;// Values from FF
     font-weight: normal;
     display: block;
-    // Values from FF
     letter-spacing: 0.09em;
 }
-
-// Values from FF
 
 h1 {
     font-size: 2em;
@@ -112,11 +107,9 @@ hr {
     border: 0;
     height: 1px;
     background: #333;
-    background-image: -moz-linear-gradient(left, #ccc, #333, #ccc);
-    /* TODO : need to be tested
-    background-image: linear-gradient(left, #ccc, #333, #ccc);
-    background: -webkit-linear-gradient(left, #ccc, #333, #ccc);
-    */
+    background-image: -webkit-linear-gradient(to right, #ccc, #333, #ccc);
+    background-image: -moz-linear-gradient(to right, #ccc, #333, #ccc);
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
     margin-top: 10px;
     margin-bottom: 10px;
 }

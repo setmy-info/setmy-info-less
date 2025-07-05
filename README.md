@@ -3,6 +3,9 @@
 A modular and testable LESS-based styling framework for web projects. This project provides a structured system for
 managing CSS using LESS, generating HTML with Pug, and ensuring quality through unit and end-to-end testing.
 
+As SMI standard browser is Firefox, then values can be taken from FF development tool and make these similar for all
+browsers.
+
 ## 📦 Project
 
 This project includes:
@@ -189,3 +192,13 @@ replace.
 * horisontalStrechPanel -> horizontalStretchPanel
 
 + some more other possible changes
+
+## TODO
+
+* Consider font correctness
+
+```less
+@fontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+```
+
+* get rid of !important. Probably right order helps here.

@@ -22,7 +22,7 @@
         "test": "jest",
         "e2e": "npx playwright test --config=playwright.config.js",
         "e2e:one": "npx playwright test --config=playwright.config.js",
-        "cucumber": "cucumber-js ./src/test/gherkin --require ./src/test/js/cucumber.js",
+        "cucumber": "cucumber-js",
         "lint:less": "stylelint ./src/main/less/**/*.less",
         "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix"
     },

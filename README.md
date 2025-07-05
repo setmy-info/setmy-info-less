@@ -35,7 +35,7 @@ Utility CSS classes are switches to apply some CSS rules on elements.
 
 Project creation steps and commands:
 
-```
+```shell
 npm init --yes
 npm i less --save-dev
 npm i less-plugin-clean-css --save-dev
@@ -53,7 +53,7 @@ npx playwright install
 
 ### 🔧 Setup
 
-```
+```shell
 npm install
 # Or use 'ci' cub-command, to install by lock file. 
 npm ci
@@ -62,20 +62,20 @@ npx playwright install
 
 ### LESS to CSS transpiling
 
-```
+```shell
 npm run css
 npm run css-min
 ```
 
 ### Pug to HTML transpiling
 
-```
+```shell
 npm run html
 ```
 
 ### Full build
 
-```
+```shell
 npm run build
 ```
 
@@ -85,43 +85,43 @@ Currently, no useful unit tests, just working placeholder.
 
 #### Unit test execution
 
-```
+```shell
 npm test
 ```
 
 ### E2E test execution
 
-```
+```shell
 npm run e2e
 ```
 
 ### Specific E2E test execution
 
-```
+```shell
 npm run e2e:one -- src/test/js/e2e/application.e2e.js
 ```
 
 ### Combined test execution
 
-```
+```shell
 npm run verify
 ```
 
 ### Run local server
 
-```
+```shell
 npm run start
 ```
 
 ### Continuous building
 
-```
+```shell
 npm run watch
 ```
 
 ### Packaging
 
-```
+```shell
 npm pack
 npm pack --dry-run
 ```
@@ -130,19 +130,25 @@ npm pack --dry-run
 
 ### Dist folder removal
 
-```
+```shell
 npm run clean
 ```
 
 ### Clean project removal
 
-```
+```shell
 npm run clean:all
+```
+
+### Full build for CI and build checkup
+
+```shell
+npm run clean:all && npm ci && npm run build && npm run verify && npm pack && npm pack --dry-run
 ```
 
 ## Publishing
 
-```
+```shell
 npm login
 npm publish
 ```

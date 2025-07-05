@@ -11,6 +11,7 @@
         "build": "npm run css && npm run css-min && npm run html",
         "css": "lessc ./src/main/less/main.less dist/main.css",
         "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",
+        "css:debug": "lessc --modify-var=debug=true ./src/main/less/main.less dist/main.css",
         "html": "node ./src/test/js/pugBuild.js",
         "start": "node ./src/test/js/server.js",
         "watch": "less-watch-compiler ./src/main/less dist main.less",

@@ -1,7 +1,8 @@
 /* values/index.less */
 
 @prefix: smi;
-@flex-prefix: @{prefix}-flex;
+@flex-prefix: ~"@{prefix}-flex";
+@grid-prefix: ~"@{prefix}-grid";
 
 @zero: 0;
 @half: 50%;
@@ -36,8 +37,8 @@
 
 @sectionHeaderPictureHeight: 200px;
 
-@import "colors/index.less";
-@import "fonts/index.less";
+@import url("colors/index.less");
+@import url("fonts/index.less");
 
 @articleLineHeight: 1.7;
 

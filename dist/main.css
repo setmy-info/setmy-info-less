@@ -7,16 +7,14 @@ html {
   width: 100%;
   padding: 0;
   margin: 0;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 html body {
   height: 100%;
   width: 100%;
   padding: 0;
   margin: 0;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
   color: black;
   font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
 }
@@ -60,33 +58,27 @@ h6 {
 }
 h1 {
   font-size: 2em;
-  margin-block-start: 0.67em;
-  margin-block-end: 0.67em;
+  margin-block: 0.67em;
 }
 h2 {
   font-size: 1.5em;
-  margin-block-start: 0.83em;
-  margin-block-end: 0.83em;
+  margin-block: 0.83em;
 }
 h3 {
   font-size: 1.17em;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
+  margin-block: 1em;
 }
 h4 {
   font-size: 1em;
-  margin-block-start: 1.33em;
-  margin-block-end: 1.33em;
+  margin-block: 1.33em;
 }
 h5 {
   font-size: 0.83em;
-  margin-block-start: 1.67em;
-  margin-block-end: 1.67em;
+  margin-block: 1.67em;
 }
 h6 {
   font-size: 0.67em;
-  margin-block-start: 2.33em;
-  margin-block-end: 2.33em;
+  margin-block: 2.33em;
 }
 small {
   font-size: 75%;
@@ -95,8 +87,6 @@ hr {
   border: 0;
   height: 1px;
   background: #333;
-  background-image: -webkit-linear-gradient(to right, #ccc, #333, #ccc);
-  background-image: -moz-linear-gradient(to right, #ccc, #333, #ccc);
   background-image: linear-gradient(to right, #ccc, #333, #ccc);
   margin-top: 10px;
   margin-bottom: 10px;
@@ -367,14 +357,10 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
   border: solid 2px steelblue;
 }
 .defaultShadow {
-  -moz-box-shadow: 0 0 2px #333333;
-  -webkit-box-shadow: 0 0 2px #333333;
-  box-shadow: 0 0 2px #333333;
+  box-shadow: 0 0 2px #333;
 }
 .defaultRadius {
-  border-radius: 6px 6px 6px 6px;
-  -moz-border-radius: 6px 6px 6px 6px;
-  -webkit-border-radius: 6px;
+  border-radius: 6px;
 }
 .defaultTextBackground {
   background: white;
@@ -402,12 +388,14 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
   .phone-hidden {
     display: none;
   }
-  #headerPanel {
+  #header-panel {
     height: auto;
   }
   main {
+    /* stylelint-disable declaration-property-value-no-unknown */
     height: calc( 100%  -  50px );
     min-height: calc( 100%  -  50px );
+    /* stylelint-enable declaration-property-value-no-unknown */
   }
 }
 /* phone.less */
@@ -415,12 +403,14 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
   .phone-hidden {
     display: none;
   }
-  #headerPanel {
+  #header-panel {
     height: auto;
   }
   main {
+    /* stylelint-disable declaration-property-value-no-unknown */
     height: calc( 100%  -  50px );
     min-height: calc( 100%  -  50px );
+    /* stylelint-enable declaration-property-value-no-unknown */
   }
 }
 /* pad.less */
@@ -441,6 +431,7 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 .smi-flex-panel-row {
   flex-direction: row;
 }
+/* grid/index.less */
 /**
 * Components directed to use for concrete systems.
 */

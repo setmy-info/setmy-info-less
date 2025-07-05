@@ -16,10 +16,12 @@
         "watch": "less-watch-compiler ./src/main/less dist main.less",
         "clean": "rimraf dist",
         "clean:all": "rimraf dist node_modules",
-        "verify": "npm test && npm run e2e",
+        "verify": "npm test && npm run e2e && npm run lint:less",
         "test": "jest",
         "e2e": "npx playwright test --config=playwright.config.js",
-        "e2e:one": "npx playwright test --config=playwright.config.js"
+        "e2e:one": "npx playwright test --config=playwright.config.js",
+        "lint:less": "stylelint ./src/main/less/**/*.less",
+        "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix"
     },
     "keywords": [
         "less",
@@ -43,7 +45,11 @@
         "less-plugin-clean-css": "^1.6.0",
         "less-watch-compiler": "^1.16.3",
         "playwright": "^1.53.1",
+        "postcss-less": "^6.0.0",
         "pug": "^3.0.3",
-        "rimraf": "^6.0.1"
+        "rimraf": "^6.0.1",
+        "stylelint": "^16.21.1",
+        "stylelint-config-standard": "^38.0.0",
+        "stylelint-less": "^3.0.1"
     }
 }

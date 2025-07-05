@@ -1,17 +1,18 @@
 /* watch.less */
 
 @media only screen and (max-width: 639px) {
-
     .phone-hidden {
         display: none;
     }
 
-    #headerPanel {
+    #header-panel {
         height: auto;
     }
 
     main {
+        /* stylelint-disable declaration-property-value-no-unknown */
         height: ~"calc(" @maxHeight ~" - " @headerHeight ~")";
         min-height: ~"calc(" @maxHeight ~" - " @headerHeight ~")";
+        /* stylelint-enable declaration-property-value-no-unknown */
     }
 }

@@ -203,6 +203,8 @@ npx playwright install
 
 ```less
 @fontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+#headerPanel -> #header-panel;
 ```
 
 * Eliminate use of !important — proper load order should help avoid it.

@@ -1,0 +1,10 @@
+doctype html
+html(lang="en")
+    include include/head.pug
+    body(id="body")
+        app(id="app")
+            div(id="application")
+                div(id="centerBox" class="centerBox")
+                    div(id="innerBox" style="height: 100px; min-height:100px;" class="smi-flex-panel smi-flex-panel-right")
+                        - for (let i = 0; i < 12; i++)
+                            div(class="smi-flex-panel-box leftText" style="height: 20px; width: 200px;")=String.fromCharCode(65 + i)

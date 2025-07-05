@@ -299,6 +299,12 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 .centerText {
   text-align: center;
 }
+.leftText {
+  text-align: left;
+}
+.rightText {
+  text-align: right;
+}
 /* scroll.less */
 .autoScrollBars {
   overflow: auto;
@@ -422,10 +428,19 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 /* flex/index.less */
 .smi-flex-panel {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  align-content: flex-start;
 }
-.smi-flex-panel-box {
+.smi-flex-panel-left {
+  justify-content: flex-start;
+}
+.smi-flex-panel-center {
+  justify-content: center;
+}
+.smi-flex-panel-right {
+  justify-content: flex-end;
+}
+.smi-flex-panel-column {
   flex-direction: column;
 }
 .smi-flex-panel-row {

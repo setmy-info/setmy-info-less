@@ -82,6 +82,18 @@ npm run e2e
 npm run e2e:one -- src/test/js/e2e/application.e2e.js
 ```
 
+### Check LESS style
+
+```shell
+npm run lint:less
+```
+
+### Fix LESS style
+
+```shell
+npm run lint:fix-less
+```
+
 ### Combined test execution
 
 ```shell
@@ -91,7 +103,7 @@ npm run verify
 ### 🌐 Local Development Server
 
 ```shell
-npm run start
+npm start
 ```
 
 ### 🔄 Watch for changes
@@ -204,7 +216,9 @@ npx playwright install
 ```less
 @fontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-#headerPanel -> #header-panel;
+#headerPanel - > #header-panel
+
+;
 ```
 
 * Eliminate use of !important — proper load order should help avoid it.

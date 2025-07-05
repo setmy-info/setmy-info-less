@@ -1,11 +1,38 @@
 /* flex/index.less */
 
-.@{flex-prefix}-panel {
+.smi-flex-panel {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  align-content: flex-start;
+
+  &-left {
+    justify-content: flex-start;
+  }
+
+  &-center {
+    justify-content: center;
+  }
+
+  &-right {
+    justify-content: flex-end;
+  }
 
   &-box {
+    .debug-style() when (@debug = true) {
+      /* DEBUG: Begin */
+      box-sizing: border-box;
+      /* stylelint-disable-next-line color-function-notation, color-function-alias-notation, alpha-value-notation */
+      background-color: rgba(255, 0, 0, 0.1);
+      border: 1px dashed red;
+      outline: 1px solid magenta;
+
+      /* DEBUG: End */
+    }
+
+    .debug-style();
+  }
+
+  &-column {
     flex-direction: column;
   }
 

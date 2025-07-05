@@ -206,6 +206,7 @@ npm i playwright --save-dev
 npm i @playwright/test@latest --save-dev
 npm i pug --save-dev
 npm i rimraf --save-dev
+npm i @cucumber/cucumber --save-dev
 npx playwright install
 ```
 

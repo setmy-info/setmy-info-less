@@ -85,6 +85,11 @@ function expectations(ex) {
     expect(data.computedStyles.y).toBe(ex.y);
 }
 
+async function pageClose() {
+    await data.page.close();
+    await data.browser.close();
+}
+
 module.exports = {
     pageName,
     getPath,
@@ -92,7 +97,8 @@ module.exports = {
     elementIdIs,
     data,
     expectations,
-    elementExpectations
+    elementExpectations,
+    pageClose
 };
 
 

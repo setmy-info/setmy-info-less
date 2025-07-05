@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less",
-    "version": "1.1.0",
+    "version": "1.2.0-SNAPSHOT",
     "description": "SMI LESS project",
     "main": "dist/main.css",
     "files": [

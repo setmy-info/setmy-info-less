@@ -2,7 +2,7 @@
     "name": "setmy-info-less",
     "version": "2.0.0",
     "description": "SMI LESS project",
-    "main": "dist/main.css",
+    "main": "dist/main.min.css",
     "files": [
         "dist/*.css",
         "README.md"

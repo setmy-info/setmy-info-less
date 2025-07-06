@@ -5,6 +5,28 @@ for managing styles with LESS, generating HTML using Pug, and ensuring quality w
 As the SMI standard browser is Firefox, values can be taken directly from Firefox DevTools and unified across all
 browsers.
 
+## Usage
+
+### NPM
+
+```shell
+npm i setmy-info-less
+```
+
+* https://www.npmjs.com/package/setmy-info-less
+
+###
+
+```html
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/setmy-info-less/dist/main.min.css">
+```
+
+```html
+
+<link rel="stylesheet" href="https://unpkg.com/setmy-info-less@latest/dist/main.min.css">
+```
+
 ## 📦 Project
 
 This project includes:
@@ -214,7 +236,7 @@ npx playwright install
 
 * Consider font correctness
 
-```less
+```
 @fontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
 #headerPanel - > #header-panel

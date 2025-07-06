@@ -15,7 +15,7 @@ npm i setmy-info-less
 
 * https://www.npmjs.com/package/setmy-info-less
 
-###
+### Using from CDN
 
 ```html
 

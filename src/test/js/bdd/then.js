@@ -1,23 +1,10 @@
-const {Given, When, Then} = require('@cucumber/cucumber');
+const {Then} = require('@cucumber/cucumber');
 const {expect} = require('@playwright/test');
-const pageHelper = require('./pageHelper');
-
-Given('page name is {string}', function (name) {
-    pageHelper.pageName(name);
-    pageHelper.getPath();
-});
-
-When('page is rendered', async function () {
-    await pageHelper.pageIsRendered();
-});
+const pageHelper = require('../pageHelper');
 
 Then('page should have title {string}', async function (expectedTitle) {
     const title = await pageHelper.data.page.title();
     expect(title).toBe(expectedTitle);
-});
-
-Then('page element ID is {string}', async function (elementId) {
-    await pageHelper.elementIdIs(elementId);
 });
 
 Then('page element margin should be {string}', function (expectedMargin) {

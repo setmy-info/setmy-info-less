@@ -3,6 +3,7 @@ const path = require('path');
 const pugTranspile = require('./pugTranspile');
 
 const inputDir = path.join(__dirname, '../pug');
+const partials = ["abc"];
 
 function main() {
     const dir = inputDir;
@@ -12,7 +13,16 @@ function main() {
         const stat = fs.statSync(filePath);
         if (stat.isFile() && file.endsWith('.pug')) {
             const pageName = path.basename(filePath, path.extname(filePath));
-            pugTranspile.transpileHtml(pageName, {title: pageName + ".html"});
+            if (pageName === "main") {
+                for (const partial of partials) {
+                    pugTranspile.transpileHtml(pageName, {
+                        title: partial + '.html',
+                        page: partial
+                    });
+                }
+            } else {
+                pugTranspile.transpileHtml(pageName, {title: pageName + ".html"});
+            }
         }
     });
 }

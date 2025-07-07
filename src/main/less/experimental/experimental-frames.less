@@ -1,3 +1,6 @@
+@paddingValue: 10px;
+@doublePaddingValue: @paddingValue * 2;
+
 html {
     height: 100%;
     width:  100%;
@@ -5,12 +8,12 @@ html {
     margin: 0px;
 }
 
-//body {
-html body {
-    height: calc(100% - 20px);
-    width:  calc(100% - 20px);
+body {
+//html body {
+    height: calc(100% - @doublePaddingValue);
+    width:  calc(100% - @doublePaddingValue);
     margin: 0px;
-    padding: 10px;
+    padding: @paddingValue;
     overflow: hidden;
 }
 

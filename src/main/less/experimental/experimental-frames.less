@@ -7,58 +7,60 @@
 
 body {
     height: calc(100% - @doublePaddingValue);
-    width:  calc(100% - @doublePaddingValue);
+    width: calc(100% - @doublePaddingValue);
     padding: @paddingValue;
 }
 
-.bodyContent {
-    height: 100%;
-    width:  100%;
-    margin: 0px;
-    padding: 0px;
-}
-
 .contentHeader {
-    width:  100%;
+    width: 100%;
     height: @contentHeaderHeight;
 }
 
 .content {
-    width:  100%;
+    width: 100%;
     height: calc(100% - @headerFooterSum);
 }
 
+.contentFooter {
+    width: 100%;
+    height: @contentFooterHeight;
+}
+
+@leftWidth: 30%;
+@rightWidth: 100% - @leftWidth;
+
 .contentLeft {
-    width:  30%;
+    width: @leftWidth;
     height: 100%;
 }
 
 .contentRight {
-    width:  70%;
+    width: @rightWidth;
     height: 100%;
 }
 
+@contentLeftUpHeight: 60%;
+@contentLeftBottomHeight: 100% - @contentLeftUpHeight;
+
 .contentLeftUp {
     width: 100%;
-    height: 60%;
+    height: @contentLeftUpHeight;
 }
 
 .contentLeftBottom {
     width: 100%;
-    height: 40%;
+    height: @contentLeftBottomHeight;
 }
+
+@contentRightUpHeight: 30%;
+@contentRightBottomHeight: 100% - @contentRightUpHeight;
 
 .contentRightUp {
     width: 100%;
-    height: 30%;
+    height: @contentRightUpHeight;
 }
 
 .contentRightBottom {
     width: 100%;
-    height: 70%;
-}
-
-.contentFooter {
-    width:  100%;
-    height: @contentFooterHeight;
+    height: @contentRightBottomHeight;
 }

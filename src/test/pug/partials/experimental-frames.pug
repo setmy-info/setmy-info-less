@@ -39,3 +39,35 @@ footer(class="contentFooter AliceBlue")
         li(class="floatRight Aquamarine halfHeight") Floating right A
         li(class="floatClear")
 
+script.
+    // Broken for window re-sizing.
+    const verticalDivider = document.getElementById('verticalDivider');
+    const leftPanel = document.querySelector('.contentLeft');
+    const rightPanel = document.querySelector('.contentRight');
+    const computedStyleLeft = window.getComputedStyle(leftPanel);
+    const computedStyleRight = window.getComputedStyle(rightPanel);
+    console.log(computedStyleLeft)
+    console.log(computedStyleRight)
+    let isDragging = false;
+    verticalDivider.addEventListener('mousedown', function (e) {
+        isDragging = true;
+        document.body.style.cursor = 'col-resize';
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', function (e) {
+        if (!isDragging) return;
+        const totalWidth = verticalDivider.parentElement.clientWidth;
+        const newLeftWidth = e.clientX;
+        const minWidth = 100;
+        if (newLeftWidth < minWidth || newLeftWidth > totalWidth - minWidth) return;
+        leftPanel.style.width = `${newLeftWidth}px`;
+        rightPanel.style.width = `${totalWidth - newLeftWidth - verticalDivider.offsetWidth}px`;
+    });
+
+    document.addEventListener('mouseup', function () {
+        if (isDragging) {
+            isDragging = false;
+            document.body.style.cursor = 'default';
+        }
+    });

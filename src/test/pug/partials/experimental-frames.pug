@@ -1,29 +1,41 @@
-.contentHeader.AliceBlue
-    .floatLeft.Aquamarine Floating left A
-    .floatLeft.Aquamarine Floating left B
-    .floatRight.Aquamarine Floating right B
-    .floatRight.Aquamarine Floating right A
-    .floatClear
-.content
-    .contentLeft.floatLeft
-        .contentLeftUp.noWrap.autoScrollBars.Beige
+header(class="contentHeader AliceBlue")
+    menu(class="")
+        li(class="floatLeft Aquamarine halfHeight") Floating left A
+        li(class="floatLeft Aquamarine halfHeight") Floating left B
+        li(class="floatRight Aquamarine halfHeight") Floating right B
+        li(class="floatRight Aquamarine halfHeight") Floating right A
+        li(class="floatClear")
+    menu(class="")
+        li(class="floatLeft Aquamarine halfHeight") Floating left A
+        li(class="floatLeft Aquamarine halfHeight") Floating left B
+        li(class="floatRight Aquamarine halfHeight") Floating right B
+        li(class="floatRight Aquamarine halfHeight") Floating right A
+        li(class="floatClear")
+main(class="content")
+    section(class="contentLeft floatLeft")
+        .contentLeftUp.noWrap.autoScrollBars.Beige.defaultBorder
             div Tested on: IE 9.0.8112.16421, 11.0.9600.17843; Opera: 28.0.1750.51; Chrome: 43.0.2357.134; Firefox: 39.0
                 - for (let i = 0; i < 50; i++)
                     div Left Up #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
-        .contentLeftBottom.noWrap.autoScrollBars.Bisque
+        div(id="horizontalLeftDivider" class="horizontalSeparator cursorHorizontalResize")
+        .contentLeftBottom.noWrap.autoScrollBars.Bisque.defaultBorder
             - for (let i = 0; i < 50; i++)
                 div Left Bottom #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
-    .contentRight.floatLeft
-        .contentRightUp.noWrap.autoScrollBars.BurlyWood
+    div(id="verticalDivider" class="verticalSeparator cursorVerticalResize floatLeft")
+    section(class="contentRight floatLeft")
+        .contentRightUp.noWrap.autoScrollBars.BurlyWood.defaultBorder
             - for (let i = 0; i < 50; i++)
                 div Right Up #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
-        .contentRightBottom.noWrap.autoScrollBars.Cornsilk
+        div(id="horizontalRightDivider" class="horizontalSeparator cursorHorizontalResize")
+        .contentRightBottom.noWrap.autoScrollBars.Cornsilk.defaultBorder
             - for (let i = 0; i < 50; i++)
                 div Right Bottom #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
     .floatClear
-.contentFooter.AliceBlue
-    .floatLeft.Cyan Floating left A
-    .floatLeft.Cyan Floating left B
-    .floatRight.Cyan Floating right B
-    .floatRight.Cyan Floating right A
-    .floatClear
+footer(class="contentFooter AliceBlue")
+    menu(class="")
+        li(class="floatLeft Aquamarine halfHeight") Floating left A
+        li(class="floatLeft Aquamarine halfHeight") Floating left B
+        li(class="floatRight Aquamarine halfHeight") Floating right B
+        li(class="floatRight Aquamarine halfHeight") Floating right A
+        li(class="floatClear")
+

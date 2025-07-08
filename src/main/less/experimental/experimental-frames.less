@@ -1,9 +1,16 @@
+@numberOfMenuPanels: 2;
+@headerHeight: @numberOfMenuPanels * @halfDefaultHeight;
+@footerHeight: @halfDefaultHeight;
+
+@verticalSeparatorWidth: 8px;
+@horizontalSeparatorHeight: 4px;
+
 @paddingValue: 0px; // 10px;
 @doublePaddingValue: @paddingValue * 2;
 
-@contentHeaderHeight: 20px;
-@contentFooterHeight: @contentHeaderHeight;
-@headerFooterSum: @contentHeaderHeight + @contentFooterHeight;
+//@contentHeaderHeigh_t: 20px;
+//@contentFooterHeigh_t: @footerHeight;
+@headerFooterSum: @headerHeight + @footerHeight;
 
 body {
     height: calc(100% - @doublePaddingValue);
@@ -13,7 +20,7 @@ body {
 
 .contentHeader {
     width: 100%;
-    height: @contentHeaderHeight;
+    height: @headerHeight;
 }
 
 .content {
@@ -23,15 +30,21 @@ body {
 
 .contentFooter {
     width: 100%;
-    height: @contentFooterHeight;
+    height: @footerHeight;
 }
 
 @leftWidth: 30%;
 @rightWidth: 100% - @leftWidth;
 
 .contentLeft {
-    width: @leftWidth;
+    width: calc(@leftWidth - @verticalSeparatorWidth - @defaultBorderVerticalAmount);
     height: 100%;
+}
+
+.verticalSeparator {
+    width: @verticalSeparatorWidth;
+    height: 100%;
+    display: block;
 }
 
 .contentRight {
@@ -44,7 +57,11 @@ body {
 
 .contentLeftUp {
     width: 100%;
-    height: @contentLeftUpHeight;
+    height: calc(@contentLeftUpHeight - @horizontalSeparatorHeight - 2 * @defaultBorderHorizontalAmount);
+}
+
+.horizontalSeparator {
+    height: @horizontalSeparatorHeight;
 }
 
 .contentLeftBottom {
@@ -62,5 +79,5 @@ body {
 
 .contentRightBottom {
     width: 100%;
-    height: @contentRightBottomHeight;
+    height: calc(@contentRightBottomHeight - @horizontalSeparatorHeight - 2 * @defaultBorderHorizontalAmount);
 }

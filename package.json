@@ -9,6 +9,7 @@
     ],
     "scripts": {
         "build": "npm run css && npm run css-min && npm run html",
+        "build:experimental": "npm run css:experimental",
         "css": "lessc ./src/main/less/main.less dist/main.css",
         "css:experimental": "lessc ./src/main/less/experimental/main.less dist/experimental.css",
         "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",

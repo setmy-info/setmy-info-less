@@ -30,6 +30,10 @@ a {
 button {
   height: 50px;
 }
+menu {
+  padding: 0;
+  margin: 0;
+}
 ul {
   padding: 0;
   margin: 0;
@@ -272,6 +276,12 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 .lineHeight {
   line-height: 50px;
 }
+.defaultHeight {
+  height: 50px;
+}
+.halfHeight {
+  height: 25px;
+}
 /* layout.less */
 .floatLeft {
   float: left;
@@ -344,6 +354,12 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 .pointerCursor {
   cursor: pointer;
 }
+.cursorVerticalResize {
+  cursor: e-resize;
+}
+.cursorHorizontalResize {
+  cursor: n-resize;
+}
 /* panels.less */
 .verticalStretchPanel {
   min-height: 0 !important;
@@ -373,6 +389,9 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
 }
 .minifiedText {
   font-size: xx-small;
+}
+menu > li {
+  list-style: none;
 }
 /* notes.less */
 .importantNote {

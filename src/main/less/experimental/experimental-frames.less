@@ -2,6 +2,8 @@
 @headerHeight: @numberOfMenuPanels * @halfDefaultHeight;
 @footerHeight: @halfDefaultHeight;
 
+@sectionHeaderHeight: @halfDefaultHeight;
+
 @verticalSeparatorWidth: 8px;
 @horizontalSeparatorHeight: 4px;
 
@@ -34,7 +36,7 @@ body {
 @leftWidth: 30%;
 @rightWidth: 100% - @leftWidth;
 
-.contentLeft {
+.sectionLeft {
     width: calc(@leftWidth - @verticalSeparatorWidth - @defaultBorderVerticalAmount);
     height: 100%;
 }
@@ -45,37 +47,62 @@ body {
     display: block;
 }
 
-.contentRight {
+.sectionRight {
     width: @rightWidth;
     height: 100%;
+}
+
+.sectionHeader {
+    width: 100%;
+    height: @sectionHeaderHeight;
 }
 
 @contentLeftUpHeight: 60%;
 @contentLeftBottomHeight: 100% - @contentLeftUpHeight;
 
-.contentLeftUp {
+.sectionLeftUp {
     width: 100%;
     height: calc(@contentLeftUpHeight - @horizontalSeparatorHeight - 2 * @defaultBorderHorizontalAmount);
+}
+
+.contentLeftUp {
+    width: 100%;
+    height: calc(100% - @sectionHeaderHeight);
 }
 
 .horizontalSeparator {
     height: @horizontalSeparatorHeight;
 }
 
+.sectionLeftBottom {
+    width: 100%;
+    height: calc(@contentLeftBottomHeight);
+}
+
 .contentLeftBottom {
     width: 100%;
-    height: @contentLeftBottomHeight;
+    height: calc(100% - @sectionHeaderHeight);
 }
 
 @contentRightUpHeight: 30%;
 @contentRightBottomHeight: 100% - @contentRightUpHeight;
 
-.contentRightUp {
+.sectionRightUp {
     width: 100%;
     height: @contentRightUpHeight;
 }
 
-.contentRightBottom {
+.contentRightUp {
+    width: 100%;
+    height: calc(100% - @sectionHeaderHeight);
+}
+
+.sectionRightBottom {
     width: 100%;
     height: calc(@contentRightBottomHeight - @horizontalSeparatorHeight - 2 * @defaultBorderHorizontalAmount);
+}
+
+.contentRightBottom {
+    width: 100%;
+    height: calc(100% - @sectionHeaderHeight);
 }

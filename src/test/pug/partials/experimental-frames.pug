@@ -12,25 +12,52 @@ header(class="contentHeader AliceBlue")
         li(class="floatRight Aquamarine halfHeight") Floating right A
         li(class="floatClear")
 main(class="content")
-    section(class="contentLeft floatLeft")
-        .contentLeftUp.noWrap.autoScrollBars.Beige.defaultBorder
-            div Tested on: IE 9.0.8112.16421, 11.0.9600.17843; Opera: 28.0.1750.51; Chrome: 43.0.2357.134; Firefox: 39.0
-                - for (let i = 0; i < 50; i++)
-                    div Left Up #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
+    section(class="sectionLeft floatLeft")
+        div(class="sectionLeftUp defaultBorder")
+            header(class="sectionHeader AliceBlue")
+                menu(class="")
+                    li(class="floatLeft Aquamarine halfHeight") A
+                    li(class="floatLeft Aquamarine halfHeight") B
+                    li(class="floatRight Aquamarine halfHeight") B
+                    li(class="floatRight Aquamarine halfHeight") A
+                    li(class="floatClear")
+            div(class="contentLeftUp noWrap autoScrollBars Beige")
+                include lines.pug
         div(id="horizontalLeftDivider" class="horizontalSeparator cursorHorizontalResize")
-        .contentLeftBottom.noWrap.autoScrollBars.Bisque.defaultBorder
-            - for (let i = 0; i < 50; i++)
-                div Left Bottom #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
+        div(class="sectionLeftBottom defaultBorder")
+            header(class="sectionHeader AliceBlue")
+                menu(class="")
+                    li(class="floatLeft Aquamarine halfHeight") A
+                    li(class="floatLeft Aquamarine halfHeight") B
+                    li(class="floatRight Aquamarine halfHeight") B
+                    li(class="floatRight Aquamarine halfHeight") A
+                    li(class="floatClear")
+            div(class="contentLeftBottom noWrap autoScrollBars Bisque")
+                include lines.pug
     div(id="verticalDivider" class="verticalSeparator cursorVerticalResize floatLeft")
-    section(class="contentRight floatLeft")
-        .contentRightUp.noWrap.autoScrollBars.BurlyWood.defaultBorder
-            - for (let i = 0; i < 50; i++)
-                div Right Up #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
+    section(class="sectionRight floatLeft")
+        div(class="sectionRightUp defaultBorder")
+            header(class="sectionHeader AliceBlue")
+                menu(class="")
+                    li(class="floatLeft Aquamarine halfHeight") A
+                    li(class="floatLeft Aquamarine halfHeight") B
+                    li(class="floatRight Aquamarine halfHeight") B
+                    li(class="floatRight Aquamarine halfHeight") A
+                    li(class="floatClear")
+            div(class="contentRightUp noWrap autoScrollBars BurlyWood")
+                include lines.pug
         div(id="horizontalRightDivider" class="horizontalSeparator cursorHorizontalResize")
-        .contentRightBottom.noWrap.autoScrollBars.Cornsilk.defaultBorder
-            - for (let i = 0; i < 50; i++)
-                div Right Bottom #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
-    .floatClear
+        div(class="sectionRightBottom defaultBorder")
+            header(class="sectionHeader AliceBlue")
+                menu(class="")
+                    li(class="floatLeft Aquamarine halfHeight") A
+                    li(class="floatLeft Aquamarine halfHeight") B
+                    li(class="floatRight Aquamarine halfHeight") B
+                    li(class="floatRight Aquamarine halfHeight") A
+                    li(class="floatClear")
+            div(class="contentRightBottom noWrap autoScrollBars Cornsilk")
+                include lines.pug
+    div(class="floatClear")
 footer(class="contentFooter AliceBlue")
     menu(class="")
         li(class="floatLeft Aquamarine halfHeight") Floating left A
@@ -42,8 +69,8 @@ footer(class="contentFooter AliceBlue")
 script.
     // Broken for window re-sizing.
     const verticalDivider = document.getElementById('verticalDivider');
-    const leftPanel = document.querySelector('.contentLeft');
-    const rightPanel = document.querySelector('.contentRight');
+    const leftPanel = document.querySelector('.sectionLeft');
+    const rightPanel = document.querySelector('.sectionRight');
     const computedStyleLeft = window.getComputedStyle(leftPanel);
     const computedStyleRight = window.getComputedStyle(rightPanel);
     console.log(computedStyleLeft)

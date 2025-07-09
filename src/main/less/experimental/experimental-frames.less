@@ -21,6 +21,11 @@ body {
     height: @headerHeight;
 }
 
+.defaultHeader {
+    width: 100%;
+    height: @halfDefaultHeight
+}
+
 .content {
     width: 100%;
     height: calc(100% - @headerFooterSum);
@@ -52,10 +57,12 @@ body {
 
 @contentLeftUpHeight: 60%;
 @contentLeftBottomHeight: 100% - @contentLeftUpHeight;
+@doubleDefaultBorderHorizontalAmount: 2 * @defaultBorderHorizontalAmount;
+@x: @horizontalSeparatorHeight - @doubleDefaultBorderHorizontalAmount;
 
 .contentLeftUp {
     width: 100%;
-    height: calc(@contentLeftUpHeight - @horizontalSeparatorHeight - 2 * @defaultBorderHorizontalAmount);
+    height: calc(@contentLeftUpHeight - @horizontalSeparatorHeight - @doubleDefaultBorderHorizontalAmount);
 }
 
 .horizontalSeparator {
@@ -77,5 +84,5 @@ body {
 
 .contentRightBottom {
     width: 100%;
-    height: calc(@contentRightBottomHeight - @horizontalSeparatorHeight - 2 * @defaultBorderHorizontalAmount);
+    height: calc(@contentRightBottomHeight - @horizontalSeparatorHeight - @doubleDefaultBorderHorizontalAmount);
 }

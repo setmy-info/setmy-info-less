@@ -1,0 +1,64 @@
+{
+    "name": "setmy-info-less-extended",
+    "version": "2.0.0-SNAPSHOT",
+    "description": "SMI LESS project",
+    "main": "dist/main.min.css",
+    "files": [
+        "dist/*.css",
+        "README.md"
+    ],
+    "dependencies": {
+        "setmy-info-less": "*"
+    },
+    "scripts": {
+        "build": "npm run css && npm run css-min && npm run html",
+        "build:experimental": "npm run css:experimental",
+        "css": "lessc ./src/main/less/main.less dist/main.css",
+        "css:experimental": "lessc ./src/main/less/experimental/main.less dist/experimental.css",
+        "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",
+        "css:debug": "lessc --modify-var=debug=true ./src/main/less/main.less dist/main.css",
+        "html": "node ./src/test/js/pugBuild.js",
+        "start": "node ./src/test/js/server.js",
+        "watch": "less-watch-compiler ./src/main/less dist main.less",
+        "watch:pug": "node ./src/test/js/pugWatch.js",
+        "clean": "rimraf dist",
+        "clean:all": "rimraf dist node_modules",
+        "verify": "npm test && npm run e2e && npm run lint:less && npm run cucumber",
+        "test": "jest",
+        "e2e": "npx playwright test --config=playwright.config.js",
+        "e2e:one": "npx playwright test --config=playwright.config.js",
+        "cucumber": "cucumber-js",
+        "lint:less": "stylelint ./src/main/less/**/*.less",
+        "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix"
+    },
+    "keywords": [
+        "less",
+        "css",
+        "pug",
+        "playwright",
+        "jest"
+    ],
+    "author": "Imre Tabur <imre.tabur@mail.ee>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/setmy-info/setmy-info-less.git"
+    },
+    "homepage": "https://github.com/setmy-info/setmy-info-less",
+    "devDependencies": {
+        "@cucumber/cucumber": "^11.3.0",
+        "@playwright/test": "^1.53.1",
+        "express": "^5.1.0",
+        "jest": "^30.0.3",
+        "less": "^4.3.0",
+        "less-plugin-clean-css": "^1.6.0",
+        "less-watch-compiler": "^1.16.3",
+        "playwright": "^1.53.1",
+        "postcss-less": "^6.0.0",
+        "pug": "^3.0.3",
+        "rimraf": "^6.0.1",
+        "stylelint": "^16.21.1",
+        "stylelint-config-standard": "^38.0.0",
+        "stylelint-less": "^3.0.1"
+    }
+}

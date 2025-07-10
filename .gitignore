@@ -39,6 +39,7 @@ bower_components
 build/Release
 dist/*.html
 dist/experimental.css
+**/dist/*.html
 
 # Dependency directories
 node_modules/

@@ -1,0 +1,7 @@
+{
+  "name": "setmy-info-less-modules",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}

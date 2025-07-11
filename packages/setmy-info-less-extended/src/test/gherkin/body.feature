@@ -15,6 +15,6 @@ Feature: body page
         And page element HEIGHT should be 1200
         And page element TOP should be 0
         And page element LEFT should be 0
-        And page element background color should be "rgba(0, 0, 0, 0)"
+        And page element background color should be "rgb(0, 0, 0)"
         And page element color should be "rgb(0, 0, 0)"
         And page is closed

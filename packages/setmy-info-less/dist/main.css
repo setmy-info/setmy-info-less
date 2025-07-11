@@ -1,6 +1,6 @@
-/* values/index.less */
-/* values/colors/index.less */
-/* values/fonts/index.less */
+/* values/main.less */
+/* values/colors/main.less */
+/* values/fonts/main.less */
 /* html.less */
 html {
   height: 100%;
@@ -95,9 +95,11 @@ hr {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+/* stylelint-disable no-duplicate-selectors */
 body > noscript > ul {
   padding-left: 50px;
 }
+/* stylelint-enable no-duplicate-selectors */
 /* html-extended.less */
 /*
 html-frames
@@ -376,7 +378,9 @@ Possibly successor was HTML NetBeans implementation - requires verification chec
   background: white;
 }
 .defaultBorder {
-  border: solid 2px steelblue;
+  border-style: solid;
+  border-width: 2px;
+  border-color: steelblue;
 }
 .defaultShadow {
   box-shadow: 0 0 2px #333;
@@ -444,7 +448,7 @@ menu > li {
     display: none !important;
   }
 }
-/* flex/index.less */
+/* flex/main.less */
 .smi-flex-panel {
   display: flex;
   flex-wrap: wrap;
@@ -465,7 +469,7 @@ menu > li {
 .smi-flex-panel-row {
   flex-direction: row;
 }
-/* grid/index.less */
+/* grid/main.less */
 /**
 * Components directed to use for concrete systems.
 */

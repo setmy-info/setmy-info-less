@@ -3,10 +3,6 @@
     "version": "2.0.0-SNAPSHOT",
     "description": "SMI LESS project",
     "main": "dist/main.min.css",
-    "files": [
-        "dist/*.css",
-        "README.md"
-    ],
     "dependencies": {
         "setmy-info-less": "*"
     },

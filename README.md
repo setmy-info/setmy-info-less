@@ -133,20 +133,20 @@ npm run verify --workspaces
 ### 🌐 Local Development Server
 
 ```shell
-npm start
+npm start --workspace setmy-info-less
 ```
 
 ### 🔄 Watch for changes
 
 ```shell
-npm run watch
+npm run watch --workspace setmy-info-less
 ```
 
 ### 📦 Packaging
 
 ```shell
-npm pack
-npm pack --dry-run
+npm pack --workspaces
+npm pack --dry-run --workspaces
 ```
 
 ### 🧹 Cleaning
@@ -166,7 +166,7 @@ npm run clean:all --workspaces
 ### 🏗 Full build for CI and build checkup
 
 ```shell
-npm run clean:all && npm ci && npm run build && npm run verify && npm pack && npm pack --dry-run
+npm run clean:all --workspaces && npm install && npm run build --workspaces && npm run verify --workspaces && npm pack --workspaces && npm pack --dry-run  --workspaces
 ```
 
 ## 📤 Publishing

@@ -30,7 +30,7 @@ test.describe(pageName + ' page layout tests', async () => {
                 height: 1200,
                 top: 0,
                 left: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0)',
+                backgroundColor: 'rgb(0, 0, 0)',
                 color: 'rgb(0, 0, 0)'
             }
         );

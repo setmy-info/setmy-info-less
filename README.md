@@ -71,20 +71,23 @@ npx playwright install
 ### LESS to CSS transpiling
 
 ```shell
-npm run css
-npm run css-min
+npm run css --workspaces
+npm run css-min --workspaces
 ```
 
 ### Pug to HTML transpiling
 
 ```shell
-npm run html
+npm run html --workspaces
 ```
 
 ### Full build
 
 ```shell
-npm run build
+npm run build --workspaces
+# Or
+npm run build --workspace setmy-info-less
+npm run build --workspace setmy-info-less-extended
 ```
 
 ### 🧪 Test execution
@@ -94,37 +97,37 @@ Currently, no useful unit tests, just working placeholder.
 #### Unit test execution
 
 ```shell
-npm test
+npm test --workspaces
 ```
 
 ### E2E test execution
 
 ```shell
-npm run e2e
+npm run e2e --workspaces
 ```
 
 ### Specific E2E test execution
 
 ```shell
-npm run e2e:one -- src/test/js/e2e/application.e2e.js
+npm run e2e:one --workspace setmy-info-less -- src/test/js/e2e/application.e2e.js
 ```
 
 ### Check LESS style
 
 ```shell
-npm run lint:less
+npm run lint:less --workspaces
 ```
 
 ### Fix LESS style
 
 ```shell
-npm run lint:fix-less
+npm run lint:fix-less --workspaces
 ```
 
 ### Combined test execution
 
 ```shell
-npm run verify
+npm run verify --workspaces
 ```
 
 ### 🌐 Local Development Server
@@ -151,13 +154,13 @@ npm pack --dry-run
 ### Dist folder removal
 
 ```shell
-npm run clean
+npm run clean --workspaces
 ```
 
 ### Clean project removal
 
 ```shell
-npm run clean:all
+npm run clean:all --workspaces
 ```
 
 ### 🏗 Full build for CI and build checkup

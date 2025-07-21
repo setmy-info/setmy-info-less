@@ -1,7 +1,7 @@
 /* values/main.less */
 /* values/colors/main.less */
 /* values/fonts/main.less */
-body.defaultPadding {
+body.framesDefaultPadding {
   height: calc(100% - 0px);
   width: calc(100% - 0px);
   padding: 0px;

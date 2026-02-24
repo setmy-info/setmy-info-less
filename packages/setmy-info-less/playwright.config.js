@@ -1,5 +1,5 @@
 const {defineConfig} = require('@playwright/test');
-const firefoxHelper = require('./src/test/js/firefoxHelper');
+const firefoxHelper = require('../common/test/js/firefoxHelper');
 
 const firefoxPath = firefoxHelper.getFirefoxPath();
 

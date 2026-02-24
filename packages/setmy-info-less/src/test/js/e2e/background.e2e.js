@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
-const pageHelper = require('../pageHelper');
-const getTestPageName = require('../testPageName');
+const pageHelper = require('../../../../../common/test/js/pageHelper');
+const getTestPageName = require('../../../../../common/test/js/testPageName');
 
 const pageName = getTestPageName();
 

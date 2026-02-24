@@ -1,9 +1,9 @@
 module.exports = {
     default: [
         `--format-options '{"snippetInterface": "synchronous"}'`,
-        '--require ./src/test/js/bdd/given.js',
-        '--require ./src/test/js/bdd/when.js',
-        '--require ./src/test/js/bdd/then.js',
+        '--require ../common/test/js/bdd/given.js',
+        '--require ../common/test/js/bdd/when.js',
+        '--require ../common/test/js/bdd/then.js',
         './src/test/gherkin'
     ].join(' ')
 };

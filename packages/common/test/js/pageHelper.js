@@ -19,7 +19,7 @@ function pageName(name) {
 }
 
 function getPath() {
-    const filePath = 'file://' + path.resolve(__dirname, '../../../dist/' + data.name + '.html');
+    const filePath = 'file://' + path.resolve(process.cwd(), 'dist/' + data.name + '.html');
     data.filePath = filePath;
     return data.filePath;
 }

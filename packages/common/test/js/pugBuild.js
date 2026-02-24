@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const pugTranspile = require('./pugTranspile');
 
-const inputDir = path.join(__dirname, '../pug');
+const inputDir = path.join(process.cwd(), 'src/test/pug');
 const partialsDir = path.join(inputDir, 'partials');
 
 function getPartials() {

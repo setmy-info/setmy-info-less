@@ -2,11 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [3.0.0] - 2025-07-06
 
 ### Added
 
 - linter for LESS
+- less-extended for more rich LESS support
 
 ### Fixed
 

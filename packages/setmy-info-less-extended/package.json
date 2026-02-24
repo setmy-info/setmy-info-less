@@ -42,10 +42,10 @@
     },
     "homepage": "https://github.com/setmy-info/setmy-info-less",
     "devDependencies": {
-        "@cucumber/cucumber": "^11.3.0",
+        "@cucumber/cucumber": "^12.6.0",
         "@playwright/test": "^1.53.1",
         "express": "^5.1.0",
-        "jest": "^30.0.3",
+        "jest": "^30.2.0",
         "less": "^4.3.0",
         "less-plugin-clean-css": "^1.6.0",
         "less-watch-compiler": "^1.16.3",

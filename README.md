@@ -253,3 +253,9 @@ npx playwright install
 ```
 
 * Eliminate use of !important — proper load order should help avoid it.
+
+sudo dnf install \
+flite \
+libavif \
+libjpeg-turbo \
+libmanette

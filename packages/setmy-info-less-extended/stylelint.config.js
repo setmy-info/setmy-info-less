@@ -8,6 +8,7 @@ module.exports = {
         'block-no-empty': null,//true
         'selector-class-pattern': null,
         'media-feature-range-notation': 'prefix',
+        'declaration-property-value-no-unknown': null,
         "selector-type-no-unknown": [true, {
             ignoreTypes: ["app"]
         }],

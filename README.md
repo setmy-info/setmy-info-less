@@ -171,9 +171,28 @@ npm run clean:all --workspaces && npm install && npm run build --workspaces && n
 
 ## 📤 Publishing
 
+Login to npm:
+
 ```shell
 npm login
-npm publish
+```
+
+Dry run:
+
+```shell
+npm pack --workspaces --dry-run
+```
+
+Publish all:
+
+```shell
+npm publish --workspaces
+```
+
+Or publish a specific workspace:
+
+```shell
+npm publish --workspace setmy-info-less
 ```
 
 ## Load order

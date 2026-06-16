@@ -1,5 +1,15 @@
 /* panels.less */
 
+/*
+Panel helpers are utility activator classes.
+
+Apply them directly to containers that must shrink correctly inside a constrained layout.
+They are especially useful inside flex-like shells and frame layouts.
+
+Note: the current implementation still uses `!important` as a compatibility/override shortcut.
+Keep this in mind before depending on custom overrides from application code.
+*/
+
 .verticalStretchPanel {
     min-height: 0 !important;
     height: auto !important;

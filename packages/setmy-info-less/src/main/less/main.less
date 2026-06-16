@@ -1,3 +1,16 @@
+/*
+Main entry point for the base CSS module.
+
+Import order is intentional:
+1. values and tokens
+2. element-level HTML defaults
+3. reusable utility activator classes
+4. responsive device modifiers
+5. flex/grid composition helpers
+6. component-level hooks
+
+Developers and AI agents should start reading here when mapping the style system.
+*/
 @import url("values/index.less");
 @import url("html/index.less");
 @import url("utility/index.less");

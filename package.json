@@ -5,6 +5,6 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@cucumber/cucumber": "^12.6.0"
+    "@cucumber/cucumber": "^13.0.0"
   }
 }

@@ -1,3 +1,12 @@
+/*
+Frame presets for the extended module.
+
+These rules are closer to application shell structures than generic utilities. They mix utility-like
+classes with structural selectors such as `body.framesDefaultPadding` and rely on modern layout math
+through `calc(...)`.
+
+If very old browser support is required later, this file is one of the first places to review.
+*/
 @numberOfMenuPanels: 2;
 @headerHeight: @numberOfMenuPanels * @halfDefaultHeight;
 @footerHeight: @halfDefaultHeight;

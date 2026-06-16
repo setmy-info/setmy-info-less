@@ -1,5 +1,15 @@
 /* flex/main.less */
 
+/*
+Flex helpers expose a small utility family based on the `.smi-flex-panel` prefix.
+
+Usage example:
+`class="smi-flex-panel smi-flex-panel-row smi-flex-panel-left"`
+
+Treat `.smi-flex-panel` as the base activator class and the suffixed variants as modifier classes.
+These helpers target modern browsers; do not assume legacy browser parity without explicit testing.
+*/
+
 .smi-flex-panel {
   display: flex;
   flex-wrap: wrap;

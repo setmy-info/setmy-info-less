@@ -1,6 +1,21 @@
+/*
+Main entry point for the extended module.
+
+This package depends on the base module and adds more opinionated layout/frame presets.
+Use it only when the project wants those extra structures on top of `setmy-info-less`.
+*/
 /* values/main.less */
 /* values/colors/main.less */
 /* values/fonts/main.less */
+/*
+Frame presets for the extended module.
+
+These rules are closer to application shell structures than generic utilities. They mix utility-like
+classes with structural selectors such as `body.framesDefaultPadding` and rely on modern layout math
+through `calc(...)`.
+
+If very old browser support is required later, this file is one of the first places to review.
+*/
 body.framesDefaultPadding {
   height: calc(100% - 0px);
   width: calc(100% - 0px);

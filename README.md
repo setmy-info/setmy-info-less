@@ -5,6 +5,9 @@ for managing styles with LESS, generating HTML using Pug, and ensuring quality w
 As the SMI standard browser is Firefox, values can be taken directly from Firefox DevTools and unified across all
 browsers.
 
+- Developer documentation: `devlopers-guide.md` (`developers-guide.md` contains the same content)
+- Review notes for this repository: `review.md`
+
 ## Usage
 
 ### NPM
@@ -66,6 +69,35 @@ npm install
 # Or use 'ci' cub-command, to install by lock file. 
 npm ci
 npx playwright install
+```
+
+## Upgrade packages
+
+```shell
+# Check updates
+npx npm-check-updates --workspaces
+# Update all versions in package.json files
+npx npm-check-updates -u --workspaces
+npx npm-check-updates -u --workspace setmy-info-less
+npx npm-check-updates -u --workspace setmy-info-less-extended
+# Update all workspaces
+npm install --workspaces
+
+npm audit --workspaces
+npm audit fix --workspaces
+npm audit fix --force --workspaces
+
+# Sometimes, to install testing frameworks again
+npx playwright install
+```
+
+Useful workspace commands:
+
+```shell
+npm run build --workspaces
+npm run css --workspace setmy-info-less
+npm run css --workspace setmy-info-less-extended
+npm run html --workspace setmy-info-less
 ```
 
 ### LESS to CSS transpiling

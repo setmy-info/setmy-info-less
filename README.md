@@ -5,6 +5,13 @@ for managing styles with LESS, generating HTML using Pug, and ensuring quality w
 As the SMI standard browser is Firefox, values can be taken directly from Firefox DevTools and unified across all
 browsers.
 
+This workspace contains **two modules**:
+
+- `setmy-info-less` — the base module: resets, typography, spacing, layout, flex helpers, responsive breakpoints.
+- `setmy-info-less-extended` — the extended module: IDE-style frame building blocks inspired by the
+  **NetBeans IDE layout** (header + content area with left/right panes + footer). Use this when the application
+  needs a split-pane, panel-driven shell structure similar to a developer tool or enterprise admin application.
+
 - Developer documentation: `devlopers-guide.md` (`developers-guide.md` contains the same content)
 - Review notes for this repository: `review.md`
 
@@ -12,22 +19,34 @@ browsers.
 
 ### NPM
 
+Base module:
 ```shell
 npm i setmy-info-less
 ```
 
 * https://www.npmjs.com/package/setmy-info-less
 
+Extended module (IDE-style frame building blocks — NetBeans look and feel):
+```shell
+npm i setmy-info-less-extended
+```
+
+* https://www.npmjs.com/package/setmy-info-less-extended
+
 ### Using from CDN
 
+Base module:
 ```html
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/setmy-info-less/dist/main.min.css">
 ```
 
 ```html
-
 <link rel="stylesheet" href="https://unpkg.com/setmy-info-less@latest/dist/main.min.css">
+```
+
+Extended module:
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/setmy-info-less-extended/dist/main.min.css">
 ```
 
 ## 📦 Project
@@ -55,6 +74,13 @@ UI is grouped based on breakpoints:
 
 Utility CSS classes are provided to toggle CSS rules per element.
 
+### Browser support
+
+Firefox-first. Modern evergreen browsers (Chrome, Edge, Safari) are supported on a best-effort basis.
+Legacy browsers such as Internet Explorer are not explicitly supported.
+
+For current browser market share data see: https://gs.statcounter.com/browser-market-share
+
 ## Development
 
 Using:
@@ -64,30 +90,47 @@ Using:
 
 ### 🔧 Setup
 
+All workspace packages share the single `node_modules` tree at the repository root. Always run install from
+the root directory, not from inside a package folder.
+
 ```shell
+# Install all workspace dependencies (run from repository root)
 npm install
-# Or use 'ci' cub-command, to install by lock file. 
+
+# Or install strictly from the lock file — recommended for CI environments
 npm ci
+
+# Install Playwright browser binaries (needed once, and after each Playwright version upgrade)
 npx playwright install
 ```
 
 ## Upgrade packages
 
+All commands below must be run from the **repository root**.
+
 ```shell
-# Check updates
-npx npm-check-updates --workspaces
-# Update all versions in package.json files
-npx npm-check-updates -u --workspaces
+# Check which packages have newer versions available (includes root and all workspaces)
+npx npm-check-updates --workspaces --root
+
+# Write updated versions into all package.json files
+npx npm-check-updates -u --workspaces --root
+
+# Or update a single workspace only
 npx npm-check-updates -u --workspace setmy-info-less
-npx npm-check-updates -u --workspace setmy-info-less-extended
-# Update all workspaces
-npm install --workspaces
 
-npm audit --workspaces
-npm audit fix --workspaces
-npm audit fix --force --workspaces
+# Install the updated versions
+npm install
 
-# Sometimes, to install testing frameworks again
+# Check for security vulnerabilities across all packages
+npm audit
+
+# Fix automatically fixable vulnerabilities
+npm audit fix
+
+# Force-fix remaining vulnerabilities — review the diff before committing
+npm audit fix --force
+
+# Reinstall Playwright browser binaries after a Playwright version change
 npx playwright install
 ```
 
@@ -116,8 +159,10 @@ npm run html --workspaces
 ### Full build
 
 ```shell
+# Build all workspaces (npm processes them in alphabetical order: base before extended)
 npm run build --workspaces
-# Or
+
+# Or build each workspace explicitly in dependency order
 npm run build --workspace setmy-info-less
 npm run build --workspace setmy-info-less-extended
 ```
@@ -198,7 +243,8 @@ npm run clean:all --workspaces
 ### 🏗 Full build for CI and build checkup
 
 ```shell
-npm run clean:all --workspaces && npm install && npm run build --workspaces && npm run verify --workspaces && npm pack --workspaces && npm pack --dry-run  --workspaces
+# Clean, install, build, verify, and pack — run from repository root
+npm run clean:all --workspaces && npm install && npm run build --workspaces && npm run verify --workspaces && npm pack --workspaces && npm pack --dry-run --workspaces
 ```
 
 ## 📤 Publishing
@@ -215,53 +261,51 @@ Dry run:
 npm pack --workspaces --dry-run
 ```
 
-Publish all:
+Publish in dependency order — base module must be published before the extended module because
+`setmy-info-less-extended` declares `setmy-info-less` as a dependency:
+
+```shell
+npm publish --workspace setmy-info-less
+npm publish --workspace setmy-info-less-extended
+```
+
+Or publish all at once (only safe when the base version is already on npm from a previous release):
 
 ```shell
 npm publish --workspaces
 ```
 
-Or publish a specific workspace:
-
-```shell
-npm publish --workspace setmy-info-less
-```
-
 ## Load order
 
-    @import "values.less";
-    ...
-    @import "colors/index.less";
-    @import "fonts/index.less";
-    ...
-    @import "html/index.less";
-    @import "html.less";
-    @import "html-extended.less";
-    @import "utility/index.less";
-    @import "visibility.less";
-    @import "spacing.less";
-    @import "spacing2.less";
-    @import "sizing.less";
-    @import "spacing3.less";
-    @import "layout.less";
-    @import "scroll.less";
-    @import "text.less";
-    @import "cursor.less";
-    @import "layout2.less";
-    @import "text2.less";
-    @import "sizing3.less";
-    @import "panels.less";
-    @import "sizing2.less";
-    @import "visual-style.less";
-    @import "layout3.less";
-    @import "notes.less";
-    @import "visual-style2.less";
-    @import "devices/index.less";
-    @import "print.less";
-    @import "watch.less";
-    @import "phone.less";
-    @import "pad.less";
-    @import "components/application.less";
+The actual import tree as of the current codebase (`main.less` → group index → individual files):
+
+    main.less
+      values/index.less
+        colors/index.less
+        fonts/index.less
+      html/index.less
+        html.less
+        html-extended.less
+      utility/index.less
+        visibility.less
+        spacing.less
+        sizing.less
+        layout.less
+        scroll.less
+        text.less
+        cursor.less
+        panels.less
+        visual-style.less
+        notes.less
+      devices/index.less
+        print.less
+        watch.less
+        phone.less
+        pad.less
+      flex/index.less
+      grid/index.less
+      components/index.less
+        application.less
 
 ## Changed
 

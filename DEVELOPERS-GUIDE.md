@@ -34,8 +34,56 @@ It adds:
 - experimental styles in `src/main/less/experimental`
 
 Use this module when the application already uses the base module and also wants opinionated frame/page compositions
-such
-as header-content-footer or split-pane layouts.
+such as header-content-footer or split-pane layouts.
+
+#### IDE building blocks (NetBeans-style frame layout)
+
+The extended module's primary purpose is to provide a set of composable frame classes that reproduce the
+**NetBeans IDE window composition**. This makes it a reusable kit for developer tools, admin dashboards, file
+managers, and any enterprise web application that uses an IDE-like panel structure.
+
+```
+┌────────────────────────────────────────────────┐  ← .contentHeader or .defaultHeader
+├───────────────────┬────────────────────────────┤
+│  .sectionLeft     │  .sectionRight             │
+│  ┌─────────────┐  │  ┌──────────────────────┐  │
+│  │.sectionLeftUp│  │  │  .sectionRightUp     │  │
+│  ├─────────────┤  │  ├──────────────────────┤  │
+│  │.horizontalSeparator                       │  │
+│  ├─────────────┤  │  ├──────────────────────┤  │
+│  │.sectionLeftBottom  │  .sectionRightBottom │  │
+│  └─────────────┘  │  └──────────────────────┘  │
+│  .verticalSeparator                             │
+├───────────────────┴────────────────────────────┤  ← .contentFooter
+└────────────────────────────────────────────────┘
+```
+
+**Frame class reference:**
+
+| Class                    | Purpose                                                          |
+|--------------------------|------------------------------------------------------------------|
+| `body.framesDefaultPadding` | Sets body to fill the full viewport with zero padding         |
+| `.contentHeader`         | Top strip, two-row-height (`header + navigation`)               |
+| `.defaultHeader`         | Top strip, single-row-height                                    |
+| `.content`               | Middle area; height computed as `100% - header - footer`        |
+| `.contentFooter`         | Bottom strip, single-row-height                                 |
+| `.sectionLeft`           | Left pane (30 % of width by default)                            |
+| `.verticalSeparator`     | Thin vertical divider between left and right panes              |
+| `.sectionRight`          | Right pane (70 % of width by default)                           |
+| `.sectionHeader`         | Sub-header strip inside a pane                                  |
+| `.sectionLeftUp`         | Upper portion of the left pane                                  |
+| `.horizontalSeparator`   | Thin horizontal divider inside a pane                           |
+| `.sectionLeftBottom`     | Lower portion of the left pane                                  |
+| `.sectionRightUp`        | Upper portion of the right pane                                 |
+| `.sectionRightBottom`    | Lower portion of the right pane                                 |
+| `.contentLeftUp`         | Inner content area within `.sectionLeftUp`                      |
+| `.contentLeftBottom`     | Inner content area within `.sectionLeftBottom`                  |
+| `.contentRightUp`        | Inner content area within `.sectionRightUp`                     |
+| `.contentRightBottom`    | Inner content area within `.sectionRightBottom`                 |
+
+These classes are framework-agnostic. They work with Angular, Vue, React, or plain HTML.
+The experimental sub-module (`src/main/less/experimental/`) contains color overlays and additional presets
+that are not yet stabilized.
 
 ## LESS architecture
 
@@ -128,16 +176,27 @@ The current repository should be treated as:
 - Compatible with modern evergreen browsers on a best-effort basis
 - Not explicitly committed to very old browsers unless a feature is separately tested and documented
 
+For current browser market share data, consult: https://gs.statcounter.com/browser-market-share
+
+As of 2025-2026, Chrome/Chromium-based browsers hold roughly 65 % of global share, Safari around 19 %,
+Edge (Chromium) around 5 %, and Firefox around 3 %. For developer tools and enterprise web applications,
+Firefox and Chrome/Edge are the dominant pair. Safari matters for users on macOS and iOS.
+
+Practical targets for this framework:
+- **Firefox** — primary tested baseline (all E2E tests run here)
+- **Chrome / Edge** — best-effort; add one Chromium Playwright run when cross-browser parity matters
+- **Safari** — best-effort; most modern CSS used here is supported in Safari 15+
+- **Internet Explorer** — not supported; no fallbacks are maintained
+
 Important notes:
 
 - Flexbox-based helpers assume modern browser support.
 - `calc(...)`, `margin-block`, and gradient usage mean very old browsers may not render identically.
 - There is currently no explicit `browserslist` policy and no Autoprefixer pipeline.
-- Playwright tests currently verify Firefox behavior, not full multi-browser parity.
+- Playwright tests currently verify Firefox behavior only.
 
 If stronger legacy support is needed, define exact browser versions first and then introduce compatibility work from
-that
-requirement.
+that requirement.
 
 ## Build and verification flow
 
@@ -155,6 +214,102 @@ requirement.
 - `stylelint`: LESS linting
 
 The `verify` script in each package combines these checks.
+
+## Code documentation and generation from comments
+
+### Inline LESS comment style
+
+LESS has no native documentation format. Use these conventions consistently:
+
+**File-level header** — first line of every `.less` file, identifies the file:
+```less
+/* spacing.less */
+```
+
+**Class-level comment** — written above a class when the behavior is non-obvious or the class is part of a
+group. Keep it to one line unless a caveat must be explained:
+```less
+/* Hides element and removes it from layout — use .invisible to keep space reserved */
+.hidden {
+    display: none;
+}
+```
+
+**Variable comment** — for variables with cross-file impact or deliberately chosen values:
+```less
+/* Base spacing unit used across spacing.less, sizing.less, and frames/index.less */
+@defaultPadding: 10px;
+```
+
+**Group header** — for a block of related classes:
+```less
+/* --- Scroll helpers --- */
+```
+
+Do not write multi-line block comments for things a good name already expresses. One short line is the maximum.
+
+### Generating a living styleguide with KSS
+
+KSS (Knyle Style Sheets) reads structured comments and generates an HTML styleguide from LESS/CSS source.
+
+`kss` is already installed as a dev dependency in `packages/setmy-info-less-extended/package.json`.
+For the base module, install it if needed:
+```shell
+npm i kss --save-dev
+```
+
+KSS comment format (add above any class you want in the styleguide):
+```less
+// Flex button row
+//
+// A horizontal row of buttons. Combine with alignment modifiers.
+//
+// Markup:
+// <div class="smi-flex-panel smi-flex-panel-row {{modifier_class}}">
+//   <button>First</button>
+//   <button>Second</button>
+// </div>
+//
+// .smi-flex-panel-left   - Align buttons to the left.
+// .smi-flex-panel-center - Center buttons.
+// .smi-flex-panel-right  - Align buttons to the right.
+//
+// Styleguide flex.button-row
+
+.smi-flex-panel {
+    display: flex;
+    ...
+}
+```
+
+Generate the styleguide:
+```shell
+npx kss --source packages/setmy-info-less/src/main/less \
+         --destination docs/styleguide
+```
+
+### Generating living examples with Pug (already in the project)
+
+The project already generates HTML from Pug templates under `src/test/pug/`. Each Pug file produces a
+corresponding HTML page in `dist/` that is both a visual example and a Playwright test fixture.
+
+This is already the primary documentation mechanism. Extend it by:
+- Adding one Pug template per new category (e.g., `forms.pug`, `tables.pug`, `feedback.pug`).
+- Showing every class in the category with a code snippet and rendered result on the same page.
+- Running `npm run html --workspaces` to rebuild all example pages.
+
+Prefer Pug templates over a separate documentation build step until there are many documented classes.
+
+### When to use KSS vs Pug templates
+
+| Situation                                   | Use              |
+|---------------------------------------------|------------------|
+| Visual example of a rendered component      | Pug template     |
+| Searchable, indexed class reference         | KSS styleguide   |
+| AI agent reading source to understand classes | Inline comments |
+| Quick check during development              | Pug + dev server |
+
+---
 
 ## Notes for AI agents
 

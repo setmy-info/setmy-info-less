@@ -1,5 +1,16 @@
 /* visibility.less */
 
+/* Removes element from layout flow */
 .hidden {
     display: none;
+}
+
+/* Hides visually but preserves layout space */
+.invisible {
+    visibility: hidden;
+}
+
+/* Restores visibility — use to undo .invisible in a specific scope */
+.visible {
+    visibility: visible;
 }

@@ -1,0 +1,37 @@
+/* dashboard.less */
+
+/* Auto-fitting grid for dashboard widgets */
+.dashboardGrid {
+    display: grid;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: @doubleDefaultPadding;
+}
+
+/* Fixed-size widget card — combine with .card from base module for border and radius */
+.widgetCard {
+    border-style: solid;
+    border-width: @defaultBorder;
+    border-color: @tertiaryColor;
+    border-radius: @defaultBorderRadius;
+    padding: @defaultPadding;
+    overflow: hidden;
+    background: @secondaryBackgroundColor;
+    box-sizing: border-box;
+}
+
+/* Small uppercase label at the top of a widget */
+.widgetTitle {
+    font-size: @smallFontSize;
+    text-transform: uppercase;
+    color: @quinaryColor;
+    margin-bottom: @defaultPadding;
+    font-weight: bold;
+}
+
+/* Aspect-ratio container for embedded chart or graph elements */
+.chartContainer {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}

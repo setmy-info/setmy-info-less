@@ -1,0 +1,47 @@
+/* data.less */
+
+/* Stacked label-value list with alternating row background — IDE properties view */
+.propertyPanel {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.propertyPanel > .kvRow:nth-child(even) {
+    background: @gray-50;
+}
+
+/* Small uppercase muted label — place above a metric value */
+.dataLabel {
+    font-size: @smallFontSize;
+    text-transform: uppercase;
+    color: @quinaryColor;
+    letter-spacing: 0.05em;
+}
+
+/* Large KPI number */
+.statNumber {
+    font-size: @xlargeFontSize;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* Centered placeholder when a list or panel is empty */
+.emptyState {
+    text-align: center;
+    padding: @quadrupleDefaultPadding;
+    color: @quinaryColor;
+}
+
+/* Pulsing skeleton block for async loading states */
+.loadingPlaceholder {
+    background: @gray-200;
+    border-radius: @defaultBorderRadius;
+    animation: loading-shimmer 1.5s infinite ease-in-out;
+}
+
+@keyframes loading-shimmer {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}

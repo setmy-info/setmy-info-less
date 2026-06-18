@@ -1,0 +1,48 @@
+/* positioning.less */
+
+/* Sticks to the top of the nearest scrollable ancestor */
+.stickyTop {
+    position: sticky;
+    top: 0;
+    z-index: @z-index-5;
+}
+
+/* Fixed to top of viewport — full width */
+.fixedTop {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: @z-index-7;
+}
+
+/* Fixed to bottom of viewport — full width */
+.fixedBottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: @z-index-7;
+}
+
+/* Expose z-index token scale as activator classes */
+.zIndex1 { z-index: @z-index-1; }
+.zIndex2 { z-index: @z-index-2; }
+.zIndex3 { z-index: @z-index-3; }
+.zIndex4 { z-index: @z-index-4; }
+.zIndex5 { z-index: @z-index-5; }
+.zIndex6 { z-index: @z-index-6; }
+.zIndex7 { z-index: @z-index-7; }
+.zIndex8 { z-index: @z-index-8; }
+.zIndex9 { z-index: @z-index-9; }
+
+/* Aspect ratio containers */
+.aspectRatio16x9 {
+    aspect-ratio: 16 / 9;
+}
+
+.aspectRatio4x3 {
+    aspect-ratio: 4 / 3;
+}
+
+.aspectRatio1x1 {
+    aspect-ratio: 1 / 1;
+}

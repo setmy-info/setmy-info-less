@@ -1,0 +1,61 @@
+/* modal.less */
+
+/* Full-screen overlay — blocks background; JS controls visibility toggle */
+.overlay {
+    position: fixed;
+    /* stylelint-disable declaration-block-no-redundant-longhand-properties */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* stylelint-enable declaration-block-no-redundant-longhand-properties */
+    background: @overlayBackgroundColor;
+    z-index: @z-index-8;
+}
+
+/* Centered dialog box — JS controls open/close; LESS handles size and position only */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 640px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: @secondaryBackgroundColor;
+    border-radius: @defaultBorderRadius;
+    z-index: @z-index-9;
+}
+
+.modalHeader {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-bottom: 1px solid @tertiaryColor;
+    font-weight: bold;
+}
+
+.modalBody {
+    padding: @doubleDefaultPadding;
+    overflow-y: auto;
+}
+
+.modalFooter {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-top: 1px solid @tertiaryColor;
+    text-align: right;
+}
+
+/* Absolute close button — position inside .modal which has position:fixed */
+.modalClose {
+    position: absolute;
+    top: @defaultPadding;
+    right: @defaultPadding;
+    cursor: pointer;
+    background: transparent;
+    border-style: none;
+    line-height: 1;
+}

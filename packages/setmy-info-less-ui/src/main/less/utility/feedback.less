@@ -1,0 +1,99 @@
+/* feedback.less */
+
+/* Base alert — colored background with left accent border */
+.alertSuccess {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-left: 4px solid @emerald-500;
+    background: @emerald-50;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    border-radius: @defaultBorderRadius;
+    color: @emerald-800;
+    margin-bottom: @defaultPadding;
+}
+
+.alertWarning {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-left: 4px solid @amber-500;
+    background: @amber-50;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    border-radius: @defaultBorderRadius;
+    color: @amber-800;
+    margin-bottom: @defaultPadding;
+}
+
+.alertDanger {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-left: 4px solid @red-500;
+    background: @red-50;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    border-radius: @defaultBorderRadius;
+    color: @red-800;
+    margin-bottom: @defaultPadding;
+}
+
+.alertInfo {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-left: 4px solid @blue-500;
+    background: @blue-50;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    border-radius: @defaultBorderRadius;
+    color: @blue-800;
+    margin-bottom: @defaultPadding;
+}
+
+/* Small inline error message below a field */
+.validationError {
+    color: @red-600;
+    font-size: @smallFontSize;
+    margin-top: @halfDefaultPadding;
+}
+
+/* Small pill label */
+.badge {
+    display: inline-block;
+    border-radius: 999px;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: 2px @defaultPadding;
+    font-size: @smallFontSize;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.badgeSuccess {
+    background: @emerald-100;
+    color: @emerald-800;
+}
+
+.badgeDanger {
+    background: @red-100;
+    color: @red-800;
+}
+
+.badgeWarning {
+    background: @amber-100;
+    color: @amber-800;
+}
+
+.badgeInfo {
+    background: @blue-100;
+    color: @blue-800;
+}
+
+/* Fixed toast notification — appears bottom-right */
+.toastMessage {
+    position: fixed;
+    bottom: @doubleDefaultPadding;
+    right: @doubleDefaultPadding;
+    z-index: @z-index-7;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    background: @gray-800;
+    color: @secondaryFontColor;
+    border-radius: @defaultBorderRadius;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    box-shadow: 0 4px 12px @gray-400;
+}

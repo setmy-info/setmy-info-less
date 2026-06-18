@@ -1,0 +1,42 @@
+{
+    "name": "setmy-info-less-enterprise",
+    "version": "3.1.0",
+    "description": "SMI LESS enterprise meta-package — installs and combines all Layer 0 and Layer 1 modules",
+    "main": "dist/main.min.css",
+    "dependencies": {
+        "setmy-info-less": "*",
+        "setmy-info-less-extended": "*",
+        "setmy-info-less-ui": "*",
+        "setmy-info-less-forms": "*",
+        "setmy-info-less-data": "*"
+    },
+    "scripts": {
+        "build": "npm run css && npm run css-min",
+        "css": "lessc ./src/main/less/main.less dist/main.css",
+        "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",
+        "clean": "rimraf dist",
+        "clean:all": "rimraf dist node_modules",
+        "lint:less": "stylelint ./src/main/less/**/*.less",
+        "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix"
+    },
+    "keywords": [
+        "less",
+        "css"
+    ],
+    "author": "Imre Tabur <imre.tabur@mail.ee>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/setmy-info/setmy-info-less.git"
+    },
+    "homepage": "https://github.com/setmy-info/setmy-info-less",
+    "devDependencies": {
+        "less": "^4.6.6",
+        "less-plugin-clean-css": "^1.6.0",
+        "rimraf": "^6.1.3",
+        "stylelint": "^17.13.0",
+        "stylelint-config-standard": "^40.0.0",
+        "stylelint-less": "^4.2.1",
+        "postcss-less": "^6.0.0"
+    }
+}

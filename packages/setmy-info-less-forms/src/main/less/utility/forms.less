@@ -1,0 +1,69 @@
+/* forms.less */
+
+/* Base resets for form controls */
+input,
+select,
+textarea {
+    box-sizing: border-box;
+    font-family: @fontFamily;
+    font-size: inherit;
+}
+
+fieldset {
+    border-style: solid;
+    border-width: @buttonBorderWidth;
+    border-color: @tertiaryColor;
+    padding: @defaultPadding;
+    margin: 0;
+}
+
+legend {
+    padding-left: @halfDefaultPadding;
+    padding-right: @halfDefaultPadding;
+    font-weight: bold;
+}
+
+/* Label + field wrapper — block column layout */
+.formGroup {
+    display: block;
+    margin-bottom: @defaultPadding;
+}
+
+/* Stretches an input to fill its container */
+.fullWidthInput {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Clearfix for inline form rows with floated children */
+.formRow {
+    overflow: hidden;
+}
+
+/* Label and field on the same horizontal line — display:table works in IE8+ */
+.inlineLabel {
+    display: table;
+    width: 100%;
+}
+
+.inlineLabel > label {
+    display: table-cell;
+    vertical-align: middle;
+    white-space: nowrap;
+    padding-right: @defaultPadding;
+    width: 1px;
+}
+
+.inlineLabel > input,
+.inlineLabel > select,
+.inlineLabel > textarea {
+    display: table-cell;
+    width: 100%;
+    vertical-align: middle;
+}
+
+/* Appends a red asterisk to mark required fields */
+.requiredMark::after {
+    content: " *";
+    color: @red-500;
+}

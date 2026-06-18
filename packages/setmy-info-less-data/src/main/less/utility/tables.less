@@ -1,0 +1,47 @@
+/* tables.less */
+
+/* Default table reset */
+table {
+    border-collapse: collapse;
+}
+
+/* Stretches table to full container width */
+.tableFullWidth {
+    width: 100%;
+}
+
+/* Adds borders to all cells */
+.tableBordered {
+    td,
+    th {
+        border-style: solid;
+        border-width: @buttonBorderWidth;
+        border-color: @tertiaryColor;
+        padding: @defaultPadding;
+    }
+}
+
+/* Alternates row background for readability */
+.stripedTable {
+    tbody tr:nth-child(even) {
+        background-color: @gray-50;
+    }
+}
+
+/* Reduces cell padding for dense data views */
+.denseTable {
+    td,
+    th {
+        padding: @halfDefaultPadding;
+    }
+}
+
+/* Freezes the header row while the body scrolls */
+.stickyHeader {
+    thead th {
+        position: sticky;
+        top: 0;
+        background: @secondaryBackgroundColor;
+        z-index: @z-index-1;
+    }
+}

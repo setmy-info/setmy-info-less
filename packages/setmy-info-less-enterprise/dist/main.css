@@ -1,19 +1,25 @@
 /*
-Main entry point for the base CSS module.
+setmy-info-less-enterprise — Layer 2 meta-package.
 
-Import order is intentional:
-1. values and tokens
-2. element-level HTML defaults
-3. reusable utility activator classes
-4. responsive device modifiers
-5. flex/grid composition helpers
-6. component-level hooks
+Compiles all Layer 0 and Layer 1 modules into a single combined CSS file.
+Use this when you want to install the full stack with one dependency.
 
-Developers and AI agents should start reading here when mapping the style system.
+Layer 0 (base):
+  - values, html resets, utility, devices, flex, grid, components
+
+Layer 1 (extensions):
+  - setmy-info-less-ui:    states, typography, card variants, feedback, navigation, positioning
+  - setmy-info-less-forms: form resets and layout helpers
+  - setmy-info-less-data:  table styles, data patterns, dashboard
+  - setmy-info-less-extended: IDE frame layout (NetBeans-style)
+
+Load order: values first, then each layer's utility files in dependency order.
 */
+/* Values — imported once; all modules below share these tokens */
 /* values/main.less */
 /* values/colors/main.less */
 /* values/fonts/main.less */
+/* Layer 0: base module */
 /*
 HTML defaults and structural selectors.
 
@@ -932,4 +938,578 @@ canvas#background {
   position: absolute;
   z-index: -1000;
   display: block;
+}
+/* Layer 1a: UI components */
+/*
+UI component utility classes.
+Layer 1 of the module hierarchy — depends only on setmy-info-less (Layer 0).
+*/
+/* states.less */
+/* Grays out and blocks interaction — use on disabled form fields, buttons, or sections */
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+/* Indicates an in-progress operation — blocks interaction */
+.loading {
+  cursor: wait;
+  pointer-events: none;
+}
+/* Highlights the currently selected item */
+.selected {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  outline: 2px solid #3b82f6;
+  outline-offset: 1px;
+}
+/* Marks the currently active item in a list or navigation */
+.active {
+  font-weight: bold;
+}
+/* Visual cue for read-only containers */
+.readonly {
+  background: #f3f4f6;
+  cursor: default;
+}
+/* typography.less */
+.bold {
+  font-weight: bold;
+}
+.italic {
+  font-style: italic;
+}
+.underline {
+  text-decoration: underline;
+}
+.strikethrough {
+  text-decoration: line-through;
+}
+/* Clips overflowing text with an ellipsis — requires a width to be set on the element */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Wraps long words to prevent overflow */
+.breakWord {
+  overflow-wrap: break-word;
+}
+/* Prevents text selection — useful for UI labels and drag handles */
+.noSelect {
+  user-select: none;
+}
+/* Relaxed line height — apply to article or paragraph containers */
+.lineHeightRelaxed {
+  line-height: 1.7;
+}
+.fontSmall {
+  font-size: 75%;
+}
+.fontLarge {
+  font-size: 105%;
+}
+/* card.less — Level 3 card variants */
+/* Adds a colored top accent border — combine with .card from base module */
+.cardHighlight {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  border-top: 4px solid #3b82f6;
+}
+/* Makes a card interactive — adds pointer cursor and a subtle hover shadow */
+.cardClickable {
+  cursor: pointer;
+}
+.cardClickable:hover {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  box-shadow: 0 2px 8px #d1d5db;
+}
+/* Compact card with reduced padding — combine with .card from base module */
+.cardCompact {
+  padding: 10px;
+}
+/* feedback.less */
+/* Base alert — colored background with left accent border */
+.alertSuccess {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  border-left: 4px solid #10b981;
+  background: #ecfdf5;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: #065f46;
+  margin-bottom: 10px;
+}
+.alertWarning {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  border-left: 4px solid #f59e0b;
+  background: #fffbeb;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: #92400e;
+  margin-bottom: 10px;
+}
+.alertDanger {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  border-left: 4px solid #ef4444;
+  background: #fef2f2;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: #991b1b;
+  margin-bottom: 10px;
+}
+.alertInfo {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  border-left: 4px solid #3b82f6;
+  background: #eff6ff;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: #1e40af;
+  margin-bottom: 10px;
+}
+/* Small inline error message below a field */
+.validationError {
+  color: #dc2626;
+  font-size: 75%;
+  margin-top: 5px;
+}
+/* Small pill label */
+.badge {
+  display: inline-block;
+  border-radius: 999px;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 2px 10px;
+  font-size: 75%;
+  font-weight: bold;
+  vertical-align: middle;
+}
+.badgeSuccess {
+  background: #d1fae5;
+  color: #065f46;
+}
+.badgeDanger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.badgeWarning {
+  background: #fef3c7;
+  color: #92400e;
+}
+.badgeInfo {
+  background: #dbeafe;
+  color: #1e40af;
+}
+/* Fixed toast notification — appears bottom-right */
+.toastMessage {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 700;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  background: #1f2937;
+  color: black;
+  border-radius: 6px;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  box-shadow: 0 4px 12px #9ca3af;
+}
+/* navigation.less */
+/* Breadcrumb trail — float-based horizontal list with "/" separators */
+.breadcrumb {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+.breadcrumb li {
+  float: left;
+}
+.breadcrumb li + li::before {
+  content: " / ";
+  color: dimgray;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* Horizontal tab strip container */
+.tabBar {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  border-bottom: 2px solid #cccccc;
+}
+/* Individual tab — float-based */
+.tabItem {
+  float: left;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+.tabItem.active {
+  border-bottom-color: #3b82f6;
+  font-weight: bold;
+  color: #2563eb;
+}
+/* Vertical sidebar navigation list */
+.sideNavList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+/* Sidebar nav item — add .active for the current page */
+.sideNavItem {
+  display: block;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  border-left: 4px solid transparent;
+  cursor: pointer;
+}
+.sideNavItem.active {
+  border-left-color: #3b82f6;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-weight: bold;
+}
+/* Centered row of pagination buttons */
+.paginationBar {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  overflow: hidden;
+}
+.paginationBar li {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+/* positioning.less */
+/* Sticks to the top of the nearest scrollable ancestor */
+.stickyTop {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+}
+/* Fixed to top of viewport — full width */
+.fixedTop {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 700;
+}
+/* Fixed to bottom of viewport — full width */
+.fixedBottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 700;
+}
+/* Expose z-index token scale as activator classes */
+.zIndex1 {
+  z-index: 100;
+}
+.zIndex2 {
+  z-index: 200;
+}
+.zIndex3 {
+  z-index: 300;
+}
+.zIndex4 {
+  z-index: 400;
+}
+.zIndex5 {
+  z-index: 500;
+}
+.zIndex6 {
+  z-index: 600;
+}
+.zIndex7 {
+  z-index: 700;
+}
+.zIndex8 {
+  z-index: 800;
+}
+.zIndex9 {
+  z-index: 900;
+}
+/* Aspect ratio containers */
+.aspectRatio16x9 {
+  aspect-ratio: 16 / 9;
+}
+.aspectRatio4x3 {
+  aspect-ratio: 4 / 3;
+}
+.aspectRatio1x1 {
+  aspect-ratio: 1 / 1;
+}
+/* Layer 1b: Forms */
+/*
+Form utility classes.
+Layer 1 of the module hierarchy — depends only on setmy-info-less (Layer 0).
+*/
+/* forms.less */
+/* Base resets for form controls */
+input,
+select,
+textarea {
+  box-sizing: border-box;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: inherit;
+}
+fieldset {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #cccccc;
+  padding: 10px;
+  margin: 0;
+}
+legend {
+  padding-left: 5px;
+  padding-right: 5px;
+  font-weight: bold;
+}
+/* Label + field wrapper — block column layout */
+.formGroup {
+  display: block;
+  margin-bottom: 10px;
+}
+/* Stretches an input to fill its container */
+.fullWidthInput {
+  width: 100%;
+  box-sizing: border-box;
+}
+/* Clearfix for inline form rows with floated children */
+.formRow {
+  overflow: hidden;
+}
+/* Label and field on the same horizontal line — display:table works in IE8+ */
+.inlineLabel {
+  display: table;
+  width: 100%;
+}
+.inlineLabel > label {
+  display: table-cell;
+  vertical-align: middle;
+  white-space: nowrap;
+  padding-right: 10px;
+  width: 1px;
+}
+.inlineLabel > input,
+.inlineLabel > select,
+.inlineLabel > textarea {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+}
+/* Appends a red asterisk to mark required fields */
+.requiredMark::after {
+  content: " *";
+  color: #ef4444;
+}
+/* Layer 1c: Data presentation */
+/*
+Data presentation utility classes.
+Layer 1 of the module hierarchy — depends only on setmy-info-less (Layer 0).
+*/
+/* tables.less */
+/* Default table reset */
+table {
+  border-collapse: collapse;
+}
+/* Stretches table to full container width */
+.tableFullWidth {
+  width: 100%;
+}
+/* Adds borders to all cells */
+.tableBordered td,
+.tableBordered th {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #cccccc;
+  padding: 10px;
+}
+/* Alternates row background for readability */
+.stripedTable tbody tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+/* Reduces cell padding for dense data views */
+.denseTable td,
+.denseTable th {
+  padding: 5px;
+}
+/* Freezes the header row while the body scrolls */
+.stickyHeader thead th {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  z-index: 100;
+}
+/* data.less */
+/* Stacked label-value list with alternating row background — IDE properties view */
+.propertyPanel {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+.propertyPanel > .kvRow:nth-child(even) {
+  background: #f9fafb;
+}
+/* Small uppercase muted label — place above a metric value */
+.dataLabel {
+  font-size: 75%;
+  text-transform: uppercase;
+  color: dimgray;
+  letter-spacing: 0.05em;
+}
+/* Large KPI number */
+.statNumber {
+  font-size: 105%;
+  font-weight: bold;
+  line-height: 1;
+}
+/* Centered placeholder when a list or panel is empty */
+.emptyState {
+  text-align: center;
+  padding: 40px;
+  color: dimgray;
+}
+/* Pulsing skeleton block for async loading states */
+.loadingPlaceholder {
+  background: #e5e7eb;
+  border-radius: 6px;
+  animation: loading-shimmer 1.5s infinite ease-in-out;
+}
+@keyframes loading-shimmer {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* dashboard.less */
+/* Auto-fitting grid for dashboard widgets */
+.dashboardGrid {
+  display: grid;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+/* Fixed-size widget card — combine with .card from base module for border and radius */
+.widgetCard {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #cccccc;
+  border-radius: 6px;
+  padding: 10px;
+  overflow: hidden;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+/* Small uppercase label at the top of a widget */
+.widgetTitle {
+  font-size: 75%;
+  text-transform: uppercase;
+  color: dimgray;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+/* Aspect-ratio container for embedded chart or graph elements */
+.chartContainer {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+/* Layer 1d: IDE frames (NetBeans-style layout) */
+/*
+Frame presets for the extended module.
+
+These rules are closer to application shell structures than generic utilities. They mix utility-like
+classes with structural selectors such as `body.framesDefaultPadding` and rely on modern layout math
+through `calc(...)`.
+
+If very old browser support is required later, this file is one of the first places to review.
+*/
+body.framesDefaultPadding {
+  height: calc(100% - 0px);
+  width: calc(100% - 0px);
+  padding: 0px;
+}
+.contentHeader {
+  width: 100%;
+  height: 50px;
+}
+.defaultHeader {
+  width: 100%;
+  height: 25px;
+}
+.content {
+  width: 100%;
+  height: calc(100% - 75px);
+}
+.contentFooter {
+  width: 100%;
+  height: 25px;
+}
+.sectionLeft {
+  width: calc(30% - 8px - 4px);
+  height: 100%;
+}
+.verticalSeparator {
+  width: 8px;
+  height: 100%;
+  display: block;
+}
+.sectionRight {
+  width: 70%;
+  height: 100%;
+}
+.sectionHeader {
+  width: 100%;
+  height: 25px;
+}
+.sectionLeftUp {
+  width: 100%;
+  height: calc(60% - 4px - 8px);
+}
+.contentLeftUp {
+  width: 100%;
+  height: calc(100% - 25px);
+}
+.horizontalSeparator {
+  height: 4px;
+}
+.sectionLeftBottom {
+  width: 100%;
+  height: calc(40%);
+}
+.contentLeftBottom {
+  width: 100%;
+  height: calc(100% - 25px);
+}
+.sectionRightUp {
+  width: 100%;
+  height: 30%;
+}
+.contentRightUp {
+  width: 100%;
+  height: calc(100% - 25px);
+}
+.sectionRightBottom {
+  width: 100%;
+  height: calc(70% - 4px - 8px);
+}
+.contentRightBottom {
+  width: 100%;
+  height: calc(100% - 25px);
 }

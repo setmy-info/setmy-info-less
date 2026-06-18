@@ -1,0 +1,28 @@
+/* card.less */
+
+/* Base content card */
+.card {
+    border-style: solid;
+    border-width: @defaultBorder;
+    border-color: @tertiaryColor;
+    border-radius: @defaultBorderRadius;
+    padding: @doubleDefaultPadding;
+    background: @secondaryBackgroundColor;
+    box-sizing: border-box;
+}
+
+/* Card heading */
+.cardTitle {
+    font-weight: bold;
+    margin-bottom: @defaultPadding;
+}
+
+/* Card body text area */
+.cardBody {
+    color: @textColor;
+}
+
+/* Wrapping row of cards — clearfix for floated children */
+.cardGrid {
+    overflow: hidden;
+}

@@ -1,0 +1,52 @@
+/* article.less */
+
+/* Long-form article text container */
+.articleBody {
+    line-height: @articleLineHeight;
+    max-width: 75ch;
+}
+
+/* Inline code span */
+.codeInline {
+    font-family: monospace;
+    background: @gray-100;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 3px;
+    font-size: @smallFontSize;
+}
+
+/* Block code area */
+.codePre {
+    font-family: monospace;
+    background: @gray-100;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    border-radius: @defaultBorderRadius;
+    overflow-x: auto;
+    line-height: 1.5;
+    white-space: pre;
+}
+
+/* Block quotation with left accent border */
+.blockquote {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-left: 4px solid @blue-300;
+    padding-left: @doubleDefaultPadding;
+    margin-top: @defaultPadding;
+    margin-bottom: @defaultPadding;
+    color: @quinaryColor;
+    font-style: italic;
+}
+
+/* Definition list term */
+.definitionTerm {
+    font-weight: bold;
+    margin-top: @defaultPadding;
+}
+
+/* Definition list description */
+.definitionDesc {
+    margin-left: @doubleDefaultPadding;
+    color: @quinaryColor;
+}

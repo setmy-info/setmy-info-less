@@ -1,0 +1,32 @@
+/* states.less */
+
+/* Grays out and blocks interaction — use on disabled form fields, buttons, or sections */
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* Indicates an in-progress operation — blocks interaction */
+.loading {
+    cursor: wait;
+    pointer-events: none;
+}
+
+/* Highlights the currently selected item */
+.selected {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    outline: 2px solid @blue-500;
+    outline-offset: 1px;
+}
+
+/* Marks the currently active item in a list or navigation */
+.active {
+    font-weight: bold;
+}
+
+/* Visual cue for read-only containers */
+.readonly {
+    background: @gray-100;
+    cursor: default;
+}

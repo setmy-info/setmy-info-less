@@ -1,0 +1,22 @@
+/* card.less — Level 3 card variants */
+
+/* Adds a colored top accent border — combine with .card from base module */
+.cardHighlight {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-top: 4px solid @blue-500;
+}
+
+/* Makes a card interactive — adds pointer cursor and a subtle hover shadow */
+.cardClickable {
+    cursor: pointer;
+}
+
+.cardClickable:hover {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    box-shadow: 0 2px 8px @gray-300;
+}
+
+/* Compact card with reduced padding — combine with .card from base module */
+.cardCompact {
+    padding: @defaultPadding;
+}

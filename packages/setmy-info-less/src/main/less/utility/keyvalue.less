@@ -1,0 +1,33 @@
+/* keyvalue.less */
+
+/* Container for a structured list of label-value pairs — display:table works in IE8+ */
+.kvList {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* A single label-value pair row */
+.kvRow {
+    display: table-row;
+}
+
+/* Label side — muted color, fixed min-width */
+.kvLabel {
+    display: table-cell;
+    min-width: 120px;
+    font-weight: bold;
+    color: @quinaryColor;
+    padding-top: @halfDefaultPadding;
+    padding-right: @defaultPadding;
+    padding-bottom: @halfDefaultPadding;
+    vertical-align: top;
+}
+
+/* Value side */
+.kvValue {
+    display: table-cell;
+    padding-top: @halfDefaultPadding;
+    padding-bottom: @halfDefaultPadding;
+    vertical-align: top;
+}

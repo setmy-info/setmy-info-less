@@ -1,0 +1,80 @@
+/* button.less */
+
+/* Base button — browser reset + interactive affordances */
+.btn {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    border-style: solid;
+    border-width: @buttonBorderWidth;
+    border-color: @primaryBorderColor;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    background: transparent;
+    font-family: @fontFamily;
+    font-size: inherit;
+    line-height: 1;
+    border-radius: @defaultBorderRadius;
+    text-decoration: none;
+    box-sizing: border-box;
+
+    &:hover {
+        opacity: 0.85;
+    }
+
+    &:focus {
+        /* stylelint-disable-next-line declaration-property-value-no-unknown */
+        outline: 2px solid @blue-400;
+        outline-offset: 2px;
+    }
+}
+
+/* Filled primary button */
+.btnPrimary {
+    background-color: @primaryBackgroundColor;
+    color: @primaryFontColor;
+    border-color: @primaryBorderColor;
+}
+
+/* Outlined secondary button */
+.btnSecondary {
+    background-color: @secondaryBackgroundColor;
+    color: @secondaryFontColor;
+    border-color: @primaryBorderColor;
+}
+
+/* Compact button variant */
+.btnSmall {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @halfDefaultPadding @defaultPadding;
+    font-size: @smallFontSize;
+}
+
+/* Joined button group — uses inline-block to avoid flex dependency */
+.btnGroup {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+
+    .btnGroupItem {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: @defaultFontSize;
+        border-radius: 0;
+
+        &:first-child {
+            border-top-left-radius: @defaultBorderRadius;
+            border-bottom-left-radius: @defaultBorderRadius;
+        }
+
+        &:last-child {
+            border-top-right-radius: @defaultBorderRadius;
+            border-bottom-right-radius: @defaultBorderRadius;
+        }
+
+        /* Collapse adjacent borders */
+        &:not(:first-child) {
+            margin-left: @negativeButtonBorderWidth;
+        }
+    }
+}

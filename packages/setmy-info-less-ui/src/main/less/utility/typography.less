@@ -1,0 +1,47 @@
+/* typography.less */
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+/* Clips overflowing text with an ellipsis — requires a width to be set on the element */
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Wraps long words to prevent overflow */
+.breakWord {
+    overflow-wrap: break-word;
+}
+
+/* Prevents text selection — useful for UI labels and drag handles */
+.noSelect {
+    user-select: none;
+}
+
+/* Relaxed line height — apply to article or paragraph containers */
+.lineHeightRelaxed {
+    line-height: @articleLineHeight;
+}
+
+.fontSmall {
+    font-size: @smallFontSize;
+}
+
+.fontLarge {
+    font-size: @largeFontSize;
+}

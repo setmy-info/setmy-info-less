@@ -1,0 +1,87 @@
+/* navigation.less */
+
+/* Breadcrumb trail — float-based horizontal list with "/" separators */
+.breadcrumb {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.breadcrumb li {
+    float: left;
+}
+
+.breadcrumb li + li::before {
+    content: " / ";
+    color: @quinaryColor;
+    padding-left: @halfDefaultPadding;
+    padding-right: @halfDefaultPadding;
+}
+
+/* Horizontal tab strip container */
+.tabBar {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-bottom: 2px solid @tertiaryColor;
+}
+
+/* Individual tab — float-based */
+.tabItem {
+    float: left;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+}
+
+.tabItem.active {
+    border-bottom-color: @blue-500;
+    font-weight: bold;
+    color: @blue-600;
+}
+
+/* Vertical sidebar navigation list */
+.sideNavList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+/* Sidebar nav item — add .active for the current page */
+.sideNavItem {
+    display: block;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    border-left: 4px solid transparent;
+    cursor: pointer;
+}
+
+.sideNavItem.active {
+    border-left-color: @blue-500;
+    background: @blue-50;
+    color: @blue-700;
+    font-weight: bold;
+}
+
+/* Centered row of pagination buttons */
+.paginationBar {
+    list-style: none;
+    padding: 0;
+    margin-top: @doubleDefaultPadding;
+    margin-bottom: @doubleDefaultPadding;
+    text-align: center;
+    overflow: hidden;
+}
+
+.paginationBar li {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: @halfDefaultPadding;
+    margin-right: @halfDefaultPadding;
+}

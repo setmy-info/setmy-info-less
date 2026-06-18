@@ -1,2 +1,39 @@
 /* grid/main.less */
 
+/* Auto-fitting responsive grid — columns shrink to fit, minimum 240px each */
+.gridAuto {
+    display: grid;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: @doubleDefaultPadding;
+}
+
+/* Explicit two-column grid */
+.grid2col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: @doubleDefaultPadding;
+}
+
+/* Explicit three-column grid */
+.grid3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: @doubleDefaultPadding;
+}
+
+/* Explicit four-column grid */
+.grid4col {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: @doubleDefaultPadding;
+}
+
+/* Span helpers — place inside any .grid* container */
+.gridSpan2 {
+    grid-column: span 2;
+}
+
+.gridSpan3 {
+    grid-column: span 3;
+}

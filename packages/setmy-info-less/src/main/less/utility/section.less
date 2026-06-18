@@ -1,0 +1,36 @@
+/* section.less */
+
+/* Full viewport height — use for hero or landing sections */
+.fullViewport {
+    height: 100vh;
+    width: 100%;
+}
+
+/* Generic full-width content section with vertical padding */
+.pageSection {
+    width: 100%;
+    padding-top: @doubleDefaultPadding;
+    padding-bottom: @doubleDefaultPadding;
+}
+
+/* Width-constrained centered content section — combine with .centerBox */
+.pageSectionNarrow {
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @doubleDefaultPadding @defaultPadding;
+}
+
+/* Centers child content vertically and horizontally — display:table works in IE8+ */
+.sectionContentCenter {
+    display: table;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+/* Clearfix for floated children arranged in a row */
+.sectionContentRow {
+    overflow: hidden;
+}

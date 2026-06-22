@@ -22,7 +22,8 @@
         "e2e:one": "npx playwright test --config=playwright.config.js",
         "cucumber": "cucumber-js",
         "lint:less": "stylelint ./src/main/less/**/*.less",
-        "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix"
+        "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix",
+        "styleguide": "kss --source src/main/less --destination dist/styleguide --css ../main.css"
     },
     "keywords": ["less", "css", "minimal"],
     "author": "Imre Tabur <imre.tabur@mail.ee>",
@@ -36,7 +37,8 @@
         "@cucumber/cucumber": "^13.0.0",
         "@playwright/test": "^1.61.0",
         "express": "^5.2.1",
-        "jest": "^25.0.0",
+        "jest": "^30.4.2",
+        "kss": "^3.1.0",
         "less": "^4.6.6",
         "less-plugin-clean-css": "^1.6.0",
         "less-watch-compiler": "^1.17.5",

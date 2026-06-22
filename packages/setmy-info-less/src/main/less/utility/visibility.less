@@ -1,5 +1,18 @@
 /* visibility.less */
 
+// Visibility
+//
+// Classes that control whether an element is visible or present in the layout.
+//
+// .hidden    - Removes the element from layout flow (display: none).
+// .invisible - Hides visually but preserves its layout space (visibility: hidden).
+// .visible   - Restores visibility — use to undo .invisible in a specific scope.
+//
+// Markup:
+// <div class="{{modifier_class}}" style="background:#ddd;padding:8px">Element</div>
+//
+// Styleguide: utilities.visibility
+
 /* Removes element from layout flow */
 .hidden {
     display: none;

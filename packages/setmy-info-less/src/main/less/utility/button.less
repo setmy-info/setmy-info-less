@@ -1,5 +1,33 @@
 /* button.less */
 
+// Buttons
+//
+// Clickable controls for triggering actions. Apply `.btn` as the base, then add
+// a variant modifier. Works on `<button>`, `<a>`, and `<input type="submit">`.
+//
+// .btnPrimary   - Filled primary action button.
+// .btnSecondary - Outlined secondary button.
+// .btnSmall     - Compact size variant with smaller padding and font.
+//
+// Markup:
+// <button class="btn {{modifier_class}}">Button label</button>
+//
+// Styleguide: components.buttons
+
+// Button group
+//
+// Joins multiple buttons into a single horizontal strip. Borders collapse between
+// items and border-radius is applied only to the outer edges.
+//
+// Markup:
+// <div class="btnGroup">
+//   <button class="btn btnGroupItem">First</button>
+//   <button class="btn btnGroupItem">Second</button>
+//   <button class="btn btnGroupItem">Third</button>
+// </div>
+//
+// Styleguide: components.buttons.group
+
 /* Base button — browser reset + interactive affordances */
 .btn {
     display: inline-block;

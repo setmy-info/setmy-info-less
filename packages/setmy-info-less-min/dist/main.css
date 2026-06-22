@@ -1,0 +1,10 @@
+/*
+Main entry point for the minimal module.
+
+Imports base token values only — no utility classes, no components, no resets.
+Use this when you want precise control over which CSS rules are included.
+*/
+/* values/main.less */
+/* values/colors/main.less */
+/* values/fonts/main.less */
+/* Minimal module utility classes — add imports here as the module grows. */

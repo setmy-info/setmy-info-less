@@ -1,0 +1,11 @@
+/*
+Main entry point for the IDE module.
+
+CSS patterns for developer-facing UIs: code editors, debugging panels, output consoles,
+developer dashboards. Builds on top of setmy-info-less-enterprise.
+Load setmy-info-less-enterprise CSS before this.
+*/
+/* values/main.less */
+/* values/colors/main.less */
+/* values/fonts/main.less */
+/* IDE utility classes — add imports here as the module grows. */

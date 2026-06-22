@@ -5,15 +5,61 @@ for managing styles with LESS, generating HTML using Pug, and ensuring quality w
 As the SMI standard browser is Firefox, values can be taken directly from Firefox DevTools and unified across all
 browsers.
 
-This workspace contains **two modules**:
+This workspace contains the following modules:
 
-- `setmy-info-less` — the base module: resets, typography, spacing, layout, flex helpers, responsive breakpoints.
-- `setmy-info-less-extended` — the extended module: IDE-style frame building blocks inspired by the
-  **NetBeans IDE layout** (header + content area with left/right panes + footer). Use this when the application
-  needs a split-pane, panel-driven shell structure similar to a developer tool or enterprise admin application.
+### Layer 0 — Base
+
+- [`setmy-info-less`](packages/setmy-info-less/README.md) — core resets, tokens, spacing, layout, flex helpers, responsive breakpoints. All other packages depend on this.
+
+### Layer 1 — Extensions (depend on base)
+
+- [`setmy-info-less-min`](packages/setmy-info-less-min/README.md) — minimal token-only distribution; no utility classes, no resets. For projects that need precise CSS control.
+- [`setmy-info-less-extended`](packages/setmy-info-less-extended/README.md) — IDE-style frame building blocks (NetBeans-style split-pane shell layout).
+- [`setmy-info-less-ui`](packages/setmy-info-less-ui/README.md) — interaction states, typography helpers, and positioning utilities.
+- [`setmy-info-less-forms`](packages/setmy-info-less-forms/README.md) — form element resets and layout helpers.
+- [`setmy-info-less-data`](packages/setmy-info-less-data/README.md) — table styles and data presentation patterns.
+- [`setmy-info-less-experimental`](packages/setmy-info-less-experimental/README.md) — prototype and in-progress CSS for framework developers only. Not for production use.
+
+### Layer 2 — Consumer packages (depend on Layer 1)
+
+- [`setmy-info-less-fancy`](packages/setmy-info-less-fancy/README.md) — visually rich, polished patterns for public-facing web pages. Depends on `setmy-info-less-extended`. **Audience: web designers and front-end developers building consumer sites.**
+- [`setmy-info-less-enterprise`](packages/setmy-info-less-enterprise/README.md) — meta-package that compiles the full stack into one CSS file. For enterprise intranet and internal applications. **Audience: enterprise application developers.**
+
+### Layer 3 — Specialist packages (depend on Layer 2)
+
+- [`setmy-info-less-ide`](packages/setmy-info-less-ide/README.md) — developer tool and IDE-style UI patterns. Depends on `setmy-info-less-enterprise`. **Audience: developers building browser-based IDEs, dashboards, or admin consoles for engineers.**
+
+### Dependency graph
+
+```
+setmy-info-less  (Layer 0 — base)
+│
+├── setmy-info-less-min          (tokens only, no classes)
+│
+├── setmy-info-less-extended     (IDE-style frame layout)
+│   │
+│   ├── setmy-info-less-fancy    (polished public web UI)
+│   │
+│   └── setmy-info-less-enterprise  (meta-package, compiles all into one CSS)
+│       │
+│       └── setmy-info-less-ide  (developer tool UI patterns)
+│
+├── setmy-info-less-ui           (states, typography, positioning)
+│
+├── setmy-info-less-forms        (form resets and helpers)
+│
+├── setmy-info-less-data         (tables and data display)
+│
+└── setmy-info-less-experimental (prototype — framework developers only)
+```
+
+Note: `setmy-info-less-enterprise` pulls in `setmy-info-less-extended`, `setmy-info-less-ui`,
+`setmy-info-less-forms`, and `setmy-info-less-data` as dependencies.
+
+---
 
 - Developer documentation: `devlopers-guide.md` (`developers-guide.md` contains the same content)
-- Review notes for this repository: `review.md`
+- Review notes: `review.md`, `review2.md`
 
 ## Usage
 

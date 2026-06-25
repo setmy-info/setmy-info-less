@@ -6,6 +6,7 @@ or prototype CSS that is not ready for production use. Do not use in projects ou
 the setmy-info-less development team.
 
 Subdirectory layout:
+  base/   — moved from setmy-info-less utility/ (button, color, color-named, keyvalue)
   ui/     — moved from setmy-info-less-ui (interaction states, typography, cards, feedback, navigation, positioning)
   forms/  — moved from setmy-info-less-forms (form resets and layout helpers)
   data/   — moved from setmy-info-less-data (table styles, data patterns, dashboard widgets)
@@ -475,102 +476,6 @@ menu > li {
   border-left-color: #73d073;
   padding-left: 5px;
 }
-/* color-named.less */
-/* Named background color activator classes.
-   Class names use CamelCase; color values must be lowercase per CSS spec. */
-.AliceBlue {
-  background-color: aliceblue;
-}
-.Aquamarine {
-  background-color: aquamarine;
-}
-.Beige {
-  background-color: beige;
-}
-.Bisque {
-  background-color: bisque;
-}
-.BurlyWood {
-  background-color: burlywood;
-}
-.Cornsilk {
-  background-color: cornsilk;
-}
-.Honeydew {
-  background-color: honeydew;
-}
-.Lavender {
-  background-color: lavender;
-}
-.LightBlue {
-  background-color: lightblue;
-}
-.LightGray {
-  background-color: lightgray;
-}
-.LightYellow {
-  background-color: lightyellow;
-}
-.MintCream {
-  background-color: mintcream;
-}
-.OldLace {
-  background-color: oldlace;
-}
-.Snow {
-  background-color: snow;
-}
-.WhiteSmoke {
-  background-color: whitesmoke;
-}
-/* color.less */
-/* Semantic background color activators — built from palette tokens */
-.bgPrimary {
-  background-color: black;
-}
-.bgSecondary {
-  background-color: #ffffff;
-}
-.bgSuccess {
-  background-color: #d1fae5;
-}
-.bgWarning {
-  background-color: #fef3c7;
-}
-.bgDanger {
-  background-color: #fee2e2;
-}
-.bgInfo {
-  background-color: #dbeafe;
-}
-.bgAccent {
-  background-color: #eff6ff;
-}
-/* Semantic text color activators */
-.textSuccess {
-  color: #047857;
-}
-.textWarning {
-  color: #b45309;
-}
-.textDanger {
-  color: #b91c1c;
-}
-.textInfo {
-  color: #1d4ed8;
-}
-.textMuted {
-  color: dimgray;
-}
-.textAccent {
-  color: #2563eb;
-}
-.textSubtle {
-  color: #9ca3af;
-}
-.textEmphasis {
-  color: #111827;
-}
 /* section.less */
 /* Full viewport height — use for hero or landing sections */
 .fullViewport {
@@ -601,75 +506,6 @@ menu > li {
 /* Clearfix for floated children arranged in a row */
 .sectionContentRow {
   overflow: hidden;
-}
-/* button.less */
-/* Base button — browser reset + interactive affordances */
-.btn {
-  display: inline-block;
-  vertical-align: middle;
-  cursor: pointer;
-  border-style: solid;
-  border-width: 1px;
-  border-color: black;
-  /* stylelint-disable-next-line declaration-property-value-no-unknown */
-  padding: 10px 20px;
-  background: transparent;
-  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
-  font-size: inherit;
-  line-height: 1;
-  border-radius: 6px;
-  text-decoration: none;
-  box-sizing: border-box;
-}
-.btn:hover {
-  opacity: 0.85;
-}
-.btn:focus {
-  /* stylelint-disable-next-line declaration-property-value-no-unknown */
-  outline: 2px solid #60a5fa;
-  outline-offset: 2px;
-}
-/* Filled primary button */
-.btnPrimary {
-  background-color: black;
-  color: #ffffff;
-  border-color: black;
-}
-/* Outlined secondary button */
-.btnSecondary {
-  background-color: #ffffff;
-  color: black;
-  border-color: black;
-}
-/* Compact button variant */
-.btnSmall {
-  /* stylelint-disable-next-line declaration-property-value-no-unknown */
-  padding: 5px 10px;
-  font-size: 75%;
-}
-/* Joined button group — uses inline-block to avoid flex dependency */
-.btnGroup {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0;
-}
-.btnGroup .btnGroupItem {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 14px;
-  border-radius: 0;
-  /* Collapse adjacent borders */
-}
-.btnGroup .btnGroupItem:first-child {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-.btnGroup .btnGroupItem:last-child {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
-.btnGroup .btnGroupItem:not(:first-child) {
-  margin-left: -1px;
 }
 /* modal.less */
 /* Full-screen overlay — blocks background; JS controls visibility toggle */
@@ -749,35 +585,6 @@ menu > li {
 /* Wrapping row of cards — clearfix for floated children */
 .cardGrid {
   overflow: hidden;
-}
-/* keyvalue.less */
-/* Container for a structured list of label-value pairs — display:table works in IE8+ */
-.kvList {
-  display: table;
-  width: 100%;
-  border-collapse: collapse;
-}
-/* A single label-value pair row */
-.kvRow {
-  display: table-row;
-}
-/* Label side — muted color, fixed min-width */
-.kvLabel {
-  display: table-cell;
-  min-width: 120px;
-  font-weight: bold;
-  color: dimgray;
-  padding-top: 5px;
-  padding-right: 10px;
-  padding-bottom: 5px;
-  vertical-align: top;
-}
-/* Value side */
-.kvValue {
-  display: table-cell;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  vertical-align: top;
 }
 /* article.less */
 /* Long-form article text container */
@@ -1034,6 +841,205 @@ body.framesDefaultPadding {
 .contentRightBottom {
   width: 100%;
   height: calc(100% - 25px);
+}
+/* Moved from setmy-info-less utility/ */
+/*
+Utility classes moved from setmy-info-less (base package, utility/ folder).
+Staged here for consolidation — may be promoted to a stable module, merged back, or discarded.
+*/
+/* button.less */
+/* Base button — browser reset + interactive affordances */
+.btn {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  background: transparent;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: inherit;
+  line-height: 1;
+  border-radius: 6px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.btn:hover {
+  opacity: 0.85;
+}
+.btn:focus {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+/* Filled primary button */
+.btnPrimary {
+  background-color: black;
+  color: #ffffff;
+  border-color: black;
+}
+/* Outlined secondary button */
+.btnSecondary {
+  background-color: #ffffff;
+  color: black;
+  border-color: black;
+}
+/* Compact button variant */
+.btnSmall {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 5px 10px;
+  font-size: 75%;
+}
+/* Joined button group — uses inline-block to avoid flex dependency */
+.btnGroup {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0;
+}
+.btnGroup .btnGroupItem {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  border-radius: 0;
+  /* Collapse adjacent borders */
+}
+.btnGroup .btnGroupItem:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.btnGroup .btnGroupItem:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.btnGroup .btnGroupItem:not(:first-child) {
+  margin-left: -1px;
+}
+/* color.less */
+/* Semantic background color activators — built from palette tokens */
+.bgPrimary {
+  background-color: black;
+}
+.bgSecondary {
+  background-color: #ffffff;
+}
+.bgSuccess {
+  background-color: #d1fae5;
+}
+.bgWarning {
+  background-color: #fef3c7;
+}
+.bgDanger {
+  background-color: #fee2e2;
+}
+.bgInfo {
+  background-color: #dbeafe;
+}
+.bgAccent {
+  background-color: #eff6ff;
+}
+/* Semantic text color activators */
+.textSuccess {
+  color: #047857;
+}
+.textWarning {
+  color: #b45309;
+}
+.textDanger {
+  color: #b91c1c;
+}
+.textInfo {
+  color: #1d4ed8;
+}
+.textMuted {
+  color: dimgray;
+}
+.textAccent {
+  color: #2563eb;
+}
+.textSubtle {
+  color: #9ca3af;
+}
+.textEmphasis {
+  color: #111827;
+}
+/* color-named.less */
+/* Named background color activator classes.
+   Class names use CamelCase; color values must be lowercase per CSS spec. */
+.AliceBlue {
+  background-color: aliceblue;
+}
+.Aquamarine {
+  background-color: aquamarine;
+}
+.Beige {
+  background-color: beige;
+}
+.Bisque {
+  background-color: bisque;
+}
+.BurlyWood {
+  background-color: burlywood;
+}
+.Cornsilk {
+  background-color: cornsilk;
+}
+.Honeydew {
+  background-color: honeydew;
+}
+.Lavender {
+  background-color: lavender;
+}
+.LightBlue {
+  background-color: lightblue;
+}
+.LightGray {
+  background-color: lightgray;
+}
+.LightYellow {
+  background-color: lightyellow;
+}
+.MintCream {
+  background-color: mintcream;
+}
+.OldLace {
+  background-color: oldlace;
+}
+.Snow {
+  background-color: snow;
+}
+.WhiteSmoke {
+  background-color: whitesmoke;
+}
+/* keyvalue.less */
+/* Container for a structured list of label-value pairs — display:table works in IE8+ */
+.kvList {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+/* A single label-value pair row */
+.kvRow {
+  display: table-row;
+}
+/* Label side — muted color, fixed min-width */
+.kvLabel {
+  display: table-cell;
+  min-width: 120px;
+  font-weight: bold;
+  color: dimgray;
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  vertical-align: top;
+}
+/* Value side */
+.kvValue {
+  display: table-cell;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: top;
 }
 /* Moved from setmy-info-less-ui */
 /*

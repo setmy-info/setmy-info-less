@@ -6,6 +6,7 @@ or prototype CSS that is not ready for production use. Do not use in projects ou
 the setmy-info-less development team.
 
 Subdirectory layout:
+  grid/   — moved from setmy-info-less grid/ (grid layout helpers)
   base/   — moved from setmy-info-less utility/ (button, color, color-named, keyvalue)
   ui/     — moved from setmy-info-less-ui (interaction states, typography, cards, feedback, navigation, positioning)
   forms/  — moved from setmy-info-less-forms (form resets and layout helpers)
@@ -16,6 +17,9 @@ Each subdirectory name matches the removed package it came from.
 Code here may be merged into stable modules, promoted to a new package, or discarded.
 */
 @import url("../../../../setmy-info-less-enterprise/src/main/less/main.less");
+
+/* Moved from setmy-info-less grid/ */
+@import url("grid/index.less");
 
 /* Moved from setmy-info-less utility/ */
 @import url("base/index.less");

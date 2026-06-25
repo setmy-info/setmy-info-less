@@ -9,52 +9,84 @@ This workspace contains the following modules:
 
 ### Layer 0 — Base
 
-- [`setmy-info-less`](packages/setmy-info-less/README.md) — core resets, tokens, spacing, layout, flex helpers, responsive breakpoints. All other packages depend on this.
+- [`setmy-info-less`](packages/setmy-info-less/README.md) — core resets, tokens, spacing, layout, flex helpers,
+  responsive breakpoints. All other packages depend on this.
 
 ### Layer 1 — Extensions (depend on base)
 
-- [`setmy-info-less-min`](packages/setmy-info-less-min/README.md) — minimal token-only distribution; no utility classes, no resets. For projects that need precise CSS control.
-- [`setmy-info-less-extended`](packages/setmy-info-less-extended/README.md) — IDE-style frame building blocks (NetBeans-style split-pane shell layout).
-- [`setmy-info-less-ui`](packages/setmy-info-less-ui/README.md) — interaction states, typography helpers, and positioning utilities.
-- [`setmy-info-less-forms`](packages/setmy-info-less-forms/README.md) — form element resets and layout helpers.
-- [`setmy-info-less-data`](packages/setmy-info-less-data/README.md) — table styles and data presentation patterns.
-- [`setmy-info-less-experimental`](packages/setmy-info-less-experimental/README.md) — prototype and in-progress CSS for framework developers only. Not for production use.
+- [`setmy-info-less-extended`](packages/setmy-info-less-extended/README.md) — IDE-style frame building blocks (
+  NetBeans-style split-pane shell layout).
 
 ### Layer 2 — Consumer packages (depend on Layer 1)
 
-- [`setmy-info-less-fancy`](packages/setmy-info-less-fancy/README.md) — visually rich, polished patterns for public-facing web pages. Depends on `setmy-info-less-extended`. **Audience: web designers and front-end developers building consumer sites.**
-- [`setmy-info-less-enterprise`](packages/setmy-info-less-enterprise/README.md) — meta-package that compiles the full stack into one CSS file. For enterprise intranet and internal applications. **Audience: enterprise application developers.**
+- [`setmy-info-less-fancy`](packages/setmy-info-less-fancy/README.md) — visually rich, polished patterns for
+  public-facing web pages. Depends on `setmy-info-less-extended`. **Audience: web designers and front-end developers
+  building consumer sites.**
+- [`setmy-info-less-enterprise`](packages/setmy-info-less-enterprise/README.md) — meta-package that compiles the stable
+  stack into one CSS file. For enterprise intranet and internal applications. Depends on `setmy-info-less-extended`. *
+  *Audience: enterprise application developers.**
 
 ### Layer 3 — Specialist packages (depend on Layer 2)
 
-- [`setmy-info-less-ide`](packages/setmy-info-less-ide/README.md) — developer tool and IDE-style UI patterns. Depends on `setmy-info-less-enterprise`. **Audience: developers building browser-based IDEs, dashboards, or admin consoles for engineers.**
+- [`setmy-info-less-ide`](packages/setmy-info-less-ide/README.md) — developer tool and IDE-style UI patterns. Depends on
+  `setmy-info-less-enterprise`. **Audience: developers building browser-based IDEs, dashboards, or admin consoles for
+  engineers.**
+
+### Experimental (depends on enterprise)
+
+- [`setmy-info-less-experimental`](packages/setmy-info-less-experimental/README.md) — prototype and in-progress CSS for
+  framework developers only. Depends on `setmy-info-less-enterprise`, so all stable LESS variables and rules are in
+  scope. Not for production use. Contains three subdirectories of code staged for future promotion:
+    - `ui/` — interaction states, typography helpers, card variants, feedback alerts, navigation, and positioning
+      utilities (moved from the removed `setmy-info-less-ui` package)
+    - `forms/` — form element resets and layout helpers (moved from the removed `setmy-info-less-forms` package)
+    - `data/` — table styles, data display patterns, and dashboard widgets (moved from the removed
+      `setmy-info-less-data` package)
 
 ### Dependency graph
 
 ```
 setmy-info-less  (Layer 0 — base)
 │
-├── setmy-info-less-min          (tokens only, no classes)
-│
-├── setmy-info-less-extended     (IDE-style frame layout)
-│   │
-│   ├── setmy-info-less-fancy    (polished public web UI)
-│   │
-│   └── setmy-info-less-enterprise  (meta-package, compiles all into one CSS)
-│       │
-│       └── setmy-info-less-ide  (developer tool UI patterns)
-│
-├── setmy-info-less-ui           (states, typography, positioning)
-│
-├── setmy-info-less-forms        (form resets and helpers)
-│
-├── setmy-info-less-data         (tables and data display)
-│
-└── setmy-info-less-experimental (prototype — framework developers only)
+└── setmy-info-less-extended     (Layer 1 — IDE-style frame layout)
+    │
+    ├── setmy-info-less-fancy    (Layer 2 — polished public web UI)
+    │
+    └── setmy-info-less-enterprise  (Layer 2 — meta-package, compiles stable stack)
+        │
+        ├── setmy-info-less-ide          (Layer 3 — developer tool UI patterns)
+        │
+        └── setmy-info-less-experimental (experimental — framework developers only)
+            ├── ui/     (states, typography, cards, feedback, navigation, positioning)
+            ├── forms/  (form resets and layout helpers)
+            └── data/   (table styles, data patterns, dashboard widgets)
 ```
 
-Note: `setmy-info-less-enterprise` pulls in `setmy-info-less-extended`, `setmy-info-less-ui`,
-`setmy-info-less-forms`, and `setmy-info-less-data` as dependencies.
+### Stability rules
+
+Packages in this workspace fall into two stability tiers:
+
+**Stable** — `setmy-info-less`, `setmy-info-less-extended`, `setmy-info-less-fancy`,
+`setmy-info-less-enterprise`, `setmy-info-less-ide`
+
+- Public API (class names, token names, LESS variable names) follows
+  [Semantic Versioning](https://semver.org/spec/v2.0.0.html): breaking changes require a major version bump.
+- Changes are documented in `CHANGELOG.md`.
+- Production use is supported and encouraged.
+
+**Experimental** — `setmy-info-less-experimental`
+
+- No API stability guarantees. Class names, file layout, and import paths may change in any release without a major
+  version bump.
+- Depends on `setmy-info-less-enterprise`, so all stable LESS tokens and rules are available when
+  writing or evaluating experimental code. This also makes it straightforward to move code between
+  experimental and any stable module — the full parent context is always in scope.
+- The `ui/`, `forms/`, and `data/` subdirectories preserve the original module names of the removed
+  packages (`setmy-info-less-ui`, `setmy-info-less-forms`, `setmy-info-less-data`) to make it clear
+  what each directory came from. Code here is being evaluated for eventual promotion to a new stable
+  module, merging into an existing module, or removal.
+- Do not take a production dependency on `setmy-info-less-experimental`. It is intended for framework
+  developers and internal evaluation only.
 
 ---
 
@@ -66,6 +98,7 @@ Note: `setmy-info-less-enterprise` pulls in `setmy-info-less-extended`, `setmy-i
 ### NPM
 
 Base module:
+
 ```shell
 npm i setmy-info-less
 ```
@@ -73,6 +106,7 @@ npm i setmy-info-less
 * https://www.npmjs.com/package/setmy-info-less
 
 Extended module (IDE-style frame building blocks — NetBeans look and feel):
+
 ```shell
 npm i setmy-info-less-extended
 ```
@@ -82,16 +116,21 @@ npm i setmy-info-less-extended
 ### Using from CDN
 
 Base module:
+
 ```html
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/setmy-info-less/dist/main.min.css">
 ```
 
 ```html
+
 <link rel="stylesheet" href="https://unpkg.com/setmy-info-less@latest/dist/main.min.css">
 ```
 
 Extended module:
+
 ```html
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/setmy-info-less-extended/dist/main.min.css">
 ```
 

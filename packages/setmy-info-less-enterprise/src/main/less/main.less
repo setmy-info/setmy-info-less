@@ -1,16 +1,13 @@
 /*
 setmy-info-less-enterprise — Layer 2 meta-package.
 
-Compiles all Layer 0 and Layer 1 modules into a single combined CSS file.
-Use this when you want to install the full stack with one dependency.
+Compiles Layer 0 and the stable Layer 1 modules into a single combined CSS file.
+Use this when you want to install the full stable stack with one dependency.
 
 Layer 0 (base):
   - values, html resets, utility, devices, flex, grid, components
 
 Layer 1 (extensions):
-  - setmy-info-less-ui:    states, typography, card variants, feedback, navigation, positioning
-  - setmy-info-less-forms: form resets and layout helpers
-  - setmy-info-less-data:  table styles, data patterns, dashboard
   - setmy-info-less-extended: IDE frame layout (NetBeans-style)
 
 Load order: values first, then each layer's utility files in dependency order.
@@ -27,14 +24,5 @@ Load order: values first, then each layer's utility files in dependency order.
 @import url("../../../../setmy-info-less/src/main/less/grid/index.less");
 @import url("../../../../setmy-info-less/src/main/less/components/index.less");
 
-/* Layer 1a: UI components */
-@import url("../../../../setmy-info-less-ui/src/main/less/utility/index.less");
-
-/* Layer 1b: Forms */
-@import url("../../../../setmy-info-less-forms/src/main/less/utility/index.less");
-
-/* Layer 1c: Data presentation */
-@import url("../../../../setmy-info-less-data/src/main/less/utility/index.less");
-
-/* Layer 1d: IDE frames (NetBeans-style layout) */
+/* Layer 1: IDE frames (NetBeans-style layout) */
 @import url("../../../../setmy-info-less-extended/src/main/less/frames/index.less");

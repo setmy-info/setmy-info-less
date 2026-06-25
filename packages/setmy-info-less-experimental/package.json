@@ -4,7 +4,7 @@
     "description": "SMI LESS experimental — prototype and in-progress CSS for framework developers only",
     "main": "dist/main.min.css",
     "dependencies": {
-        "setmy-info-less": "*"
+        "setmy-info-less-enterprise": "*"
     },
     "scripts": {
         "build": "npm run css && npm run css-min && npm run html",

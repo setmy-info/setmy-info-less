@@ -5,10 +5,7 @@
     "main": "dist/main.min.css",
     "dependencies": {
         "setmy-info-less": "*",
-        "setmy-info-less-extended": "*",
-        "setmy-info-less-ui": "*",
-        "setmy-info-less-forms": "*",
-        "setmy-info-less-data": "*"
+        "setmy-info-less-extended": "*"
     },
     "scripts": {
         "build": "npm run css && npm run css-min",
@@ -16,6 +13,7 @@
         "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",
         "clean": "rimraf dist",
         "clean:all": "rimraf dist node_modules",
+        "verify": "npm run lint:less",
         "lint:less": "stylelint ./src/main/less/**/*.less",
         "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix"
     },

@@ -4,6 +4,26 @@ Main entry point for the experimental module.
 Scratch space for LESS framework developers. Contents here are unstable, in-progress,
 or prototype CSS that is not ready for production use. Do not use in projects outside
 the setmy-info-less development team.
+
+Subdirectory layout:
+  ui/     — moved from setmy-info-less-ui (interaction states, typography, cards, feedback, navigation, positioning)
+  forms/  — moved from setmy-info-less-forms (form resets and layout helpers)
+  data/   — moved from setmy-info-less-data (table styles, data patterns, dashboard widgets)
+  utility/— original experimental scratch space
+
+Each subdirectory name matches the removed package it came from.
+Code here may be merged into stable modules, promoted to a new package, or discarded.
 */
-@import url("../../../../setmy-info-less/src/main/less/values/index.less");
+@import url("../../../../setmy-info-less-enterprise/src/main/less/main.less");
+
+/* Moved from setmy-info-less-ui */
+@import url("ui/index.less");
+
+/* Moved from setmy-info-less-forms */
+@import url("forms/index.less");
+
+/* Moved from setmy-info-less-data */
+@import url("data/index.less");
+
+/* Experimental scratch space */
 @import url("utility/index.less");

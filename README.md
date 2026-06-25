@@ -36,7 +36,8 @@ This workspace contains the following modules:
 
 - [`setmy-info-less-experimental`](packages/setmy-info-less-experimental/README.md) — prototype and in-progress CSS for
   framework developers only. Depends on `setmy-info-less-enterprise`, so all stable LESS variables and rules are in
-  scope. Not for production use. Contains three subdirectories of code staged for future promotion:
+  scope. Not for production use. Contains subdirectories of code staged for future promotion:
+    - `base/` — button, color, color-named, and keyvalue utilities (moved from `setmy-info-less` utility/ folder)
     - `ui/` — interaction states, typography helpers, card variants, feedback alerts, navigation, and positioning
       utilities (moved from the removed `setmy-info-less-ui` package)
     - `forms/` — form element resets and layout helpers (moved from the removed `setmy-info-less-forms` package)
@@ -57,6 +58,7 @@ setmy-info-less  (Layer 0 — base)
         ├── setmy-info-less-ide          (Layer 3 — developer tool UI patterns)
         │
         └── setmy-info-less-experimental (experimental — framework developers only)
+            ├── base/   (button, color, color-named, keyvalue — from setmy-info-less utility/)
             ├── ui/     (states, typography, cards, feedback, navigation, positioning)
             ├── forms/  (form resets and layout helpers)
             └── data/   (table styles, data patterns, dashboard widgets)

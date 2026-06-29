@@ -48,17 +48,17 @@ This workspace contains the following modules:
 ### Dependency graph
 
 ```
-setmy-info-less  (Layer 0 — base)
+setmy-info-less  (Layer 0 — base. Smallest needed CSS to have GUI environment with base content panels/panes.)
 │
-└── setmy-info-less-extended     (Layer 1 — IDE-style frame layout)
+└── setmy-info-less-extended     (Layer 1 — IDE-style frame layout. Adds a more complex UI/UIX/GUI possibilities, more heavyer, helpers.)
     │
-    ├── setmy-info-less-fancy    (Layer 2 — polished public web UI)
+    ├── setmy-info-less-fancy    (Layer 2 — polished public web UI, most of the design elements for interesting, more difficult and rich UI/UIX/GUI possibilities.)
     │
-    └── setmy-info-less-enterprise  (Layer 2 — meta-package, compiles stable stack)
+    └── setmy-info-less-enterprise  (Layer 2 — meta-package, compiles stable stack. For enterprise intranet and internal applications.)
         │
-        ├── setmy-info-less-ide          (Layer 3 — developer tool UI patterns)
+        ├── setmy-info-less-ide          (Layer 3 — developer tool UI patterns. IDE-like (NetBeans) UI/UIX/GUI possibilities.)
         │
-        └── setmy-info-less-experimental (experimental — framework developers only)
+        └── setmy-info-less-experimental (experimental — framework developers only. Unstable elements, possbily moving down in the tree, into any branch.)
             ├── grid/   (grid layout helpers — from setmy-info-less grid/)
             ├── base/   (button, color, color-named, keyvalue — from setmy-info-less utility/)
             ├── ui/     (states, typography, cards, feedback, navigation, positioning)
@@ -398,19 +398,52 @@ Dry run:
 npm pack --workspaces --dry-run
 ```
 
-Publish in dependency order — base module must be published before the extended module because
-`setmy-info-less-extended` declares `setmy-info-less` as a dependency:
+Publish in dependency order. Each package's `package.json` declares its npm dependencies, so a
+package must be published only after every package it depends on already exists on the registry.
+
+Declared dependency edges (from each `package.json`):
+
+| Package                        | Depends on (npm `dependencies`)               |
+|--------------------------------|-----------------------------------------------|
+| `setmy-info-less`              | — (none, Layer 0 base)                        |
+| `setmy-info-less-extended`     | `setmy-info-less`                             |
+| `setmy-info-less-fancy`        | `setmy-info-less-extended`                    |
+| `setmy-info-less-enterprise`   | `setmy-info-less`, `setmy-info-less-extended` |
+| `setmy-info-less-ide`          | `setmy-info-less-enterprise`                  |
+| `setmy-info-less-experimental` | `setmy-info-less-enterprise`                  |
+
+A valid topological publish order (every dependency precedes its dependents):
 
 ```shell
 npm publish --workspace setmy-info-less
 npm publish --workspace setmy-info-less-extended
+npm publish --workspace setmy-info-less-fancy
+npm publish --workspace setmy-info-less-enterprise
+npm publish --workspace setmy-info-less-ide
+npm publish --workspace setmy-info-less-experimental
 ```
 
-Or publish all at once (only safe when the base version is already on npm from a previous release):
+> Note: `setmy-info-less-experimental` is not intended for public consumption — publish it only if
+> internal distribution requires it.
+
+Or publish all at once (only safe when every dependency's current version is already on npm from a
+previous release):
 
 ```shell
 npm publish --workspaces
 ```
+
+### Build vs. publish order
+
+The two orders are governed by different mechanisms — do not conflate them:
+
+- **Build order is not significant.** Each package's `lessc` step reads its dependencies' LESS
+  **source** directly via relative `@import url("../../../../<pkg>/src/main/less/...")`, not their
+  built `dist/`. So `npm run build --workspaces` succeeds regardless of the order npm iterates the
+  workspaces (alphabetical: base, enterprise, experimental, extended, fancy, ide). No package's
+  build depends on another package's `dist/` existing first.
+- **Publish order is significant** and must follow the table above, because `npm install` of a
+  dependent resolves its declared `dependencies` from the registry.
 
 ## Load order
 

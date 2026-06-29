@@ -48,23 +48,34 @@ This workspace contains the following modules:
 ### Dependency graph
 
 ```
-setmy-info-less  (Layer 0 — base. Smallest needed CSS to have GUI environment with base content panels/panes.)
+setmy-info-less  (Layer 0 — base. The smallest CSS needed for a GUI environment with basic content panels/panes.)
 │
-└── setmy-info-less-extended     (Layer 1 — IDE-style frame layout. Adds a more complex UI/UIX/GUI possibilities, more heavyer, helpers.)
+└── setmy-info-less-extended     (Layer 1 — IDE-style frame layout. Adds heavier helpers for more complex UI/UX/GUI compositions.)
     │
-    ├── setmy-info-less-fancy    (Layer 2 — polished public web UI, most of the design elements for interesting, more difficult and rich UI/UIX/GUI possibilities.)
+    ├── setmy-info-less-fancy    (Layer 2 — polished public web UI. Most of the design elements for richer, more elaborate UI/UX/GUI work.)
     │
-    └── setmy-info-less-enterprise  (Layer 2 — meta-package, compiles stable stack. For enterprise intranet and internal applications.)
+    └── setmy-info-less-enterprise  (Layer 2 — meta-package, compiles the stable stack. For enterprise intranet and internal applications.)
         │
-        ├── setmy-info-less-ide          (Layer 3 — developer tool UI patterns. IDE-like (NetBeans) UI/UIX/GUI possibilities.)
+        ├── setmy-info-less-ide          (Layer 3 — developer-tool UI patterns. IDE-like (NetBeans) UI/UX/GUI compositions.)
         │
-        └── setmy-info-less-experimental (experimental — framework developers only. Unstable elements, possbily moving down in the tree, into any branch.)
+        └── setmy-info-less-experimental (experimental — framework developers only. Unstable elements that may later move down the tree into any branch.)
             ├── grid/   (grid layout helpers — from setmy-info-less grid/)
             ├── base/   (button, color, color-named, keyvalue — from setmy-info-less utility/)
             ├── ui/     (states, typography, cards, feedback, navigation, positioning)
             ├── forms/  (form resets and layout helpers)
             └── data/   (table styles, data patterns, dashboard widgets)
 ```
+
+The arrows show the **load order**, not CSS bundling. The stable packages follow a
+**standalone / delta** model: each package's `dist/main.css` contains only its own rules, so
+consumers load the stylesheets in dependency order (base first, then each layer on top). Each
+package imports the base module's `values/index.less` for tokens only (LESS variables emit no
+CSS), so it can reference shared variables without re-emitting the base styles.
+
+`setmy-info-less-extended` and `setmy-info-less-fancy` are currently **skeletons** — wired into
+the load order but carrying no rules of their own yet, ready for future LESS. The
+`setmy-info-less-enterprise` meta-package is the one exception to the delta model: it deliberately
+aggregates the stable stack into a single combined stylesheet.
 
 ### Stability rules
 
@@ -381,7 +392,9 @@ npm run clean:all --workspaces
 ```shell
 # Clean, install, build, verify, and pack — run from repository root
 # This workflow includes KSS styleguide generation via each workspace build script.
-npm run clean:all --workspaces && npm install && npm run build --workspaces && npm run verify --workspaces && npm pack --workspaces && npm pack --dry-run --workspaces
+# `npm run smoke:dist` checks every package produced a dist/main.css and that content packages
+# are non-empty (intentional skeletons are allowed to be empty).
+npm run clean:all --workspaces && npm install && npm run build --workspaces && npm run smoke:dist && npm run verify --workspaces && npm pack --workspaces && npm pack --dry-run --workspaces
 ```
 
 ## 📤 Publishing

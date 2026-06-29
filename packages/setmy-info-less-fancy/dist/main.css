@@ -1,10 +1,21 @@
 /*
 Main entry point for the fancy web module.
 
-Extends the base and extended modules with visually rich, polished patterns for
-public-facing web pages. Load setmy-info-less and setmy-info-less-extended CSS before this.
+Distribution model: STANDALONE / DELTA.
+`dist/main.css` contains ONLY this package's own rules — it does not bundle the base or
+extended CSS. Consumers load the stylesheets in dependency order:
+
+    setmy-info-less  ->  setmy-info-less-extended  ->  setmy-info-less-fancy
+
+This package is currently a skeleton: it has no rules of its own yet. The base module's
+`values/index.less` is imported for TOKENS ONLY (LESS variables produce no CSS output), so
+future fancy rules can reference shared tokens without re-emitting base or extended styles
+here. The dependency on `setmy-info-less-extended` is a load-order relationship declared in
+package.json, not a CSS import — extended's rules must not be bundled into this delta.
 */
+/* Base tokens only (no CSS output) — gives future rules access to shared variables */
 /* values/main.less */
 /* values/colors/main.less */
 /* values/fonts/main.less */
+/* This package's own rules (empty skeleton — add files via utility/index.less) */
 /* Fancy web utility classes — add imports here as the module grows. */

@@ -1,17 +1,28 @@
 /*
 Main entry point for the extended module.
 
-This package depends on the base module and now contains only optional or experimental
-additions beyond the base package. Stable NetBeans-style frame presets live in
-`setmy-info-less-ide`.
+Distribution model: STANDALONE / DELTA.
+`dist/main.css` contains ONLY this package's own rules — it does not bundle the base
+module's CSS. Consumers load the stylesheets in dependency order:
+
+    setmy-info-less  ->  setmy-info-less-extended
+
+This package is currently a skeleton: it has no rules of its own yet. The base module's
+`values/index.less` is imported for TOKENS ONLY (LESS variables produce no CSS output), so
+future extended rules can reference shared tokens without re-emitting base styles here.
+Stable NetBeans-style frame presets live in `setmy-info-less-ide`.
 */
 
 // Extended module
 //
-// Optional additions on top of `setmy-info-less`.
+// Optional additions on top of `setmy-info-less`. Load the base CSS before this file.
 //
 // Markup: <div class="smi-frame"></div>
 //
 // Styleguide: packages.extended
+
+/* Base tokens only (no CSS output) — gives future rules access to shared variables */
 @import url("../../../../setmy-info-less/src/main/less/values/index.less");
 
+/* This package's own rules (empty skeleton — add files via utility/index.less) */
+@import url("utility/index.less");

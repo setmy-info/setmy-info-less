@@ -95,6 +95,7 @@ Packages in this workspace fall into two stability tiers:
 ---
 
 - Developer documentation: `devlopers-guide.md` (`developers-guide.md` contains the same content)
+- Review notes: `review.md`, `review2.md`
 
 ## Usage
 
@@ -410,3 +411,83 @@ Or publish all at once (only safe when the base version is already on npm from a
 ```shell
 npm publish --workspaces
 ```
+
+## Load order
+
+The actual import tree as of the current codebase (`main.less` → group index → individual files):
+
+    main.less
+      values/index.less
+        colors/index.less
+        fonts/index.less
+      html/index.less
+        html.less
+        html-extended.less
+      utility/index.less
+        visibility.less
+        spacing.less
+        sizing.less
+        layout.less
+        scroll.less
+        text.less
+        cursor.less
+        panels.less
+        visual-style.less
+        notes.less
+      devices/index.less
+        print.less
+        watch.less
+        phone.less
+        pad.less
+      flex/index.less
+      grid/index.less
+      components/index.less
+        application.less
+
+## Changed
+
+Some class names were updated after v1.0.0. If you're upgrading, search and replace as needed:
+
+* verticalStrechPanel -> verticalStretchPanel
+* horisontalStrechPanel -> horizontalStretchPanel
+
+(+ other possible minor updates)
+
+## Project was created
+
+Project creation steps and commands:
+
+```shell
+npm init --yes
+npm i less --save-dev
+npm i less-plugin-clean-css --save-dev
+npm i less-watch-compiler --save-dev
+npm i express --save-dev
+npm i jest --save-dev
+npm i playwright --save-dev
+npm i @playwright/test@latest --save-dev
+npm i pug --save-dev
+npm i rimraf --save-dev
+npm i @cucumber/cucumber --save-dev
+npx playwright install
+```
+
+## TODO
+
+* Consider font correctness
+
+```
+@fontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+#headerPanel - > #header-panel
+
+;
+```
+
+* Eliminate use of !important — proper load order should help avoid it.
+
+sudo dnf install \
+flite \
+libavif \
+libjpeg-turbo \
+libmanette

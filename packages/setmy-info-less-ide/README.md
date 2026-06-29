@@ -2,7 +2,7 @@
 
 CSS patterns for developer-facing UIs: code editors, debugging panels, output consoles,
 split-pane workspaces, and developer dashboards. Extends the enterprise package with
-patterns specific to developer tool web applications.
+patterns specific to developer tool web applications, including the NetBeans-style frame shell.
 
 **Target audience:** Developers building IDE-style or developer-tool web UIs — think
 browser-based code editors, CI dashboards, log viewers, or admin consoles for engineers.
@@ -16,7 +16,7 @@ npm i setmy-info-less-ide
 ## Dependencies
 
 Depends on [`setmy-info-less-enterprise`](../setmy-info-less-enterprise/README.md), which
-pulls in the full stack: base, extended, UI, forms, and data packages.
+provides the stable shared stack beneath this IDE-specific layer.
 
 ## Usage
 
@@ -26,6 +26,9 @@ Load the enterprise compiled CSS (includes everything) plus this package:
 <link rel="stylesheet" href="node_modules/setmy-info-less-enterprise/dist/main.min.css">
 <link rel="stylesheet" href="node_modules/setmy-info-less-ide/dist/main.css">
 ```
+
+The IDE package now owns the NetBeans-style frame selectors such as
+`body.framesDefaultPadding`, `.contentHeader`, `.sectionLeft`, and `.sectionRightBottom`.
 
 ## Development
 

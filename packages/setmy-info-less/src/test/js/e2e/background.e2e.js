@@ -1,20 +1,22 @@
-const {test, expect} = require('@playwright/test');
 const pageHelper = require('../../../../../common/test/js/pageHelper');
 const getTestPageName = require('../../../../../common/test/js/testPageName');
 
 const pageName = getTestPageName();
 
-test.describe(pageName + ' page layout tests', async () => {
+describe(pageName + ' page layout tests', () => {
 
-    test.beforeAll(async () => {
+    beforeAll(async () => {
         pageHelper.pageName(pageName);
-        pageHelper.getPath();
         await pageHelper.pageIsRendered();
+    });
+
+    afterAll(async () => {
+        await pageHelper.pageClose();
     });
 
     test('should load the page and check title', async () => {
 
-        const title = await pageHelper.data.page.title();
+        const title = await pageHelper.getTitle();
         expect(title).toBe('background.html');
 
         await pageHelper.elementExpectations(

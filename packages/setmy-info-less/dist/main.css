@@ -679,6 +679,7 @@ These helpers target modern browsers; do not assume legacy browser parity withou
 .smi-flex-panel-row {
   flex-direction: row;
 }
+/* grid/main.less */
 /**
 * Components directed to use for concrete systems.
 */

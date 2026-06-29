@@ -8,10 +8,19 @@ Layer 0 (base):
   - values, html resets, utility, devices, flex, grid, components
 
 Layer 1 (extensions):
-  - setmy-info-less-extended: IDE frame layout (NetBeans-style)
+  - setmy-info-less-extended: stable extended additions beyond the base package
 
 Load order: values first, then each layer's utility files in dependency order.
 */
+
+// Enterprise module
+//
+// Combined stable distribution that aggregates the base module with stable Layer 1
+// extensions into a single stylesheet.
+//
+// Markup: <div class="smi-enterprise-shell"></div>
+//
+// Styleguide: packages.enterprise
 
 /* Values — imported once; all modules below share these tokens */
 @import url("../../../../setmy-info-less/src/main/less/values/index.less");
@@ -24,5 +33,3 @@ Load order: values first, then each layer's utility files in dependency order.
 @import url("../../../../setmy-info-less/src/main/less/grid/index.less");
 @import url("../../../../setmy-info-less/src/main/less/components/index.less");
 
-/* Layer 1: IDE frames (NetBeans-style layout) */
-@import url("../../../../setmy-info-less-extended/src/main/less/frames/index.less");

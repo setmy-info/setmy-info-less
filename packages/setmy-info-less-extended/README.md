@@ -1,17 +1,15 @@
 # setmy-info-less-extended
 
-IDE-style application shell layout for web applications. Provides a NetBeans-inspired
-split-pane frame structure: a fixed header bar, a footer bar, and a content area that can
-hold left and right side panels alongside a main central panel. Also includes IDE frame color
-variants and the experimental frames module for alternative frame combinations.
+Extended LESS package for optional layout additions and experiments on top of the base module.
+This package no longer owns the NetBeans-inspired IDE frame shell; that stable frame layout now
+lives in `setmy-info-less-ide`. The extended package remains the place for alternative or
+experimental additions such as the experimental frames module.
 
-**For what:** Building the outer shell of a panel-driven web application — developer tools,
-admin dashboards, workbench-style UIs, or any application that needs a persistent header,
-footer, and collapsible side panels in the browser.
+**For what:** Trying optional layout additions on top of the base package without pulling in the
+IDE-specific module.
 
-**For who:** Front-end developers building application-shell UIs that mimic desktop IDE
-or enterprise admin tool layouts. Teams migrating a NetBeans-style desktop application to
-the web will find this frame structure familiar.
+**For who:** Front-end developers who want extra layout experiments beyond the base package while
+keeping the stable IDE shell rules separate.
 
 ## Install
 
@@ -42,8 +40,7 @@ Or from CDN:
 
 | Group | Classes |
 |---|---|
-| Frame layout | Header, footer, left panel, right panel, main content area |
-| Frame colors | IDE color variants for panels and borders |
+| Extended additions | Optional layout-related additions on top of the base package |
 | Experimental frames | Alternative frame combinations (unstable) |
 
 ## Development

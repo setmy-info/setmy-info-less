@@ -1,16 +1,2 @@
-const {defineConfig} = require('@playwright/test');
-const firefoxHelper = require('../common/test/js/firefoxHelper');
-
-const firefoxPath = firefoxHelper.getFirefoxPath();
-
-module.exports = defineConfig({
-    testDir: 'src/test/js',
-    timeout: 30000,
-    retries: 0,
-    use: {
-        headless: false,
-        browserName: 'firefox',
-        executablePath: firefoxPath
-    },
-    testMatch: '**/*.e2e.js'
-});
+// Replaced by jest.e2e.config.js — e2e tests now run via Selenium Grid
+module.exports = {};

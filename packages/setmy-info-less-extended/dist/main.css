@@ -1,91 +1,10 @@
 /*
 Main entry point for the extended module.
 
-This package depends on the base module and adds more opinionated layout/frame presets.
-Use it only when the project wants those extra structures on top of `setmy-info-less`.
+This package depends on the base module and now contains only optional or experimental
+additions beyond the base package. Stable NetBeans-style frame presets live in
+`setmy-info-less-ide`.
 */
 /* values/main.less */
 /* values/colors/main.less */
 /* values/fonts/main.less */
-/*
-Frame presets for the extended module.
-
-These rules are closer to application shell structures than generic utilities. They mix utility-like
-classes with structural selectors such as `body.framesDefaultPadding` and rely on modern layout math
-through `calc(...)`.
-
-If very old browser support is required later, this file is one of the first places to review.
-*/
-body.framesDefaultPadding {
-  height: calc(100% - 0px);
-  width: calc(100% - 0px);
-  padding: 0px;
-}
-.contentHeader {
-  width: 100%;
-  height: 50px;
-}
-.defaultHeader {
-  width: 100%;
-  height: 25px;
-}
-.content {
-  width: 100%;
-  height: calc(100% - 75px);
-}
-.contentFooter {
-  width: 100%;
-  height: 25px;
-}
-.sectionLeft {
-  width: calc(30% - 8px - 4px);
-  height: 100%;
-}
-.verticalSeparator {
-  width: 8px;
-  height: 100%;
-  display: block;
-}
-.sectionRight {
-  width: 70%;
-  height: 100%;
-}
-.sectionHeader {
-  width: 100%;
-  height: 25px;
-}
-.sectionLeftUp {
-  width: 100%;
-  height: calc(60% - 4px - 8px);
-}
-.contentLeftUp {
-  width: 100%;
-  height: calc(100% - 25px);
-}
-.horizontalSeparator {
-  height: 4px;
-}
-.sectionLeftBottom {
-  width: 100%;
-  height: calc(40%);
-}
-.contentLeftBottom {
-  width: 100%;
-  height: calc(100% - 25px);
-}
-.sectionRightUp {
-  width: 100%;
-  height: 30%;
-}
-.contentRightUp {
-  width: 100%;
-  height: calc(100% - 25px);
-}
-.sectionRightBottom {
-  width: 100%;
-  height: calc(70% - 4px - 8px);
-}
-.contentRightBottom {
-  width: 100%;
-  height: calc(100% - 25px);
-}

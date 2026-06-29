@@ -1,9 +1,9 @@
 const {Then} = require('@cucumber/cucumber');
-const {expect} = require('@playwright/test');
+const {expect} = require('expect');
 const pageHelper = require('../pageHelper');
 
 Then('page should have title {string}', async function (expectedTitle) {
-    const title = await pageHelper.data.page.title();
+    const title = await pageHelper.getTitle();
     expect(title).toBe(expectedTitle);
 });
 
@@ -53,6 +53,10 @@ Then('page element background color should be {string}', async function (expecte
 
 Then('page element color should be {string}', async function (expectedColor) {
     expect(pageHelper.data.computedStyles.color).toBe(expectedColor);
+});
+
+Then('page element style {string} should be {string}', async function (propertyName, expectedValue) {
+    expect(pageHelper.data.computedStyles.allStyles[propertyName]).toBe(expectedValue);
 });
 
 Then('page is closed', async function () {

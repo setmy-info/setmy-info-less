@@ -40,6 +40,7 @@ build/Release
 **/dist/*.html
 **/dist/experimental.css
 **/dist/*.html
+**/dist/styleguide/**
 
 # Dependency directories
 node_modules/

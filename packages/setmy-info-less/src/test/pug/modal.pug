@@ -1,0 +1,12 @@
+doctype html
+html(lang="en")
+    include include/head.pug
+    body(id="body")
+        div(id="overlay", class="overlay")
+            section(id="modal", class="modal")
+                button(id="modalClose", class="modalClose", type="button") ×
+                header(id="modalHeader", class="modalHeader") Modal title
+                div(id="modalBody", class="modalBody")
+                    p Modal body content.
+                footer(id="modalFooter", class="modalFooter")
+                    button(type="button") Close

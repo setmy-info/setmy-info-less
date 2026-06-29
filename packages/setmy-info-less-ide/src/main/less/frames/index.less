@@ -1,9 +1,9 @@
 /*
-Frame presets for the extended module.
+Frame presets for the IDE module.
 
-These rules are closer to application shell structures than generic utilities. They mix utility-like
-classes with structural selectors such as `body.framesDefaultPadding` and rely on modern layout math
-through `calc(...)`.
+These rules provide a NetBeans-inspired application shell layout. They mix utility-like
+classes with structural selectors such as `body.framesDefaultPadding` and rely on modern
+layout math through `calc(...)`.
 
 If very old browser support is required later, this file is one of the first places to review.
 */
@@ -22,7 +22,9 @@ If very old browser support is required later, this file is one of the first pla
 @headerFooterSum: @headerHeight + @footerHeight;
 
 body.framesDefaultPadding {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     height: calc(100% - @doublePaddingValue);
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     width: calc(100% - @doublePaddingValue);
     padding: @paddingValue;
 }
@@ -39,6 +41,7 @@ body.framesDefaultPadding {
 
 .content {
     width: 100%;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     height: calc(100% - @headerFooterSum);
 }
 
@@ -51,6 +54,7 @@ body.framesDefaultPadding {
 @rightWidth: 100% - @leftWidth;
 
 .sectionLeft {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     width: calc(@leftWidth - @verticalSeparatorWidth - @defaultBorderVerticalAmount);
     height: 100%;
 }
@@ -78,11 +82,13 @@ body.framesDefaultPadding {
 
 .sectionLeftUp {
     width: 100%;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     height: calc(@contentLeftUpHeight - @horizontalSeparatorHeight - @doubleDefaultBorderHorizontalAmount);
 }
 
 .contentLeftUp {
     width: 100%;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     height: calc(100% - @sectionHeaderHeight);
 }
 
@@ -92,11 +98,13 @@ body.framesDefaultPadding {
 
 .sectionLeftBottom {
     width: 100%;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     height: calc(@contentLeftBottomHeight);
 }
 
 .contentLeftBottom {
     width: 100%;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     height: calc(100% - @sectionHeaderHeight);
 }
 
@@ -110,15 +118,18 @@ body.framesDefaultPadding {
 
 .contentRightUp {
     width: 100%;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     height: calc(100% - @sectionHeaderHeight);
 }
 
 .sectionRightBottom {
     width: 100%;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     height: calc(@contentRightBottomHeight - @horizontalSeparatorHeight - @doubleDefaultBorderHorizontalAmount);
 }
 
 .contentRightBottom {
     width: 100%;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     height: calc(100% - @sectionHeaderHeight);
 }

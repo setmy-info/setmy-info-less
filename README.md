@@ -95,7 +95,6 @@ Packages in this workspace fall into two stability tiers:
 ---
 
 - Developer documentation: `devlopers-guide.md` (`developers-guide.md` contains the same content)
-- Review notes: `review.md`, `review2.md`
 
 ## Usage
 
@@ -144,7 +143,7 @@ This project includes:
 
 - `LESS` – for modular and extendable CSS
 - `Pug` – for HTML generation
-- `Playwright` – for end-to-end (E2E) testing
+- `Selenium WebDriver` – for end-to-end (E2E) testing via Selenium Grid
 - `Jest` – for unit testing JavaScript
 - `Express` – for local development server
 - `npm scripts` – for build and test automation
@@ -179,8 +178,42 @@ Using:
 
 ### 🔧 Setup
 
-All workspace packages share the single `node_modules` tree at the repository root. Always run install from
-the root directory, not from inside a package folder.
+Complete setup in order — all prerequisites first, then install.
+
+#### 1. System prerequisites
+
+Java is required to run the Selenium Grid hub and node:
+
+```shell
+# Verify Java is available
+java -version
+```
+
+KSS styleguide generation uses the `kss-node` CLI from the `kss` npm package (v2.x).
+It is installed automatically by `npm install` as a devDependency — no separate global install needed.
+Note: `kss@2.x` registers the binary as `kss-node`, not `kss`. The build scripts call `kss-node` directly.
+
+#### 2. Selenium Grid
+
+E2E tests run against an external Selenium Grid. Start the hub and node **before** running
+`npm run e2e` or `npm run verify`:
+
+```shell
+smi-selenium-hub
+smi-selenium-node
+```
+
+Override the hub URL or browser via environment variables if your grid differs from the defaults:
+
+```shell
+export SELENIUM_HUB_URL=http://localhost:4444/wd/hub
+export SELENIUM_BROWSER=firefox
+```
+
+#### 3. Node dependencies
+
+All workspace packages share the single `node_modules` tree at the repository root. Always run
+install from the root directory, not from inside a package folder:
 
 ```shell
 # Install all workspace dependencies (run from repository root)
@@ -188,9 +221,6 @@ npm install
 
 # Or install strictly from the lock file — recommended for CI environments
 npm ci
-
-# Install Playwright browser binaries (needed once, and after each Playwright version upgrade)
-npx playwright install
 ```
 
 ## Upgrade packages
@@ -218,9 +248,6 @@ npm audit fix
 
 # Force-fix remaining vulnerabilities — review the diff before committing
 npm audit fix --force
-
-# Reinstall Playwright browser binaries after a Playwright version change
-npx playwright install
 ```
 
 Useful workspace commands:
@@ -249,11 +276,22 @@ npm run html --workspaces
 
 ```shell
 # Build all workspaces (npm processes them in alphabetical order: base before extended)
+# This builds CSS, minified CSS, example HTML, and KSS styleguides.
 npm run build --workspaces
 
 # Or build each workspace explicitly in dependency order
 npm run build --workspace setmy-info-less
 npm run build --workspace setmy-info-less-extended
+```
+
+### Styleguide generation
+
+Uses `kss-node` (from the `kss@2.x` devDependency). The binary is in `node_modules/.bin/kss-node`
+and is called automatically by `npm run build` and `npm run styleguide`.
+
+```shell
+# Generate only the KSS styleguides without rerunning the rest of the build
+npm run styleguide --workspaces
 ```
 
 ### 🧪 Test execution
@@ -268,6 +306,10 @@ npm test --workspaces
 
 ### E2E test execution
 
+Requires Selenium Grid running at `http://localhost:4444/wd/hub` (or override via `SELENIUM_HUB_URL`).
+Each package starts its own HTTP server on a random port for the duration of the test run.
+Tests within a package run serially (`maxWorkers: 1`) to prevent session collisions.
+
 ```shell
 npm run e2e --workspaces
 ```
@@ -275,7 +317,11 @@ npm run e2e --workspaces
 ### Specific E2E test execution
 
 ```shell
-npm run e2e:one --workspace setmy-info-less -- src/test/js/e2e/application.e2e.js
+# Run all e2e tests in one package
+npm run e2e --workspace setmy-info-less
+
+# Run a single test file by name pattern
+npm run e2e:one --workspace setmy-info-less -- --testPathPattern=application
 ```
 
 ### Check LESS style
@@ -333,6 +379,7 @@ npm run clean:all --workspaces
 
 ```shell
 # Clean, install, build, verify, and pack — run from repository root
+# This workflow includes KSS styleguide generation via each workspace build script.
 npm run clean:all --workspaces && npm install && npm run build --workspaces && npm run verify --workspaces && npm pack --workspaces && npm pack --dry-run --workspaces
 ```
 
@@ -363,83 +410,3 @@ Or publish all at once (only safe when the base version is already on npm from a
 ```shell
 npm publish --workspaces
 ```
-
-## Load order
-
-The actual import tree as of the current codebase (`main.less` → group index → individual files):
-
-    main.less
-      values/index.less
-        colors/index.less
-        fonts/index.less
-      html/index.less
-        html.less
-        html-extended.less
-      utility/index.less
-        visibility.less
-        spacing.less
-        sizing.less
-        layout.less
-        scroll.less
-        text.less
-        cursor.less
-        panels.less
-        visual-style.less
-        notes.less
-      devices/index.less
-        print.less
-        watch.less
-        phone.less
-        pad.less
-      flex/index.less
-      grid/index.less
-      components/index.less
-        application.less
-
-## Changed
-
-Some class names were updated after v1.0.0. If you're upgrading, search and replace as needed:
-
-* verticalStrechPanel -> verticalStretchPanel
-* horisontalStrechPanel -> horizontalStretchPanel
-
-(+ other possible minor updates)
-
-## Project was created
-
-Project creation steps and commands:
-
-```shell
-npm init --yes
-npm i less --save-dev
-npm i less-plugin-clean-css --save-dev
-npm i less-watch-compiler --save-dev
-npm i express --save-dev
-npm i jest --save-dev
-npm i playwright --save-dev
-npm i @playwright/test@latest --save-dev
-npm i pug --save-dev
-npm i rimraf --save-dev
-npm i @cucumber/cucumber --save-dev
-npx playwright install
-```
-
-## TODO
-
-* Consider font correctness
-
-```
-@fontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
-#headerPanel - > #header-panel
-
-;
-```
-
-* Eliminate use of !important — proper load order should help avoid it.
-
-sudo dnf install \
-flite \
-libavif \
-libjpeg-turbo \
-libmanette

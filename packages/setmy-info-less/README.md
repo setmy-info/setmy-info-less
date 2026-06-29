@@ -61,5 +61,14 @@ Or from CDN:
 ```shell
 npm run build
 npm run lint:less
+npm run test
 npm run verify
+```
+
+E2E tests require a running Selenium Grid. Start it before calling `npm run e2e`:
+
+```shell
+smi-selenium-hub
+smi-selenium-node
+npm run e2e
 ```

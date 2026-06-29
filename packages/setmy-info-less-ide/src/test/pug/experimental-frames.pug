@@ -1,0 +1,116 @@
+doctype html
+html(lang="en")
+    head(id="head")
+        title experimental-frames.html
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(name="description", content="HTML 5 CSS test pages")
+        meta(name="author", content="Imre Tabur")
+        link(rel="stylesheet", type="text/css", href="../../setmy-info-less-enterprise/dist/main.min.css")
+        link(rel="stylesheet", type="text/css", href="main.css")
+        link(rel="stylesheet", type="text/css", href="experimental.css")
+    body(id="body" class="framesDefaultPadding")
+        header(class="contentHeader AliceBlue")
+            menu
+                li(class="floatLeft Aquamarine halfHeight") Floating left A
+                li(class="floatLeft Aquamarine halfHeight") Floating left B
+                li(class="floatRight Aquamarine halfHeight") Floating right B
+                li(class="floatRight Aquamarine halfHeight") Floating right A
+                li(class="floatClear")
+            menu
+                li(class="floatLeft Aquamarine halfHeight") Floating left A
+                li(class="floatLeft Aquamarine halfHeight") Floating left B
+                li(class="floatRight Aquamarine halfHeight") Floating right B
+                li(class="floatRight Aquamarine halfHeight") Floating right A
+                li(class="floatClear")
+        main(class="content")
+            section(class="sectionLeft floatLeft")
+                div(class="sectionLeftUp defaultBorder")
+                    header(class="sectionHeader AliceBlue")
+                        menu
+                            li(class="floatLeft Aquamarine halfHeight") A
+                            li(class="floatLeft Aquamarine halfHeight") B
+                            li(class="floatRight Aquamarine halfHeight") B
+                            li(class="floatRight Aquamarine halfHeight") A
+                            li(class="floatClear")
+                    div(class="contentLeftUp noWrap autoScrollBars Beige")
+                        - for (let i = 0; i < 50; i++)
+                            div Left Up #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
+                div(id="horizontalLeftDivider" class="horizontalSeparator cursorHorizontalResize")
+                div(class="sectionLeftBottom defaultBorder")
+                    header(class="sectionHeader AliceBlue")
+                        menu
+                            li(class="floatLeft Aquamarine halfHeight") A
+                            li(class="floatLeft Aquamarine halfHeight") B
+                            li(class="floatRight Aquamarine halfHeight") B
+                            li(class="floatRight Aquamarine halfHeight") A
+                            li(class="floatClear")
+                    div(class="contentLeftBottom noWrap autoScrollBars Bisque")
+                        - for (let i = 0; i < 50; i++)
+                            div Left Up #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
+            div(id="verticalDivider" class="verticalSeparator cursorVerticalResize floatLeft")
+            section(class="sectionRight floatLeft")
+                div(class="sectionRightUp defaultBorder")
+                    header(class="sectionHeader AliceBlue")
+                        menu
+                            li(class="floatLeft Aquamarine halfHeight") A
+                            li(class="floatLeft Aquamarine halfHeight") B
+                            li(class="floatRight Aquamarine halfHeight") B
+                            li(class="floatRight Aquamarine halfHeight") A
+                            li(class="floatClear")
+                    div(class="contentRightUp noWrap autoScrollBars BurlyWood")
+                        - for (let i = 0; i < 50; i++)
+                            div Left Up #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
+                div(id="horizontalRightDivider" class="horizontalSeparator cursorHorizontalResize")
+                div(class="sectionRightBottom defaultBorder")
+                    header(class="sectionHeader AliceBlue")
+                        menu
+                            li(class="floatLeft Aquamarine halfHeight") A
+                            li(class="floatLeft Aquamarine halfHeight") B
+                            li(class="floatRight Aquamarine halfHeight") B
+                            li(class="floatRight Aquamarine halfHeight") A
+                            li(class="floatClear")
+                    div(class="contentRightBottom noWrap autoScrollBars Cornsilk")
+                        - for (let i = 0; i < 50; i++)
+                            div Left Up #{i} Longer Longer Longer Longer Longer Longer Longer Longer Longer
+            div(class="floatClear")
+        footer(class="contentFooter AliceBlue")
+            menu
+                li(class="floatLeft Aquamarine halfHeight") Floating left A
+                li(class="floatLeft Aquamarine halfHeight") Floating left B
+                li(class="floatRight Aquamarine halfHeight") Floating right B
+                li(class="floatRight Aquamarine halfHeight") Floating right A
+                li(class="floatClear")
+
+        script.
+            // Broken for window re-sizing.
+            const verticalDivider = document.getElementById('verticalDivider');
+            const leftPanel = document.querySelector('.sectionLeft');
+            const rightPanel = document.querySelector('.sectionRight');
+            const computedStyleLeft = window.getComputedStyle(leftPanel);
+            const computedStyleRight = window.getComputedStyle(rightPanel);
+            console.log(computedStyleLeft)
+            console.log(computedStyleRight)
+            let isDragging = false;
+            verticalDivider.addEventListener('mousedown', function (e) {
+                isDragging = true;
+                document.body.style.cursor = 'col-resize';
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', function (e) {
+                if (!isDragging) return;
+                const totalWidth = verticalDivider.parentElement.clientWidth;
+                const newLeftWidth = e.clientX;
+                const minWidth = 100;
+                if (newLeftWidth < minWidth || newLeftWidth > totalWidth - minWidth) return;
+                leftPanel.style.width = `${newLeftWidth}px`;
+                rightPanel.style.width = `${totalWidth - newLeftWidth - verticalDivider.offsetWidth}px`;
+            });
+
+            document.addEventListener('mouseup', function () {
+                if (isDragging) {
+                    isDragging = false;
+                    document.body.style.cursor = 'default';
+                }
+            });

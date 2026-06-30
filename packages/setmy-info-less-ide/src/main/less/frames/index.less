@@ -8,8 +8,8 @@ layout math through `calc(...)`.
 If very old browser support is required later, this file is one of the first places to review.
 */
 @numberOfMenuPanels: 2;
-@headerHeight: @numberOfMenuPanels * @halfDefaultHeight;
-@footerHeight: @halfDefaultHeight;
+@frameHeaderHeight: @numberOfMenuPanels * @halfDefaultHeight;
+@frameFooterHeight: @halfDefaultHeight;
 
 @sectionHeaderHeight: @halfDefaultHeight;
 
@@ -19,7 +19,7 @@ If very old browser support is required later, this file is one of the first pla
 @paddingValue: 0px;
 @doublePaddingValue: @paddingValue * 2;
 
-@headerFooterSum: @headerHeight + @footerHeight;
+@headerFooterSum: @frameHeaderHeight + @frameFooterHeight;
 
 body.framesDefaultPadding {
     /* stylelint-disable-next-line declaration-property-value-no-unknown */
@@ -31,7 +31,7 @@ body.framesDefaultPadding {
 
 .contentHeader {
     width: 100%;
-    height: @headerHeight;
+    height: @frameHeaderHeight;
 }
 
 .defaultHeader {
@@ -47,7 +47,7 @@ body.framesDefaultPadding {
 
 .contentFooter {
     width: 100%;
-    height: @footerHeight;
+    height: @frameFooterHeight;
 }
 
 @leftWidth: 30%;

@@ -2,12 +2,26 @@
 Main entry point for the IDE module.
 
 CSS patterns for developer-facing UIs: code editors, debugging panels, output consoles,
-developer dashboards. Builds on top of setmy-info-less-enterprise.
-Load setmy-info-less-enterprise CSS before this.
+developer dashboards.
+
+Distribution model: STANDALONE / DELTA.
+`dist/main.css` contains ONLY this package's own rules — the NetBeans-style frame presets in
+`frames/index.less` (plus anything added under `utility/`). It does NOT bundle base or enterprise
+CSS. Consumers load the stylesheets in dependency order:
+
+    setmy-info-less-enterprise  ->  setmy-info-less-ide
+
+The dependency on `setmy-info-less-enterprise` is a load-order relationship declared in
+package.json (load the enterprise CSS, which carries the full stable stack, before this file), not
+a CSS import — enterprise's rules must not be bundled into this delta. The base module's
+`values/index.less` is imported below for TOKENS ONLY (LESS variables emit no CSS), so the frame
+rules can reference shared variables without re-emitting base or enterprise styles.
 */
+/* Base tokens only (no CSS output) — gives the frame rules access to shared variables */
 /* values/main.less */
 /* values/colors/main.less */
 /* values/fonts/main.less */
+/* This package's own rules */
 /*
 Frame presets for the IDE module.
 

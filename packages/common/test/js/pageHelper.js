@@ -45,21 +45,27 @@ async function pageIsRendered() {
         .build();
 
     await data.driver.manage().setTimeouts({ pageLoad: 30000, implicit: 5000 });
-    // Set initial window size then compensate for browser chrome to get exact viewport
-    await data.driver.manage().window().setRect({ width: WINDOW_WIDTH, height: WINDOW_HEIGHT });
     await data.driver.get('about:blank');
+    await setViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
+    await data.driver.get(data.url);
+}
+
+// Resize the window so the INNER viewport is exactly width x height. Selenium's setRect sizes the
+// outer window, so we measure the resulting innerWidth/innerHeight and re-apply the chrome delta.
+// Use this to drive responsive media-query tests (media queries react to resize without a reload).
+async function setViewport(width, height) {
+    await data.driver.manage().window().setRect({ width, height });
     const viewport = await data.driver.executeScript(
         'return { w: window.innerWidth, h: window.innerHeight };'
     );
-    const wDiff = WINDOW_WIDTH - viewport.w;
-    const hDiff = WINDOW_HEIGHT - viewport.h;
+    const wDiff = width - viewport.w;
+    const hDiff = height - viewport.h;
     if (wDiff !== 0 || hDiff !== 0) {
         await data.driver.manage().window().setRect({
-            width: WINDOW_WIDTH + wDiff,
-            height: WINDOW_HEIGHT + hDiff
+            width: width + wDiff,
+            height: height + hDiff
         });
     }
-    await data.driver.get(data.url);
 }
 
 async function getTitle() {
@@ -134,6 +140,7 @@ module.exports = {
     pageName,
     getPath,
     pageIsRendered,
+    setViewport,
     elementIdIs,
     data,
     expectations,

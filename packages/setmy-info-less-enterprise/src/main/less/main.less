@@ -10,7 +10,20 @@ Layer 0 (base):
 Layer 1 (extensions):
   - setmy-info-less-extended: stable extended additions beyond the base package
 
+This is the one CUMULATIVE package in the workspace (the others follow the standalone/delta
+model). It deliberately aggregates the full stable stack into a single `dist/main.css`, so it
+imports both the base module's rules AND the Layer 1 `setmy-info-less-extended` rules — matching
+its declared `package.json` dependencies. `extended` is currently an empty skeleton, so it adds
+no rules yet; the import is wired so its future content flows into this bundle automatically.
+
 Load order: values first, then each layer's utility files in dependency order.
+
+Verification scope (intentional): this meta-package has no e2e/cucumber suite of its own. Its
+`verify` script runs `lint:less` only, and the repository-root `npm run smoke:dist` asserts its
+compiled `dist/main.css` is non-empty. Rendered behavior is covered by the base module's e2e/
+cucumber tests, because the enterprise CSS re-compiles the same base source. A dedicated render
+smoke test for the combined stylesheet is tracked as an open item (review3.md F1) but is not
+required today.
 */
 
 // Enterprise module
@@ -30,6 +43,8 @@ Load order: values first, then each layer's utility files in dependency order.
 @import url("../../../../setmy-info-less/src/main/less/utility/index.less");
 @import url("../../../../setmy-info-less/src/main/less/devices/index.less");
 @import url("../../../../setmy-info-less/src/main/less/flex/index.less");
-@import url("../../../../setmy-info-less/src/main/less/grid/index.less");
 @import url("../../../../setmy-info-less/src/main/less/components/index.less");
+
+/* Layer 1: stable extensions — extended's own rules (base values re-import is deduped by LESS) */
+@import url("../../../../setmy-info-less-extended/src/main/less/utility/index.less");
 

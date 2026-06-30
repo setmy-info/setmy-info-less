@@ -10,7 +10,20 @@ Layer 0 (base):
 Layer 1 (extensions):
   - setmy-info-less-extended: stable extended additions beyond the base package
 
+This is the one CUMULATIVE package in the workspace (the others follow the standalone/delta
+model). It deliberately aggregates the full stable stack into a single `dist/main.css`, so it
+imports both the base module's rules AND the Layer 1 `setmy-info-less-extended` rules — matching
+its declared `package.json` dependencies. `extended` is currently an empty skeleton, so it adds
+no rules yet; the import is wired so its future content flows into this bundle automatically.
+
 Load order: values first, then each layer's utility files in dependency order.
+
+Verification scope (intentional): this meta-package has no e2e/cucumber suite of its own. Its
+`verify` script runs `lint:less` only, and the repository-root `npm run smoke:dist` asserts its
+compiled `dist/main.css` is non-empty. Rendered behavior is covered by the base module's e2e/
+cucumber tests, because the enterprise CSS re-compiles the same base source. A dedicated render
+smoke test for the combined stylesheet is tracked as an open item (review3.md F1) but is not
+required today.
 */
 /* Values — imported once; all modules below share these tokens */
 /* values/main.less */
@@ -123,7 +136,6 @@ body > noscript > ul {
   padding-left: 50px;
 }
 /* stylelint-enable no-duplicate-selectors */
-/* html-extended.less */
 /*
 html-frames
 
@@ -408,17 +420,18 @@ Panel helpers are utility activator classes.
 Apply them directly to containers that must shrink correctly inside a constrained layout.
 They are especially useful inside flex-like shells and frame layouts.
 
-Note: the current implementation still uses `!important` as a compatibility/override shortcut.
-Keep this in mind before depending on custom overrides from application code.
+These are plain single-class utilities (no `!important`), so application code can override them
+by load order or higher specificity. If a competing layout rule wins unexpectedly, make sure the
+panel class is loaded after it, or raise the panel selector's specificity.
 */
 .verticalStretchPanel {
-  min-height: 0 !important;
-  height: auto !important;
+  min-height: 0;
+  height: auto;
   overflow: hidden;
 }
 .horizontalStretchPanel {
-  min-width: 0 !important;
-  width: auto !important;
+  min-width: 0;
+  width: auto;
   overflow: hidden;
 }
 /* visual-style.less */
@@ -615,8 +628,38 @@ menu > li {
   margin-left: 20px;
   color: dimgray;
 }
+/*
+Responsive device breakpoints.
+
+The base module implements ONE small-vs-wide width boundary at 1024px, plus a print block.
+The breakpoints are plain `@media only screen` min/max-width queries and drive two visibility
+utilities:
+
+    .phone-hidden  - Hidden on screens NARROWER than 1024px (the watch + phone ranges);
+                     visible at >= 1024px. Use for content that should drop on small screens.
+    .pc-hidden     - Hidden on screens 1024px AND WIDER (the pad / desktop range);
+                     visible below 1024px. Use for small-screen-only content (e.g. a
+                     mobile menu button).
+
+Breakpoint map (matches the files imported below):
+
+    | Range          | File       | Active rules                                              |
+    |----------------|------------|----------------------------------------------------------|
+    | <= 639px       | watch.less | .phone-hidden -> display:none; #header-panel height auto; |
+    |                |            | main height reduced by one header                        |
+    | 640px - 1023px | phone.less | same rules as watch.less                                 |
+    | >= 1024px      | pad.less   | .pc-hidden -> display:none !important                     |
+    | print media    | print.less | print-only overrides (placeholder)                       |
+
+Important: `.phone-hidden` hides across BOTH the watch and phone ranges — i.e. everything
+below 1024px, NOT only on phones. `.pc-hidden` is its exact inverse. The two utilities never
+overlap because their media queries are mutually exclusive around the 1024px line. Base
+(default, no-media-query) styles apply at every width.
+
+Styleguide: utilities.responsive
+*/
 /* print.less */
-/* watch.less */
+/* watch.less — smallest screens, max-width 639px. Applies .phone-hidden (display:none). */
 @media only screen and (max-width: 639px) {
   .phone-hidden {
     display: none;
@@ -631,7 +674,7 @@ menu > li {
     /* stylelint-enable declaration-property-value-no-unknown */
   }
 }
-/* phone.less */
+/* phone.less — small screens, 640px–1023px. Also applies .phone-hidden (display:none). */
 @media only screen and (min-width: 640px) and (max-width: 1023px) {
   .phone-hidden {
     display: none;
@@ -646,7 +689,7 @@ menu > li {
     /* stylelint-enable declaration-property-value-no-unknown */
   }
 }
-/* pad.less */
+/* pad.less — wide screens / desktop, min-width 1024px. Applies .pc-hidden (display:none). */
 @media only screen and (min-width: 1024px) {
   .pc-hidden {
     display: none !important;
@@ -682,7 +725,6 @@ These helpers target modern browsers; do not assume legacy browser parity withou
 .smi-flex-panel-row {
   flex-direction: row;
 }
-/* grid/main.less */
 /**
 * Components directed to use for concrete systems.
 */
@@ -710,3 +752,5 @@ canvas#background {
   z-index: -1000;
   display: block;
 }
+/* Layer 1: stable extensions — extended's own rules (base values re-import is deduped by LESS) */
+/* Extended utility classes — add @import lines here as the module grows. */

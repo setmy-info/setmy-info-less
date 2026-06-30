@@ -56,6 +56,42 @@ Or from CDN:
 | Columns | `.grid2col`, `.grid3col`, `.grid4col` (float-based, IE 8+) |
 | Devices | `@media` blocks for phone, pad, watch, print |
 
+## Responsive breakpoints
+
+The base module uses a single small-vs-wide width boundary at **1024px**, plus a print block.
+Breakpoints are plain `@media only screen` queries (no JS), defined in `src/main/less/devices/`.
+
+| Range            | File         | What happens                                                         |
+|------------------|--------------|----------------------------------------------------------------------|
+| ≤ 639px          | `watch.less` | `.phone-hidden` → `display:none`; `#header-panel` height auto; `main` height reduced by one header |
+| 640px – 1023px   | `phone.less` | same rules as `watch.less`                                           |
+| ≥ 1024px         | `pad.less`   | `.pc-hidden` → `display:none !important`                             |
+| print media      | `print.less` | print-only overrides (placeholder)                                  |
+
+Base (default, no-media-query) styles apply at every width; the rules above are added on top
+within their range.
+
+### Visibility utilities
+
+Two classes toggle visibility by breakpoint. They are exact inverses around the 1024px line and
+never overlap:
+
+| Class           | Hidden when        | Visible when   | Use for                                               |
+|-----------------|--------------------|----------------|-------------------------------------------------------|
+| `.phone-hidden` | width **< 1024px** | width ≥ 1024px | content that should drop on small screens             |
+| `.pc-hidden`    | width **≥ 1024px** | width < 1024px | small-screen-only content (e.g. a mobile menu button) |
+
+> Note: `.phone-hidden` hides across **both** the watch and phone ranges — i.e. everything below
+> 1024px, not only on phones. The name refers to "small screens", not literally phones.
+
+```html
+<!-- Visible on wide screens, hidden below 1024px -->
+<nav class="phone-hidden">…full navigation…</nav>
+
+<!-- Visible below 1024px, hidden on wide screens -->
+<button class="pc-hidden">☰ Menu</button>
+```
+
 ## Development
 
 ```shell

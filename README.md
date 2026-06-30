@@ -164,15 +164,27 @@ This project includes:
 
 ### Principles
 
-UI is grouped based on breakpoints:
+UI is grouped by width breakpoints. The base module implements a single small-vs-wide boundary at
+**1024px**, plus a print block (`@media only screen`, no JS):
 
-* **Default** – Desktop / wide UI (full visibility, no collapsing)
-* **Phone** – Small screen (pocket) devices
-* **Pad** – Medium-width UIs (tablet-like), may hide or shrink some elements
-* **Watch** – Minimal UI for small displays
-* **Print** – Styles for printable documents
+| Category            | Width          | Behavior                                                              |
+|---------------------|----------------|----------------------------------------------------------------------|
+| **Watch**           | ≤ 639px        | Minimal UI; `.phone-hidden` removed; `#header-panel` and `main` heights adjust |
+| **Phone**           | 640px – 1023px | Small-screen UI; same hide/adjust rules as Watch                     |
+| **Pad / desktop**   | ≥ 1024px       | Full wide UI; `.pc-hidden` removed                                    |
+| **Default**         | all widths     | Base (no-media-query) styles; the ranges above layer on top          |
+| **Print**           | print media    | Styles for printable documents                                       |
 
-Utility CSS classes are provided to toggle CSS rules per element.
+Two responsive visibility utilities are driven by these breakpoints (exact inverses around the
+1024px line):
+
+* `.phone-hidden` — hidden **below 1024px** (Watch + Phone), visible on wide screens. Use it to drop
+  content on small screens. (Hides on all small screens, not literally only phones.)
+* `.pc-hidden` — hidden at **1024px and wider** (Pad / desktop), visible below 1024px. Use it for
+  small-screen-only content such as a mobile menu button.
+
+Full breakpoint reference: [`packages/setmy-info-less/README.md`](packages/setmy-info-less/README.md)
+→ "Responsive breakpoints". Utility CSS classes toggle CSS rules per element.
 
 ### Browser support
 
@@ -266,8 +278,21 @@ Useful workspace commands:
 
 ```shell
 npm run build --workspaces
+
 npm run css --workspace setmy-info-less
 npm run css --workspace setmy-info-less-extended
+npm run css --workspace setmy-info-less-fancy
+npm run css --workspace setmy-info-less-enterprise
+npm run css --workspace setmy-info-less-ide
+npm run css --workspace setmy-info-less-experimental
+
+npm run css-min --workspace setmy-info-less
+npm run css-min --workspace setmy-info-less-extended
+npm run css-min --workspace setmy-info-less-fancy
+npm run css-min --workspace setmy-info-less-enterprise
+npm run css-min --workspace setmy-info-less-ide
+npm run css-min --workspace setmy-info-less-experimental
+
 npm run html --workspace setmy-info-less
 ```
 
@@ -294,6 +319,10 @@ npm run build --workspaces
 # Or build each workspace explicitly in dependency order
 npm run build --workspace setmy-info-less
 npm run build --workspace setmy-info-less-extended
+npm run build --workspace setmy-info-less-fancy
+npm run build --workspace setmy-info-less-enterprise
+npm run build --workspace setmy-info-less-ide
+npm run build --workspace setmy-info-less-experimental
 ```
 
 ### Styleguide generation
@@ -325,6 +354,18 @@ Tests within a package run serially (`maxWorkers: 1`) to prevent session collisi
 ```shell
 npm run e2e --workspaces
 ```
+
+#### Test infrastructure notes
+
+- **`setmy-info-less-enterprise` is verified by lint + dist smoke only.** As a meta-package it has no
+  e2e/cucumber suite of its own; its `verify` runs `lint:less`, and the repository-root
+  `npm run smoke:dist` checks its compiled CSS is non-empty. Its rendered behavior is already covered
+  by the base module's e2e/cucumber tests, since the enterprise stylesheet re-compiles the same base
+  source. (A dedicated render smoke test for the combined stylesheet is an open follow-up.)
+- **Retained legacy test files (kept on purpose, not used).** `packages/common/test/js/firefoxHelper.js`
+  and the per-package `playwright.config.js` stubs are leftovers from the Playwright era. The suite now
+  runs on an external Selenium Grid via the Jest runner, so these are unused — they are retained as
+  migration markers and documented in-file rather than removed.
 
 ### Specific E2E test execution
 
@@ -425,7 +466,7 @@ Declared dependency edges (from each `package.json`):
 | `setmy-info-less-ide`          | `setmy-info-less-enterprise`                  |
 | `setmy-info-less-experimental` | `setmy-info-less-enterprise`                  |
 
-A valid topological publish order (every dependency precedes its dependents):
+A valid topological publishing order (every dependency precedes its dependents):
 
 ```shell
 npm publish --workspace setmy-info-less
@@ -486,7 +527,6 @@ The actual import tree as of the current codebase (`main.less` → group index �
         phone.less
         pad.less
       flex/index.less
-      grid/index.less
       components/index.less
         application.less
 
@@ -498,6 +538,14 @@ Some class names were updated after v1.0.0. If you're upgrading, search and repl
 * horisontalStrechPanel -> horizontalStretchPanel
 
 (+ other possible minor updates)
+
+### Behavior changes
+
+* `.verticalStretchPanel` and `.horizontalStretchPanel` no longer use `!important`
+  (`min-height`/`height` and `min-width`/`width` are now plain declarations). These utilities can
+  now be overridden by normal CSS load order and specificity. If your application relied on the old
+  `!important` to force the stretch behavior over a competing rule, ensure the panel class is loaded
+  after that rule, or raise its selector specificity.
 
 ## Project was created
 

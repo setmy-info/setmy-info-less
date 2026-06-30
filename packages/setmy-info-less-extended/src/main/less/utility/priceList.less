@@ -1,0 +1,43 @@
+/* priceList.less */
+
+// Price list
+//
+// A list of name -> value rows (e.g. services and their prices). Float-based, no flex: the name
+// floats left, the price floats right, and each row clears its floats with overflow:hidden.
+//
+// Markup:
+// <dl class="priceList">
+//   <div class="priceRow">
+//     <dt class="priceName">Item</dt>
+//     <dd class="priceValue">25 EUR</dd>
+//   </div>
+// </dl>
+//
+// Styleguide: extended.priceList
+
+.priceList {
+    margin: 0;
+    padding: 0;
+}
+
+/* One name/value row; clears the floated name + value */
+.priceRow {
+    overflow: hidden;
+    padding-top: @halfDefaultPadding;
+    padding-bottom: @halfDefaultPadding;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-bottom: 1px solid @tertiaryColor;
+}
+
+.priceName {
+    float: left;
+    margin: 0;
+    color: @textColor;
+}
+
+.priceValue {
+    float: right;
+    margin: 0;
+    color: @quinaryColor;
+    font-weight: bold;
+}

@@ -37,12 +37,19 @@ Or from CDN:
 
 ## What is included
 
-| Group | Classes |
-|---|---|
-| Section | `.fullViewport`, `.pageSection`, `.pageSectionNarrow`, `.sectionContentCenter`, `.sectionContentRow` |
-| Modal | `.overlay`, `.modal`, `.modalHeader`, `.modalBody`, `.modalFooter`, `.modalClose` |
-| Card | `.card`, `.cardTitle`, `.cardBody`, `.cardGrid` |
-| Article | `.articleBody`, `.codeInline`, `.codePre`, `.blockquote`, `.definitionTerm`, `.definitionDesc` |
+| Group                | Classes                                                                                              |
+|----------------------|------------------------------------------------------------------------------------------------------|
+| Section              | `.fullViewport`, `.pageSection`, `.pageSectionNarrow`, `.sectionContentCenter`, `.sectionContentRow` |
+| Modal                | `.overlay`, `.modal`, `.modalHeader`, `.modalBody`, `.modalFooter`, `.modalClose`                    |
+| Card                 | `.card`, `.cardTitle`, `.cardBody`, `.cardGrid`                                                      |
+| Article              | `.articleBody`, `.codeInline`, `.codePre`, `.blockquote`, `.definitionTerm`, `.definitionDesc`       |
+| Button (promoted)    | `.btn`, `.btnPrimary`, `.btnSecondary`, `.btnSmall`, `.btnGroup`, `.btnGroupItem`                    |
+| Forms (promoted)     | `.formGroup`, `.formRow`, `.fullWidthInput`, `.inlineLabel`, `.requiredMark`                         |
+| Key–value (promoted) | `.kvList`, `.kvRow`, `.kvLabel`, `.kvValue`                                                          |
+| Price list           | `.priceList`, `.priceRow`, `.priceName`, `.priceValue`                                               |
+| Media object         | `.mediaObject`, `.mediaFigure`, `.mediaBody`, `.mediaFigureRight`                                    |
+| Profile block        | `.profileBlock`, `.profileByline`, `.profileText`, `.profilePhoto`                                   |
+| Notice banner        | `.noticeBanner`, `.noticeBannerStrong`                                                               |
 
 These reference base design tokens but ship only as this package's own CSS (standalone/delta — base
 CSS is not bundled). Load the base stylesheet before this one.

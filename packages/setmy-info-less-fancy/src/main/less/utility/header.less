@@ -1,0 +1,80 @@
+/* header.less */
+
+// Site header
+//
+// Full-width top bar: logo floated left, horizontal nav floated right, with a prominent booking
+// CTA. Float-based. Wrap the inner content in `.siteHeaderInner` and add base `.centerBox` for a
+// centered max-width container.
+//
+// Markup:
+// <header class="siteHeader">
+//   <div class="siteHeaderInner centerBox">
+//     <a class="siteLogo" href="/">Brand</a>
+//     <nav class="siteNav">
+//       <a class="siteNavItem" href="/services/">Services</a>
+//       <a class="siteNavItem" href="/contact/">Contact</a>
+//       <a class="siteNavCta" href="/get-started/">Get started</a>
+//     </nav>
+//   </div>
+// </header>
+//
+// Styleguide: fancy.siteHeader
+
+.siteHeader {
+    width: 100%;
+    background: @secondaryBackgroundColor;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-bottom: 1px solid @tertiaryColor;
+}
+
+/* Clearfix for the floated logo + nav */
+.siteHeaderInner {
+    overflow: hidden;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: 0 @doubleDefaultPadding;
+}
+
+.siteLogo {
+    float: left;
+    height: @defaultHeight;
+    line-height: @defaultHeight;
+    color: @textColor;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.siteNav {
+    float: right;
+}
+
+.siteNavItem {
+    float: left;
+    height: @defaultHeight;
+    line-height: @defaultHeight;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: 0 @defaultPadding;
+    color: @textColor;
+    text-decoration: none;
+}
+
+.siteNavItem:hover {
+    color: @blue-600;
+}
+
+/* Prominent booking action inside the nav */
+.siteNavCta {
+    float: left;
+    height: @defaultHeight;
+    line-height: @defaultHeight;
+    margin-left: @defaultPadding;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: 0 @doubleDefaultPadding;
+    background: @blue-600;
+    color: @secondaryColor;
+    text-decoration: none;
+    border-radius: @defaultBorderRadius;
+}
+
+.siteNavCta:hover {
+    background: @blue-700;
+}

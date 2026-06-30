@@ -1,0 +1,44 @@
+/* mediaObject.less */
+
+// Media object
+//
+// An image/figure floated beside a text body — the classic float-based media object. The figure
+// floats; the body establishes its own block formatting context (overflow:hidden) so it sits
+// alongside rather than wrapping under the figure.
+//
+// Markup:
+// <div class="mediaObject">
+//   <div class="mediaFigure"><img src="placeholder.svg" alt=""></div>
+//   <div class="mediaBody"><p>Text beside the image.</p></div>
+// </div>
+//
+// .mediaFigureRight - Float the figure to the right instead of the left.
+//
+// Styleguide: extended.mediaObject
+
+/* Contains the floated figure */
+.mediaObject {
+    overflow: hidden;
+}
+
+.mediaFigure {
+    float: left;
+    margin-right: @doubleDefaultPadding;
+}
+
+.mediaFigure > img {
+    display: block;
+    max-width: 100%;
+}
+
+/* Own block formatting context so the body sits beside the figure */
+.mediaBody {
+    overflow: hidden;
+}
+
+/* Modifier: figure on the right */
+.mediaFigureRight {
+    float: right;
+    margin-left: @doubleDefaultPadding;
+    margin-right: 0;
+}

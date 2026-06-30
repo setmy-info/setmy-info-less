@@ -20,10 +20,15 @@ Stable NetBeans-style frame presets live in `setmy-info-less-ide`.
 /*
 Extended utility classes.
 
-Higher-level content patterns moved here from the base module: page sections, modal/overlay,
-cards, and article typography. These reference base design tokens (imported for tokens only by
-this package's main.less) but live in the extended layer so the base module stays minimal.
+Higher-level content patterns on top of the base module. Two groups:
+  - Content components moved out of base to keep base minimal: section, modal, card, article.
+  - Reusable building blocks promoted from experimental / added here: button, forms, key-value,
+    price list, media object, profile block, notice banner.
+
+All reference base design tokens (imported for tokens only by this package's main.less) but live in
+the extended layer. They are float-based and token-driven, per the project CSS design principles.
 */
+/* Content components (moved from base) */
 /* section.less */
 /* Full viewport height — use for hero or landing sections */
 .fullViewport {
@@ -179,4 +184,244 @@ this package's main.less) but live in the extended layer so the base module stay
 .definitionDesc {
   margin-left: 20px;
   color: dimgray;
+}
+/* Reusable building blocks (promoted from experimental) */
+/* button.less */
+/* Base button — browser reset + interactive affordances */
+.btn {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  background: transparent;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: inherit;
+  line-height: 1;
+  border-radius: 6px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.btn:hover {
+  opacity: 0.85;
+}
+.btn:focus {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+/* Filled primary button */
+.btnPrimary {
+  background-color: black;
+  color: #ffffff;
+  border-color: black;
+}
+/* Outlined secondary button */
+.btnSecondary {
+  background-color: #ffffff;
+  color: black;
+  border-color: black;
+}
+/* Compact button variant */
+.btnSmall {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 5px 10px;
+  font-size: 75%;
+}
+/* Joined button group — uses inline-block to avoid flex dependency */
+.btnGroup {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0;
+}
+.btnGroup .btnGroupItem {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  border-radius: 0;
+  /* Collapse adjacent borders */
+}
+.btnGroup .btnGroupItem:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.btnGroup .btnGroupItem:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.btnGroup .btnGroupItem:not(:first-child) {
+  margin-left: -1px;
+}
+/* forms.less */
+/* Base resets for form controls */
+input,
+select,
+textarea {
+  box-sizing: border-box;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: inherit;
+}
+fieldset {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #cccccc;
+  padding: 10px;
+  margin: 0;
+}
+legend {
+  padding-left: 5px;
+  padding-right: 5px;
+  font-weight: bold;
+}
+/* Label + field wrapper — block column layout */
+.formGroup {
+  display: block;
+  margin-bottom: 10px;
+}
+/* Stretches an input to fill its container */
+.fullWidthInput {
+  width: 100%;
+  box-sizing: border-box;
+}
+/* Clearfix for inline form rows with floated children */
+.formRow {
+  overflow: hidden;
+}
+/* Label and field on the same horizontal line — display:table works in IE8+ */
+.inlineLabel {
+  display: table;
+  width: 100%;
+}
+.inlineLabel > label {
+  display: table-cell;
+  vertical-align: middle;
+  white-space: nowrap;
+  padding-right: 10px;
+  width: 1px;
+}
+.inlineLabel > input,
+.inlineLabel > select,
+.inlineLabel > textarea {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+}
+/* Appends a red asterisk to mark required fields */
+.requiredMark::after {
+  content: " *";
+  color: #ef4444;
+}
+/* keyvalue.less */
+/* Container for a structured list of label-value pairs — display:table works in IE8+ */
+.kvList {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+/* A single label-value pair row */
+.kvRow {
+  display: table-row;
+}
+/* Label side — muted color, fixed min-width */
+.kvLabel {
+  display: table-cell;
+  min-width: 120px;
+  font-weight: bold;
+  color: dimgray;
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  vertical-align: top;
+}
+/* Value side */
+.kvValue {
+  display: table-cell;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: top;
+}
+/* Reusable content patterns */
+/* priceList.less */
+.priceList {
+  margin: 0;
+  padding: 0;
+}
+/* One name/value row; clears the floated name + value */
+.priceRow {
+  overflow: hidden;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  border-bottom: 1px solid #cccccc;
+}
+.priceName {
+  float: left;
+  margin: 0;
+  color: black;
+}
+.priceValue {
+  float: right;
+  margin: 0;
+  color: dimgray;
+  font-weight: bold;
+}
+/* mediaObject.less */
+/* Contains the floated figure */
+.mediaObject {
+  overflow: hidden;
+}
+.mediaFigure {
+  float: left;
+  margin-right: 20px;
+}
+.mediaFigure > img {
+  display: block;
+  max-width: 100%;
+}
+/* Own block formatting context so the body sits beside the figure */
+.mediaBody {
+  overflow: hidden;
+}
+/* Modifier: figure on the right */
+.mediaFigureRight {
+  float: right;
+  margin-left: 20px;
+  margin-right: 0;
+}
+/* profileBlock.less */
+/* Readable single column, centered */
+.profileBlock {
+  max-width: 75ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.profileByline {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: dimgray;
+  font-weight: bold;
+}
+.profileText {
+  line-height: 1.7;
+}
+/* Portrait stacked beneath the text */
+.profilePhoto {
+  display: block;
+  max-width: 100%;
+  margin-top: 20px;
+}
+/* noticeBanner.less */
+.noticeBanner {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  background: #fef3c7;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  border-left: 2px solid #f59e0b;
+  color: #333333;
+}
+.noticeBannerStrong {
+  font-weight: bold;
 }

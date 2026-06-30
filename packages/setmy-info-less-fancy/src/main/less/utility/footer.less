@@ -1,0 +1,81 @@
+/* footer.less */
+
+// Site footer
+//
+// Full-width footer with a business-info column, a secondary nav column, and a social column,
+// floated side by side on wide screens and stacked below the 1024px boundary. Wrap the columns in
+// `.siteFooterInner` (add base `.centerBox` to constrain width).
+//
+// Markup:
+// <footer class="siteFooter">
+//   <div class="siteFooterInner centerBox">
+//     <div class="siteFooterInfo">
+//       <p>Brand</p>
+//       <p>+372 5000 0000</p>
+//     </div>
+//     <nav class="siteFooterNav">
+//       <a class="siteFooterLink" href="/about/">About</a>
+//       <a class="siteFooterLink" href="/contact/">Contact</a>
+//     </nav>
+//     <div class="siteFooterSocial">
+//       <a class="siteFooterLink" href="#">Social</a>
+//     </div>
+//   </div>
+// </footer>
+//
+// Styleguide: fancy.siteFooter
+
+.siteFooter {
+    width: 100%;
+    background: @senaryColor;
+    color: @gray-200;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @doubleDefaultPadding 0;
+}
+
+/* Clearfix for the floated columns */
+.siteFooterInner {
+    overflow: hidden;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: 0 @doubleDefaultPadding;
+}
+
+.siteFooterInfo {
+    float: left;
+    width: 50%;
+}
+
+.siteFooterNav {
+    float: left;
+    width: 25%;
+}
+
+.siteFooterSocial {
+    float: right;
+    width: 25%;
+    text-align: right;
+}
+
+.siteFooterLink {
+    display: block;
+    height: auto;
+    padding-top: @halfDefaultPadding;
+    padding-bottom: @halfDefaultPadding;
+    color: @gray-200;
+    text-decoration: none;
+}
+
+.siteFooterLink:hover {
+    color: @secondaryColor;
+}
+
+/* Stack the columns below the desktop boundary */
+@media only screen and (max-width: 1023px) {
+    .siteFooterInfo,
+    .siteFooterNav,
+    .siteFooterSocial {
+        float: none;
+        width: 100%;
+        text-align: left;
+    }
+}

@@ -1,0 +1,26 @@
+/* noticeBanner.less */
+
+// Notice banner
+//
+// A full-width announcement strip — e.g. a holiday/closure notice. Token-driven colours and a
+// left accent border. A simpler, single-purpose cousin of a full alert component.
+//
+// Markup:
+// <div class="noticeBanner">
+//   Oleme <span class="noticeBannerStrong">suletud pühade ajal</span>.
+// </div>
+//
+// Styleguide: extended.noticeBanner
+
+.noticeBanner {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding @doubleDefaultPadding;
+    background: @amber-100;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    border-left: @defaultBorder solid @amber-500;
+    color: @senaryColor;
+}
+
+.noticeBannerStrong {
+    font-weight: bold;
+}

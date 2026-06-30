@@ -20,26 +20,26 @@ statements wire up a **different, flatter** graph. The two do not agree, and two
 
 ### 1.1 Declared npm dependencies vs. actual LESS imports
 
-| Package                        | Declared `dependencies`                       | What its `main.less` actually `@import`s                          |
-|--------------------------------|-----------------------------------------------|-------------------------------------------------------------------|
-| `setmy-info-less`              | —                                             | own `values, html, utility, devices, flex, grid, components`      |
-| `setmy-info-less-extended`     | `setmy-info-less`                             | **only** base `values/index.less` — nothing else                  |
-| `setmy-info-less-fancy`        | `setmy-info-less-extended`                    | base `values` + own (empty) `utility/index.less` — **not** extended |
+| Package                        | Declared `dependencies`                       | What its `main.less` actually `@import`s                                         |
+|--------------------------------|-----------------------------------------------|----------------------------------------------------------------------------------|
+| `setmy-info-less`              | —                                             | own `values, html, utility, devices, flex, grid, components`                     |
+| `setmy-info-less-extended`     | `setmy-info-less`                             | **only** base `values/index.less` — nothing else                                 |
+| `setmy-info-less-fancy`        | `setmy-info-less-extended`                    | base `values` + own (empty) `utility/index.less` — **not** extended              |
 | `setmy-info-less-enterprise`   | `setmy-info-less`, `setmy-info-less-extended` | base `values, html, utility, devices, flex, grid, components` — **not** extended |
-| `setmy-info-less-ide`          | `setmy-info-less-enterprise`                  | base `values` + own `frames` + own (empty) `utility` — **not** enterprise |
-| `setmy-info-less-experimental` | `setmy-info-less-enterprise`                  | enterprise `main.less` + own `grid, base, ui, forms, data, utility` ✔ matches |
+| `setmy-info-less-ide`          | `setmy-info-less-enterprise`                  | base `values` + own `frames` + own (empty) `utility` — **not** enterprise        |
+| `setmy-info-less-experimental` | `setmy-info-less-enterprise`                  | enterprise `main.less` + own `grid, base, ui, forms, data, utility` ✔ matches    |
 
 Only `setmy-info-less-experimental` has a LESS import graph that matches its declared dependency.
 
 ### 1.2 Compiled output sizes (from current `dist/`)
 
-| Package                        | `dist/main.css` | Class selectors | Verdict                                  |
-|--------------------------------|-----------------|-----------------|------------------------------------------|
-| `setmy-info-less`              | 709 lines       | 124             | the real base                            |
-| `setmy-info-less-extended`     | 10 lines        | **0**           | **empty** — only comments + token values |
-| `setmy-info-less-fancy`        | 10 lines        | **0**           | **empty** — only comments + token values |
-| `setmy-info-less-enterprise`   | 712 lines       | 124             | ≈ identical to base (extended adds nothing) |
-| `setmy-info-less-ide`          | 104 lines       | 17              | frame classes only; no base/enterprise CSS |
+| Package                        | `dist/main.css` | Class selectors | Verdict                                        |
+|--------------------------------|-----------------|-----------------|------------------------------------------------|
+| `setmy-info-less`              | 709 lines       | 124             | the real base                                  |
+| `setmy-info-less-extended`     | 10 lines        | **0**           | **empty** — only comments + token values       |
+| `setmy-info-less-fancy`        | 10 lines        | **0**           | **empty** — only comments + token values       |
+| `setmy-info-less-enterprise`   | 712 lines       | 124             | ≈ identical to base (extended adds nothing)    |
+| `setmy-info-less-ide`          | 104 lines       | 17              | frame classes only; no base/enterprise CSS     |
 | `setmy-info-less-experimental` | 1459 lines      | 257             | base (via enterprise) + experimental utilities |
 
 ### 1.3 Consequences
@@ -59,12 +59,12 @@ Only `setmy-info-less-experimental` has a LESS import graph that matches its dec
   enterprise) CSS. Nothing in the package enforces or documents this at the CSS level.
 - **Cross-package `@import` reads source, not `dist`.** Every cross-package import points at
   `../../../../<pkg>/src/main/less/...`. This means:
-  - The npm `dependencies` are decorative for the build — no package's compile step consumes another
-    package's `dist/`.
-  - A published package's `dist/main.css` is self-contained for whatever it actually imported, which
-    (per §1.1) is usually just base `values` + its own files — **not** the dependency chain the
-    `package.json` advertises.
-  - This is the root cause of the "ide/fancy ship less than their dependency implies" trap.
+    - The npm `dependencies` are decorative for the build — no package's compile step consumes another
+      package's `dist/`.
+    - A published package's `dist/main.css` is self-contained for whatever it actually imported, which
+      (per §1.1) is usually just base `values` + its own files — **not** the dependency chain the
+      `package.json` advertises.
+    - This is the root cause of the "ide/fancy ship less than their dependency implies" trap.
 
 ### 1.4 What is internally consistent and should be kept
 
@@ -85,56 +85,31 @@ This is now documented in `README.md` (Publishing → "Build vs. publish order")
   `npm run build --workspaces` works in any order. npm iterates alphabetically: `setmy-info-less`,
   `-enterprise`, `-experimental`, `-extended`, `-fancy`, `-ide`.
 - **Publish order: significant**, topological by declared `dependencies`:
-  1. `setmy-info-less`
-  2. `setmy-info-less-extended`
-  3. `setmy-info-less-fancy`
-  4. `setmy-info-less-enterprise`
-  5. `setmy-info-less-ide`
-  6. `setmy-info-less-experimental` (internal only)
+    1. `setmy-info-less`
+    2. `setmy-info-less-extended`
+    3. `setmy-info-less-fancy`
+    4. `setmy-info-less-enterprise`
+    5. `setmy-info-less-ide`
+    6. `setmy-info-less-experimental` (internal only)
 
 ---
 
 ## 2a. Module independence
 
-> **Updated after Round 2 (Task 1): ALL packages are now standalone/delta — no cumulative packages.**
+> **Moved to user docs.** The module-independence explanation (delta model, only-`base`-is-standalone,
+> npm-dep-is-load-order, no cumulative packages) now lives in `README.md` → **Module independence**,
+> which is its correct home as user-facing documentation. It is no longer duplicated here.
 
-Each module's `dist/main.css` contains **only its own rules** and never re-emits a parent's CSS. The
-final application selects the packages it needs and loads their stylesheets in dependency order. Wiring
-as of the current source:
-
-| Module | Compile-time LESS imports | Standalone CSS? | Its `dist/main.css` is… |
-|---|---|---|---|
-| `setmy-info-less` (base) | nothing cross-package | ✅ yes | resets, tokens, single-purpose utilities |
-| `setmy-info-less-extended` | base `values` (tokens only) | ❌ delta | content components (section/modal/card/article) |
-| `setmy-info-less-fancy` | base `values` (tokens only) | ❌ delta | empty skeleton |
-| `setmy-info-less-enterprise` | base `values` (tokens only) | ❌ delta | empty skeleton (placeholder) |
-| `setmy-info-less-ide` | base `values` (tokens only) | ❌ delta | frame rules only |
-| `setmy-info-less-experimental` | base `values` (tokens only) | ❌ delta | experimental utilities only |
-
-**Key points:**
-
-1. **Only `base` ships a standalone stylesheet.** Every other module's `dist` is a **delta** — usable
-   only when the consumer also loads its dependency-chain CSS first, in order.
-2. **Compile-time coupling is tokens-only.** Every non-base module `@import`s base's `values/index.less`
-   for LESS variables (which emit no CSS), so none can *compile* without base source present, but none
-   *bundle* base (or any other package's) rules.
-3. **No cumulative/meta packages.** `enterprise` and `experimental` used to bundle their ancestors; as of
-   Task 1 they import base tokens only and emit just their own rules (enterprise: none yet; experimental:
-   its own utilities). This is the rule, enforced by `npm run smoke:dist` (which now expects `enterprise`
-   to be an empty skeleton).
-4. **npm dependency = load order, LESS import = tokens.** Declared `package.json` dependencies express the
-   order to load stylesheets in; they are not CSS bundling. This is intentional and uniform across all
-   delta packages.
-5. **No cycles** — strict DAG rooted at `base`.
-
-Net: `base` stands alone; every other package is a delta that the consuming app composes in dependency
-order.
+Summary for reviewers: not all modules are independent — they form a strict tree rooted at `base`; every
+non-base module's `dist` is a delta (its own rules only) that imports base `values` for tokens only and
+is composed by the consuming app in dependency order.
 
 ---
 
 ## 3. LESS code review (current source)
 
 ### 3.1 Correct / good
+
 - Base utilities are conservative, float/`display:table`-based, and compile ahead of time — friendly
   to older browsers as `review.md` notes.
 - camelCase, behavior-first naming is consistent (`.centerBox`, `.verticalStretchPanel`,
@@ -145,6 +120,7 @@ order.
   have landed in base `utility/`. The `.invisible`/`.visible` gap is closed.
 
 ### 3.2 Issues and smells
+
 - **`!important` in `panels.less`.** `.verticalStretchPanel` / `.horizontalStretchPanel` still use
   `!important` (min-height/height and min-width/width). `review.md` flagged this; it complicates
   integrator overrides. The file's own comment acknowledges it. Candidate for removal once load
@@ -174,6 +150,7 @@ order.
   output. Review whether this script is still needed.
 
 ### 3.3 Browser-support posture (unchanged from `review.md`, still accurate)
+
 - Modern features in use: `display:flex` (flex helpers), `calc()` (devices + ide frames),
   `margin-block` (`html.less` headings), `linear-gradient` (`hr`), CSS `grid` (experimental),
   `aspect-ratio`/`position:sticky` (experimental). These are fine Firefox-first / evergreen but not
@@ -185,6 +162,7 @@ order.
 ## 4. Test review (current state)
 
 ### 4.1 What exists
+
 - **Jest unit:** one placeholder (`common/test/js/unit/main.test.js`, asserts `true === true`). No CSS
   behavior is unit-tested (expected — CSS behavior is covered by e2e).
 - **Selenium e2e (Jest runner):** migrated off Playwright. `pageHelper.js` drives a remote Firefox via
@@ -196,16 +174,18 @@ order.
 - **stylelint** per package.
 
 ### 4.2 Coverage by package
-| Package      | e2e files | Cucumber features | Notes |
-|--------------|-----------|-------------------|-------|
-| base         | 7 (`application`, `background`, `body`, `centerText`, `flex-center`, `layoutCenterBox`, `layoutCenterBox2`) | 5 | best covered, but `flex-center.e2e.js` historically only checked the title |
-| extended     | 1 (`body`) | 1 | tests an empty stylesheet — body comes from base anyway |
-| fancy        | 1 (`body`) | 1 | tests an empty stylesheet |
-| enterprise   | **0**     | **0**             | **no tests at all**; `verify` only runs `lint:less` |
-| ide          | 1 (`body`) | 3 (`body`, `frames`, `experimental-frames`) | frame e2e still thin |
-| experimental | 1 (`body`) | 1 | 257 selectors, 1 fixture |
+
+| Package      | e2e files                                                                                                   | Cucumber features                           | Notes                                                                      |
+|--------------|-------------------------------------------------------------------------------------------------------------|---------------------------------------------|----------------------------------------------------------------------------|
+| base         | 7 (`application`, `background`, `body`, `centerText`, `flex-center`, `layoutCenterBox`, `layoutCenterBox2`) | 5                                           | best covered, but `flex-center.e2e.js` historically only checked the title |
+| extended     | 1 (`body`)                                                                                                  | 1                                           | tests an empty stylesheet — body comes from base anyway                    |
+| fancy        | 1 (`body`)                                                                                                  | 1                                           | tests an empty stylesheet                                                  |
+| enterprise   | **0**                                                                                                       | **0**                                       | **no tests at all**; `verify` only runs `lint:less`                        |
+| ide          | 1 (`body`)                                                                                                  | 3 (`body`, `frames`, `experimental-frames`) | frame e2e still thin                                                       |
+| experimental | 1 (`body`)                                                                                                  | 1                                           | 257 selectors, 1 fixture                                                   |
 
 ### 4.3 Gaps and dead code
+
 - **`enterprise` has no `verify` beyond lint.** It also has no `test`/`e2e`/`cucumber` scripts and no
   Jest/Playwright/cucumber config. The combined stable distribution is never rendered-tested.
 - **`firefoxHelper.js` is dead code.** It hard-codes `/opt/firefox/firefox` and a Windows path — a
@@ -227,6 +207,7 @@ order.
 ---
 
 ## 5. README / docs review
+
 - The **dependency graph** section (Layer 0–3) — ✅ ADDRESSED (D1/C1): a "load order, not CSS
   bundling" / standalone-delta note was added so the Layer diagram is no longer read as a promise about
   compiled CSS contents.
@@ -246,7 +227,9 @@ remove dead weight.
 > (dismissed, won't do) · ⬜ OPEN
 
 ### A. Reconcile declared dependencies with LESS reality (highest value)
+
 Pick one direction per package and make `package.json` and `main.less` agree:
+
 - **A1.** ✅ DONE — Resolved under the **standalone / delta** model (see C1). `fancy` and `extended`
   are now wired as proper delta skeletons: each imports base `values` for tokens only, declares its
   parent as a load-order dependency in `package.json` (no rule-bundling `@import`), and documents the
@@ -262,6 +245,7 @@ Pick one direction per package and make `package.json` and `main.less` agree:
   Consistent with the fancy/extended delta headers. No rule-output change (smoke: 18).
 
 ### B. Fix the empty packages
+
 - **B1.** ☑️ RESOLVED — `extended` and `fancy` are **intentional skeletons** for future LESS, not
   broken packages. Decision: keep them empty under the standalone/delta model; no content is invented.
   The smoke test (B2) explicitly tolerates them.
@@ -270,11 +254,13 @@ Pick one direction per package and make `package.json` and `main.less` agree:
   rules and tolerates the intentional skeletons (`extended`, `fancy`).
 
 ### C. Decide the cross-package import strategy
+
 - **C1.** ✅ DONE — Decided **(b) standalone / delta**: each package's `dist` carries only its own
   rules; consumers compose base + each layer in load order. `enterprise` is the explicit cumulative
   exception. Documented in `README.md` (Dependency graph note) and each delta package's `main.less`.
 
 ### D. README / docs
+
 - **D1.** ✅ DONE — Added a "load order, not CSS bundling" / standalone-delta note to the
   README dependency-graph section, so the Layer diagram is no longer read as a promise about CSS
   contents.
@@ -287,6 +273,7 @@ Pick one direction per package and make `package.json` and `main.less` agree:
   `.phone-hidden` hides everything below 1024px, not only phones.
 
 ### E. LESS hygiene
+
 - **E1.** ✅ DONE — Reordered `values/index.less` so `@headerHeight`/`@navigationHeight`/`@footerHeight`
   are declared before `@headerPanelHeight`. Pure refactor (lazy eval → identical compiled CSS).
 - **E2.** ✅ DONE — Renamed the `ide/frames/index.less` local `@headerHeight`/`@footerHeight` to
@@ -309,6 +296,7 @@ Pick one direction per package and make `package.json` and `main.less` agree:
   `dist/experimental.css` removed.
 
 ### F. Tests (carry-over from review.md)
+
 - **F1.** ☑️ RESOLVED (documented, per decision) — Decision: do **not** build out a separate enterprise
   test suite now. Its verification scope is documented in `enterprise/src/main/less/main.less` and the
   root README ("Test infrastructure notes"): `verify` runs `lint:less`, root `npm run smoke:dist`
@@ -330,6 +318,7 @@ Pick one direction per package and make `package.json` and `main.less` agree:
 - **F6.** ⬜ OPEN — Add a Chromium target alongside Firefox once parity matters.
 
 ### Priority order
+
 1. **A + B** — ✅ done: A1, A2, A3, B1, B2 (with C1, D1).
 2. **C + D** — ✅ done: C1 ✅, D1 ✅, D3 ✅; D2 ❌ N/A (dismissed).
 3. **E** — LESS hygiene: ✅ all done (E1, E2, E3, E4, E5).
@@ -398,6 +387,7 @@ several plausible hang sources. Ranked most → least likely:
    on a node with a flaky window manager or when the requested size is below the browser minimum.
 
 **Hardening — ✅ implemented for causes 1–3 (`pageHelper.js`):**
+
 - `pageClose()` now wraps both `driver.quit()` and `server.close()` in a `withTimeout()` race
   (`QUIT_TIMEOUT_MS` 15s, `SERVER_CLOSE_TIMEOUT_MS` 10s, both env-overridable). A stuck quit/close is
   logged and skipped instead of hanging `afterAll` forever — directly addresses causes 2 and 3, and
@@ -409,6 +399,7 @@ several plausible hang sources. Ranked most → least likely:
   even when a prior step is slow.
 
 **Still recommended (not yet applied):**
+
 - Explicit session-acquisition timeout / fail-fast when the grid is full, and optionally reap orphaned
   sessions before a run (cause 1, root).
 - Replace the stack-parsing page name with the explicit `pageHelper.pageName(...)` already passed in

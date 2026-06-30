@@ -1,0 +1,48 @@
+/* cta.less */
+
+// Call to action
+//
+// A large accent button and a full-width call-to-action banner for booking prompts. The button is
+// a link; it sets its own height (overriding the base `a` reset).
+//
+// Markup:
+// <a class="ctaButton" href="/get-started/">Get started</a>
+//
+// <section class="ctaBanner">
+//   <p class="ctaBannerText">Ready to get started?</p>
+//   <a class="ctaButton" href="/get-started/">Get started</a>
+// </section>
+//
+// Styleguide: fancy.cta
+
+.ctaButton {
+    display: inline-block;
+    height: @defaultHeight;
+    line-height: @defaultHeight;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: 0 @quadrupleDefaultPadding;
+    background: @blue-600;
+    color: @secondaryColor;
+    text-align: center;
+    text-decoration: none;
+    border-radius: @defaultBorderRadius;
+}
+
+.ctaButton:hover {
+    background: @blue-700;
+}
+
+/* Full-width booking prompt strip */
+.ctaBanner {
+    width: 100%;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @quadrupleDefaultPadding @doubleDefaultPadding;
+    background: @gray-100;
+    text-align: center;
+}
+
+.ctaBannerText {
+    margin-top: 0;
+    margin-bottom: @doubleDefaultPadding;
+    color: @senaryColor;
+}

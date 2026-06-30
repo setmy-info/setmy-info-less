@@ -1,0 +1,66 @@
+/* hero.less */
+
+// Hero banner
+//
+// Full-width banner: a background-image layer, a dim overlay for legibility, and a content layer
+// with the title and a call-to-action. Set the background image yourself on `.heroImage`.
+//
+// Markup:
+// <section class="hero">
+//   <div class="heroImage" style="background-image:url('placeholder.svg')"></div>
+//   <div class="heroOverlay"></div>
+//   <div class="heroContent centerBox">
+//     <h1 class="heroTitle">Welcome</h1>
+//     <p class="heroSubtitle">Your tagline here</p>
+//     <a class="ctaButton" href="/get-started/">Get started</a>
+//   </div>
+// </section>
+//
+// Styleguide: fancy.hero
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    overflow: hidden;
+}
+
+/* Background image layer — set background-image yourself */
+.heroImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+/* Dim layer for text legibility, above the image */
+.heroOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: @overlayBackgroundColor;
+}
+
+/* Title/actions layer, above image + overlay */
+.heroContent {
+    position: relative;
+    z-index: @z-index-1;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @quadrupleDefaultPadding @doubleDefaultPadding;
+    color: @secondaryColor;
+}
+
+.heroTitle {
+    margin-top: 0;
+    color: @secondaryColor;
+}
+
+.heroSubtitle {
+    margin-top: 0;
+    color: @secondaryColor;
+}

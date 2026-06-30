@@ -1,0 +1,54 @@
+doctype html
+html(lang="en")
+    include include/head.pug
+    body(id="body")
+        header(id="siteHeader" class="siteHeader")
+            div(class="siteHeaderInner centerBox")
+                a(class="siteLogo" href="/") Brand
+                nav(class="siteNav")
+                    a(class="siteNavItem" href="/services/") Services
+                    a(class="siteNavItem" href="/contact/") Contact
+                    a(class="siteNavCta" href="/get-started/") Get started
+        section(id="hero" class="hero")
+            div(class="heroImage" style="background-image:url('../src/test/resources/placeholder.svg')")
+            div(class="heroOverlay")
+            div(class="heroContent centerBox")
+                h1(class="heroTitle") Welcome
+                p(class="heroSubtitle") Your tagline here
+                a(id="ctaButton" class="ctaButton" href="/get-started/") Get started
+        main(class="centerBox")
+            section(class="pageSection")
+                div(class="tileGrid")
+                    a(class="tile" href="#")
+                        span(id="tileImage" class="tileImage" style="background-image:url('../src/test/resources/placeholder.svg')")
+                        span(class="tileTitle") Item one
+                        span(class="tileMeta") from 25 EUR
+                    a(class="tile" href="#")
+                        span(class="tileImage" style="background-image:url('../src/test/resources/placeholder.svg')")
+                        span(class="tileTitle") Item two
+                        span(class="tileMeta") 20 EUR
+                    a(class="tile" href="#")
+                        span(class="tileImage" style="background-image:url('../src/test/resources/placeholder.svg')")
+                        span(class="tileTitle") Item three
+                        span(class="tileMeta") 15 EUR
+            section(class="pageSection")
+                dl(id="priceList" class="priceList")
+                    div(class="priceRow")
+                        dt(class="priceName") Item A
+                        dd(class="priceValue") 15 EUR
+                    div(class="priceRow")
+                        dt(class="priceName") Item B
+                        dd(class="priceValue") from 40 EUR
+        section(class="ctaBanner")
+            p(class="ctaBannerText") Ready to get started?
+            a(class="ctaButton" href="/get-started/") Get started
+        footer(class="siteFooter")
+            div(class="siteFooterInner centerBox")
+                div(class="siteFooterInfo")
+                    p Brand
+                    p +372 5000 0000
+                nav(class="siteFooterNav")
+                    a(class="siteFooterLink" href="/about/") About
+                    a(class="siteFooterLink" href="/contact/") Contact
+                div(class="siteFooterSocial")
+                    a(class="siteFooterLink" href="#") Social

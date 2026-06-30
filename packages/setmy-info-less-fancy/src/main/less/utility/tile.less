@@ -1,0 +1,69 @@
+/* tile.less */
+
+// Service card + service grid
+//
+// A float-based responsive grid of card tiles (image, title, price): three columns on
+// wide screens, one column below the 1024px boundary. The card is a link; the base reset forces
+// `a { height }`, so the card overrides it back to auto.
+//
+// Markup:
+// <div class="tileGrid">
+//   <a class="tile" href="/services/one/">
+//     <span class="tileImage" style="background-image:url('placeholder.svg')"></span>
+//     <span class="tileTitle">Service one</span>
+//     <span class="tileMeta">from 25 EUR</span>
+//   </a>
+//   <!-- more .tile ... -->
+// </div>
+//
+// Styleguide: fancy.tile
+
+/* Clearfix row; negative gutter pairs with each card's padding */
+.tileGrid {
+    overflow: hidden;
+    margin-left: -@defaultPadding;
+    margin-right: -@defaultPadding;
+}
+
+.tile {
+    float: left;
+    width: 33.333%;
+    height: auto;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    padding: @defaultPadding;
+    box-sizing: border-box;
+    color: @textColor;
+    text-decoration: none;
+}
+
+/* Square-ish image area — set background-image yourself */
+.tileImage {
+    display: block;
+    width: 100%;
+    height: @sectionHeaderPictureHeight;
+    background-color: @gray-100;
+    background-position: center;
+    background-size: cover;
+    border-radius: @defaultBorderRadius;
+}
+
+.tileTitle {
+    display: block;
+    height: auto;
+    margin-top: @defaultPadding;
+    font-weight: bold;
+}
+
+.tileMeta {
+    display: block;
+    height: auto;
+    margin-top: @halfDefaultPadding;
+    color: @quinaryColor;
+}
+
+/* One column below the desktop boundary */
+@media only screen and (max-width: 1023px) {
+    .tile {
+        width: 100%;
+    }
+}

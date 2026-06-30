@@ -75,11 +75,37 @@ responsible for selecting the packages it needs and loading their stylesheets in
 tokens only (LESS variables emit no CSS), so it can reference shared variables without re-emitting
 base styles.
 
-`setmy-info-less-fancy` and `setmy-info-less-enterprise` are currently **skeletons** — wired into
-the load order but carrying no rules of their own yet, held as placeholders for future LESS.
-`setmy-info-less-extended` now carries the content components (sections, modal, cards, article)
-moved out of base; `setmy-info-less-ide` carries the frame presets; `setmy-info-less-experimental`
+`setmy-info-less-enterprise` is currently a **skeleton** — wired into the load order but carrying no
+rules of its own yet, held as a placeholder for future LESS. `setmy-info-less-extended` carries the
+content components (sections, modal, cards, article) plus promoted building blocks (button, forms,
+key-value) and content patterns (price list, media object, profile block, notice banner);
+`setmy-info-less-fancy` carries the polished public-web chrome (site header/nav, hero, card tile +
+grid, CTA, footer); `setmy-info-less-ide` carries the frame presets; `setmy-info-less-experimental`
 carries staged prototypes. None of them bundle base or any other package's CSS.
+
+### Module independence
+
+The modules are **not** all independent — they form a layered tree rooted at `base`. Each module's
+compiled `dist/main.css` is a **delta** (only its own rules); the consuming application composes the
+deltas in dependency order.
+
+| Module                         | Compile-time LESS imports   | Standalone CSS? | Its `dist/main.css` contains                    |
+|--------------------------------|-----------------------------|-----------------|-------------------------------------------------|
+| `setmy-info-less` (base)       | nothing cross-package       | ✅ yes           | resets, tokens, single-purpose utilities        |
+| `setmy-info-less-extended`     | base `values` (tokens only) | ❌ delta         | content components + building blocks + patterns |
+| `setmy-info-less-fancy`        | base `values` (tokens only) | ❌ delta         | public-web chrome (header/hero/tile/cta/footer) |
+| `setmy-info-less-enterprise`   | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                      |
+| `setmy-info-less-ide`          | base `values` (tokens only) | ❌ delta         | frame presets only                              |
+| `setmy-info-less-experimental` | base `values` (tokens only) | ❌ delta         | experimental utilities only                     |
+
+- **Only `base` ships a standalone stylesheet.** Every other module's `dist` is a delta that only
+  works once the consumer also loads its dependency-chain CSS first, in order.
+- **Compile-time coupling is tokens-only.** Every non-base module imports base's `values/index.less`
+  for LESS variables (which emit no CSS), so none can compile without base source present — but none
+  bundle another package's rules.
+- **npm dependency = load order, LESS import = tokens.** The declared `package.json` dependencies tell
+  you the order to load stylesheets in; they are not CSS bundling.
+- **No cycles** — it is a strict tree rooted at `base`. Same-tier modules don't depend on each other.
 
 ### Stability rules
 
@@ -166,18 +192,44 @@ This project includes:
 
 **main.less** is the entry point, which includes other files in the correct order.
 
-### Principles
+### CSS design principles
+
+These principles govern every module and every new class added to the framework:
+
+- **Token-driven.** Values come from `values/index.less` (colors, fonts, spacing, sizing, z-index)
+  — do not hardcode magic numbers or colors in a rule. New categories reference existing tokens so
+  the system stays consistent and themeable.
+- **camelCase, behavior-first naming.** Class names describe *what the class makes the element do*,
+  not how it looks: `.centerText`, `.verticalStretchPanel`, `.autoScrollBars`, `.noPadding`.
+- **Three kinds of selector** (use the right one):
+    - *Utility activator classes* — attached directly to an element to turn a behavior on
+      (`.hidden`, `.centerText`, `.floatLeft`, `.smi-flex-panel-row`).
+    - *Modifier classes* — suffix/companion classes that refine a base utility
+      (`.smi-flex-panel-left`, `.smi-flex-panel-column`, `.phone-hidden`).
+    - *Structural selectors* — intentionally target element names or fixed DOM anchors
+      (`html`, `body`, `main`, `#application`, `body.framesDefaultPadding`).
+- **Conservative, old-browser-friendly layout.** Prefer floats + `.centerBox` + clearfix
+  (`overflow: hidden`) for layout; do not introduce a new CSS Grid / Flexbox dependency for new work.
+  The framework is **Firefox-first**, modern evergreen browsers supported, legacy browsers best-effort
+  (see [Browser support](#browser-support)).
+- **Composable and non-breaking.** New classes must compose with existing ones and must not break the
+  `base` or `extended` modules. Keep the **base module minimal** — add new utility *categories* in the
+  higher layers (`extended`, `fancy`, …), not in `base`.
+- **Delta packaging.** Each module's compiled CSS contains only its own rules; the consuming app
+  composes the modules in dependency order (see [Module independence](#module-independence)).
+
+### Responsive principles
 
 UI is grouped by width breakpoints. The base module implements a single small-vs-wide boundary at
 **1024px**, plus a print block (`@media only screen`, no JS):
 
-| Category            | Width          | Behavior                                                              |
-|---------------------|----------------|----------------------------------------------------------------------|
-| **Watch**           | ≤ 639px        | Minimal UI; `.phone-hidden` removed; `#header-panel` and `main` heights adjust |
-| **Phone**           | 640px – 1023px | Small-screen UI; same hide/adjust rules as Watch                     |
-| **Pad / desktop**   | ≥ 1024px       | Full wide UI; `.pc-hidden` removed                                    |
-| **Default**         | all widths     | Base (no-media-query) styles; the ranges above layer on top          |
-| **Print**           | print media    | Styles for printable documents                                       |
+| Category          | Width          | Behavior                                                                       |
+|-------------------|----------------|--------------------------------------------------------------------------------|
+| **Watch**         | ≤ 639px        | Minimal UI; `.phone-hidden` removed; `#header-panel` and `main` heights adjust |
+| **Phone**         | 640px – 1023px | Small-screen UI; same hide/adjust rules as Watch                               |
+| **Pad / desktop** | ≥ 1024px       | Full wide UI; `.pc-hidden` removed                                             |
+| **Default**       | all widths     | Base (no-media-query) styles; the ranges above layer on top                    |
+| **Print**         | print media    | Styles for printable documents                                                 |
 
 Two responsive visibility utilities are driven by these breakpoints (exact inverses around the
 1024px line):
@@ -501,6 +553,69 @@ The two orders are governed by different mechanisms — do not conflate them:
   build depends on another package's `dist/` existing first.
 - **Publish order is significant** and must follow the table above, because `npm install` of a
   dependent resolves its declared `dependencies` from the registry.
+
+### Publishing only the packages that have content
+
+Some packages are currently **empty skeletons** (zero CSS rules) and should not be published yet.
+Run `npm run smoke:dist` to see which have content:
+
+| Package                        | Has rules?       | Publish?                            |
+|--------------------------------|------------------|-------------------------------------|
+| `setmy-info-less`              | ✅ yes            | ✅ publish                           |
+| `setmy-info-less-extended`     | ✅ yes            | ✅ publish                           |
+| `setmy-info-less-ide`          | ✅ yes            | ✅ publish (see dependency note)     |
+| `setmy-info-less-experimental` | ✅ yes            | ⚠️ internal only — keep unpublished |
+| `setmy-info-less-fancy`        | ✅ yes            | ✅ publish                           |
+| `setmy-info-less-enterprise`   | ❌ empty skeleton | ⏸ skip until it has rules           |
+
+**1. Block accidental publishes.** Mark the packages you are *not* publishing as private so
+`npm publish --workspaces` skips them (and a stray `npm publish` is refused):
+
+```jsonc
+// packages/setmy-info-less-fancy/package.json, -enterprise, -experimental
+{ "private": true }
+```
+
+Remove `"private": true` later, when a package gains real rules and you want to ship it.
+
+**2. Resolve the `ide → enterprise` dependency.** `setmy-info-less-ide` declares a dependency on the
+empty `setmy-info-less-enterprise`, so a consumer installing `ide` needs `enterprise` on the registry.
+Pick one:
+
+- **Re-point the dependency (recommended):** change `ide`'s dependency from `setmy-info-less-enterprise`
+  to `setmy-info-less` (its real compile/runtime need under the delta model). Then `ide` publishes
+  without the empty placeholder.
+- **Or publish the empty placeholder:** ship `setmy-info-less-enterprise` too (an empty but valid
+  package) so `ide`'s declared dependency resolves.
+
+**3. Restrict tarball contents.** Add a `files` allow-list so only built CSS ships (not `src/`, tests,
+or configs):
+
+```jsonc
+{ "files": ["dist", "README.md"] }
+```
+
+**4. Build fresh, then dry-run, then publish in dependency order:**
+
+```shell
+# from repository root
+npm run clean:all --workspaces && npm install && npm run build --workspaces && npm run smoke:dist
+
+# inspect exactly what each tarball will contain
+npm pack --dry-run --workspace setmy-info-less
+npm pack --dry-run --workspace setmy-info-less-extended
+npm pack --dry-run --workspace setmy-info-less-ide
+
+# log in once, then publish base → extended → ide (dependency order)
+npm login
+npm publish --workspace setmy-info-less
+npm publish --workspace setmy-info-less-extended
+npm publish --workspace setmy-info-less-ide
+```
+
+`npm publish --workspaces` (all at once) is only safe once every published package's dependencies are
+already on the registry **and** the skeletons are marked `private` — otherwise it will try to publish
+the empty packages or fail on the unresolved `enterprise` dependency.
 
 ## Load order
 

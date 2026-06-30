@@ -1,0 +1,41 @@
+/* profileBlock.less */
+
+// Profile block
+//
+// About-page pattern: a byline, narrative text, and a stacked portrait photo, in a single
+// readable-width column. Pair with a call-to-action button between the text and the photo.
+//
+// Markup:
+// <section class="profileBlock">
+//   <p class="profileByline">Name</p>
+//   <div class="profileText"><p>Intro text here.</p></div>
+//   <a class="btn btnPrimary" href="/get-started/">Get started</a>
+//   <img class="profilePhoto" src="placeholder.svg" alt="">
+// </section>
+//
+// Styleguide: extended.profileBlock
+
+/* Readable single column, centered */
+.profileBlock {
+    max-width: 75ch;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profileByline {
+    margin-top: 0;
+    margin-bottom: @defaultPadding;
+    color: @headingTextColor;
+    font-weight: bold;
+}
+
+.profileText {
+    line-height: @articleLineHeight;
+}
+
+/* Portrait stacked beneath the text */
+.profilePhoto {
+    display: block;
+    max-width: 100%;
+    margin-top: @doubleDefaultPadding;
+}

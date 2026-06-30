@@ -15,8 +15,16 @@ Subdirectory layout:
 
 Each subdirectory name matches the removed package it came from.
 Code here may be merged into stable modules, promoted to a new package, or discarded.
+
+Distribution model: STANDALONE / DELTA (no cumulative bundling). `dist/main.css` contains ONLY this
+package's own experimental rules — it does NOT bundle base/enterprise CSS. The base module's
+`values/index.less` is imported below for TOKENS ONLY (LESS variables emit no CSS). The dependency
+on `setmy-info-less-enterprise` is a load-order relationship declared in package.json. Final
+software loads the modules it needs in dependency order before this file.
 */
-@import url("../../../../setmy-info-less-enterprise/src/main/less/main.less");
+
+/* Base tokens only (no CSS output) — shared variables for the experimental rules below */
+@import url("../../../../setmy-info-less/src/main/less/values/index.less");
 
 /* Moved from setmy-info-less grid/ */
 @import url("grid/index.less");

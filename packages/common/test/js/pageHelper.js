@@ -9,7 +9,30 @@ const BROWSER = process.env.SELENIUM_BROWSER || 'firefox';
 const WINDOW_WIDTH = 2000;
 const WINDOW_HEIGHT = 1200;
 
+// Hard caps so cleanup in pageClose() can never hang the test runner (see review3.md §7.2).
+const QUIT_TIMEOUT_MS = Number(process.env.SELENIUM_QUIT_TIMEOUT_MS) || 15000;
+const SERVER_CLOSE_TIMEOUT_MS = Number(process.env.SERVER_CLOSE_TIMEOUT_MS) || 10000;
+
 const data = {};
+
+// Race a promise against a timeout. Resolves (never rejects) so a stuck quit()/close() is logged
+// and skipped rather than blocking afterAll forever. Returns true if it finished, false on timeout.
+function withTimeout(promise, ms, label) {
+    let timer;
+    const timeout = new Promise((resolve) => {
+        timer = setTimeout(() => {
+            console.warn(`pageHelper: ${label} did not finish within ${ms}ms — continuing without waiting.`);
+            resolve(false);
+        }, ms);
+    });
+    return Promise.race([
+        Promise.resolve(promise).then(() => true, (err) => {
+            console.warn(`pageHelper: ${label} failed: ${err && err.message ? err.message : err}`);
+            return true;
+        }),
+        timeout
+    ]).finally(() => clearTimeout(timer));
+}
 
 function pageName(name) {
     data.name = name;
@@ -27,8 +50,16 @@ async function startServer() {
     const app = express();
     app.use(express.static(packagesRoot));
     const server = http.createServer(app);
+    // Track live sockets so pageClose() can force them shut — server.close() alone waits for
+    // keep-alive connections (e.g. one Firefox holds open) to drain and can otherwise hang forever.
+    const sockets = new Set();
+    server.on('connection', (socket) => {
+        sockets.add(socket);
+        socket.on('close', () => sockets.delete(socket));
+    });
     await new Promise((resolve) => server.listen(0, resolve));
     data.server = server;
+    data.sockets = sockets;
     data.serverPort = server.address().port;
     data.packageName = path.basename(process.cwd());
 }
@@ -126,13 +157,34 @@ async function elementExpectations(elementId, exp) {
 }
 
 async function pageClose() {
+    // Always release the Selenium session — a leaked session counts against the grid's max-session
+    // cap and is the most likely cause of later runs hanging on Builder().build(). Bounded so a
+    // stuck quit() against an unhealthy node can't hang afterAll.
     if (data.driver) {
-        try { await data.driver.quit(); } catch (_) {}
+        await withTimeout(data.driver.quit(), QUIT_TIMEOUT_MS, 'driver.quit()');
         data.driver = null;
     }
     if (data.server) {
-        await new Promise((resolve) => data.server.close(resolve));
+        const server = data.server;
+        const sockets = data.sockets;
+        // Force lingering connections shut first so server.close() can actually complete.
+        if (typeof server.closeAllConnections === 'function') {
+            server.closeAllConnections();
+        } else if (sockets) {
+            for (const socket of sockets) {
+                socket.destroy();
+            }
+        }
+        if (sockets) {
+            sockets.clear();
+        }
+        await withTimeout(
+            new Promise((resolve) => server.close(resolve)),
+            SERVER_CLOSE_TIMEOUT_MS,
+            'server.close()'
+        );
         data.server = null;
+        data.sockets = null;
     }
 }
 

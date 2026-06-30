@@ -1,22 +1,20 @@
 # setmy-info-less-enterprise
 
-Meta-package that compiles the complete SMI LESS stack into a single CSS file. Installing
-this package brings in all Layer 0 and Layer 1 packages as dependencies and produces one
-`main.min.css` that contains everything: base resets, frame layouts, UI states, form helpers,
-table styles, and dashboard widget layout.
+Stable distribution layer intended for enterprise intranet and internal web applications.
 
-**For what:** Distributing a single pre-compiled CSS bundle to enterprise intranet and
-internal web applications. Instead of managing individual package CSS load order in HTML,
-teams include one file and get the full SMI LESS feature set. The compiled output is suitable
-for internal tools, employee portals, admin dashboards, back-office systems, and any
-browser-based application intended for use inside an organisation rather than the public web.
+> **Status: placeholder.** This package currently has **no CSS rules of its own** — it is held as a
+> skeleton for future enterprise-specific additions. Its compiled `dist/main.css` is intentionally
+> empty.
 
-**For who:**
-- **Enterprise application teams** building internal tools where the full feature set
-  is wanted without per-feature CSS management overhead.
-- **Intranet and ops teams** deploying standardised look-and-feel across multiple internal
-  web applications from a single versioned CSS artifact.
-- **CI/CD pipelines** that need one file to copy to a CDN or static server.
+**Distribution model: standalone / delta.** Like every package in this workspace, `setmy-info-less-enterprise`
+ships **only its own CSS** — it does **not** bundle base, extended, or any other package's CSS. There are no
+cumulative/meta packages here. The final application selects the packages it needs and loads their stylesheets
+in dependency order.
+
+**For what:** A reserved, versioned home for stable enterprise-only patterns once they exist. Until then it
+adds nothing to the cascade.
+
+**For who:** Enterprise application teams who will extend this layer with internal-app-specific rules.
 
 ## Install
 
@@ -26,22 +24,21 @@ npm i setmy-info-less-enterprise
 
 ## Dependencies
 
-Pulls in the full stack automatically:
+Declared dependencies express **load order**, not CSS bundling — load each package's stylesheet in this order:
 
 | Package | Role |
 |---|---|
 | `setmy-info-less` | Base tokens, resets, utility classes |
-| `setmy-info-less-extended` | IDE frame layout |
-| `setmy-info-less-ui` | Interaction states, typography, positioning |
-| `setmy-info-less-forms` | Form resets and helpers |
-| `setmy-info-less-data` | Table and data display |
+| `setmy-info-less-extended` | Content components (sections, modal, cards, article) |
 
 ## Usage
 
-One link tag replaces all individual package links:
+Load the dependency stylesheets first, then this package's own CSS (empty for now):
 
 ```html
-<link rel="stylesheet" href="node_modules/setmy-info-less-enterprise/dist/main.min.css">
+<link rel="stylesheet" href="node_modules/setmy-info-less/dist/main.css">
+<link rel="stylesheet" href="node_modules/setmy-info-less-extended/dist/main.css">
+<link rel="stylesheet" href="node_modules/setmy-info-less-enterprise/dist/main.css">
 ```
 
 ## Development
@@ -51,5 +48,5 @@ npm run build
 npm run lint:less
 ```
 
-Note: `verify`, `e2e`, and `cucumber` scripts are intentionally absent — this is a
-compilation-only package with no unique CSS classes of its own to test.
+Note: `e2e` and `cucumber` scripts are intentionally absent while this package has no CSS of its own.
+The repository-root `npm run smoke:dist` treats it as an intentional skeleton (zero rules allowed).

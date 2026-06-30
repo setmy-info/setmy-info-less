@@ -96,39 +96,39 @@ This is now documented in `README.md` (Publishing → "Build vs. publish order")
 
 ## 2a. Module independence
 
-**The modules are NOT all independent — they form a layered DAG rooted at `base`.** Wiring as of the
-current source (after the A1–A3 / E-series changes):
+> **Updated after Round 2 (Task 1): ALL packages are now standalone/delta — no cumulative packages.**
 
-| Module | Compile-time LESS imports | Independent? | Its `dist/main.css` is… |
+Each module's `dist/main.css` contains **only its own rules** and never re-emits a parent's CSS. The
+final application selects the packages it needs and loads their stylesheets in dependency order. Wiring
+as of the current source:
+
+| Module | Compile-time LESS imports | Standalone CSS? | Its `dist/main.css` is… |
 |---|---|---|---|
-| `setmy-info-less` (base) | nothing cross-package | ✅ **fully independent** | standalone, self-contained |
-| `setmy-info-less-extended` | base `values` (tokens only) | ❌ needs base to compile | empty delta (skeleton) |
-| `setmy-info-less-fancy` | base `values` (tokens only) | ❌ needs base to compile | empty delta (skeleton) |
-| `setmy-info-less-ide` | base `values` (tokens only) | ❌ needs base to compile | delta — frame rules only |
-| `setmy-info-less-enterprise` | base (full) + extended | ❌ cumulative | self-contained bundle (base + extended) |
-| `setmy-info-less-experimental` | enterprise (= base + extended) + own | ❌ cumulative | self-contained bundle + experimental |
+| `setmy-info-less` (base) | nothing cross-package | ✅ yes | resets, tokens, single-purpose utilities |
+| `setmy-info-less-extended` | base `values` (tokens only) | ❌ delta | content components (section/modal/card/article) |
+| `setmy-info-less-fancy` | base `values` (tokens only) | ❌ delta | empty skeleton |
+| `setmy-info-less-enterprise` | base `values` (tokens only) | ❌ delta | empty skeleton (placeholder) |
+| `setmy-info-less-ide` | base `values` (tokens only) | ❌ delta | frame rules only |
+| `setmy-info-less-experimental` | base `values` (tokens only) | ❌ delta | experimental utilities only |
 
 **Key points:**
 
-1. **Only `base` is independent.** Every other module `@import`s base's `values/index.less` at a
-   minimum, so none of them can even *compile* without base source present.
-2. **Two meanings of "independent" diverge:**
-   - *Compile independence:* only `base`.
-   - *Runtime / standalone-CSS independence:* `base`, `enterprise`, and `experimental` ship
-     self-contained stylesheets usable on their own. `extended` / `fancy` / `ide` are **deltas** —
-     their CSS is not usable alone; the consumer must load the parent CSS first (the load-order
-     dependency documented in each package's `main.less` header).
-3. **No cycles** — strict DAG. Same-tier modules don't depend on each other: `fancy` ↔ `enterprise`
-   are mutually independent, and `ide` ↔ `experimental` are mutually independent (they only share
-   upstream ancestors).
-4. **npm dependency vs. LESS import differ on purpose for the delta packages.** `fancy`'s npm dep is
-   `extended` but it LESS-imports only base tokens; `ide`'s npm dep is `enterprise` but it LESS-imports
-   only base tokens. Under the standalone/delta model (C1) the npm dependency expresses **load order**
-   while the LESS import is **tokens only**. `extended` (token-only), `enterprise` and `experimental`
-   (cumulative) have npm deps that match what they compile.
+1. **Only `base` ships a standalone stylesheet.** Every other module's `dist` is a **delta** — usable
+   only when the consumer also loads its dependency-chain CSS first, in order.
+2. **Compile-time coupling is tokens-only.** Every non-base module `@import`s base's `values/index.less`
+   for LESS variables (which emit no CSS), so none can *compile* without base source present, but none
+   *bundle* base (or any other package's) rules.
+3. **No cumulative/meta packages.** `enterprise` and `experimental` used to bundle their ancestors; as of
+   Task 1 they import base tokens only and emit just their own rules (enterprise: none yet; experimental:
+   its own utilities). This is the rule, enforced by `npm run smoke:dist` (which now expects `enterprise`
+   to be an empty skeleton).
+4. **npm dependency = load order, LESS import = tokens.** Declared `package.json` dependencies express the
+   order to load stylesheets in; they are not CSS bundling. This is intentional and uniform across all
+   delta packages.
+5. **No cycles** — strict DAG rooted at `base`.
 
-Net: `base` stands alone; everything else is layered on top of it — `enterprise` and `experimental`
-as full bundles, `extended` / `fancy` / `ide` as deltas that lean on a parent at load time.
+Net: `base` stands alone; every other package is a delta that the consuming app composes in dependency
+order.
 
 ---
 
@@ -334,3 +334,108 @@ Pick one direction per package and make `package.json` and `main.less` agree:
 2. **C + D** — ✅ done: C1 ✅, D1 ✅, D3 ✅; D2 ❌ N/A (dismissed).
 3. **E** — LESS hygiene: ✅ all done (E1, E2, E3, E4, E5).
 4. **F** — F1 ☑️, F2 ☑️, F3 ☑️ (resolved by decision/documentation), F4 ✅, F5 ✅ done; **F6 open**.
+
+---
+
+## 7. Round 2 — restructure + re-review (Tasks 1–6)
+
+A second batch of changes after the review above. This section records what changed and re-checks
+consistency.
+
+### 7.1 Structural changes applied
+
+- **Task 1 — all packages are now standalone/delta; cumulative packages removed.** `enterprise` and
+  `experimental` no longer bundle their ancestors' CSS. Both now import base `values` for tokens only
+  and emit just their own rules (`enterprise`: none yet — empty placeholder; `experimental`: its own
+  utilities, dropped from 291→137 rules). `dist` rule counts: base 133, extended 21, fancy 0 (skeleton),
+  enterprise 0 (skeleton), ide 18, experimental 137. `smoke:dist` expectations updated (`enterprise` →
+  skeleton, `extended` → content). IDE test fixtures (`include/head.pug`, `experimental-frames.pug`) now
+  load base CSS directly instead of the (now-empty) enterprise bundle.
+- **Task 2 — `section`, `modal`, `card`, `article` moved base → extended**, with their cucumber features,
+  pug fixtures, and new e2e specs (`card`/`modal`/`section`/`article.e2e.js`). Base `utility/index.less`
+  and extended `utility/index.less` rewired. Base README and extended README updated to match.
+- **Task 3 — `packages/setmy-info-less/src/experimental/`** (loose `experiment1/`, `experiment3/`
+  scratch HTML/CSS) **moved to `packages/setmy-info-less-experimental/src/experimental/`.** No code
+  referenced it; pure relocation.
+- **Task 4 — IDE `experimental-frames.pug` resize JS** refactored into reusable `makeColumnResizer` /
+  `makeRowResizer` helpers and wired so `horizontalRightDivider` (and, symmetrically,
+  `horizontalLeftDivider`) drag-resize the right/left up-and-bottom sections, in addition to the existing
+  `verticalDivider`.
+
+### 7.2 Task 5 — intermittent test-hang analysis (possible causes)
+
+The suite "sometimes" hangs for minutes, not always. The architecture (single Selenium Grid, one
+module-level `data` singleton in `pageHelper.js`, an Express server per suite, `maxWorkers: 1`) has
+several plausible hang sources. Ranked most → least likely:
+
+1. **Leaked Selenium sessions saturating the grid (8 max sessions).** Each suite's `pageIsRendered`
+   builds a driver; `afterAll → pageClose → driver.quit()` frees it. If a suite throws in `beforeAll`
+   after the driver is built, or `quit()` fails, the session leaks. Once ~8 sessions are orphaned, the
+   next `Builder().build()` blocks in the grid's session **queue** for minutes — the classic
+   intermittent multi-minute hang. Intermittency = whether prior orphans exist.
+2. **`server.close()` hanging on a lingering keep-alive socket.** `pageClose` does
+   `await new Promise(resolve => server.close(resolve))`. Node's `server.close()` waits for *existing*
+   connections to drain; it does **not** destroy them. If Firefox/Grid still holds a keep-alive
+   connection to the fixture server, the callback never fires and `afterAll` hangs forever (no timeout).
+3. **`driver.quit()` hanging against an unhealthy node**, with no timeout wrapper → `afterAll` never
+   completes.
+4. **No timeout on `Builder().build()` / session creation.** When the grid is busy, build() blocks on the
+   queue; Jest's 60s `testTimeout` may fire the hook timeout but the half-created session can linger,
+   compounding cause 1.
+5. **Shared module-level `data` singleton in `pageHelper.js`.** All e2e suites and *all* cucumber
+   scenarios in one process share one `data` object (driver, server, computedStyles). It is only safe
+   because `maxWorkers: 1` and cucumber's default serial mode prevent overlap. Turning on jest
+   `maxWorkers>1` or cucumber `--parallel` would clobber `data.driver`/`data.server` mid-flight →
+   deadlock/race. Fragile by design.
+6. **Fragile page-name detection (`testPageName.js`).** It parses `new Error().stack.split('\n')[2]` to
+   infer the fixture name. If the stack shape shifts (Node version, async wrapper, transform), it yields
+   the wrong name → wrong URL → up to a 30s `pageLoad` wait per suite (looks like a stall).
+7. **Cross-process grid contention.** CI + a local run, or any other consumer, sharing the same grid hits
+   the 8-session cap → queueing/hangs. Not visible from within one run.
+8. **Fixture resource 404s after refactors.** A wrong CSS/HTML href makes `driver.get` wait out the 30s
+   `pageLoad` timeout. The Task 1/2 fixture-href changes are a place to double-check.
+9. **Window-chrome ops on a headed node.** `about:blank` + `setRect` + innerWidth compensation can stall
+   on a node with a flaky window manager or when the requested size is below the browser minimum.
+
+**Hardening — ✅ implemented for causes 1–3 (`pageHelper.js`):**
+- `pageClose()` now wraps both `driver.quit()` and `server.close()` in a `withTimeout()` race
+  (`QUIT_TIMEOUT_MS` 15s, `SERVER_CLOSE_TIMEOUT_MS` 10s, both env-overridable). A stuck quit/close is
+  logged and skipped instead of hanging `afterAll` forever — directly addresses causes 2 and 3, and
+  bounds the leak window for cause 1.
+- `startServer()` tracks live sockets; `pageClose()` force-closes them (`server.closeAllConnections()`
+  on Node ≥18.2, else `socket.destroy()` per tracked socket) **before** `server.close()`, so a lingering
+  Firefox keep-alive connection can no longer block the close (cause 2).
+- `withTimeout()` resolves (never rejects) and the quit step always runs, so the session is released
+  even when a prior step is slow.
+
+**Still recommended (not yet applied):**
+- Explicit session-acquisition timeout / fail-fast when the grid is full, and optionally reap orphaned
+  sessions before a run (cause 1, root).
+- Replace the stack-parsing page name with the explicit `pageHelper.pageName(...)` already passed in
+  (cause 6).
+- Keep `maxWorkers: 1` + serial cucumber, or make `data` per-instance before enabling any parallelism
+  (cause 5).
+
+### 7.3 Task 6 — README / docs consistency
+
+- README dependency-graph note rewritten: **all packages are delta, no cumulative/meta exception**;
+  `enterprise` described as a placeholder; `extended` re-described as content components.
+- Stale enterprise package README (cumulative "meta-package" bundling removed `-ui`/`-forms`/`-data`)
+  rewritten to the delta/placeholder reality.
+- Base package README "What is included" corrected (removed moved `section`/`modal`/`card`/`article` and
+  classes that actually live in `experimental`; added a pointer to extended). Extended package README now
+  lists the moved component classes.
+- Load-order tree fixed (removed deleted `html-extended.less`); enterprise "Test infrastructure" note
+  corrected (no longer a meta-package / does not re-compile base).
+- Guides and notes in the root README (Load order, Changed, Project was created, TODO, developer/review
+  pointers) were **preserved** — only stale claims were corrected.
+
+### 7.4 Still open (carried forward)
+
+- **A2/A3 note:** with all packages delta, `enterprise` and `ide` npm deps remain **load-order** only;
+  they no longer bundle and are internally consistent.
+- **F6** — no Chromium target yet (Firefox-only via the grid).
+- **Test-hang hardening (7.2)** — `quit()`/`server.close()` timeouts + socket force-close ✅ implemented
+  in `pageHelper.js`; the grid-side fail-fast / orphan-reaping and page-name robustness remain open.
+- **3.x LESS hygiene** items E-series are done; the empty `print.less` / `watch.less` `body{}` blocks and
+  the (now `extended`-housed) content packages' own test depth remain minor follow-ups.

@@ -14,17 +14,18 @@ This workspace contains the following modules:
 
 ### Layer 1 — Extensions (depend on base)
 
-- [`setmy-info-less-extended`](packages/setmy-info-less-extended/README.md) — IDE-style frame building blocks (
-  NetBeans-style split-pane shell layout).
+- [`setmy-info-less-extended`](packages/setmy-info-less-extended/README.md) — extended content components: page
+  sections, modal/overlay, cards, and article typography (moved out of the base module to keep base minimal).
 
 ### Layer 2 — Consumer packages (depend on Layer 1)
 
 - [`setmy-info-less-fancy`](packages/setmy-info-less-fancy/README.md) — visually rich, polished patterns for
   public-facing web pages. Depends on `setmy-info-less-extended`. **Audience: web designers and front-end developers
   building consumer sites.**
-- [`setmy-info-less-enterprise`](packages/setmy-info-less-enterprise/README.md) — meta-package that compiles the stable
-  stack into one CSS file. For enterprise intranet and internal applications. Depends on `setmy-info-less-extended`. *
-  *Audience: enterprise application developers.**
+- [`setmy-info-less-enterprise`](packages/setmy-info-less-enterprise/README.md) — stable distribution layer for
+  enterprise intranet and internal applications. Currently a placeholder (no rules of its own yet); like every package
+  it ships only its own CSS — load it alongside the base/extended stylesheets in dependency order. Depends on
+  `setmy-info-less-extended`. **Audience: enterprise application developers.**
 
 ### Layer 3 — Specialist packages (depend on Layer 2)
 
@@ -50,11 +51,11 @@ This workspace contains the following modules:
 ```
 setmy-info-less  (Layer 0 — base. The smallest CSS needed for a GUI environment with basic content panels/panes.)
 │
-└── setmy-info-less-extended     (Layer 1 — IDE-style frame layout. Adds heavier helpers for more complex UI/UX/GUI compositions.)
+└── setmy-info-less-extended     (Layer 1 — extended content components: sections, modal/overlay, cards, article typography.)
     │
     ├── setmy-info-less-fancy    (Layer 2 — polished public web UI. Most of the design elements for richer, more elaborate UI/UX/GUI work.)
     │
-    └── setmy-info-less-enterprise  (Layer 2 — meta-package, compiles the stable stack. For enterprise intranet and internal applications.)
+    └── setmy-info-less-enterprise  (Layer 2 — stable distribution layer for enterprise intranet and internal applications. Placeholder for now.)
         │
         ├── setmy-info-less-ide          (Layer 3 — developer-tool UI patterns. IDE-like (NetBeans) UI/UX/GUI compositions.)
         │
@@ -66,16 +67,19 @@ setmy-info-less  (Layer 0 — base. The smallest CSS needed for a GUI environmen
             └── data/   (table styles, data patterns, dashboard widgets)
 ```
 
-The arrows show the **load order**, not CSS bundling. The stable packages follow a
-**standalone / delta** model: each package's `dist/main.css` contains only its own rules, so
-consumers load the stylesheets in dependency order (base first, then each layer on top). Each
-package imports the base module's `values/index.less` for tokens only (LESS variables emit no
-CSS), so it can reference shared variables without re-emitting the base styles.
+The arrows show the **load order**, not CSS bundling. **Every** package follows a
+**standalone / delta** model — there are no cumulative/meta packages: each package's `dist/main.css`
+contains **only its own rules** and never re-emits a parent's CSS. The final application is
+responsible for selecting the packages it needs and loading their stylesheets in dependency order
+(base first, then each layer on top). Each package imports the base module's `values/index.less` for
+tokens only (LESS variables emit no CSS), so it can reference shared variables without re-emitting
+base styles.
 
-`setmy-info-less-extended` and `setmy-info-less-fancy` are currently **skeletons** — wired into
-the load order but carrying no rules of their own yet, ready for future LESS. The
-`setmy-info-less-enterprise` meta-package is the one exception to the delta model: it deliberately
-aggregates the stable stack into a single combined stylesheet.
+`setmy-info-less-fancy` and `setmy-info-less-enterprise` are currently **skeletons** — wired into
+the load order but carrying no rules of their own yet, held as placeholders for future LESS.
+`setmy-info-less-extended` now carries the content components (sections, modal, cards, article)
+moved out of base; `setmy-info-less-ide` carries the frame presets; `setmy-info-less-experimental`
+carries staged prototypes. None of them bundle base or any other package's CSS.
 
 ### Stability rules
 
@@ -357,11 +361,10 @@ npm run e2e --workspaces
 
 #### Test infrastructure notes
 
-- **`setmy-info-less-enterprise` is verified by lint + dist smoke only.** As a meta-package it has no
-  e2e/cucumber suite of its own; its `verify` runs `lint:less`, and the repository-root
-  `npm run smoke:dist` checks its compiled CSS is non-empty. Its rendered behavior is already covered
-  by the base module's e2e/cucumber tests, since the enterprise stylesheet re-compiles the same base
-  source. (A dedicated render smoke test for the combined stylesheet is an open follow-up.)
+- **`setmy-info-less-enterprise` is a placeholder, verified by lint only.** It currently has no rules
+  of its own and no e2e/cucumber suite; its `verify` runs `lint:less`. The repository-root
+  `npm run smoke:dist` treats it as an intentional skeleton (zero rules allowed). Add tests when it
+  gains real content.
 - **Retained legacy test files (kept on purpose, not used).** `packages/common/test/js/firefoxHelper.js`
   and the per-package `playwright.config.js` stubs are leftovers from the Playwright era. The suite now
   runs on an external Selenium Grid via the Jest runner, so these are unused — they are retained as
@@ -509,7 +512,6 @@ The actual import tree as of the current codebase (`main.less` → group index �
         fonts/index.less
       html/index.less
         html.less
-        html-extended.less
       utility/index.less
         visibility.less
         spacing.less

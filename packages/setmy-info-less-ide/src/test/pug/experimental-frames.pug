@@ -6,7 +6,7 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(name="description", content="HTML 5 CSS test pages")
         meta(name="author", content="Imre Tabur")
-        link(rel="stylesheet", type="text/css", href="../../setmy-info-less-enterprise/dist/main.min.css")
+        link(rel="stylesheet", type="text/css", href="../../setmy-info-less/dist/main.min.css")
         link(rel="stylesheet", type="text/css", href="main.css")
         link(rel="stylesheet", type="text/css", href="experimental.css")
     body(id="body" class="framesDefaultPadding")
@@ -83,34 +83,70 @@ html(lang="en")
                 li(class="floatClear")
 
         script.
-            // Broken for window re-sizing.
-            const verticalDivider = document.getElementById('verticalDivider');
-            const leftPanel = document.querySelector('.sectionLeft');
-            const rightPanel = document.querySelector('.sectionRight');
-            const computedStyleLeft = window.getComputedStyle(leftPanel);
-            const computedStyleRight = window.getComputedStyle(rightPanel);
-            console.log(computedStyleLeft)
-            console.log(computedStyleRight)
-            let isDragging = false;
-            verticalDivider.addEventListener('mousedown', function (e) {
-                isDragging = true;
-                document.body.style.cursor = 'col-resize';
-                e.preventDefault();
-            });
+            // Horizontal resize: the vertical divider drags the left/right panes wider/narrower.
+            function makeColumnResizer(dividerId, leftSelector, rightSelector) {
+                const divider = document.getElementById(dividerId);
+                if (!divider) return;
+                const left = document.querySelector(leftSelector);
+                const right = document.querySelector(rightSelector);
+                if (!left || !right) return;
+                let dragging = false;
+                divider.addEventListener('mousedown', function (e) {
+                    dragging = true;
+                    document.body.style.cursor = 'col-resize';
+                    e.preventDefault();
+                });
+                document.addEventListener('mousemove', function (e) {
+                    if (!dragging) return;
+                    const container = divider.parentElement;
+                    const rect = container.getBoundingClientRect();
+                    const totalWidth = container.clientWidth;
+                    const minWidth = 100;
+                    const newLeftWidth = e.clientX - rect.left;
+                    if (newLeftWidth < minWidth || newLeftWidth > totalWidth - minWidth - divider.offsetWidth) return;
+                    left.style.width = `${newLeftWidth}px`;
+                    right.style.width = `${totalWidth - newLeftWidth - divider.offsetWidth}px`;
+                });
+                document.addEventListener('mouseup', function () {
+                    if (dragging) {
+                        dragging = false;
+                        document.body.style.cursor = 'default';
+                    }
+                });
+            }
 
-            document.addEventListener('mousemove', function (e) {
-                if (!isDragging) return;
-                const totalWidth = verticalDivider.parentElement.clientWidth;
-                const newLeftWidth = e.clientX;
-                const minWidth = 100;
-                if (newLeftWidth < minWidth || newLeftWidth > totalWidth - minWidth) return;
-                leftPanel.style.width = `${newLeftWidth}px`;
-                rightPanel.style.width = `${totalWidth - newLeftWidth - verticalDivider.offsetWidth}px`;
-            });
+            // Vertical resize: a horizontal divider drags its pane's upper/lower sections taller/shorter.
+            function makeRowResizer(dividerId, upSelector, bottomSelector) {
+                const divider = document.getElementById(dividerId);
+                if (!divider) return;
+                const up = document.querySelector(upSelector);
+                const bottom = document.querySelector(bottomSelector);
+                if (!up || !bottom) return;
+                let dragging = false;
+                divider.addEventListener('mousedown', function (e) {
+                    dragging = true;
+                    document.body.style.cursor = 'row-resize';
+                    e.preventDefault();
+                });
+                document.addEventListener('mousemove', function (e) {
+                    if (!dragging) return;
+                    const container = divider.parentElement;
+                    const rect = container.getBoundingClientRect();
+                    const totalHeight = container.clientHeight;
+                    const minHeight = 40;
+                    const newUpHeight = e.clientY - rect.top;
+                    if (newUpHeight < minHeight || newUpHeight > totalHeight - minHeight - divider.offsetHeight) return;
+                    up.style.height = `${newUpHeight}px`;
+                    bottom.style.height = `${totalHeight - newUpHeight - divider.offsetHeight}px`;
+                });
+                document.addEventListener('mouseup', function () {
+                    if (dragging) {
+                        dragging = false;
+                        document.body.style.cursor = 'default';
+                    }
+                });
+            }
 
-            document.addEventListener('mouseup', function () {
-                if (isDragging) {
-                    isDragging = false;
-                    document.body.style.cursor = 'default';
-                }
-            });
+            makeColumnResizer('verticalDivider', '.sectionLeft', '.sectionRight');
+            makeRowResizer('horizontalRightDivider', '.sectionRightUp', '.sectionRightBottom');
+            makeRowResizer('horizontalLeftDivider', '.sectionLeftUp', '.sectionLeftBottom');

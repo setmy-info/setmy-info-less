@@ -4,5 +4,7 @@ head(id="head")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(name="description", content="HTML 5 CSS test pages")
     meta(name="author", content="Imre Tabur")
-    link(rel="stylesheet", type="text/css", href="../../setmy-info-less-enterprise/dist/main.min.css")
+    //- Delta model: load each module's own CSS in dependency order. extended/enterprise are
+    //- empty skeletons today, so base supplies the resets the frame layout sits on.
+    link(rel="stylesheet", type="text/css", href="../../setmy-info-less/dist/main.min.css")
     link(rel="stylesheet", type="text/css", href="main.css")

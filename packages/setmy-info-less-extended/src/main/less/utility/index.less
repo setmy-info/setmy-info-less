@@ -1,1 +1,11 @@
-/* Extended utility classes — add @import lines here as the module grows. */
+/*
+Extended utility classes.
+
+Higher-level content patterns moved here from the base module: page sections, modal/overlay,
+cards, and article typography. These reference base design tokens (imported for tokens only by
+this package's main.less) but live in the extended layer so the base module stays minimal.
+*/
+@import url("section.less");
+@import url("modal.less");
+@import url("card.less");
+@import url("article.less");

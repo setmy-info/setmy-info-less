@@ -17,9 +17,9 @@ const path = require('path');
 //   'skeleton' -> dist/main.css must exist; zero rules is allowed (placeholder for future LESS)
 const EXPECTATIONS = {
     'setmy-info-less': 'content',
-    'setmy-info-less-extended': 'skeleton',
+    'setmy-info-less-extended': 'content',
     'setmy-info-less-fancy': 'skeleton',
-    'setmy-info-less-enterprise': 'content',
+    'setmy-info-less-enterprise': 'skeleton',
     'setmy-info-less-ide': 'content',
     'setmy-info-less-experimental': 'content'
 };

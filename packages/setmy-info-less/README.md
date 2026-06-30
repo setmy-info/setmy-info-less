@@ -39,22 +39,25 @@ Or from CDN:
 
 | Group | Classes |
 |---|---|
-| Values | Color palette, font stack, spacing scale, z-index scale |
+| Values | Color palette, font stack, spacing scale, z-index scale (tokens only) |
 | HTML resets | `html`, `body`, `h1`–`h6`, `p`, `ul`, `li`, `hr`, `small` |
 | Visibility | `.hidden`, `.invisible`, `.visible`, `.phone-hidden`, `.pc-hidden` |
 | Spacing | `.noPadding`, `.noMargin`, `.defaultPadding`, `.doublePadding` etc. |
-| Sizing | `.maxWidth`, `.halfWidth`, `.quarterWidth`, `.fullHeight` etc. |
-| Layout | `.floatLeft`, `.floatRight`, `.floatClear`, `.centerBox`, `.tableElement` |
-| Scroll | `.autoScrollBars`, `.verticalScrollBar`, `.noScrollBar` |
-| Text | `.asUppercase`, `.asLowercase`, `.asCapitalize`, `.textRight` etc. |
-| Cursor | `.textCursor`, `.pointerCursor`, `.notAllowedCursor` |
+| Sizing | `.maxWidth`, `.halfWidth`, `.quarterWidth`, `.threeQuartersWidth`, `.elementHeight` etc. |
+| Layout | `.floatLeft`, `.floatRight`, `.floatClear`, `.noWrap`, `.tableElement`, `.centerBox`, `.centerText`, `.leftText`, `.rightText` |
+| Scroll | `.autoScrollBars`, `.verticalScrollBar`, `.horizontalScrollBar`, `.noScrollBars` etc. |
+| Text | `.asUppercase`, `.asLowercase`, `.firstAsUppercase`, `.textColorGray` |
+| Cursor | `.textCursor`, `.pointerCursor`, `.cursorVerticalResize`, `.cursorHorizontalResize` |
 | Panels | `.verticalStretchPanel`, `.horizontalStretchPanel` |
-| Visual style | `.normalBackground`, `.defaultBorder`, `.defaultShadow`, `.defaultRadius` |
-| Colors | `.bgPrimary`, `.bgSuccess`, `.textMuted`, `.textDanger` etc. |
-| Named colors | `.AliceBlue`, `.Lavender`, `.Snow` etc. |
-| Components | Button (`.btn`, `.btnGroup`), modal (`.overlay`, `.modal`), card (`.card`), section (`.fullViewport`, `.pageSection`), key-value (`.kvList`), article (`.articleBody`) |
-| Columns | `.grid2col`, `.grid3col`, `.grid4col` (float-based, IE 8+) |
+| Visual style | `.normalBackground`, `.defaultBorder`, `.defaultShadow`, `.defaultRadius`, `.minifiedText` |
+| Notes | `.importantNote`, `.timeLabel`, `.detailed` |
+| Flex | `.smi-flex-panel` + `-row`/`-column`/`-left`/`-center`/`-right` modifiers |
+| Components | structural anchors only: `canvas#background`, `#application` |
 | Devices | `@media` blocks for phone, pad, watch, print |
+
+> Higher-level content components — page **sections**, **modal**/overlay, **cards**, and **article**
+> typography — live in [`setmy-info-less-extended`](../setmy-info-less-extended/README.md), not here.
+> The base module stays minimal (resets, tokens, single-purpose utilities).
 
 ## Responsive breakpoints
 

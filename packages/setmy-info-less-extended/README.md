@@ -1,15 +1,14 @@
 # setmy-info-less-extended
 
-Extended LESS package for optional layout additions and experiments on top of the base module.
-This package no longer owns the NetBeans-inspired IDE frame shell; that stable frame layout now
-lives in `setmy-info-less-ide`. The extended package remains the place for alternative or
-experimental additions such as the experimental frames module.
+Extended content components on top of the base module: page sections, modal/overlay, cards, and
+article typography. These higher-level patterns were moved out of the base package to keep the base
+minimal (resets, tokens, single-purpose utilities). This package does **not** own the
+NetBeans-inspired IDE frame shell — that lives in `setmy-info-less-ide`.
 
-**For what:** Trying optional layout additions on top of the base package without pulling in the
-IDE-specific module.
+**For what:** Adding common content patterns (sections, modals, cards, article text) on top of the
+base utilities.
 
-**For who:** Front-end developers who want extra layout experiments beyond the base package while
-keeping the stable IDE shell rules separate.
+**For who:** Front-end developers building page content on top of the base module.
 
 ## Install
 
@@ -40,8 +39,13 @@ Or from CDN:
 
 | Group | Classes |
 |---|---|
-| Extended additions | Optional layout-related additions on top of the base package |
-| Experimental frames | Alternative frame combinations (unstable) |
+| Section | `.fullViewport`, `.pageSection`, `.pageSectionNarrow`, `.sectionContentCenter`, `.sectionContentRow` |
+| Modal | `.overlay`, `.modal`, `.modalHeader`, `.modalBody`, `.modalFooter`, `.modalClose` |
+| Card | `.card`, `.cardTitle`, `.cardBody`, `.cardGrid` |
+| Article | `.articleBody`, `.codeInline`, `.codePre`, `.blockquote`, `.definitionTerm`, `.definitionDesc` |
+
+These reference base design tokens but ship only as this package's own CSS (standalone/delta — base
+CSS is not bundled). Load the base stylesheet before this one.
 
 ## Development
 

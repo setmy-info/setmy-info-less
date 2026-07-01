@@ -75,13 +75,14 @@ responsible for selecting the packages it needs and loading their stylesheets in
 tokens only (LESS variables emit no CSS), so it can reference shared variables without re-emitting
 base styles.
 
-`setmy-info-less-enterprise` is currently a **skeleton** — wired into the load order but carrying no
-rules of its own yet, held as a placeholder for future LESS. `setmy-info-less-extended` carries the
-content components (sections, modal, cards, article) plus promoted building blocks (button, forms,
-key-value) and content patterns (price list, media object, profile block, notice banner);
-`setmy-info-less-fancy` carries the polished public-web chrome (site header/nav, hero, card tile +
-grid, CTA, footer); `setmy-info-less-ide` carries the frame presets; `setmy-info-less-experimental`
-carries staged prototypes. None of them bundle base or any other package's CSS.
+`setmy-info-less-fancy` and `setmy-info-less-enterprise` are currently **skeletons** — wired into the
+load order but carrying no rules of their own yet, held as placeholders for future LESS.
+`setmy-info-less-extended` carries the content components (sections, modal, cards, article);
+`setmy-info-less-ide` carries the frame presets; `setmy-info-less-experimental` carries all
+**unvalidated** staged prototypes — building blocks (button, forms, key-value), content patterns
+(price list, media object, profile block, notice banner), and public-web chrome (site header/nav,
+hero, tiles + grid, CTA, footer) under `web/` — none of which have passed the refactorial validation
+process yet. None of the packages bundle base or any other package's CSS.
 
 ### Module independence
 
@@ -92,11 +93,11 @@ deltas in dependency order.
 | Module                         | Compile-time LESS imports   | Standalone CSS? | Its `dist/main.css` contains                    |
 |--------------------------------|-----------------------------|-----------------|-------------------------------------------------|
 | `setmy-info-less` (base)       | nothing cross-package       | ✅ yes           | resets, tokens, single-purpose utilities        |
-| `setmy-info-less-extended`     | base `values` (tokens only) | ❌ delta         | content components + building blocks + patterns |
-| `setmy-info-less-fancy`        | base `values` (tokens only) | ❌ delta         | public-web chrome (header/hero/tile/cta/footer) |
+| `setmy-info-less-extended`     | base `values` (tokens only) | ❌ delta         | content components (section/modal/card/article) |
+| `setmy-info-less-fancy`        | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                      |
 | `setmy-info-less-enterprise`   | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                      |
 | `setmy-info-less-ide`          | base `values` (tokens only) | ❌ delta         | frame presets only                              |
-| `setmy-info-less-experimental` | base `values` (tokens only) | ❌ delta         | experimental utilities only                     |
+| `setmy-info-less-experimental` | base `values` (tokens only) | ❌ delta         | staged prototypes (utilities, patterns, web chrome) |
 
 - **Only `base` ships a standalone stylesheet.** Every other module's `dist` is a delta that only
   works once the consumer also loads its dependency-chain CSS first, in order.
@@ -565,7 +566,7 @@ Run `npm run smoke:dist` to see which have content:
 | `setmy-info-less-extended`     | ✅ yes            | ✅ publish                           |
 | `setmy-info-less-ide`          | ✅ yes            | ✅ publish (see dependency note)     |
 | `setmy-info-less-experimental` | ✅ yes            | ⚠️ internal only — keep unpublished |
-| `setmy-info-less-fancy`        | ✅ yes            | ✅ publish                           |
+| `setmy-info-less-fancy`        | ❌ empty skeleton | ⏸ skip until it has rules           |
 | `setmy-info-less-enterprise`   | ❌ empty skeleton | ⏸ skip until it has rules           |
 
 **1. Block accidental publishes.** Mark the packages you are *not* publishing as private so

@@ -1,0 +1,35 @@
+/* langToggle.less */
+
+// Language toggle
+//
+// A small inline row of language options (e.g. EN / ET) for an i18n site. Float-based; mark the
+// current language with the active modifier. Combine with `.siteHeader` / `.siteNav`.
+//
+// Markup:
+// <div class="langToggle">
+//   <a class="langToggleItem langToggleItemActive" href="?lang=en">EN</a>
+//   <a class="langToggleItem" href="?lang=et">ET</a>
+// </div>
+//
+// Styleguide: web.langToggle
+
+/* Clearfix row of language options */
+.langToggle {
+    overflow: hidden;
+}
+
+.langToggleItem {
+    float: left;
+    height: @defaultHeight;
+    line-height: @defaultHeight;
+    padding-left: @halfDefaultPadding;
+    padding-right: @halfDefaultPadding;
+    color: @quaternaryColor;
+    text-decoration: none;
+}
+
+/* The currently selected language */
+.langToggleItemActive {
+    color: @textColor;
+    font-weight: bold;
+}

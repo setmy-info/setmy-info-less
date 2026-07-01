@@ -65,7 +65,75 @@ software loads the modules it needs in dependency order before this file.
 Utility classes moved from setmy-info-less (base package, utility/ folder).
 Staged here for consolidation — may be promoted to a stable module, merged back, or discarded.
 */
-/* button.less and keyvalue.less were promoted to setmy-info-less-extended. */
+/* button.less */
+/* Base button — browser reset + interactive affordances */
+.btn {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  background: transparent;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: inherit;
+  line-height: 1;
+  border-radius: 6px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.btn:hover {
+  opacity: 0.85;
+}
+.btn:focus {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+/* Filled primary button */
+.btnPrimary {
+  background-color: black;
+  color: #ffffff;
+  border-color: black;
+}
+/* Outlined secondary button */
+.btnSecondary {
+  background-color: #ffffff;
+  color: black;
+  border-color: black;
+}
+/* Compact button variant */
+.btnSmall {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 5px 10px;
+  font-size: 75%;
+}
+/* Joined button group — uses inline-block to avoid flex dependency */
+.btnGroup {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0;
+}
+.btnGroup .btnGroupItem {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  border-radius: 0;
+  /* Collapse adjacent borders */
+}
+.btnGroup .btnGroupItem:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.btnGroup .btnGroupItem:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.btnGroup .btnGroupItem:not(:first-child) {
+  margin-left: -1px;
+}
 /* color.less */
 /* Semantic background color activators — built from palette tokens */
 .bgPrimary {
@@ -161,6 +229,35 @@ Staged here for consolidation — may be promoted to a stable module, merged bac
 }
 .WhiteSmoke {
   background-color: whitesmoke;
+}
+/* keyvalue.less */
+/* Container for a structured list of label-value pairs — display:table works in IE8+ */
+.kvList {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+/* A single label-value pair row */
+.kvRow {
+  display: table-row;
+}
+/* Label side — muted color, fixed min-width */
+.kvLabel {
+  display: table-cell;
+  min-width: 120px;
+  font-weight: bold;
+  color: dimgray;
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  vertical-align: top;
+}
+/* Value side */
+.kvValue {
+  display: table-cell;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: top;
 }
 /* Moved from setmy-info-less-ui */
 /*
@@ -473,12 +570,152 @@ Staged here for consolidation — may be promoted to a stable module or merged.
 .aspectRatio1x1 {
   aspect-ratio: 1 / 1;
 }
+/* Content patterns (unvalidated — staged here) */
+/* priceList.less */
+.priceList {
+  margin: 0;
+  padding: 0;
+}
+/* One name/value row; clears the floated name + value */
+.priceRow {
+  overflow: hidden;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  border-bottom: 1px solid #cccccc;
+}
+.priceName {
+  float: left;
+  margin: 0;
+  color: black;
+}
+.priceValue {
+  float: right;
+  margin: 0;
+  color: dimgray;
+  font-weight: bold;
+}
+/* mediaObject.less */
+/* Contains the floated figure */
+.mediaObject {
+  overflow: hidden;
+}
+.mediaFigure {
+  float: left;
+  margin-right: 20px;
+}
+.mediaFigure > img {
+  display: block;
+  max-width: 100%;
+}
+/* Own block formatting context so the body sits beside the figure */
+.mediaBody {
+  overflow: hidden;
+}
+/* Modifier: figure on the right */
+.mediaFigureRight {
+  float: right;
+  margin-left: 20px;
+  margin-right: 0;
+}
+/* profileBlock.less */
+/* Readable single column, centered */
+.profileBlock {
+  max-width: 75ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.profileByline {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: dimgray;
+  font-weight: bold;
+}
+.profileText {
+  line-height: 1.7;
+}
+/* Portrait stacked beneath the text */
+.profilePhoto {
+  display: block;
+  max-width: 100%;
+  margin-top: 20px;
+}
+/* noticeBanner.less */
+.noticeBanner {
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px 20px;
+  background: #fef3c7;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  border-left: 2px solid #f59e0b;
+  color: #333333;
+}
+.noticeBannerStrong {
+  font-weight: bold;
+}
 /* Moved from setmy-info-less-forms */
 /*
 Form utility classes.
-forms.less was promoted to setmy-info-less-extended. This index is kept as a placeholder for
-future experimental form prototypes.
+Staged here for consolidation — may be promoted to a stable module or merged.
 */
+/* forms.less */
+/* Base resets for form controls */
+input,
+select,
+textarea {
+  box-sizing: border-box;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: inherit;
+}
+fieldset {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #cccccc;
+  padding: 10px;
+  margin: 0;
+}
+legend {
+  padding-left: 5px;
+  padding-right: 5px;
+  font-weight: bold;
+}
+/* Label + field wrapper — block column layout */
+.formGroup {
+  display: block;
+  margin-bottom: 10px;
+}
+/* Stretches an input to fill its container */
+.fullWidthInput {
+  width: 100%;
+  box-sizing: border-box;
+}
+/* Clearfix for inline form rows with floated children */
+.formRow {
+  overflow: hidden;
+}
+/* Label and field on the same horizontal line — display:table works in IE8+ */
+.inlineLabel {
+  display: table;
+  width: 100%;
+}
+.inlineLabel > label {
+  display: table-cell;
+  vertical-align: middle;
+  white-space: nowrap;
+  padding-right: 10px;
+  width: 1px;
+}
+.inlineLabel > input,
+.inlineLabel > select,
+.inlineLabel > textarea {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+}
+/* Appends a red asterisk to mark required fields */
+.requiredMark::after {
+  content: " *";
+  color: #ef4444;
+}
 /* Moved from setmy-info-less-data */
 /*
 Data presentation utility classes.
@@ -596,6 +833,275 @@ table {
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+}
+/* Public-web chrome prototypes */
+/*
+Public-web chrome (unvalidated prototypes) — site header/nav, hero, content tiles + grid, CTA, footer.
+Staged here until they pass the refactorial validation process; may be promoted to a stable module.
+Float-based, token-driven.
+*/
+/* header.less */
+.siteHeader {
+  width: 100%;
+  background: #ffffff;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  border-bottom: 1px solid #cccccc;
+}
+/* Clearfix for the floated logo + nav */
+.siteHeaderInner {
+  overflow: hidden;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 0 20px;
+}
+.siteLogo {
+  float: left;
+  height: 50px;
+  line-height: 50px;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+.siteNav {
+  float: right;
+}
+.siteNavItem {
+  float: left;
+  height: 50px;
+  line-height: 50px;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 0 10px;
+  color: black;
+  text-decoration: none;
+}
+.siteNavItem:hover {
+  color: #2563eb;
+}
+/* Prominent booking action inside the nav */
+.siteNavCta {
+  float: left;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 10px;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 0 20px;
+  background: #2563eb;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+}
+.siteNavCta:hover {
+  background: #1d4ed8;
+}
+/* hero.less */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  overflow: hidden;
+}
+/* Background image layer — set background-image yourself */
+.heroImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+/* Dim layer for text legibility, above the image */
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+/* Title/actions layer, above image + overlay */
+.heroContent {
+  position: relative;
+  z-index: 100;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 40px 20px;
+  color: #ffffff;
+}
+.heroTitle {
+  margin-top: 0;
+  color: #ffffff;
+}
+.heroSubtitle {
+  margin-top: 0;
+  color: #ffffff;
+}
+/* tile.less */
+/* Clearfix row; negative gutter pairs with each card's padding */
+.tileGrid {
+  overflow: hidden;
+  margin-left: -10px;
+  margin-right: -10px;
+}
+.tile {
+  float: left;
+  width: 33.333%;
+  height: auto;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 10px;
+  box-sizing: border-box;
+  color: black;
+  text-decoration: none;
+}
+/* Square-ish image area — set background-image yourself */
+.tileImage {
+  display: block;
+  width: 100%;
+  height: 200px;
+  background-color: #f3f4f6;
+  background-position: center;
+  background-size: cover;
+  border-radius: 6px;
+}
+.tileTitle {
+  display: block;
+  height: auto;
+  margin-top: 10px;
+  font-weight: bold;
+}
+.tileMeta {
+  display: block;
+  height: auto;
+  margin-top: 5px;
+  color: dimgray;
+}
+/* One column below the desktop boundary */
+@media only screen and (max-width: 1023px) {
+  .tile {
+    width: 100%;
+  }
+}
+/* cta.less */
+.ctaButton {
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 0 40px;
+  background: #2563eb;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+}
+.ctaButton:hover {
+  background: #1d4ed8;
+}
+/* Full-width booking prompt strip */
+.ctaBanner {
+  width: 100%;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 40px 20px;
+  background: #f3f4f6;
+  text-align: center;
+}
+.ctaBannerText {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333333;
+}
+/* footer.less */
+.siteFooter {
+  width: 100%;
+  background: #333333;
+  color: #e5e7eb;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 20px 0;
+}
+/* Clearfix for the floated columns */
+.siteFooterInner {
+  overflow: hidden;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
+  padding: 0 20px;
+}
+.siteFooterInfo {
+  float: left;
+  width: 50%;
+}
+.siteFooterNav {
+  float: left;
+  width: 25%;
+}
+.siteFooterSocial {
+  float: right;
+  width: 25%;
+  text-align: right;
+}
+.siteFooterLink {
+  display: block;
+  height: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #e5e7eb;
+  text-decoration: none;
+}
+.siteFooterLink:hover {
+  color: #ffffff;
+}
+/* Stack the columns below the desktop boundary */
+@media only screen and (max-width: 1023px) {
+  .siteFooterInfo,
+  .siteFooterNav,
+  .siteFooterSocial {
+    float: none;
+    width: 100%;
+    text-align: left;
+  }
+}
+/* Small combinable blocks for a marketing SPA (setmy.info-style) */
+/* langToggle.less */
+/* Clearfix row of language options */
+.langToggle {
+  overflow: hidden;
+}
+.langToggleItem {
+  float: left;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #999999;
+  text-decoration: none;
+}
+/* The currently selected language */
+.langToggleItemActive {
+  color: black;
+  font-weight: bold;
+}
+/* scrollHint.less */
+.scrollHint {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #999999;
+  font-size: 2em;
+  line-height: 1;
+  text-align: center;
+}
+/* slogan.less */
+.slogan {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: dimgray;
+  font-size: 105%;
+  text-align: center;
+}
+/* sectionLead.less */
+.sectionLead {
+  max-width: 75ch;
+  margin-left: auto;
+  margin-right: auto;
+  color: dimgray;
+  line-height: 1.7;
+  text-align: center;
 }
 /* Experimental scratch space */
 /* Experimental utility classes — add prototype imports here. Contents may change without notice. */

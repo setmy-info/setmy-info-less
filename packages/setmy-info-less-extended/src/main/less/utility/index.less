@@ -1,28 +1,11 @@
 /*
 Extended utility classes.
 
-Higher-level content patterns on top of the base module. Two groups:
-  - Content components moved out of base to keep base minimal: section, modal, card, article.
-  - Reusable building blocks promoted from experimental / added here: button, forms, key-value,
-    price list, media object, profile block, notice banner.
-
+Content components moved out of the base module to keep base minimal: section, modal, card, article.
 All reference base design tokens (imported for tokens only by this package's main.less) but live in
-the extended layer. They are float-based and token-driven, per the project CSS design principles.
+the extended layer.
 */
-
-/* Content components (moved from base) */
 @import url("section.less");
 @import url("modal.less");
 @import url("card.less");
 @import url("article.less");
-
-/* Reusable building blocks (promoted from experimental) */
-@import url("button.less");
-@import url("forms.less");
-@import url("keyvalue.less");
-
-/* Reusable content patterns */
-@import url("priceList.less");
-@import url("mediaObject.less");
-@import url("profileBlock.less");
-@import url("noticeBanner.less");

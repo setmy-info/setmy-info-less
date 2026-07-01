@@ -31,18 +31,10 @@ Load all three CSS files in order:
 
 ## What is included
 
-Polished public-web chrome (float-based, token-driven). Compose with base + extended utilities.
-
-| Group               | Classes                                                                                                        |
-|---------------------|----------------------------------------------------------------------------------------------------------------|
-| Site header         | `.siteHeader`, `.siteHeaderInner`, `.siteLogo`, `.siteNav`, `.siteNavItem`, `.siteNavCta`                      |
-| Hero                | `.hero`, `.heroImage`, `.heroOverlay`, `.heroContent`, `.heroTitle`, `.heroSubtitle`                           |
-| Service card / grid | `.tileGrid`, `.tile`, `.tileImage`, `.tileTitle`, `.tileMeta`                                                  |
-| Call to action      | `.ctaButton`, `.ctaBanner`, `.ctaBannerText`                                                                   |
-| Site footer         | `.siteFooter`, `.siteFooterInner`, `.siteFooterInfo`, `.siteFooterNav`, `.siteFooterSocial`, `.siteFooterLink` |
-
-These are original, project-native classes (camelCase, behavior-first, base-token-driven). A composed
-demo page lives in `src/test/pug/salon.pug`.
+Currently a **skeleton** — no rules of its own yet. The public-web chrome prototypes (header, hero,
+tiles, CTA, footer) that briefly lived here have been moved to `setmy-info-less-experimental/web/`
+until they pass the refactorial validation process; they will be promoted back here (or to
+`extended`) once stable.
 
 ## Development
 

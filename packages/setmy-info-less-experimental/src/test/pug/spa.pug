@@ -1,0 +1,62 @@
+doctype html
+html(lang="en")
+    include include/head.pug
+    body(id="body")
+        //- Header: brand (base/experimental) + language toggle (new block)
+        header(id="siteHeader" class="siteHeader")
+            div(class="siteHeaderInner centerBox")
+                a(class="siteLogo" href="/") Brand
+                div(class="siteNav")
+                    div(id="langToggle" class="langToggle")
+                        a(class="langToggleItem langToggleItemActive" href="?lang=en") EN
+                        a(class="langToggleItem" href="?lang=et") ET
+        //- Text hero composed from extended pageSection + base centerText + new slogan + scrollHint
+        section(id="hero" class="pageSection centerText")
+            div(class="centerBox")
+                h1 Hyperautomation
+                p(class="slogan") One platform. Every workflow.
+                div(id="scrollHint" class="scrollHint") &#8675;
+        //- Services: pageSection + sectionLead (new) + tileGrid of tiles
+        section(class="pageSection")
+            div(class="centerBox")
+                p(class="sectionLead") A short introduction to the services below.
+                div(class="tileGrid")
+                    div(class="tile")
+                        span(class="tileTitle") Service one
+                        span(class="tileMeta") Short description.
+                    div(class="tile")
+                        span(class="tileTitle") Service two
+                        span(class="tileMeta") Short description.
+                    div(class="tile")
+                        span(class="tileTitle") Service three
+                        span(class="tileMeta") Short description.
+        //- Contact: key-value block (experimental)
+        section(class="pageSection")
+            div(class="centerBox")
+                dl(id="contact" class="kvList")
+                    div(class="kvRow")
+                        dt(class="kvLabel") Email
+                        dd(class="kvValue") info@example.com
+                    div(class="kvRow")
+                        dt(class="kvLabel") Phone
+                        dd(class="kvValue") +000 000 0000
+                    div(class="kvRow")
+                        dt(class="kvLabel") Location
+                        dd(class="kvValue") Tallinn, Estonia
+        //- Footer (experimental)
+        footer(class="siteFooter")
+            div(class="siteFooterInner centerBox")
+                div(class="siteFooterInfo")
+                    p © Brand
+                nav(class="siteFooterNav")
+                    a(class="siteFooterLink" href="/privacy/") Privacy
+                div(class="siteFooterSocial")
+                    a(class="siteFooterLink" href="#") Social
+        //- Privacy modal composed from extended overlay/modal + experimental button
+        div(id="overlay" class="overlay")
+            section(class="modal")
+                header(class="modalHeader") Privacy
+                div(class="modalBody")
+                    p We use cookies. See our privacy policy.
+                footer(class="modalFooter")
+                    button(class="btn btnPrimary" type="button") Accept

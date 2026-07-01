@@ -22,6 +22,7 @@ documentation to the less files. So I need to document usage for developers and 
 documentation is for AI agents.
 
 Second pass additions:
+
 - Need to understand previous review.md and make review again and rewrite review with new things.
 - Current project contains two modules: minimalistic LESS/CSS for web system building. And extended, containing
   style and example CSS to build NetBeans IDE look and feel, frames.
@@ -51,6 +52,7 @@ The repository is an npm workspace with two publishable LESS modules:
 CSS is generated from LESS, and example HTML pages are generated from Pug for visual and automated verification.
 
 Testing currently consists of:
+
 - `Jest` for placeholder/unit-style JavaScript tests.
 - `Playwright` E2E checks, currently configured to run in `firefox` with a real browser executable.
 - `Cucumber` feature files and shared step definitions for readable rendering checks.
@@ -138,6 +140,7 @@ purpose is to provide frame-composition building blocks that replicate a **NetBe
 ```
 
 Key classes:
+
 - `.framesDefaultPadding` (body modifier): sets body to fill the viewport with zero padding
 - `.contentHeader` / `.defaultHeader` / `.contentFooter`: fixed-height strips at top and bottom
 - `.content`: takes the remaining height with `calc(100% - header - footer)`
@@ -203,7 +206,8 @@ In `utility/section.less` (new file).
 
 The website has a language switcher (two buttons side by side) and CTA buttons. No button classes exist yet.
 
-- `.btn` — base button reset: `cursor: pointer; border: @buttonBorderWidth solid; padding: @defaultPadding @doubleDefaultPadding;`
+- `.btn` — base button reset:
+  `cursor: pointer; border: @buttonBorderWidth solid; padding: @defaultPadding @doubleDefaultPadding;`
 - `.btnPrimary` — filled primary background from color tokens
 - `.btnSecondary` — outlined secondary variant
 - `.btnSmall` — compact variant (half default padding)
@@ -233,7 +237,8 @@ In `utility/modal.less` (new file).
 The website services section is a grid of service cards (title + description). Cards appear in Level 3 by
 complexity, but they are a Level 0 delivery dependency for the website migration.
 
-- `.card` — `border: @defaultBorder solid @tertiaryColor; border-radius: @defaultRadius; padding: @doubleDefaultPadding;`
+- `.card` —
+  `border: @defaultBorder solid @tertiaryColor; border-radius: @defaultRadius; padding: @doubleDefaultPadding;`
 - `.cardTitle` — heading-style text inside a card
 - `.cardBody` — body text area inside a card
 - `.cardGrid` — flex row with wrap and token-driven gap; wraps cards into a responsive row
@@ -279,6 +284,7 @@ Currently `.hidden` sets `display: none` which removes the element from layout f
 Small, independent utility classes that extend existing files without requiring new ones.
 
 **Category: `states/`** (new file `utility/states.less`)
+
 - `.disabled` — `opacity: 0.5; pointer-events: none; cursor: not-allowed;`
 - `.loading` — `cursor: wait; pointer-events: none;`
 - `.selected` — `outline: 2px solid @blue-500;`
@@ -286,6 +292,7 @@ Small, independent utility classes that extend existing files without requiring 
 - `.readonly` — `background: @gray-100; cursor: default;` (read-only field containers)
 
 **Category: `typography/`** (new file `utility/typography.less`)
+
 - `.bold` — `font-weight: bold;`
 - `.italic` — `font-style: italic;`
 - `.underline` — `text-decoration: underline;`
@@ -297,6 +304,7 @@ Small, independent utility classes that extend existing files without requiring 
 - `.fontSmall` / `.fontLarge` — use token values `@smallFontSize` / `@largeFontSize`
 
 **Color semantic extensions** (extend `utility/color.less` from Level 0)
+
 - `.bgAccent`, `.textAccent`, `.textSubtle`, `.textEmphasis`
 
 ---
@@ -306,6 +314,7 @@ Small, independent utility classes that extend existing files without requiring 
 Require new `.less` files; self-contained, implement one file at a time.
 
 **Category: `forms/`** (new file `utility/forms.less`)
+
 - Base resets for `input`, `select`, `textarea`, `fieldset`, `legend`
 - `.formGroup` — label + field wrapper
 - `.fullWidthInput` — `width: 100%; box-sizing: border-box;`
@@ -314,6 +323,7 @@ Require new `.less` files; self-contained, implement one file at a time.
 - `.requiredMark` — adds a red `*` via `::after` pseudo-element
 
 **Category: `tables/`** (new file `utility/tables.less`)
+
 - Reset `table`, `th`, `td` — `border-collapse: collapse; width: 100%;`
 - `.stripedTable tbody tr:nth-child(even)` — alternate row background from `@gray-50`
 - `.denseTable td, .denseTable th` — reduces cell padding
@@ -328,11 +338,13 @@ Require new `.less` files; self-contained, implement one file at a time.
 Depend on tokens and spacing from Level 0/1. Cards started in Level 0; here they gain variants.
 
 **Category: `card/` variants** (extend Level 0 `utility/card.less`)
+
 - `.cardHighlight` — top colored border accent
 - `.cardClickable` — `cursor: pointer;` + hover box-shadow
 - `.cardCompact` — reduced padding variant
 
 **Category: `feedback/`** (new file `utility/feedback.less`)
+
 - `.alertSuccess`, `.alertWarning`, `.alertDanger`, `.alertInfo` — colored bars with padding and left border
 - `.validationError` — small red inline message below a field
 - `.badge` — small pill: `border-radius: 999px; padding: 2px 8px; font-size: @smallFontSize;`
@@ -344,11 +356,14 @@ Depend on tokens and spacing from Level 0/1. Cards started in Level 0; here they
 ### Level 4 — Layout composition
 
 **Category: `grid/`** — fill the empty `grid/index.less`
-- `.gridAuto` — `display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: @doubleDefaultPadding;`
+
+- `.gridAuto` —
+  `display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: @doubleDefaultPadding;`
 - `.grid2col`, `.grid3col`, `.grid4col` — explicit column count variants
 - `.gridSpan2`, `.gridSpan3` — `grid-column: span N;`
 
 **Category: `navigation/`** (new file `utility/navigation.less`)
+
 - `.breadcrumb` — flex row with separators via `li + li::before { content: " / "; }`
 - `.tabBar` — flex row, border-bottom
 - `.tabItem` — padding, active bottom border via `.tabItem.active`
@@ -357,6 +372,7 @@ Depend on tokens and spacing from Level 0/1. Cards started in Level 0; here they
 - `.paginationBar` — flex row of page-number buttons, centered
 
 **Category: `positioning/`** (new file `utility/positioning.less`)
+
 - `.stickyTop` — `position: sticky; top: 0; z-index: @z-index-5;`
 - `.fixedTop` — `position: fixed; top: 0; width: 100%; z-index: @z-index-7;`
 - `.fixedBottom` — `position: fixed; bottom: 0; width: 100%; z-index: @z-index-7;`
@@ -369,6 +385,7 @@ Depend on tokens and spacing from Level 0/1. Cards started in Level 0; here they
 ### Level 5 — Domain-specific patterns (enterprise / data systems)
 
 **Category: `data/`** (new file `utility/data.less`)
+
 - `.propertyPanel` — stacked `.kvRow` list with alternating background (IDE properties view)
 - `.dataLabel` — small uppercase muted label above a value (dashboard metric label)
 - `.statNumber` — large number + small label below (KPI display)
@@ -376,6 +393,7 @@ Depend on tokens and spacing from Level 0/1. Cards started in Level 0; here they
 - `.loadingPlaceholder` — pulsing skeleton block for async loading states
 
 **Category: `dashboard/`** (new file, extends `grid/` and `card/`)
+
 - `.dashboardGrid` — CSS grid with auto-fit columns, gap, and title bar
 - `.widgetCard` — card variant with fixed height and overflow hidden
 - `.widgetTitle` — small uppercase label at top of widget
@@ -385,28 +403,28 @@ Depend on tokens and spacing from Level 0/1. Cards started in Level 0; here they
 
 ## Summary of proposed new categories
 
-| Category        | Domain / area                               | Level | File                        |
-|-----------------|---------------------------------------------|-------|-----------------------------|
-| `color/`        | Named + semantic color utilities            | 0     | `utility/color.less` + `utility/color-named.less` |
-| `section/`      | Hero, page section, content row             | 0     | `utility/section.less`      |
-| `button/`       | Base button, button group                   | 0     | `utility/button.less`       |
-| `modal/`        | Overlay, dialog, header/body/footer         | 0     | `utility/modal.less`        |
-| `card/`         | Content card, service card, card grid       | 0     | `utility/card.less`         |
-| `keyvalue/`     | Contact, property label-value pairs         | 0     | `utility/keyvalue.less`     |
-| `article/`      | Article body, code, blockquote, definition  | 0     | `utility/article.less`      |
-| visibility ext. | `.invisible`, `.visible`                    | 0     | `utility/visibility.less`   |
-| `states/`       | disabled, loading, selected, active         | 1     | `utility/states.less`       |
-| `typography/`   | bold, italic, truncate, noSelect, lineHeight| 1     | `utility/typography.less`   |
-| color ext.      | Remaining semantic color tokens             | 1     | `utility/color.less`        |
-| `forms/`        | Form resets, formGroup, formRow             | 2     | `utility/forms.less`        |
-| `tables/`       | Table resets, striped, dense, sticky header | 2     | `utility/tables.less`       |
-| `card/` variants| highlight, clickable, compact               | 3     | `utility/card.less`         |
-| `feedback/`     | Alerts, badges, validation, toast           | 3     | `utility/feedback.less`     |
-| `grid/`         | CSS grid utilities                          | 4     | `grid/index.less`           |
-| `navigation/`   | Breadcrumb, tabs, side nav, pagination      | 4     | `utility/navigation.less`   |
-| `positioning/`  | Sticky, fixed, z-index, aspect-ratio        | 4     | `utility/positioning.less`  |
-| `data/`         | KPI, property panel, empty state, skeleton  | 5     | `utility/data.less`         |
-| `dashboard/`    | Dashboard grid, widget card                 | 5     | `utility/dashboard.less`    |
+| Category         | Domain / area                                | Level | File                                              |
+|------------------|----------------------------------------------|-------|---------------------------------------------------|
+| `color/`         | Named + semantic color utilities             | 0     | `utility/color.less` + `utility/color-named.less` |
+| `section/`       | Hero, page section, content row              | 0     | `utility/section.less`                            |
+| `button/`        | Base button, button group                    | 0     | `utility/button.less`                             |
+| `modal/`         | Overlay, dialog, header/body/footer          | 0     | `utility/modal.less`                              |
+| `card/`          | Content card, service card, card grid        | 0     | `utility/card.less`                               |
+| `keyvalue/`      | Contact, property label-value pairs          | 0     | `utility/keyvalue.less`                           |
+| `article/`       | Article body, code, blockquote, definition   | 0     | `utility/article.less`                            |
+| visibility ext.  | `.invisible`, `.visible`                     | 0     | `utility/visibility.less`                         |
+| `states/`        | disabled, loading, selected, active          | 1     | `utility/states.less`                             |
+| `typography/`    | bold, italic, truncate, noSelect, lineHeight | 1     | `utility/typography.less`                         |
+| color ext.       | Remaining semantic color tokens              | 1     | `utility/color.less`                              |
+| `forms/`         | Form resets, formGroup, formRow              | 2     | `utility/forms.less`                              |
+| `tables/`        | Table resets, striped, dense, sticky header  | 2     | `utility/tables.less`                             |
+| `card/` variants | highlight, clickable, compact                | 3     | `utility/card.less`                               |
+| `feedback/`      | Alerts, badges, validation, toast            | 3     | `utility/feedback.less`                           |
+| `grid/`          | CSS grid utilities                           | 4     | `grid/index.less`                                 |
+| `navigation/`    | Breadcrumb, tabs, side nav, pagination       | 4     | `utility/navigation.less`                         |
+| `positioning/`   | Sticky, fixed, z-index, aspect-ratio         | 4     | `utility/positioning.less`                        |
+| `data/`          | KPI, property panel, empty state, skeleton   | 5     | `utility/data.less`                               |
+| `dashboard/`     | Dashboard grid, widget card                  | 5     | `utility/dashboard.less`                          |
 
 Level 0 deliverables should be implemented together as a migration sprint before anything in Level 1-5
 is started. The website cannot complete its CSS migration without all Level 0 categories being present.
@@ -418,6 +436,7 @@ is started. The website cannot complete its CSS migration without all Level 0 ca
 ### Inline LESS documentation style
 
 LESS has no native documentation format. The project should adopt a consistent inline comment style that:
+
 - Is readable as plain text in the source file.
 - Can be extracted or processed by a documentation tool if needed.
 
@@ -465,11 +484,13 @@ KSS is the most mature living styleguide generator for CSS/LESS/Sass. It reads s
 an HTML styleguide.
 
 Install:
+
 ```shell
 npm i kss --save-dev
 ```
 
 Comment format example:
+
 ```less
 // Button row
 //
@@ -487,11 +508,12 @@ Comment format example:
 // Styleguide flex.button-row
 
 .smi-flex-panel {
-    ...
+...
 }
 ```
 
 Build the styleguide:
+
 ```shell
 npx kss --source packages/setmy-info-less/src/main/less \
          --destination docs/styleguide \
@@ -501,6 +523,7 @@ npx kss --source packages/setmy-info-less/src/main/less \
 **Option 2: Pug-based living examples (already in the project)**
 
 The project already generates example HTML from Pug. This is already a form of visual documentation. Extend it:
+
 - Create one Pug template per category (e.g., `forms.pug`, `tables.pug`, `feedback.pug`).
 - Each template demonstrates every class in that category with a usage snippet.
 - These become the HTML files in `dist/` and serve both as visual tests and as living documentation.
@@ -553,14 +576,14 @@ Layer 0 (base — never changes its published API):
 
 ### Package responsibility map
 
-| Package                       | Layer | Contents                                                        |
-|-------------------------------|-------|-----------------------------------------------------------------|
-| `setmy-info-less`             | 0     | values, html resets, utility, devices, flex, grid stub, components |
-| `setmy-info-less-extended`    | 1     | IDE frames (NetBeans-style panels, separators, header/footer)   |
-| `setmy-info-less-ui`          | 1     | states, typography ext., color helpers, cards, badges, feedback |
-| `setmy-info-less-forms`       | 1     | form resets, `.formGroup`, `.formRow`, `.fullWidthInput`        |
-| `setmy-info-less-data`        | 1     | table resets, `.stripedTable`, `.denseTable`, `.propertyPanel`  |
-| `setmy-info-less-enterprise`  | 2     | re-exports all Layer 1 packages — one install for full stack    |
+| Package                      | Layer | Contents                                                           |
+|------------------------------|-------|--------------------------------------------------------------------|
+| `setmy-info-less`            | 0     | values, html resets, utility, devices, flex, grid stub, components |
+| `setmy-info-less-extended`   | 1     | IDE frames (NetBeans-style panels, separators, header/footer)      |
+| `setmy-info-less-ui`         | 1     | states, typography ext., color helpers, cards, badges, feedback    |
+| `setmy-info-less-forms`      | 1     | form resets, `.formGroup`, `.formRow`, `.fullWidthInput`           |
+| `setmy-info-less-data`       | 1     | table resets, `.stripedTable`, `.denseTable`, `.propertyPanel`     |
+| `setmy-info-less-enterprise` | 2     | re-exports all Layer 1 packages — one install for full stack       |
 
 ### Design rules for the hierarchy
 
@@ -605,24 +628,26 @@ Layer 0 (base — never changes its published API):
 
 ### Current E2E test coverage summary
 
-| Test file                   | What it checks                                          | Gaps                          |
-|-----------------------------|----------------------------------------------------------|-------------------------------|
-| `body.e2e.js`               | `body` dimensions, margin, padding, font                | No modifier class checks      |
-| `application.e2e.js`        | `body` + `app` element dimensions                       | No `#application` ID check    |
-| `background.e2e.js`         | background page rendering                               | Unknown — not fully reviewed  |
-| `centerText.e2e.js`         | `.centerText` — text-align and element position         | Only one text element tested  |
-| `layoutCenterBox.e2e.js`    | `.centerBox` — margin:auto and 1024px max-width         | No narrow-viewport test       |
-| `layoutCenterBox2.e2e.js`   | Second centering variant                                | Unknown — not fully reviewed  |
-| `flex-center.e2e.js`        | **Title only** — no layout properties checked at all    | Entire test is missing        |
-| extended `body.e2e.js`      | `body` dimensions in extended module                    | No frame class checks at all  |
+| Test file                 | What it checks                                       | Gaps                         |
+|---------------------------|------------------------------------------------------|------------------------------|
+| `body.e2e.js`             | `body` dimensions, margin, padding, font             | No modifier class checks     |
+| `application.e2e.js`      | `body` + `app` element dimensions                    | No `#application` ID check   |
+| `background.e2e.js`       | background page rendering                            | Unknown — not fully reviewed |
+| `centerText.e2e.js`       | `.centerText` — text-align and element position      | Only one text element tested |
+| `layoutCenterBox.e2e.js`  | `.centerBox` — margin:auto and 1024px max-width      | No narrow-viewport test      |
+| `layoutCenterBox2.e2e.js` | Second centering variant                             | Unknown — not fully reviewed |
+| `flex-center.e2e.js`      | **Title only** — no layout properties checked at all | Entire test is missing       |
+| extended `body.e2e.js`    | `body` dimensions in extended module                 | No frame class checks at all |
 
 ### Missing E2E tests — base module
 
 **`visibility.less`**
+
 - `.hidden` — verify `display: none` is applied
 - `.hidden` — verify children are inaccessible (bounding box zero)
 
 **`spacing.less`**
+
 - `.noPadding` — verify computed padding is `0px`
 - `.noMargin` — verify computed margin is `0px`
 - `.defaultPadding` — verify computed padding is `10px`
@@ -632,6 +657,7 @@ Layer 0 (base — never changes its published API):
 - `.noMarginLastChild` — verify only last child has zero margin
 
 **`sizing.less`**
+
 - `.maxWidth` / `.maxHeight` — verify 100%
 - `.halfWidth` — verify 50%
 - `.quarterWidth` — verify 25%
@@ -640,6 +666,7 @@ Layer 0 (base — never changes its published API):
 - `.defaultHeight` — verify `@defaultHeight` value
 
 **`layout.less`**
+
 - `.floatLeft` — verify `float: left`
 - `.floatRight` — verify `float: right`
 - `.tableElement` — verify `display: table`
@@ -647,6 +674,7 @@ Layer 0 (base — never changes its published API):
 - `.leftText` / `.rightText` — verify text-align values
 
 **`scroll.less`**
+
 - `.autoScrollBars` — verify `overflow: auto`
 - `.verticalScrollBar` — verify `overflow-y: auto`, `overflow-x` unset or visible
 - `.horizontalScrollBar` — verify `overflow-x: auto`
@@ -655,22 +683,26 @@ Layer 0 (base — never changes its published API):
 - `.noHorizontalScrollBar` — verify `overflow-x: hidden`
 
 **`text.less`**
+
 - `.asUppercase` — verify `text-transform: uppercase`
 - `.asLowercase` — verify `text-transform: lowercase`
 - `.firstAsUppercase` — verify `text-transform: capitalize`
 - `.textColorGray` — verify computed `color` matches `@quinaryColor` (`dimgray`)
 
 **`cursor.less`**
+
 - `.pointerCursor` — verify `cursor: pointer`
 - `.textCursor` — verify `cursor: text`
 - `.cursorVerticalResize` — verify `cursor: e-resize`
 - `.cursorHorizontalResize` — verify `cursor: n-resize`
 
 **`panels.less`**
+
 - `.verticalStretchPanel` — verify `min-height: 0`, `overflow: hidden`
 - `.horizontalStretchPanel` — verify `min-width: 0`, `overflow: hidden`
 
 **`visual-style.less`**
+
 - `.normalBackground` — verify `background: white`
 - `.defaultBorder` — verify `border-style: solid`, `border-width: 2px`, `border-color: steelblue`
 - `.defaultShadow` — verify `box-shadow` is applied (non-none)
@@ -678,10 +710,12 @@ Layer 0 (base — never changes its published API):
 - `.minifiedText` — verify `font-size: xx-small`
 
 **`notes.less`**
+
 - `.importantNote` — verify `color: red` and `font-weight: bold`
 - `.detailed` — verify `border-left-width: 6px` and `padding-left`
 
 **`flex/index.less` — currently `flex-center.e2e.js` only checks the title**
+
 - `.smi-flex-panel` — verify `display: flex`
 - `.smi-flex-panel-row` — verify `flex-direction: row`
 - `.smi-flex-panel-column` — verify `flex-direction: column`
@@ -690,6 +724,7 @@ Layer 0 (base — never changes its published API):
 - `.smi-flex-panel-right` — verify `justify-content: flex-end`
 
 **`devices/`**
+
 - `.phone-hidden` — verify hidden at viewport width 640–1023 px, visible outside that range
 - `.pc-hidden` — verify hidden at viewport width ≥ 1024 px, visible below that
 - Responsive `main` height reduction — verify at phone viewport width
@@ -697,6 +732,7 @@ Layer 0 (base — never changes its published API):
 ### Missing E2E tests — extended module
 
 **`frames/index.less`** — the core purpose of the extended module, zero frame tests exist:
+
 - `.contentHeader` — verify computed height equals `@headerHeight`
 - `.content` — verify computed height equals `calc(100% - @headerFooterSum)`
 - `.contentFooter` — verify computed height equals `@footerHeight`
@@ -708,50 +744,51 @@ Layer 0 (base — never changes its published API):
 - `.contentLeftUp` / `.contentRightUp` — verify inner content fills pane minus section header
 
 **Experimental module**
+
 - `experimental-frames.html` — no E2E test at all; a basic title check plus one dimension check is the minimum
 
 ### Test combination matrix
 
 The following combinations should each have at least one E2E test scenario:
 
-| Combination                                                         | What to verify                            |
-|---------------------------------------------------------------------|-------------------------------------------|
-| `.smi-flex-panel` + `.smi-flex-panel-row` + `.smi-flex-panel-left`  | flex row, items align left                |
-| `.smi-flex-panel` + `.smi-flex-panel-row` + `.smi-flex-panel-center`| flex row, items align center              |
-| `.smi-flex-panel` + `.smi-flex-panel-row` + `.smi-flex-panel-right` | flex row, items align right               |
-| `.smi-flex-panel` + `.smi-flex-panel-column`                        | flex column direction                     |
-| `.centerBox` alone                                                  | max-width 1024 px, margin auto            |
-| `.centerBox` + `.verticalStretchPanel`                              | centered box that can shrink vertically   |
-| `.autoScrollBars` + overflow content                                | scrollbars appear on both axes            |
-| `.verticalScrollBar` + overflow content                             | only vertical scrollbar                   |
-| `.noScrollBars` + overflow content                                  | no scrollbars appear                      |
-| `.defaultBorder` + `.defaultShadow` + `.defaultRadius`              | all three visual styles applied together  |
-| `.defaultPadding` + `.defaultBorder`                                | padding and border do not collapse        |
-| `.hidden` at desktop viewport                                       | element not rendered                      |
-| `.phone-hidden` at phone viewport (640–1023 px)                     | element hidden                            |
-| `.phone-hidden` at desktop viewport (≥ 1024 px)                     | element visible                           |
-| `.pc-hidden` at desktop viewport                                    | element hidden                            |
-| `.pc-hidden` at phone viewport                                      | element visible                           |
-| `.noPadding` + `.noMargin` combined                                 | both zeroed, no interaction               |
-| `.verticalStretchPanel` inside a flex column container              | shrinks to available space                |
-| Extended `.content` + `.sectionLeft` + `.sectionRight`              | widths sum to 100 % minus separator       |
-| Extended `.sectionLeftUp` + `.horizontalSeparator` + `.sectionLeftBottom` | heights sum to pane height        |
+| Combination                                                               | What to verify                           |
+|---------------------------------------------------------------------------|------------------------------------------|
+| `.smi-flex-panel` + `.smi-flex-panel-row` + `.smi-flex-panel-left`        | flex row, items align left               |
+| `.smi-flex-panel` + `.smi-flex-panel-row` + `.smi-flex-panel-center`      | flex row, items align center             |
+| `.smi-flex-panel` + `.smi-flex-panel-row` + `.smi-flex-panel-right`       | flex row, items align right              |
+| `.smi-flex-panel` + `.smi-flex-panel-column`                              | flex column direction                    |
+| `.centerBox` alone                                                        | max-width 1024 px, margin auto           |
+| `.centerBox` + `.verticalStretchPanel`                                    | centered box that can shrink vertically  |
+| `.autoScrollBars` + overflow content                                      | scrollbars appear on both axes           |
+| `.verticalScrollBar` + overflow content                                   | only vertical scrollbar                  |
+| `.noScrollBars` + overflow content                                        | no scrollbars appear                     |
+| `.defaultBorder` + `.defaultShadow` + `.defaultRadius`                    | all three visual styles applied together |
+| `.defaultPadding` + `.defaultBorder`                                      | padding and border do not collapse       |
+| `.hidden` at desktop viewport                                             | element not rendered                     |
+| `.phone-hidden` at phone viewport (640–1023 px)                           | element hidden                           |
+| `.phone-hidden` at desktop viewport (≥ 1024 px)                           | element visible                          |
+| `.pc-hidden` at desktop viewport                                          | element hidden                           |
+| `.pc-hidden` at phone viewport                                            | element visible                          |
+| `.noPadding` + `.noMargin` combined                                       | both zeroed, no interaction              |
+| `.verticalStretchPanel` inside a flex column container                    | shrinks to available space               |
+| Extended `.content` + `.sectionLeft` + `.sectionRight`                    | widths sum to 100 % minus separator      |
+| Extended `.sectionLeftUp` + `.horizontalSeparator` + `.sectionLeftBottom` | heights sum to pane height               |
 
 ### Missing Cucumber feature files
 
-| Feature file to add         | Classes / scenarios to cover                                |
-|-----------------------------|-------------------------------------------------------------|
-| `visibility.feature`        | `.hidden` — hidden at all viewports                         |
+| Feature file to add         | Classes / scenarios to cover                                  |
+|-----------------------------|---------------------------------------------------------------|
+| `visibility.feature`        | `.hidden` — hidden at all viewports                           |
 | `spacing.feature`           | `.noPadding`, `.noMargin`, `.defaultPadding`, `.doubleMargin` |
-| `sizing.feature`            | `.maxWidth`, `.halfWidth`, `.elementHeight`                  |
-| `layout.feature`            | `.centerBox`, `.floatLeft`, `.floatRight`, `.noWrap`        |
-| `flex.feature`              | `.smi-flex-panel` + row/column + alignment modifiers        |
-| `scroll.feature`            | `.autoScrollBars`, `.verticalScrollBar`, `.noScrollBars`    |
-| `visual.feature`            | `.defaultBorder`, `.defaultShadow`, `.defaultRadius`        |
-| `text.feature`              | `.asUppercase`, `.asLowercase`, `.textColorGray`            |
-| `panels.feature`            | `.verticalStretchPanel`, `.horizontalStretchPanel`          |
-| `responsive.feature`        | `.phone-hidden`, `.pc-hidden` at multiple viewports         |
-| `frames.feature` (extended) | full IDE frame composition                                  |
+| `sizing.feature`            | `.maxWidth`, `.halfWidth`, `.elementHeight`                   |
+| `layout.feature`            | `.centerBox`, `.floatLeft`, `.floatRight`, `.noWrap`          |
+| `flex.feature`              | `.smi-flex-panel` + row/column + alignment modifiers          |
+| `scroll.feature`            | `.autoScrollBars`, `.verticalScrollBar`, `.noScrollBars`      |
+| `visual.feature`            | `.defaultBorder`, `.defaultShadow`, `.defaultRadius`          |
+| `text.feature`              | `.asUppercase`, `.asLowercase`, `.textColorGray`              |
+| `panels.feature`            | `.verticalStretchPanel`, `.horizontalStretchPanel`            |
+| `responsive.feature`        | `.phone-hidden`, `.pc-hidden` at multiple viewports           |
+| `frames.feature` (extended) | full IDE frame composition                                    |
 
 ### Browser coverage gap
 

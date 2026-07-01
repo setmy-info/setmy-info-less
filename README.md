@@ -90,13 +90,13 @@ The modules are **not** all independent — they form a layered tree rooted at `
 compiled `dist/main.css` is a **delta** (only its own rules); the consuming application composes the
 deltas in dependency order.
 
-| Module                         | Compile-time LESS imports   | Standalone CSS? | Its `dist/main.css` contains                    |
-|--------------------------------|-----------------------------|-----------------|-------------------------------------------------|
-| `setmy-info-less` (base)       | nothing cross-package       | ✅ yes           | resets, tokens, single-purpose utilities        |
-| `setmy-info-less-extended`     | base `values` (tokens only) | ❌ delta         | content components (section/modal/card/article) |
-| `setmy-info-less-fancy`        | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                      |
-| `setmy-info-less-enterprise`   | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                      |
-| `setmy-info-less-ide`          | base `values` (tokens only) | ❌ delta         | frame presets only                              |
+| Module                         | Compile-time LESS imports   | Standalone CSS? | Its `dist/main.css` contains                        |
+|--------------------------------|-----------------------------|-----------------|-----------------------------------------------------|
+| `setmy-info-less` (base)       | nothing cross-package       | ✅ yes           | resets, tokens, single-purpose utilities            |
+| `setmy-info-less-extended`     | base `values` (tokens only) | ❌ delta         | content components (section/modal/card/article)     |
+| `setmy-info-less-fancy`        | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                          |
+| `setmy-info-less-enterprise`   | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                          |
+| `setmy-info-less-ide`          | base `values` (tokens only) | ❌ delta         | frame presets only                                  |
 | `setmy-info-less-experimental` | base `values` (tokens only) | ❌ delta         | staged prototypes (utilities, patterns, web chrome) |
 
 - **Only `base` ships a standalone stylesheet.** Every other module's `dist` is a delta that only

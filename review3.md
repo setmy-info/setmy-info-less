@@ -2,7 +2,7 @@
 
 Third-pass review of `setmy-info-less` after the multi-module refactor. This document reviews the
 LESS source, the test suites, and the README files **as the modules exist right now** (6 packages,
-all at `3.1.0`). It does not propose re-structuring the module hierarchy — that hierarchy is taken
+all at `4.0.0`). It does not propose re-structuring the module hierarchy — that hierarchy is taken
 as given. It carries forward the still-relevant concerns from `review.md`, adjusts them to the
 current layout, documents the real dependency order, and ends with a prioritized suggestions list.
 
@@ -45,7 +45,7 @@ Only `setmy-info-less-experimental` has a LESS import graph that matches its dec
 ### 1.3 Consequences
 
 - **`extended` and `fancy` ship empty stylesheets.** Both compile to 0 rules. Publishing them at
-  `3.1.0` ships `dist/main.css`/`main.min.css` that apply no styles. Anyone installing
+  `4.0.0` ships `dist/main.css`/`main.min.css` that apply no styles. Anyone installing
   `setmy-info-less-fancy` gets nothing.
 - **`enterprise` is just base re-compiled.** It declares a dependency on `extended` and its header
   comment says it "aggregates the base module with stable Layer 1 extensions", but `extended`

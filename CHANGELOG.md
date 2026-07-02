@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-07-02
+
+Major, **backwards-incompatible** release. The multi-module reorganization means classes now live in
+different packages/layers than in earlier releases, and all not-yet-validated CSS is staged in
+`setmy-info-less-experimental`. Consumers must review which package provides each class they use and
+update their stylesheet load list accordingly. All packages are versioned together at `4.0.0`.
+
 ### Added
 
 - Experimental public-web chrome under `setmy-info-less-experimental/src/main/less/web/`: site header
@@ -136,7 +143,9 @@ All notable changes to this project will be documented in this file.
 
 - An initial LESS code from SMI home page and from the other internal projects into one single place.
 
-[unreleased]: https://github.com/setmy-info/setmy-info-less/compare/3.1.0...HEAD
+[unreleased]: https://github.com/setmy-info/setmy-info-less/compare/4.0.0...HEAD
+
+[4.0.0]: https://github.com/setmy-info/setmy-info-less/compare/3.1.0...4.0.0
 
 [3.1.0]: https://github.com/setmy-info/setmy-info-less/compare/3.0.0...3.1.0
 

@@ -6,22 +6,31 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Experimental public-web building blocks under `setmy-info-less-experimental/src/main/less/web/`:
-  site header + nav (`.siteHeader`, `.siteNav`, `.siteLogo`, `.siteNavCta`), hero (`.hero`,
-  `.heroImage`, `.heroOverlay`, `.heroTitle`), content tiles + grid (`.tile`, `.tileGrid`,
-  `.tileImage`, `.tileTitle`, `.tileMeta`), call-to-action (`.ctaButton`, `.ctaBanner`), footer
-  (`.siteFooter*`), and small marketing-SPA blocks (`.langToggle`, `.scrollHint`, `.slogan`,
-  `.sectionLead`).
-- Experimental content patterns under `ui/`: price list, media object, profile block, notice banner.
-- Composition design docs — `setmy-info-design.md` (build a setmy.info-style single-page marketing
-  site by combining small blocks) and `web-page-design.md` (earlier marketing-site analysis) — plus a
-  worked demo fixture (`spa.pug`) and an SVG placeholder asset for fixtures.
+- Experimental public-web chrome under `setmy-info-less-experimental/src/main/less/web/`: site header
+  + nav (`.siteHeader`, `.siteHeaderInner`, `.siteLogo`, `.siteNav`, `.siteNavItem`, `.siteNavCta`),
+  hero (`.hero`, `.heroImage`, `.heroOverlay`, `.heroContent`, `.heroTitle`, `.heroSubtitle`), content
+  tiles + grid (`.tileGrid`, `.tile`, `.tileImage`, `.tileTitle`, `.tileMeta`), call-to-action
+  (`.ctaButton`, `.ctaBanner`, `.ctaBannerText`), and footer (`.siteFooter`, `.siteFooterInner`,
+  `.siteFooterInfo`, `.siteFooterNav`, `.siteFooterSocial`, `.siteFooterLink`).
+- Small, combinable marketing-SPA blocks (also under `web/`): `.langToggle` (EN/ET language switch),
+  `.scrollHint`, `.slogan`, and `.sectionLead`.
+- Experimental content patterns under `ui/`: media object (`.mediaObject`), notice banner
+  (`.noticeBanner`), price list (`.priceList`), and profile block (`.profileBlock`).
+- Test fixtures and e2e in the experimental package: a `landing` page (Pug + e2e + Cucumber) and a
+  `spa` composition demo (`spa.pug`); the experimental test head now loads base → extended →
+  experimental in dependency order; plus an SVG `placeholder` asset for fixtures.
+- `setmy-info-design.md` — a plan for building a setmy.info-style single-page marketing site by
+  combining small CSS blocks (section-by-section composition recipes and a block inventory).
+- README "Module independence" section documenting the standalone/delta model, and guidance on
+  publishing only the packages that carry rules.
 
 ### Changed
 
 - All new, not-yet-validated CSS is staged in `setmy-info-less-experimental` until it passes the
-  refactorial validation process; the stable `extended` (section/modal/card/article) and `fancy`
-  (empty skeleton) layers keep only validated content.
+  refactorial validation process; the stable `setmy-info-less-extended` (section/modal/card/article)
+  and `setmy-info-less-fancy` (empty skeleton) layers keep only validated content.
+- Refreshed `review.md` / `review3.md` and the `extended` / `fancy` package READMEs to match the
+  reorganization.
 
 ## [3.1.0] - 2026-06-30
 

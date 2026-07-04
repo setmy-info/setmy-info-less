@@ -26,6 +26,11 @@ This workspace contains the following modules:
   enterprise intranet and internal applications. Currently a placeholder (no rules of its own yet); like every package
   it ships only its own CSS — load it alongside the base/extended stylesheets in dependency order. Depends on
   `setmy-info-less-extended`. **Audience: enterprise application developers.**
+- [`setmy-info-less-angular-start-project`](packages/setmy-info-less-angular-start-project/README.md) — application
+  chrome styles for the Angular start template project (header panel, side navigation, modal overlay, footer, views).
+  Currently a placeholder (no rules of its own yet); the styles now living in the Angular workspace will be moved here
+  during the LESS cleanup. Depends on `setmy-info-less-extended`. **Audience: developers building applications from the
+  Angular start template project.**
 
 ### Layer 3 — Specialist packages (depend on Layer 2)
 
@@ -55,6 +60,8 @@ setmy-info-less  (Layer 0 — base. The smallest CSS needed for a GUI environmen
     │
     ├── setmy-info-less-fancy    (Layer 2 — polished public web UI. Most of the design elements for richer, more elaborate UI/UX/GUI work.)
     │
+    ├── setmy-info-less-angular-start-project  (Layer 2 — application chrome for the Angular start template project. Placeholder for now.)
+    │
     └── setmy-info-less-enterprise  (Layer 2 — stable distribution layer for enterprise intranet and internal applications. Placeholder for now.)
         │
         ├── setmy-info-less-ide          (Layer 3 — developer-tool UI patterns. IDE-like (NetBeans) UI/UX/GUI compositions.)
@@ -75,7 +82,8 @@ responsible for selecting the packages it needs and loading their stylesheets in
 tokens only (LESS variables emit no CSS), so it can reference shared variables without re-emitting
 base styles.
 
-`setmy-info-less-fancy` and `setmy-info-less-enterprise` are currently **skeletons** — wired into the
+`setmy-info-less-fancy`, `setmy-info-less-enterprise` and `setmy-info-less-angular-start-project`
+are currently **skeletons** — wired into the
 load order but carrying no rules of their own yet, held as placeholders for future LESS.
 `setmy-info-less-extended` carries the content components (sections, modal, cards, article);
 `setmy-info-less-ide` carries the frame presets; `setmy-info-less-experimental` carries all
@@ -90,14 +98,15 @@ The modules are **not** all independent — they form a layered tree rooted at `
 compiled `dist/main.css` is a **delta** (only its own rules); the consuming application composes the
 deltas in dependency order.
 
-| Module                         | Compile-time LESS imports   | Standalone CSS? | Its `dist/main.css` contains                        |
-|--------------------------------|-----------------------------|-----------------|-----------------------------------------------------|
-| `setmy-info-less` (base)       | nothing cross-package       | ✅ yes           | resets, tokens, single-purpose utilities            |
-| `setmy-info-less-extended`     | base `values` (tokens only) | ❌ delta         | content components (section/modal/card/article)     |
-| `setmy-info-less-fancy`        | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                          |
-| `setmy-info-less-enterprise`   | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                          |
-| `setmy-info-less-ide`          | base `values` (tokens only) | ❌ delta         | frame presets only                                  |
-| `setmy-info-less-experimental` | base `values` (tokens only) | ❌ delta         | staged prototypes (utilities, patterns, web chrome) |
+| Module                                  | Compile-time LESS imports   | Standalone CSS? | Its `dist/main.css` contains                        |
+|-----------------------------------------|-----------------------------|-----------------|-----------------------------------------------------|
+| `setmy-info-less` (base)                | nothing cross-package       | ✅ yes           | resets, tokens, single-purpose utilities            |
+| `setmy-info-less-extended`              | base `values` (tokens only) | ❌ delta         | content components (section/modal/card/article)     |
+| `setmy-info-less-fancy`                 | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                          |
+| `setmy-info-less-angular-start-project` | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                          |
+| `setmy-info-less-enterprise`            | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                          |
+| `setmy-info-less-ide`                   | base `values` (tokens only) | ❌ delta         | frame presets only                                  |
+| `setmy-info-less-experimental`          | base `values` (tokens only) | ❌ delta         | staged prototypes (utilities, patterns, web chrome) |
 
 - **Only `base` ships a standalone stylesheet.** Every other module's `dist` is a delta that only
   works once the consumer also loads its dependency-chain CSS first, in order.
@@ -113,7 +122,7 @@ deltas in dependency order.
 Packages in this workspace fall into two stability tiers:
 
 **Stable** — `setmy-info-less`, `setmy-info-less-extended`, `setmy-info-less-fancy`,
-`setmy-info-less-enterprise`, `setmy-info-less-ide`
+`setmy-info-less-enterprise`, `setmy-info-less-ide`, `setmy-info-less-angular-start-project`
 
 - Public API (class names, token names, LESS variable names) follows
   [Semantic Versioning](https://semver.org/spec/v2.0.0.html): breaking changes require a major version bump.
@@ -377,6 +386,7 @@ npm run build --workspaces
 npm run build --workspace setmy-info-less
 npm run build --workspace setmy-info-less-extended
 npm run build --workspace setmy-info-less-fancy
+npm run build --workspace setmy-info-less-angular-start-project
 npm run build --workspace setmy-info-less-enterprise
 npm run build --workspace setmy-info-less-ide
 npm run build --workspace setmy-info-less-experimental

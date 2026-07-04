@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less-fancy",
-    "version": "4.1.0",
+    "version": "4.2.0",
     "description": "SMI LESS fancy web — visually rich, polished UI patterns for public-facing web pages",
     "main": "dist/main.min.css",
     "dependencies": {

@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less-ide",
-    "version": "4.1.0",
+    "version": "4.2.0",
     "description": "SMI LESS IDE — developer tool and IDE-style UI patterns, builds on the enterprise package",
     "main": "dist/main.min.css",
     "dependencies": {

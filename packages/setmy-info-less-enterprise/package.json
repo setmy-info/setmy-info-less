@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less-enterprise",
-    "version": "4.1.0",
+    "version": "4.2.0",
     "description": "SMI LESS enterprise meta-package — installs and combines all Layer 0 and Layer 1 modules",
     "main": "dist/main.min.css",
     "dependencies": {

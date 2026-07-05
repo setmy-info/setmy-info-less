@@ -347,6 +347,7 @@ npm run build --workspaces
 
 npm run css --workspace setmy-info-less
 npm run css --workspace setmy-info-less-extended
+npm run css --workspace setmy-info-less-angular-start-project
 npm run css --workspace setmy-info-less-fancy
 npm run css --workspace setmy-info-less-enterprise
 npm run css --workspace setmy-info-less-ide
@@ -354,6 +355,7 @@ npm run css --workspace setmy-info-less-experimental
 
 npm run css-min --workspace setmy-info-less
 npm run css-min --workspace setmy-info-less-extended
+npm run css-min --workspace setmy-info-less-angular-start-project
 npm run css-min --workspace setmy-info-less-fancy
 npm run css-min --workspace setmy-info-less-enterprise
 npm run css-min --workspace setmy-info-less-ide
@@ -523,22 +525,24 @@ package must be published only after every package it depends on already exists 
 
 Declared dependency edges (from each `package.json`):
 
-| Package                        | Depends on (npm `dependencies`)               |
-|--------------------------------|-----------------------------------------------|
-| `setmy-info-less`              | — (none, Layer 0 base)                        |
-| `setmy-info-less-extended`     | `setmy-info-less`                             |
-| `setmy-info-less-fancy`        | `setmy-info-less-extended`                    |
-| `setmy-info-less-enterprise`   | `setmy-info-less`, `setmy-info-less-extended` |
-| `setmy-info-less-ide`          | `setmy-info-less-enterprise`                  |
-| `setmy-info-less-experimental` | `setmy-info-less-enterprise`                  |
+| Package                                 | Depends on (npm `dependencies`)               |
+|-----------------------------------------|-----------------------------------------------|
+| `setmy-info-less`                       | — (none, Layer 0 base)                        |
+| `setmy-info-less-extended`              | `setmy-info-less`                             |
+| `setmy-info-less-angular-start-project` | `setmy-info-less-extended`                    |
+| `setmy-info-less-fancy`                 | `setmy-info-less-extended`                    |
+| `setmy-info-less-enterprise`            | `setmy-info-less`, `setmy-info-less-extended` |
+| `setmy-info-less-ide`                   | `setmy-info-less-enterprise`                  |
+| `setmy-info-less-experimental`          | `setmy-info-less-enterprise`                  |
 
 A valid topological publishing order (every dependency precedes its dependents):
 
 ```shell
 npm publish --workspace setmy-info-less
 npm publish --workspace setmy-info-less-extended
-npm publish --workspace setmy-info-less-fancy
-npm publish --workspace setmy-info-less-enterprise
+#npm publish --workspace setmy-info-less-angular-start-project
+#npm publish --workspace setmy-info-less-fancy
+#npm publish --workspace setmy-info-less-enterprise
 npm publish --workspace setmy-info-less-ide
 npm publish --workspace setmy-info-less-experimental
 ```
@@ -570,20 +574,21 @@ The two orders are governed by different mechanisms — do not conflate them:
 Some packages are currently **empty skeletons** (zero CSS rules) and should not be published yet.
 Run `npm run smoke:dist` to see which have content:
 
-| Package                        | Has rules?       | Publish?                            |
-|--------------------------------|------------------|-------------------------------------|
-| `setmy-info-less`              | ✅ yes            | ✅ publish                           |
-| `setmy-info-less-extended`     | ✅ yes            | ✅ publish                           |
-| `setmy-info-less-ide`          | ✅ yes            | ✅ publish (see dependency note)     |
-| `setmy-info-less-experimental` | ✅ yes            | ⚠️ internal only — keep unpublished |
-| `setmy-info-less-fancy`        | ❌ empty skeleton | ⏸ skip until it has rules           |
-| `setmy-info-less-enterprise`   | ❌ empty skeleton | ⏸ skip until it has rules           |
+| Package                                 | Has rules?       | Publish?                            |
+|-----------------------------------------|------------------|-------------------------------------|
+| `setmy-info-less`                       | ✅ yes            | ✅ publish                           |
+| `setmy-info-less-extended`              | ✅ yes            | ✅ publish                           |
+| `setmy-info-less-ide`                   | ✅ yes            | ✅ publish (see dependency note)     |
+| `setmy-info-less-experimental`          | ✅ yes            | ⚠️ internal only — keep unpublished |
+| `setmy-info-less-angular-start-project` | ❌ empty skeleton | ⏸ skip until it has rules           |
+| `setmy-info-less-fancy`                 | ❌ empty skeleton | ⏸ skip until it has rules           |
+| `setmy-info-less-enterprise`            | ❌ empty skeleton | ⏸ skip until it has rules           |
 
 **1. Block accidental publishes.** Mark the packages you are *not* publishing as private so
 `npm publish --workspaces` skips them (and a stray `npm publish` is refused):
 
 ```jsonc
-// packages/setmy-info-less-fancy/package.json, -enterprise, -experimental
+// packages/setmy-info-less-angular-start-project/package.json, -fancy, -enterprise, -experimental
 { "private": true }
 ```
 
@@ -622,6 +627,7 @@ npm login
 npm publish --workspace setmy-info-less
 npm publish --workspace setmy-info-less-extended
 npm publish --workspace setmy-info-less-ide
+#npm publish --workspace setmy-info-less-angular-start-project
 ```
 
 `npm publish --workspaces` (all at once) is only safe once every published package's dependencies are

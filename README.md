@@ -425,7 +425,7 @@ npm run e2e --workspaces
 #### Test infrastructure notes
 
 - **`setmy-info-less-enterprise` is a placeholder, verified by lint only.** It currently has no rules
-  of its own and no e2e/cucumber suite; its `verify` runs `lint:less`. The repository-root
+  of its own and no e2e suite; its `verify` runs `lint:less`. The repository-root
   `npm run smoke:dist` treats it as an intentional skeleton (zero rules allowed). Add tests when it
   gains real content.
 - **Retained legacy test files (kept on purpose, not used).** `packages/common/test/js/firefoxHelper.js`
@@ -690,7 +690,6 @@ npm i playwright --save-dev
 npm i @playwright/test@latest --save-dev
 npm i pug --save-dev
 npm i rimraf --save-dev
-npm i @cucumber/cucumber --save-dev
 npx playwright install
 ```
 

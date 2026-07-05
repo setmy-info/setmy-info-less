@@ -210,7 +210,8 @@ that requirement.
 
 - `Jest`: lightweight JavaScript/unit-style tests and placeholders
 - `Playwright`: rendered CSS verification using Firefox
-- `Cucumber`: readable BDD scenarios backed by shared step definitions
+- Gherkin DTOs: readable BDD scenarios held as data objects (`packages/common/test/js/gherkin`) and
+  executed as Jest e2e tests; `toGherkin()` serializes them back into `.feature` text when needed
 - `stylelint`: LESS linting
 
 The `verify` script in each package combines these checks.

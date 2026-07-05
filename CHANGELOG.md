@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+- Cucumber support removed entirely. All Gherkin scenarios were converted 1:1 into Jest e2e tests
+  (`*.gherkin.e2e.js`) driven by Gherkin sentence DTOs — the new API in
+  `packages/common/test/js/gherkin` (`dto.js` builders, `runner.js` Jest executor, `writer.js`
+  `toGherkin()` serializer). The DTOs are pure data and can be serialized back into `.feature`
+  files later; the round-trip was verified byte-identical against the removed feature files.
+  Removed: `@cucumber/cucumber` dependency, per-package `cucumber.js` configs and `cucumber`
+  scripts, `packages/common/test/js/bdd` step definitions, and `src/test/gherkin/*.feature` files.
+
 ## [4.0.0] - 2026-07-02
 
 Major, **backwards-incompatible** release. The multi-module reorganization means classes now live in

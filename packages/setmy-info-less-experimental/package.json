@@ -16,11 +16,10 @@
         "watch:pug": "node ../common/test/js/pugWatch.js",
         "clean": "rimraf dist",
         "clean:all": "rimraf dist node_modules",
-        "verify": "npm test && npm run e2e && npm run lint:less && npm run cucumber",
+        "verify": "npm test && npm run e2e && npm run lint:less",
         "test": "jest",
         "e2e": "jest --config=jest.e2e.config.js",
         "e2e:one": "jest --config=jest.e2e.config.js --testNamePattern",
-        "cucumber": "cucumber-js",
         "lint:less": "stylelint ./src/main/less/**/*.less",
         "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix",
         "styleguide": "kss-node --source src/main/less --destination dist/styleguide --css ../main.css"
@@ -38,7 +37,6 @@
     },
     "homepage": "https://github.com/setmy-info/setmy-info-less",
     "devDependencies": {
-        "@cucumber/cucumber": "^13.0.0",
         "express": "^5.2.1",
         "jest": "^30.4.2",
         "kss": "^2.4.0",

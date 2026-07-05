@@ -111,6 +111,15 @@ the extended layer.
   border-style: none;
   line-height: 1;
 }
+#modalBody {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background: grey;
+  opacity: 0.5;
+}
 /* card.less */
 /* Base content card */
 .card {

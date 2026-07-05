@@ -48,5 +48,5 @@ npm run build
 npm run lint:less
 ```
 
-Note: `e2e` and `cucumber` scripts are intentionally absent while this package has no CSS of its own.
+Note: the `e2e` script is intentionally absent while this package has no CSS of its own.
 The repository-root `npm run smoke:dist` treats it as an intentional skeleton (zero rules allowed).

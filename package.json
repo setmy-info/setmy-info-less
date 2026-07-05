@@ -6,8 +6,5 @@
   ],
   "scripts": {
     "smoke:dist": "node packages/common/test/js/distSmoke.js"
-  },
-  "devDependencies": {
-    "@cucumber/cucumber": "^13.0.0"
   }
 }

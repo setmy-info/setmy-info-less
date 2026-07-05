@@ -65,6 +65,12 @@ async function startServer() {
 }
 
 async function pageIsRendered() {
+    // Defensive: if a previous render's driver/server is still open (failed scenario, double
+    // render), close it before overwriting the references — otherwise it leaks unreachably:
+    // the orphaned grid session counts against the hub's max-session cap and the orphaned
+    // server handle keeps the Node process alive after the run.
+    await pageClose();
+
     await startServer();
     getPath();
 

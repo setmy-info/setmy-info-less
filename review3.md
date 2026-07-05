@@ -398,6 +398,23 @@ several plausible hang sources. Ranked most → least likely:
 - `withTimeout()` resolves (never rejects) and the quit step always runs, so the session is released
   even when a prior step is slow.
 
+**Cucumber hang — root cause CONFIRMED and ✅ fixed:**
+
+Cleanup was a scenario step (`Then page is closed`). Cucumber **skips the remaining steps of a
+scenario after a failure**, including that cleanup step — so any red scenario (1) leaked its Selenium
+session against the grid's max-session cap and (2) left the Express fixture server listening, whose
+open handle keeps the Node event loop alive so `cucumber-js` never exits after printing results — the
+observed intermittent "hang at the end". Green runs closed properly, which is why it only happened
+sometimes. The next scenario's `pageIsRendered()` then overwrote `data.driver`/`data.server`, making
+the leaked pair unreachable. Fix (two layers):
+
+- `bdd/support.js` registers a Cucumber `After` hook that always calls `pageHelper.pageClose()` —
+  After hooks run regardless of scenario outcome. The `page is closed` step remains for feature
+  readability; `pageClose()` is idempotent so the double close is a no-op. Verified via
+  `cucumber-js --dry-run`: one hook per scenario registers.
+- `pageIsRendered()` defensively calls `pageClose()` first, so an existing driver/server can never be
+  orphaned by overwrite (double render or bypassed hook).
+
 **Still recommended (not yet applied):**
 
 - Explicit session-acquisition timeout / fail-fast when the grid is full, and optionally reap orphaned

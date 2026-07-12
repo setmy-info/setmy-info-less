@@ -25,35 +25,37 @@ npm i setmy-info-less
 ## Usage
 
 ```html
+
 <link rel="stylesheet" href="node_modules/setmy-info-less/dist/main.css">
 ```
 
 Or from CDN:
 
 ```html
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/setmy-info-less/dist/main.min.css">
 <link rel="stylesheet" href="https://unpkg.com/setmy-info-less@latest/dist/main.min.css">
 ```
 
 ## What is included
 
-| Group | Classes |
-|---|---|
-| Values | Color palette, font stack, spacing scale, z-index scale (tokens only) |
-| HTML resets | `html`, `body`, `h1`–`h6`, `p`, `ul`, `li`, `hr`, `small` |
-| Visibility | `.hidden`, `.invisible`, `.visible`, `.phone-hidden`, `.pc-hidden` |
-| Spacing | `.noPadding`, `.noMargin`, `.defaultPadding`, `.doublePadding` etc. |
-| Sizing | `.maxWidth`, `.halfWidth`, `.quarterWidth`, `.threeQuartersWidth`, `.elementHeight` etc. |
-| Layout | `.floatLeft`, `.floatRight`, `.floatClear`, `.noWrap`, `.tableElement`, `.centerBox`, `.centerText`, `.leftText`, `.rightText` |
-| Scroll | `.autoScrollBars`, `.verticalScrollBar`, `.horizontalScrollBar`, `.noScrollBars` etc. |
-| Text | `.asUppercase`, `.asLowercase`, `.firstAsUppercase`, `.textColorGray` |
-| Cursor | `.textCursor`, `.pointerCursor`, `.cursorVerticalResize`, `.cursorHorizontalResize` |
-| Panels | `.verticalStretchPanel`, `.horizontalStretchPanel` |
-| Visual style | `.normalBackground`, `.defaultBorder`, `.defaultShadow`, `.defaultRadius`, `.minifiedText` |
-| Notes | `.importantNote`, `.timeLabel`, `.detailed` |
-| Flex | `.smi-flex-panel` + `-row`/`-column`/`-left`/`-center`/`-right` modifiers |
-| Components | structural anchors only: `canvas#background`, `#application` |
-| Devices | `@media` blocks for phone, pad, watch, print |
+| Group        | Classes                                                                                                                        |
+|--------------|--------------------------------------------------------------------------------------------------------------------------------|
+| Values       | Color palette, font stack, spacing scale, z-index scale (tokens only)                                                          |
+| HTML resets  | `html`, `body`, `h1`–`h6`, `p`, `ul`, `li`, `hr`, `small`                                                                      |
+| Visibility   | `.hidden`, `.invisible`, `.visible`, `.phone-hidden`, `.pc-hidden`                                                             |
+| Spacing      | `.noPadding`, `.noMargin`, `.defaultPadding`, `.doublePadding` etc.                                                            |
+| Sizing       | `.maxWidth`, `.halfWidth`, `.quarterWidth`, `.threeQuartersWidth`, `.elementHeight` etc.                                       |
+| Layout       | `.floatLeft`, `.floatRight`, `.floatClear`, `.noWrap`, `.tableElement`, `.centerBox`, `.centerText`, `.leftText`, `.rightText` |
+| Scroll       | `.autoScrollBars`, `.verticalScrollBar`, `.horizontalScrollBar`, `.noScrollBars` etc.                                          |
+| Text         | `.asUppercase`, `.asLowercase`, `.firstAsUppercase`, `.textColorGray`                                                          |
+| Cursor       | `.textCursor`, `.pointerCursor`, `.cursorVerticalResize`, `.cursorHorizontalResize`                                            |
+| Panels       | `.verticalStretchPanel`, `.horizontalStretchPanel`                                                                             |
+| Visual style | `.normalBackground`, `.defaultBorder`, `.defaultShadow`, `.defaultRadius`, `.minifiedText`                                     |
+| Notes        | `.importantNote`, `.timeLabel`, `.detailed`                                                                                    |
+| Flex         | `.smi-flex-panel` + `-row`/`-column`/`-left`/`-center`/`-right` modifiers                                                      |
+| Components   | structural anchors only: `canvas#background`, `#application`                                                                   |
+| Devices      | `@media` blocks for phone, pad, watch, print                                                                                   |
 
 > Higher-level content components — page **sections**, **modal**/overlay, **cards**, and **article**
 > typography — live in [`setmy-info-less-extended`](../setmy-info-less-extended/README.md), not here.
@@ -64,12 +66,12 @@ Or from CDN:
 The base module uses a single small-vs-wide width boundary at **1024px**, plus a print block.
 Breakpoints are plain `@media only screen` queries (no JS), defined in `src/main/less/devices/`.
 
-| Range            | File         | What happens                                                         |
-|------------------|--------------|----------------------------------------------------------------------|
-| ≤ 639px          | `watch.less` | `.phone-hidden` → `display:none`; `#header-panel` height auto; `main` height reduced by one header |
-| 640px – 1023px   | `phone.less` | same rules as `watch.less`                                           |
-| ≥ 1024px         | `pad.less`   | `.pc-hidden` → `display:none !important`                             |
-| print media      | `print.less` | print-only overrides (placeholder)                                  |
+| Range          | File         | What happens                                                                                       |
+|----------------|--------------|----------------------------------------------------------------------------------------------------|
+| ≤ 639px        | `watch.less` | `.phone-hidden` → `display:none`; `#header-panel` height auto; `main` height reduced by one header |
+| 640px – 1023px | `phone.less` | same rules as `watch.less`                                                                         |
+| ≥ 1024px       | `pad.less`   | `.pc-hidden` → `display:none !important`                                                           |
+| print media    | `print.less` | print-only overrides (placeholder)                                                                 |
 
 Base (default, no-media-query) styles apply at every width; the rules above are added on top
 within their range.

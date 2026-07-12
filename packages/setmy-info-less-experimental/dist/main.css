@@ -7,6 +7,7 @@ the setmy-info-less development team.
 
 Subdirectory layout:
   grid/   — moved from setmy-info-less grid/ (grid layout helpers)
+  flex/   — moved from setmy-info-less-extended flex/ (smi-flex-panel layout helpers)
   base/   — moved from setmy-info-less utility/ (button, color, color-named, keyvalue)
   ui/     — moved from setmy-info-less-ui (interaction states, typography, cards, feedback, navigation, positioning)
   forms/  — moved from setmy-info-less-forms (form resets and layout helpers)
@@ -59,6 +60,37 @@ software loads the modules it needs in dependency order before this file.
 }
 .gridSpan3 {
   grid-column: span 3;
+}
+/* Moved from setmy-info-less-extended flex/ */
+/* flex/main.less */
+/*
+Flex helpers expose a small utility family based on the `.smi-flex-panel` prefix.
+
+Usage example:
+`class="smi-flex-panel smi-flex-panel-row smi-flex-panel-left"`
+
+Treat `.smi-flex-panel` as the base activator class and the suffixed variants as modifier classes.
+These helpers target modern browsers; do not assume legacy browser parity without explicit testing.
+*/
+.smi-flex-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+.smi-flex-panel-left {
+  justify-content: flex-start;
+}
+.smi-flex-panel-center {
+  justify-content: center;
+}
+.smi-flex-panel-right {
+  justify-content: flex-end;
+}
+.smi-flex-panel-column {
+  flex-direction: column;
+}
+.smi-flex-panel-row {
+  flex-direction: row;
 }
 /* Moved from setmy-info-less utility/ */
 /*

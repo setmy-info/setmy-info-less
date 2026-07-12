@@ -9,7 +9,7 @@ This workspace contains the following modules:
 
 ### Layer 0 — Base
 
-- [`setmy-info-less`](packages/setmy-info-less/README.md) — core resets, tokens, spacing, layout, flex helpers,
+- [`setmy-info-less`](packages/setmy-info-less/README.md) — core resets, tokens, spacing, layout,
   responsive breakpoints. All other packages depend on this.
 
 ### Layer 1 — Extensions (depend on base)
@@ -44,6 +44,7 @@ This workspace contains the following modules:
   framework developers only. Depends on `setmy-info-less-enterprise`, so all stable LESS variables and rules are in
   scope. Not for production use. Contains subdirectories of code staged for future promotion:
     - `grid/` — grid layout helpers (moved from `setmy-info-less` grid/ folder)
+    - `flex/` — `smi-flex-panel` layout helpers (moved from `setmy-info-less-extended` flex/ folder)
     - `base/` — button, color, color-named, and keyvalue utilities (moved from `setmy-info-less` utility/ folder)
     - `ui/` — interaction states, typography helpers, card variants, feedback alerts, navigation, and positioning
       utilities (moved from the removed `setmy-info-less-ui` package)
@@ -68,6 +69,7 @@ setmy-info-less  (Layer 0 — base. The smallest CSS needed for a GUI environmen
         │
         └── setmy-info-less-experimental (experimental — framework developers only. Unstable elements that may later move down the tree into any branch.)
             ├── grid/   (grid layout helpers — from setmy-info-less grid/)
+            ├── flex/   (smi-flex-panel layout helpers — from setmy-info-less-extended flex/)
             ├── base/   (button, color, color-named, keyvalue — from setmy-info-less utility/)
             ├── ui/     (states, typography, cards, feedback, navigation, positioning)
             ├── forms/  (form resets and layout helpers)
@@ -87,10 +89,11 @@ are currently **skeletons** — wired into the
 load order but carrying no rules of their own yet, held as placeholders for future LESS.
 `setmy-info-less-extended` carries the content components (sections, modal, cards, article);
 `setmy-info-less-ide` carries the frame presets; `setmy-info-less-experimental` carries all
-**unvalidated** staged prototypes — building blocks (button, forms, key-value), content patterns
-(price list, media object, profile block, notice banner), and public-web chrome (site header/nav,
-hero, tiles + grid, CTA, footer) under `web/` — none of which have passed the refactorial validation
-process yet. None of the packages bundle base or any other package's CSS.
+**unvalidated** staged prototypes — building blocks (button, forms, key-value), flex layout helpers
+(`smi-flex-panel`, moved out of `setmy-info-less-extended`), content patterns (price list, media
+object, profile block, notice banner), and public-web chrome (site header/nav, hero, tiles + grid,
+CTA, footer) under `web/` — none of which have passed the refactorial validation process yet. None
+of the packages bundle base or any other package's CSS.
 
 ### Module independence
 
@@ -106,7 +109,7 @@ deltas in dependency order.
 | `setmy-info-less-angular-start-project` | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                          |
 | `setmy-info-less-enterprise`            | base `values` (tokens only) | ❌ delta         | (skeleton — empty for now)                          |
 | `setmy-info-less-ide`                   | base `values` (tokens only) | ❌ delta         | frame presets only                                  |
-| `setmy-info-less-experimental`          | base `values` (tokens only) | ❌ delta         | staged prototypes (utilities, patterns, web chrome) |
+| `setmy-info-less-experimental`          | base `values` (tokens only) | ❌ delta         | staged prototypes (utilities, flex, patterns, web chrome) |
 
 - **Only `base` ships a standalone stylesheet.** Every other module's `dist` is a delta that only
   works once the consumer also loads its dependency-chain CSS first, in order.
@@ -279,9 +282,8 @@ Java is required to run the Selenium Grid hub and node:
 java -version
 ```
 
-KSS styleguide generation uses the `kss-node` CLI from the `kss` npm package (v2.x).
+KSS styleguide generation uses the `kss` CLI from the `kss` npm package (v3.x).
 It is installed automatically by `npm install` as a devDependency — no separate global install needed.
-Note: `kss@2.x` registers the binary as `kss-node`, not `kss`. The build scripts call `kss-node` directly.
 
 #### 2. Selenium Grid
 
@@ -348,16 +350,16 @@ npm run build --workspaces
 npm run css --workspace setmy-info-less
 npm run css --workspace setmy-info-less-extended
 npm run css --workspace setmy-info-less-angular-start-project
-npm run css --workspace setmy-info-less-fancy
-npm run css --workspace setmy-info-less-enterprise
+#npm run css --workspace setmy-info-less-fancy
+#npm run css --workspace setmy-info-less-enterprise
 npm run css --workspace setmy-info-less-ide
 npm run css --workspace setmy-info-less-experimental
 
 npm run css-min --workspace setmy-info-less
 npm run css-min --workspace setmy-info-less-extended
 npm run css-min --workspace setmy-info-less-angular-start-project
-npm run css-min --workspace setmy-info-less-fancy
-npm run css-min --workspace setmy-info-less-enterprise
+#npm run css-min --workspace setmy-info-less-fancy
+#npm run css-min --workspace setmy-info-less-enterprise
 npm run css-min --workspace setmy-info-less-ide
 npm run css-min --workspace setmy-info-less-experimental
 
@@ -387,16 +389,16 @@ npm run build --workspaces
 # Or build each workspace explicitly in dependency order
 npm run build --workspace setmy-info-less
 npm run build --workspace setmy-info-less-extended
-npm run build --workspace setmy-info-less-fancy
+#npm run build --workspace setmy-info-less-fancy
 npm run build --workspace setmy-info-less-angular-start-project
-npm run build --workspace setmy-info-less-enterprise
+#npm run build --workspace setmy-info-less-enterprise
 npm run build --workspace setmy-info-less-ide
 npm run build --workspace setmy-info-less-experimental
 ```
 
 ### Styleguide generation
 
-Uses `kss-node` (from the `kss@2.x` devDependency). The binary is in `node_modules/.bin/kss-node`
+Uses `kss` (from the `kss@3.x` devDependency). The binary is in `node_modules/.bin/kss`
 and is called automatically by `npm run build` and `npm run styleguide`.
 
 ```shell
@@ -660,7 +662,6 @@ The actual import tree as of the current codebase (`main.less` → group index �
         watch.less
         phone.less
         pad.less
-      flex/index.less
       components/index.less
         application.less
 

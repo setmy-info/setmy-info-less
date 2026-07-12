@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less-enterprise",
-    "version": "4.2.0",
+    "version": "5.0.0",
     "description": "SMI LESS enterprise meta-package — installs and combines all Layer 0 and Layer 1 modules",
     "main": "dist/main.min.css",
     "dependencies": {
@@ -16,7 +16,7 @@
         "verify": "npm run lint:less",
         "lint:less": "stylelint ./src/main/less/**/*.less",
         "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix",
-        "styleguide": "kss-node --source src/main/less --destination dist/styleguide --css ../main.css"
+        "styleguide": "kss --source src/main/less --destination dist/styleguide --css ../main.css"
     },
     "keywords": [
         "less",
@@ -30,7 +30,7 @@
     },
     "homepage": "https://github.com/setmy-info/setmy-info-less",
     "devDependencies": {
-        "kss": "^2.4.0",
+        "kss": "^3.1.0",
         "less": "^4.6.6",
         "less-plugin-clean-css": "^1.6.0",
         "postcss-less": "^6.0.0",

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.0.0] - 2026-07-12
+
+Major, **backwards-incompatible** release. All packages are versioned together at `5.0.0`.
+
 ### Changed
 
 - Cucumber support removed entirely. All Gherkin scenarios were converted 1:1 into Jest e2e tests
@@ -13,6 +17,19 @@ All notable changes to this project will be documented in this file.
   files later; the round-trip was verified byte-identical against the removed feature files.
   Removed: `@cucumber/cucumber` dependency, per-package `cucumber.js` configs and `cucumber`
   scripts, `packages/common/test/js/bdd` step definitions, and `src/test/gherkin/*.feature` files.
+- **`smi-flex-panel` flex layout helpers moved from `setmy-info-less-extended` to
+  `setmy-info-less-experimental`** (`src/main/less/flex/index.less`, plus the `flexBox`/`flex-center`
+  Pug fixtures and their e2e/Gherkin-DTO tests). `setmy-info-less-extended` is a **Stable**-tier
+  package, so removing a class family from its public surface is breaking even though the rules were
+  never actually wired into its build (the `flex/index.less` import was added and then reverted within
+  this same release, so `4.x` `setmy-info-less-extended` builds never shipped working `.smi-flex-panel`
+  CSS). Consumers using `.smi-flex-panel*` must now load `setmy-info-less-experimental` instead.
+- `kss` devDependency upgraded to `^3.1.0` across all packages; the `styleguide` script in every
+  package now calls the `kss` binary directly (`kss-node` is a deprecated compatibility alias in
+  `kss@3.x` and is no longer used).
+- All `stylelint.config.js` files now also disable `selector-id-pattern` (alongside the existing
+  `selector-class-pattern: null`), so camelCase id selectors (e.g. `#modalBody`) are allowed
+  workspace-wide, matching the project's camelCase naming convention.
 
 ## [4.0.0] - 2026-07-02
 
@@ -153,7 +170,9 @@ update their stylesheet load list accordingly. All packages are versioned togeth
 
 - An initial LESS code from SMI home page and from the other internal projects into one single place.
 
-[unreleased]: https://github.com/setmy-info/setmy-info-less/compare/4.0.0...HEAD
+[unreleased]: https://github.com/setmy-info/setmy-info-less/compare/5.0.0...HEAD
+
+[5.0.0]: https://github.com/setmy-info/setmy-info-less/compare/4.0.0...5.0.0
 
 [4.0.0]: https://github.com/setmy-info/setmy-info-less/compare/3.1.0...4.0.0
 

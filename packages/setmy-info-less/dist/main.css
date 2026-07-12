@@ -110,8 +110,7 @@ small {
 hr {
   border: 0;
   height: 1px;
-  background: #333;
-  background-image: linear-gradient(to right, #ccc, #333, #ccc);
+  background: #333 linear-gradient(to right, #ccc, #333, #ccc);
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -522,36 +521,6 @@ Styleguide: utilities.responsive
   .pc-hidden {
     display: none !important;
   }
-}
-/* flex/main.less */
-/*
-Flex helpers expose a small utility family based on the `.smi-flex-panel` prefix.
-
-Usage example:
-`class="smi-flex-panel smi-flex-panel-row smi-flex-panel-left"`
-
-Treat `.smi-flex-panel` as the base activator class and the suffixed variants as modifier classes.
-These helpers target modern browsers; do not assume legacy browser parity without explicit testing.
-*/
-.smi-flex-panel {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-}
-.smi-flex-panel-left {
-  justify-content: flex-start;
-}
-.smi-flex-panel-center {
-  justify-content: center;
-}
-.smi-flex-panel-right {
-  justify-content: flex-end;
-}
-.smi-flex-panel-column {
-  flex-direction: column;
-}
-.smi-flex-panel-row {
-  flex-direction: row;
 }
 /**
 * Components directed to use for concrete systems.

@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less",
-    "version": "4.2.0",
+    "version": "5.0.0",
     "description": "SMI LESS project",
     "main": "dist/main.min.css",
     "scripts": {
@@ -20,7 +20,7 @@
         "e2e:one": "jest --config=jest.e2e.config.js --testNamePattern",
         "lint:less": "stylelint ./src/main/less/**/*.less",
         "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix",
-        "styleguide": "kss-node --source src/main/less --destination dist/styleguide --css ../main.css"
+        "styleguide": "kss --source src/main/less --destination dist/styleguide --css ../main.css"
     },
     "keywords": [
         "less",
@@ -39,7 +39,7 @@
     "devDependencies": {
         "express": "^5.2.1",
         "jest": "^30.4.2",
-        "kss": "^2.4.0",
+        "kss": "^3.1.0",
         "less": "^4.6.6",
         "less-plugin-clean-css": "^1.6.0",
         "less-watch-compiler": "^1.17.5",

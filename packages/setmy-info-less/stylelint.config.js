@@ -7,6 +7,7 @@ module.exports = {
     rules: {
         'block-no-empty': null,//true
         'selector-class-pattern': null,
+        'selector-id-pattern': null,
         'media-feature-range-notation': 'prefix',
         "selector-type-no-unknown": [true, {
             ignoreTypes: ["app"]

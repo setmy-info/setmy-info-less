@@ -134,3 +134,6 @@ dist
 
 cypress
 test-results
+
+claude.session.sh
+claude.session.cmd

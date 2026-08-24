@@ -6,6 +6,14 @@ const http = require('http');
 
 const SELENIUM_HUB_URL = process.env.SELENIUM_HUB_URL || 'http://localhost:4444/wd/hub';
 const BROWSER = process.env.SELENIUM_BROWSER || 'firefox';
+// Optional path to a specific Gecko-based browser binary (e.g. LibreWolf) instead of the node's
+// default Firefox. The path is resolved ON THE GRID NODE, not on the machine running Jest.
+const BROWSER_BINARY = process.env.SELENIUM_BROWSER_BINARY || '';
+// Optional path to an existing browser profile directory to reuse instead of the throwaway profile
+// geckodriver builds per session. Use it when a machine-installed extension (e.g. Web eID on
+// Open-EID machines) must be accepted once by hand and then stay accepted. Also resolved ON THE
+// GRID NODE. The profile is used in place, so no other browser may hold it open during a run.
+const BROWSER_PROFILE = process.env.SELENIUM_BROWSER_PROFILE || '';
 const WINDOW_WIDTH = 2000;
 const WINDOW_HEIGHT = 1200;
 
@@ -75,6 +83,23 @@ async function pageIsRendered() {
     getPath();
 
     const options = new firefox.Options();
+    if (BROWSER_BINARY) {
+        options.setBinary(BROWSER_BINARY);
+    }
+    if (BROWSER_PROFILE) {
+        options.addArguments('-profile', BROWSER_PROFILE);
+    }
+    // LibreWolf ships privacy.spoof_english=0 ("ask"), so on the first real page load it raises a
+    // confirmEx dialog offering to request English versions of pages. Any dialog aborts the next
+    // WebDriver command with UnexpectedAlertOpenError and fails the suite. 2 = always request
+    // English, which also pins Accept-Language for reproducible rendering. Inert on stock Firefox.
+    options.setPreference('privacy.spoof_english', 2);
+    // Pin devicePixelRatio to 1 so pixel assertions do not depend on the display scaling of the
+    // machine running the browser. Firefox snaps border widths to whole DEVICE pixels, so at 125%
+    // scaling a 2px border computes as 1.6px (2 * 1.25 = 2.5 -> floor 2 -> 2 / 1.25) and breaks
+    // e.g. the .card border test. Padding and border-radius are not snapped, hence only borders
+    // appeared to "randomly" fail.
+    options.setPreference('layout.css.devPixelsPerPx', '1.0');
     data.driver = await new Builder()
         .usingServer(SELENIUM_HUB_URL)
         .forBrowser(BROWSER)

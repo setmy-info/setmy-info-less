@@ -1,26 +1,34 @@
 {
     "name": "setmy-info-less-enterprise",
     "version": "5.0.0",
-    "description": "SMI LESS enterprise meta-package — installs and combines all Layer 0 and Layer 1 modules",
+    "description": "SMI LESS enterprise — stable distribution layer for enterprise intranet and internal applications",
     "main": "dist/main.min.css",
     "dependencies": {
         "setmy-info-less": "*",
         "setmy-info-less-extended": "*"
     },
     "scripts": {
-        "build": "npm run css && npm run css-min && npm run styleguide",
+        "build": "npm run css && npm run css-min && npm run html && npm run styleguide",
         "css": "lessc ./src/main/less/main.less dist/main.css",
         "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",
+        "html": "node ../common/test/js/pugBuild.js",
+        "start": "node ../common/test/js/server.js",
+        "watch": "less-watch-compiler ./src/main/less dist main.less",
+        "watch:pug": "node ../common/test/js/pugWatch.js",
         "clean": "rimraf dist",
         "clean:all": "rimraf dist node_modules",
-        "verify": "npm run lint:less",
+        "verify": "npm test && npm run e2e && npm run lint:less",
+        "test": "jest",
+        "e2e": "jest --config=jest.e2e.config.js",
+        "e2e:one": "jest --config=jest.e2e.config.js --testNamePattern",
         "lint:less": "stylelint ./src/main/less/**/*.less",
         "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix",
-        "styleguide": "kss --source src/main/less --destination dist/styleguide --css ../main.css"
+        "styleguide": "npx kss --source src/main/less --destination dist/styleguide --css ../main.css"
     },
     "keywords": [
         "less",
-        "css"
+        "css",
+        "enterprise"
     ],
     "author": "Imre Tabur <imre.tabur@mail.ee>",
     "license": "MIT",
@@ -30,12 +38,17 @@
     },
     "homepage": "https://github.com/setmy-info/setmy-info-less",
     "devDependencies": {
-        "kss": "^3.1.0",
-        "less": "^4.6.6",
+        "express": "^5.2.1",
+        "jest": "^30.4.2",
+        "kss": "^2.4.0",
+        "less": "^4.9.0",
         "less-plugin-clean-css": "^1.6.0",
+        "less-watch-compiler": "^1.19.9",
         "postcss-less": "^6.0.0",
+        "pug": "^3.0.4",
         "rimraf": "^6.1.3",
-        "stylelint": "^17.13.0",
+        "selenium-webdriver": "^4.47.0",
+        "stylelint": "^17.14.1",
         "stylelint-config-standard": "^40.0.0",
         "stylelint-less": "^4.2.1"
     }

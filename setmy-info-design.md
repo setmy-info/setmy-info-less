@@ -11,14 +11,14 @@ validation process. Everything is float-based and token-driven, per the project 
 
 Single-page marketing SPA, i18n (EN/ET), single centered column, mobile-first. Top to bottom:
 
-| # | Section       | Pieces                                                |
-|---|---------------|-------------------------------------------------------|
-| 1 | Header        | brand/logo, language toggle (EN/ET)                   |
-| 2 | Hero          | headline ("Hyperautomation"), slogan, scroll-hint (⇣) |
-| 3 | Services      | lead paragraph + service offerings                    |
-| 4 | Contact       | company name, email, phone, location (label→value)    |
-| 5 | Footer        | copyright, privacy link                               |
-| 6 | Privacy modal | GDPR/cookie overlay + accept button                   |
+| #   | Section       | Pieces                                                |
+| --- | ------------- | ----------------------------------------------------- |
+| 1   | Header        | brand/logo, language toggle (EN/ET)                   |
+| 2   | Hero          | headline ("Hyperautomation"), slogan, scroll-hint (⇣) |
+| 3   | Services      | lead paragraph + service offerings                    |
+| 4   | Contact       | company name, email, phone, location (label→value)    |
+| 5   | Footer        | copyright, privacy link                               |
+| 6   | Privacy modal | GDPR/cookie overlay + accept button                   |
 
 ---
 
@@ -27,7 +27,7 @@ Single-page marketing SPA, i18n (EN/ET), single centered column, mobile-first. T
 **Existing, reused as-is:**
 
 | Need                             | Block(s)                                                                                  | Package (layer)        |
-|----------------------------------|-------------------------------------------------------------------------------------------|------------------------|
+| -------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------- |
 | Centered container               | `.centerBox`                                                                              | base                   |
 | Center text                      | `.centerText`                                                                             | base                   |
 | Section strip + padding          | `.pageSection`, `.pageSectionNarrow`                                                      | extended               |
@@ -42,7 +42,7 @@ Single-page marketing SPA, i18n (EN/ET), single centered column, mobile-first. T
 **New small blocks added (this pass) — `experimental/web/`:**
 
 | Block              | Classes                                                   | Purpose                                                  |
-|--------------------|-----------------------------------------------------------|----------------------------------------------------------|
+| ------------------ | --------------------------------------------------------- | -------------------------------------------------------- |
 | `langToggle.less`  | `.langToggle`, `.langToggleItem`, `.langToggleItemActive` | inline EN/ET language switch                             |
 | `scrollHint.less`  | `.scrollHint`                                             | centered "scroll down" indicator under the hero          |
 | `slogan.less`      | `.slogan`                                                 | centered tagline under the hero headline                 |

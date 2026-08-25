@@ -21,7 +21,7 @@ statements wire up a **different, flatter** graph. The two do not agree, and two
 ### 1.1 Declared npm dependencies vs. actual LESS imports
 
 | Package                        | Declared `dependencies`                       | What its `main.less` actually `@import`s                                         |
-|--------------------------------|-----------------------------------------------|----------------------------------------------------------------------------------|
+| ------------------------------ | --------------------------------------------- | -------------------------------------------------------------------------------- |
 | `setmy-info-less`              | —                                             | own `values, html, utility, devices, flex, grid, components`                     |
 | `setmy-info-less-extended`     | `setmy-info-less`                             | **only** base `values/index.less` — nothing else                                 |
 | `setmy-info-less-fancy`        | `setmy-info-less-extended`                    | base `values` + own (empty) `utility/index.less` — **not** extended              |
@@ -34,7 +34,7 @@ Only `setmy-info-less-experimental` has a LESS import graph that matches its dec
 ### 1.2 Compiled output sizes (from current `dist/`)
 
 | Package                        | `dist/main.css` | Class selectors | Verdict                                        |
-|--------------------------------|-----------------|-----------------|------------------------------------------------|
+| ------------------------------ | --------------- | --------------- | ---------------------------------------------- |
 | `setmy-info-less`              | 709 lines       | 124             | the real base                                  |
 | `setmy-info-less-extended`     | 10 lines        | **0**           | **empty** — only comments + token values       |
 | `setmy-info-less-fancy`        | 10 lines        | **0**           | **empty** — only comments + token values       |
@@ -81,7 +81,7 @@ Only `setmy-info-less-experimental` has a LESS import graph that matches its dec
 
 This is now documented in `README.md` (Publishing → "Build vs. publish order"). Summary:
 
-- **Build order: not significant.** `lessc` reads dependencies' LESS *source* via relative paths, so
+- **Build order: not significant.** `lessc` reads dependencies' LESS _source_ via relative paths, so
   `npm run build --workspaces` works in any order. npm iterates alphabetically: `setmy-info-less`,
   `-enterprise`, `-experimental`, `-extended`, `-fancy`, `-ide`.
 - **Publish order: significant**, topological by declared `dependencies`:
@@ -126,11 +126,11 @@ is composed by the consuming app in dependency order.
   integrator overrides. The file's own comment acknowledges it. Candidate for removal once load
   order guarantees specificity.
 - **Variable forward-reference in `values/index.less`.** `@headerPanelHeight: @headerHeight +
-  @navigationHeight;` is declared *above* `@headerHeight` and `@navigationHeight`. LESS lazy
+@navigationHeight;` is declared _above_ `@headerHeight` and `@navigationHeight`. LESS lazy
   evaluation makes this work, but it reads as a bug. Reorder so definitions precede use.
 - **`@headerHeight` / `@footerHeight` redefined in `ide/frames/index.less`.** Base sets
   `@footerHeight: @defaultHeight` (50px); frames overrides it to `@halfDefaultHeight` (25px). Because
-  LESS is last-wins-global, the override silently changes a token that *looks* shared. It happens to
+  LESS is last-wins-global, the override silently changes a token that _looks_ shared. It happens to
   be harmless here (ide doesn't import `devices`, the other consumer of `@headerHeight`), but it is a
   latent trap if imports change. Prefer frame-local names (`@frameHeaderHeight`, `@frameFooterHeight`).
 - **`html-extended.less` is empty.** Imported by `html/index.less` but contains only a comment.
@@ -176,7 +176,7 @@ is composed by the consuming app in dependency order.
 ### 4.2 Coverage by package
 
 | Package      | e2e files                                                                                                   | Cucumber features                           | Notes                                                                      |
-|--------------|-------------------------------------------------------------------------------------------------------------|---------------------------------------------|----------------------------------------------------------------------------|
+| ------------ | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------- | -------------------------------------------------------------------------- |
 | base         | 7 (`application`, `background`, `body`, `centerText`, `flex-center`, `layoutCenterBox`, `layoutCenterBox2`) | 5                                           | best covered, but `flex-center.e2e.js` historically only checked the title |
 | extended     | 1 (`body`)                                                                                                  | 1                                           | tests an empty stylesheet — body comes from base anyway                    |
 | fancy        | 1 (`body`)                                                                                                  | 1                                           | tests an empty stylesheet                                                  |
@@ -201,7 +201,7 @@ is composed by the consuming app in dependency order.
   feature-file additions for `article`/`card`/`modal`/`section`.
 - **Responsive viewport tests still missing** for `.phone-hidden` / `.pc-hidden` at multiple widths.
 - **Build-output smoke test** — ✅ DONE (B2): `npm run smoke:dist` now fails the pipeline if a
-  *content* package's `dist/main.css` is empty, while tolerating the intentional skeletons.
+  _content_ package's `dist/main.css` is empty, while tolerating the intentional skeletons.
 - **Single browser only.** Firefox via Grid; no Chromium run despite ~65% market share.
 
 ---
@@ -250,7 +250,7 @@ Pick one direction per package and make `package.json` and `main.less` agree:
   broken packages. Decision: keep them empty under the standalone/delta model; no content is invented.
   The smoke test (B2) explicitly tolerates them.
 - **B2.** ✅ DONE — Added `packages/common/test/js/distSmoke.js` + root `npm run smoke:dist`, wired
-  into the CI one-liner after `build`. It fails when a *content* package's `dist/main.css` has zero
+  into the CI one-liner after `build`. It fails when a _content_ package's `dist/main.css` has zero
   rules and tolerates the intentional skeletons (`extended`, `fancy`).
 
 ### C. Decide the cross-package import strategy
@@ -363,7 +363,7 @@ several plausible hang sources. Ranked most → least likely:
    next `Builder().build()` blocks in the grid's session **queue** for minutes — the classic
    intermittent multi-minute hang. Intermittency = whether prior orphans exist.
 2. **`server.close()` hanging on a lingering keep-alive socket.** `pageClose` does
-   `await new Promise(resolve => server.close(resolve))`. Node's `server.close()` waits for *existing*
+   `await new Promise(resolve => server.close(resolve))`. Node's `server.close()` waits for _existing_
    connections to drain; it does **not** destroy them. If Firefox/Grid still holds a keep-alive
    connection to the fixture server, the callback never fires and `afterAll` hangs forever (no timeout).
 3. **`driver.quit()` hanging against an unhealthy node**, with no timeout wrapper → `afterAll` never
@@ -371,7 +371,7 @@ several plausible hang sources. Ranked most → least likely:
 4. **No timeout on `Builder().build()` / session creation.** When the grid is busy, build() blocks on the
    queue; Jest's 60s `testTimeout` may fire the hook timeout but the half-created session can linger,
    compounding cause 1.
-5. **Shared module-level `data` singleton in `pageHelper.js`.** All e2e suites and *all* cucumber
+5. **Shared module-level `data` singleton in `pageHelper.js`.** All e2e suites and _all_ cucumber
    scenarios in one process share one `data` object (driver, server, computedStyles). It is only safe
    because `maxWorkers: 1` and cucumber's default serial mode prevent overlap. Turning on jest
    `maxWorkers>1` or cucumber `--parallel` would clobber `data.driver`/`data.server` mid-flight →

@@ -23,8 +23,11 @@ provides the stable shared stack beneath this IDE-specific layer.
 Load the enterprise compiled CSS (includes everything) plus this package:
 
 ```html
-<link rel="stylesheet" href="node_modules/setmy-info-less-enterprise/dist/main.min.css">
-<link rel="stylesheet" href="node_modules/setmy-info-less-ide/dist/main.css">
+<link
+    rel="stylesheet"
+    href="node_modules/setmy-info-less-enterprise/dist/main.min.css"
+/>
+<link rel="stylesheet" href="node_modules/setmy-info-less-ide/dist/main.css" />
 ```
 
 The IDE package now owns the NetBeans-style frame selectors such as
@@ -34,6 +37,6 @@ The IDE package now owns the NetBeans-style frame selectors such as
 
 ```shell
 npm run build
-npm run lint:less
+npm run lint
 npm run verify
 ```

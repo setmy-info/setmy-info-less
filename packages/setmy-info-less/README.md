@@ -20,27 +20,31 @@ on it.
 npm i setmy-info-less
 ```
 
-* https://www.npmjs.com/package/setmy-info-less
+- https://www.npmjs.com/package/setmy-info-less
 
 ## Usage
 
 ```html
-
-<link rel="stylesheet" href="node_modules/setmy-info-less/dist/main.css">
+<link rel="stylesheet" href="node_modules/setmy-info-less/dist/main.css" />
 ```
 
 Or from CDN:
 
 ```html
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/setmy-info-less/dist/main.min.css">
-<link rel="stylesheet" href="https://unpkg.com/setmy-info-less@latest/dist/main.min.css">
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/setmy-info-less/dist/main.min.css"
+/>
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/setmy-info-less@latest/dist/main.min.css"
+/>
 ```
 
 ## What is included
 
 | Group        | Classes                                                                                                                        |
-|--------------|--------------------------------------------------------------------------------------------------------------------------------|
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
 | Values       | Color palette, font stack, spacing scale, z-index scale (tokens only)                                                          |
 | HTML resets  | `html`, `body`, `h1`–`h6`, `p`, `ul`, `li`, `hr`, `small`                                                                      |
 | Visibility   | `.hidden`, `.invisible`, `.visible`, `.phone-hidden`, `.pc-hidden`                                                             |
@@ -67,7 +71,7 @@ The base module uses a single small-vs-wide width boundary at **1024px**, plus a
 Breakpoints are plain `@media only screen` queries (no JS), defined in `src/main/less/devices/`.
 
 | Range          | File         | What happens                                                                                       |
-|----------------|--------------|----------------------------------------------------------------------------------------------------|
+| -------------- | ------------ | -------------------------------------------------------------------------------------------------- |
 | ≤ 639px        | `watch.less` | `.phone-hidden` → `display:none`; `#header-panel` height auto; `main` height reduced by one header |
 | 640px – 1023px | `phone.less` | same rules as `watch.less`                                                                         |
 | ≥ 1024px       | `pad.less`   | `.pc-hidden` → `display:none !important`                                                           |
@@ -82,7 +86,7 @@ Two classes toggle visibility by breakpoint. They are exact inverses around the 
 never overlap:
 
 | Class           | Hidden when        | Visible when   | Use for                                               |
-|-----------------|--------------------|----------------|-------------------------------------------------------|
+| --------------- | ------------------ | -------------- | ----------------------------------------------------- |
 | `.phone-hidden` | width **< 1024px** | width ≥ 1024px | content that should drop on small screens             |
 | `.pc-hidden`    | width **≥ 1024px** | width < 1024px | small-screen-only content (e.g. a mobile menu button) |
 
@@ -101,7 +105,7 @@ never overlap:
 
 ```shell
 npm run build
-npm run lint:less
+npm run lint
 npm run test
 npm run verify
 ```
@@ -111,5 +115,5 @@ E2E tests require a running Selenium Grid. Start it before calling `npm run e2e`
 ```shell
 smi-selenium-hub
 smi-selenium-node
-npm run e2e
+npm run e2e-test
 ```

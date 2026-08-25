@@ -23,10 +23,15 @@ depends on [`setmy-info-less`](../setmy-info-less/README.md).
 Load all three CSS files in order:
 
 ```html
-
-<link rel="stylesheet" href="node_modules/setmy-info-less/dist/main.css">
-<link rel="stylesheet" href="node_modules/setmy-info-less-extended/dist/main.css">
-<link rel="stylesheet" href="node_modules/setmy-info-less-fancy/dist/main.css">
+<link rel="stylesheet" href="node_modules/setmy-info-less/dist/main.css" />
+<link
+    rel="stylesheet"
+    href="node_modules/setmy-info-less-extended/dist/main.css"
+/>
+<link
+    rel="stylesheet"
+    href="node_modules/setmy-info-less-fancy/dist/main.css"
+/>
 ```
 
 ## What is included
@@ -40,6 +45,6 @@ until they pass the refactorial validation process; they will be promoted back h
 
 ```shell
 npm run build
-npm run lint:less
+npm run lint
 npm run verify
 ```

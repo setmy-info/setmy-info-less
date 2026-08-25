@@ -34,35 +34,35 @@ bundling.
 
 #### Module descriptions
 
-* **[setmy-info-less](packages/setmy-info-less/README.md)** - Layer 0 base. The smallest CSS needed for a GUI
+- **[setmy-info-less](packages/setmy-info-less/README.md)** - Layer 0 base. The smallest CSS needed for a GUI
   environment: resets, design tokens, spacing, layout, responsive breakpoints, basic content panels/panes.
-* **[setmy-info-less-extended](packages/setmy-info-less-extended/README.md)** - Layer 1. Extended content components:
+- **[setmy-info-less-extended](packages/setmy-info-less-extended/README.md)** - Layer 1. Extended content components:
   page sections, modal/overlay, cards, article typography. Kept out of base so base stays minimal.
-* **[setmy-info-less-fancy](packages/setmy-info-less-fancy/README.md)** - Layer 2. Visually rich, polished patterns for
-  public-facing web pages — most of the design elements for richer UI/UX work. *Audience: web designers and front-end
-  developers building consumer sites.*
-* **[setmy-info-less-enterprise](packages/setmy-info-less-enterprise/README.md)** - Layer 2. Distribution layer for
-  enterprise intranet and internal applications. *Audience: enterprise application developers.*
-* **[setmy-info-less-angular-start-project](packages/setmy-info-less-angular-start-project/README.md)** - Layer 2,
+- **[setmy-info-less-fancy](packages/setmy-info-less-fancy/README.md)** - Layer 2. Visually rich, polished patterns for
+  public-facing web pages — most of the design elements for richer UI/UX work. _Audience: web designers and front-end
+  developers building consumer sites._
+- **[setmy-info-less-enterprise](packages/setmy-info-less-enterprise/README.md)** - Layer 2. Distribution layer for
+  enterprise intranet and internal applications. _Audience: enterprise application developers._
+- **[setmy-info-less-angular-start-project](packages/setmy-info-less-angular-start-project/README.md)** - Layer 2,
   project-specific. Application chrome for the Angular start template project: header panel, side navigation, modal
-  overlay, footer, views, pending extraction from the Angular workspace. *Audience: developers building on the Angular
-  start template project.*
-* **[setmy-info-less-ide](packages/setmy-info-less-ide/README.md)** - Layer 3. IDE-like (NetBeans style) developer-tool
-  UI compositions; currently frame presets. *Audience: developers building browser-based IDEs, dashboards, or admin
-  consoles.*
-* **[setmy-info-less-experimental](packages/setmy-info-less-experimental/README.md)** - Unvalidated prototypes staged
-  for promotion, merge, or removal; may later move down the tree into any branch. Not for production. *Audience:
-  framework developers only.* Contains:
-    * `grid/` - grid layout helpers (from base `grid/`)
-    * `flex/` - `smi-flex-panel` layout helpers (from extended `flex/`)
-    * `base/` - button, color, color-named, key-value utilities (from base `utility/`)
-    * `ui/` - interaction states, typography, card variants, feedback alerts, navigation, positioning (from the removed
+  overlay, footer, views, pending extraction from the Angular workspace. _Audience: developers building on the Angular
+  start template project._
+- **[setmy-info-less-ide](packages/setmy-info-less-ide/README.md)** - Layer 3. IDE-like (NetBeans style) developer-tool
+  UI compositions; currently frame presets. _Audience: developers building browser-based IDEs, dashboards, or admin
+  consoles._
+- **[setmy-info-less-experimental](packages/setmy-info-less-experimental/README.md)** - Unvalidated prototypes staged
+  for promotion, merge, or removal; may later move down the tree into any branch. Not for production. _Audience:
+  framework developers only._ Contains:
+    - `grid/` - grid layout helpers (from base `grid/`)
+    - `flex/` - `smi-flex-panel` layout helpers (from extended `flex/`)
+    - `base/` - button, color, color-named, key-value utilities (from base `utility/`)
+    - `ui/` - interaction states, typography, card variants, feedback alerts, navigation, positioning (from the removed
       `setmy-info-less-ui`)
-    * `forms/` - form element resets and layout helpers (from the removed `setmy-info-less-forms`)
-    * `data/` - table styles, data display patterns, dashboard widgets (from the removed `setmy-info-less-data`)
-    * `web/` - public-web chrome and content patterns (site header/nav, hero, tiles, CTA, footer, price list, media
+    - `forms/` - form element resets and layout helpers (from the removed `setmy-info-less-forms`)
+    - `data/` - table styles, data display patterns, dashboard widgets (from the removed `setmy-info-less-data`)
+    - `web/` - public-web chrome and content patterns (site header/nav, hero, tiles, CTA, footer, price list, media
       object, profile block, notice banner)
-    * `utility/` - original experimental scratch space
+    - `utility/` - original experimental scratch space
 
 ### Module independence
 
@@ -72,7 +72,7 @@ rules** and never re-emits a parent's CSS. The application selects the packages 
 dependency order.
 
 | Module                                  | Compile-time LESS imports   | Standalone CSS? | Its `dist/main.css` contains                              |
-|-----------------------------------------|-----------------------------|-----------------|-----------------------------------------------------------|
+| --------------------------------------- | --------------------------- | --------------- | --------------------------------------------------------- |
 | `setmy-info-less` (base)                | nothing cross-package       | ✅ yes          | resets, tokens, single-purpose utilities                  |
 | `setmy-info-less-extended`              | base `values` (tokens only) | ❌ delta        | content components (section/modal/card/article)           |
 | `setmy-info-less-fancy`                 | base `values` (tokens only) | ❌ delta        | (skeleton — empty for now)                                |
@@ -110,7 +110,7 @@ Base module:
 npm i setmy-info-less
 ```
 
-* https://www.npmjs.com/package/setmy-info-less
+- https://www.npmjs.com/package/setmy-info-less
 
 Extended module (IDE-style frame building blocks — NetBeans look and feel):
 
@@ -118,27 +118,33 @@ Extended module (IDE-style frame building blocks — NetBeans look and feel):
 npm i setmy-info-less-extended
 ```
 
-* https://www.npmjs.com/package/setmy-info-less-extended
+- https://www.npmjs.com/package/setmy-info-less-extended
 
 ### Using from CDN
 
 Base module:
 
 ```html
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/setmy-info-less/dist/main.min.css">
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/setmy-info-less/dist/main.min.css"
+/>
 ```
 
 ```html
-
-<link rel="stylesheet" href="https://unpkg.com/setmy-info-less@latest/dist/main.min.css">
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/setmy-info-less@latest/dist/main.min.css"
+/>
 ```
 
 Extended module:
 
 ```html
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/setmy-info-less-extended/dist/main.min.css">
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/setmy-info-less-extended/dist/main.min.css"
+/>
 ```
 
 ## 📦 Project
@@ -161,20 +167,20 @@ These principles govern every module and every new class added to the framework:
 - **Token-driven.** Values come from `values/index.less` (colors, fonts, spacing, sizing, z-index)
   — do not hardcode magic numbers or colors in a rule. New categories reference existing tokens so the system stays
   consistent and themeable.
-- **camelCase, behavior-first naming.** Class names describe *what the class makes the element do*, not how it looks:
+- **camelCase, behavior-first naming.** Class names describe _what the class makes the element do_, not how it looks:
   `.centerText`, `.verticalStretchPanel`, `.autoScrollBars`, `.noPadding`.
 - **Three kinds of selector** (use the right one):
-    - *Utility activator classes* — attached directly to an element to turn a behavior on (`.hidden`, `.centerText`,
+    - _Utility activator classes_ — attached directly to an element to turn a behavior on (`.hidden`, `.centerText`,
       `.floatLeft`, `.smi-flex-panel-row`).
-    - *Modifier classes* — suffix/companion classes that refine a base utility (`.smi-flex-panel-left`,
+    - _Modifier classes_ — suffix/companion classes that refine a base utility (`.smi-flex-panel-left`,
       `.smi-flex-panel-column`, `.phone-hidden`).
-    - *Structural selectors* — intentionally target element names or fixed DOM anchors (`html`, `body`, `main`,
+    - _Structural selectors_ — intentionally target element names or fixed DOM anchors (`html`, `body`, `main`,
       `#application`, `body.framesDefaultPadding`).
 - **Conservative, old-browser-friendly layout.** Prefer floats + `.centerBox` + clearfix (`overflow: hidden`) for
   layout; do not introduce a new CSS Grid / Flexbox dependency for new work. The framework is **Firefox-first**, modern
   evergreen browsers supported, legacy browsers best-effort (see [Browser support](#browser-support)).
 - **Composable and non-breaking.** New classes must compose with existing ones and must not break the
-  `base` or `extended` modules. Keep the **base module minimal** — add new utility *categories* in the higher layers
+  `base` or `extended` modules. Keep the **base module minimal** — add new utility _categories_ in the higher layers
   (`extended`, `fancy`, …), not in `base`.
 - **Delta packaging.** Each module's compiled CSS contains only its own rules; the consuming app composes the modules in
   dependency order (see [Module independence](#module-independence)).
@@ -186,7 +192,7 @@ separate `@media only screen` block, plus a print block (no JS). The group bound
 the 1024px line drives the visibility utilities.
 
 | Group             | Width          | LESS file    | Behavior                                                     |
-|-------------------|----------------|--------------|--------------------------------------------------------------|
+| ----------------- | -------------- | ------------ | ------------------------------------------------------------ |
 | **Watch**         | ≤ 639px        | `watch.less` | `.phone-hidden` removed; `main` height reduced by one header |
 | **Phone**         | 640px – 1023px | `phone.less` | Same rules as Watch                                          |
 | **Pad / desktop** | ≥ 1024px       | `pad.less`   | `.pc-hidden` removed                                         |
@@ -195,9 +201,9 @@ the 1024px line drives the visibility utilities.
 
 Two responsive visibility utilities are driven by these breakpoints (exact inverses around the 1024px line):
 
-* `.phone-hidden` — hidden **below 1024px** (Watch + Phone), visible on wide screens. Use it to drop content on small
+- `.phone-hidden` — hidden **below 1024px** (Watch + Phone), visible on wide screens. Use it to drop content on small
   screens. (Hides on all small screens, not literally only phones.)
-* `.pc-hidden` — hidden at **1024px and wider** (Pad / desktop), visible below 1024px. Use it for small-screen-only
+- `.pc-hidden` — hidden at **1024px and wider** (Pad / desktop), visible below 1024px. Use it for small-screen-only
   content such as a mobile menu button.
 
 #### Targeting a device group
@@ -225,15 +231,15 @@ mixin layer: to target a group you write the same media query.
 
 Points worth knowing when writing responsive rules:
 
-* **Not mobile-first.** Watch and phone are `max-width`-bounded, so a rule written for a small group never leaks upward
+- **Not mobile-first.** Watch and phone are `max-width`-bounded, so a rule written for a small group never leaks upward
   into pad/desktop. Rules that should apply everywhere go outside any media block.
-* **The boundary widths are literals**, not LESS tokens — `639`/`640` and `1023`/`1024` are written into the device
+- **The boundary widths are literals**, not LESS tokens — `639`/`640` and `1023`/`1024` are written into the device
   files themselves. Only sizing values (`@headerHeight`, `@maxHeight`, …) come from `values/index.less`.
-* **Watch and phone carry identical rules today.** They stay separate files so the two ranges can diverge later without
+- **Watch and phone carry identical rules today.** They stay separate files so the two ranges can diverge later without
   disturbing the 1024px line that the visibility utilities depend on.
-* **Downstream packages repeat the query.** Every package ships only its own CSS and imports base for tokens only, so a
+- **Downstream packages repeat the query.** Every package ships only its own CSS and imports base for tokens only, so a
   media block in `extended` or `ide` is written out in full rather than inherited from base.
-* **Height math is token-derived.** The small-screen `main` rule resolves to `calc(@maxHeight - @headerHeight)` —
+- **Height math is token-derived.** The small-screen `main` rule resolves to `calc(@maxHeight - @headerHeight)` —
   `100%` minus the `50px` header — so changing `@defaultHeight` moves it everywhere at once.
 
 Per-class detail and copy-paste HTML examples:
@@ -250,379 +256,178 @@ For current browser market share data see: https://gs.statcounter.com/browser-ma
 
 Using:
 
-* [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
-* [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
+- [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
+- [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ### 🔧 Setup
 
-Complete setup in order — all prerequisites first, then install.
-
-#### 1. System prerequisites
-
-Java is required to run the Selenium Grid hub and node:
-
 ```shell
-# Verify Java is available
-java -version
+# Install all workspace dependencies (run from the repository ROOT, never from a package)
+npm install
+
+# Or, reproducibly, from the lock file - this is the Bootstrap phase below
+npm run bootstrap
 ```
 
-KSS styleguide generation uses the `kss` CLI from the `kss` npm package (v3.x). It is installed automatically by
-`npm install` as a devDependency — no separate global install needed.
+The whole toolchain (lessc, stylelint, kss, jest, prettier, selenium-webdriver, pug) is declared **once at the
+repository root** and hoisted into the single root `node_modules`. Packages declare no devDependencies of their own -
+one toolchain, one version, like the `setmy.info-js` / `-python` / `-elixir` siblings.
 
-#### 2. Selenium Grid
-
-E2E tests run against an external Selenium Grid. Start the hub and node **before** running
-`npm run e2e` or `npm run verify`:
+E2E tests additionally need **Java** and an external **Selenium Grid** running before `npm run e2e-test`:
 
 ```shell
 smi-selenium-hub
 smi-selenium-node
-```
 
-Override the hub URL or browser via environment variables if your grid differs from the defaults:
-
-```shell
-export SELENIUM_HUB_URL=http://localhost:4444/wd/hub
+export SELENIUM_HUB_URL=http://localhost:4444/wd/hub   # optional overrides
 export SELENIUM_BROWSER=firefox
+export SELENIUM_BROWSER_BINARY="/path/to/librewolf"     # resolved on the GRID NODE, not locally
 ```
 
-To drive a specific Gecko-based browser binary instead of the node's default Firefox — for example
-LibreWolf, which has no Terms-of-Use screen — point `SELENIUM_BROWSER_BINARY` at the executable. The
-path is resolved **on the grid node**, not on the machine running Jest:
+## Lifecycle
+
+This repo follows the org's shared build lifecycle: the
+[Maven default lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#default-lifecycle)
+phase names and ordering, implemented in npm, exactly as `setmy.info-js`, `setmy.info-python` and `setmy.info-elixir`
+do. See **ADR-0045** for the maintained cross-language phase table and `setmy.info-js/requirements-rules.md` for the
+language-agnostic spec. A developer moving between any of these repos - or from a Java/Maven project - uses the same
+phase names in the same order.
+
+Run from the repository root, in order:
 
 ```shell
-export SELENIUM_BROWSER_BINARY="C:\pub\librewolf-153.0.4-1\LibreWolf\librewolf.exe"
+npm run bootstrap          # npm ci
+npm run clean
+npm run validate
+npm run format:check       # or: npm run format to auto-fix
+npm run lint               # stylelint over every package's src/main/less
+npm run resources -- --profile <local|dev|ci|test|prelive|live>
+npm run build              # LESS -> dist/main.css + dist/main.min.css, Pug -> demo pages
+npm test                   # unit tier
+npm run pre-integration-test
+npm run integration-test
+npm run post-integration-test
+npm run pre-e2e-test
+npm run e2e-test           # Selenium, needs the grid above
+npm run post-e2e-test
+npm run coverage
+npm run security
+npm run verify
+npm run package
+npm run sbom
+npm run sign
+npm run install-local
+npm run publish
+DEPLOY_TARGET=dev npm run deploy   # target is required: dev|test|prelive|live
+npm run site
 ```
 
-#### 3. Node dependencies
+Everything except the Selenium e2e tier has been run clean end to end on Linux/Node 24 (`EXIT 0`).
 
-All workspace packages share the single `node_modules` tree at the repository root. Always run install from the root
-directory, not from inside a package folder:
-
-```shell
-# Install all workspace dependencies (run from repository root)
-npm install
-
-# Or install strictly from the lock file — recommended for CI environments
-npm ci
-```
-
-## Upgrade packages
-
-All commands below must be run from the **repository root**.
+Any single phase can be run for one package only:
 
 ```shell
-# Check which packages have newer versions available (includes root and all workspaces)
-npx npm-check-updates --workspaces --root
-
-# Write updated versions into all package.json files
-npx npm-check-updates -u --workspaces --root
-
-# Or update a single workspace only
-npx npm-check-updates -u --workspace setmy-info-less
-
-# Install the updated versions
-npm install
-
-# Check for security vulnerabilities across all packages
-npm audit
-
-# Fix automatically fixable vulnerabilities
-npm audit fix
-
-# Force-fix remaining vulnerabilities — review the diff before committing
-npm audit fix --force
-```
-
-Useful workspace commands:
-
-```shell
-npm run build --workspaces
-
-npm run css --workspace setmy-info-less
-npm run css --workspace setmy-info-less-extended
-npm run css --workspace setmy-info-less-angular-start-project
-#npm run css --workspace setmy-info-less-fancy
-#npm run css --workspace setmy-info-less-enterprise
-npm run css --workspace setmy-info-less-ide
-npm run css --workspace setmy-info-less-experimental
-
-npm run css-min --workspace setmy-info-less
-npm run css-min --workspace setmy-info-less-extended
-npm run css-min --workspace setmy-info-less-angular-start-project
-#npm run css-min --workspace setmy-info-less-fancy
-#npm run css-min --workspace setmy-info-less-enterprise
-npm run css-min --workspace setmy-info-less-ide
-npm run css-min --workspace setmy-info-less-experimental
-
-npm run html --workspace setmy-info-less
-```
-
-### LESS to CSS transpiling
-
-```shell
-npm run css --workspaces
-npm run css-min --workspaces
-```
-
-### Pug to HTML transpiling
-
-```shell
-npm run html --workspaces
-```
-
-### Full build
-
-```shell
-# Build all workspaces (npm processes them in alphabetical order: base before extended)
-# This builds CSS, minified CSS, example HTML, and KSS styleguides.
-npm run build --workspaces
-
-# Or build each workspace explicitly in dependency order
 npm run build --workspace setmy-info-less
-npm run build --workspace setmy-info-less-extended
-#npm run build --workspace setmy-info-less-fancy
-npm run build --workspace setmy-info-less-angular-start-project
-#npm run build --workspace setmy-info-less-enterprise
-npm run build --workspace setmy-info-less-ide
-npm run build --workspace setmy-info-less-experimental
+npm run lint --workspace setmy-info-less-ide
 ```
 
-### Styleguide generation
+### What each phase means here
 
-Uses `kss` (from the `kss@3.x` devDependency). The binary is in `node_modules/.bin/kss`
-and is called automatically by `npm run build` and `npm run styleguide`.
+| Phase                 | LESS/CSS implementation                                                                                                                                             |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bootstrap             | `npm ci` - lockfile-exact install                                                                                                                                   |
+| Clean                 | per package: `site/`, `coverage/`, `dist/styleguide/`; root: `.artifacts/`, `.deploy/`, `.signatures/`, `site/`, and it stops any test HTTP server still registered |
+| Validate              | manifest structure (`main`, `style`, `files`), LESS entry point exists, `stylelint.config.js` present                                                               |
+| Format / Format check | `prettier` over js/cjs/json/md/yml. **LESS formatting belongs to stylelint**, see "Known deliberate differences"                                                    |
+| Lint                  | `stylelint src/main/less/**/*.less` - this module type's checkstyle equivalent                                                                                      |
+| Resources             | `${token}` filtering of a package's optional `resources/` dir from `profiles/<name>.json` (ADR-0041/0042 names)                                                     |
+| Compile/Build         | `lessc` → `dist/main.css` + `dist/main.min.css` (`--clean-css`), plus Pug → demo/fixture pages in `dist/`                                                           |
+| Unit test             | `src/test/js/unit` via jest; the build tooling's own tests run via `node --test tools/test/unit`                                                                    |
+| Integration test      | `src/test/js/integration` via jest - asserts against the **built** `dist/main.css`, never against LESS source                                                       |
+| E2E test              | `src/test/js/e2e` via jest + Selenium against a real browser, with a static server started/stopped around it                                                        |
+| Coverage              | jest `--coverage` over the unit tier only                                                                                                                           |
+| Security              | `npm audit --audit-level=high`                                                                                                                                      |
+| Verify                | both CSS artifacts exist and the rule count matches the package's declared `content`/`skeleton` expectation                                                         |
+| Package               | `npm pack` into `.artifacts/<package>/`                                                                                                                             |
+| SBOM / Sign           | CycloneDX-shaped JSON; SHA-256 checksums of the **packed tarball** (a labelled placeholder, not a real signature)                                                   |
+| Install (local)       | installs the packed tarball (+ transitive local ones) into a throwaway project and checks the CSS really arrived                                                    |
+| Publish               | branch → dist-tag, always `--dry-run` unless `PUBLISH_EXECUTE=true`                                                                                                 |
+| Deploy                | writes a `prepared-not-executed` descriptor per target                                                                                                              |
+| Site                  | per-package + aggregated root report site                                                                                                                           |
 
-```shell
-# Generate only the KSS styleguides without rerunning the rest of the build
-npm run styleguide --workspaces
-```
+### Test pyramid
 
-### 🧪 Test execution
+Maven's own `src/main` / `src/test` layout, which this repo already used:
 
-Currently, no useful unit tests, just working placeholder.
+- `src/main/less/` - the LESS sources, `main.less` is every package's single entry point
+- `src/test/pug/` - Pug sources for the demo/fixture pages built into `dist/`
+- `src/test/js/unit/` - unit tier (manifest/source assertions, no build output)
+- `src/test/js/integration/` - integration tier, against the built `dist/main.css`
+- `src/test/js/e2e/` - e2e tier, Selenium against a real browser and a running server
 
-#### Unit test execution
+`pre-integration-test` / `pre-e2e-test` start a static server on the package's own port
+(`config.server.port` + 1, so a manually started `npm run server` never collides), and the paired
+`post-*` phases stop it - the guarantee Maven's failsafe plugin gives, and the reason `Jenkinsfile`
+runs those in `post { always { ... } }`.
 
-```shell
-npm test --workspaces
-```
+### Profiles and resources
 
-### E2E test execution
+`npm run resources -- --profile <name>` filters `${token}`s in a package's optional `resources/` directory using
+`profiles/<name>.json`. `--profile` is required and hard-validated against exactly the six ADR-0041 canonical
+environments (`local`, `dev`, `ci`, `test`, `prelive`, `live`); anything else is an error, per ADR-0042. No package
+has a `resources/` directory yet, so the phase is currently a documented no-op for all seven.
 
-Requires Selenium Grid running at `http://localhost:4444/wd/hub` (or override via `SELENIUM_HUB_URL`). Each package
-starts its own HTTP server on a random port for the duration of the test run. Tests within a package run serially
-(`maxWorkers: 1`) to prevent session collisions.
+### Site (reports)
 
-```shell
-npm run e2e --workspaces
-```
+`npm run site` builds `packages/<pkg>/site/` plus an aggregated root `site/index.html`, the `mvn site` equivalent:
 
-#### Test infrastructure notes
+- **Living styleguide (KSS)** - generated from the LESS source comments
+- Lint report (stylelint), coverage report, security report (`npm audit`), dependency tree, SBOM link
 
-- **`setmy-info-less-enterprise` is a placeholder, verified by lint only.** It currently has no rules of its own and no
-  e2e suite; its `verify` runs `lint:less`. The repository-root
-  `npm run smoke:dist` treats it as an intentional skeleton (zero rules allowed). Add tests when it gains real content.
-- **Retained legacy test files (kept on purpose, not used).** `packages/common/test/js/firefoxHelper.js`
-  and the per-package `playwright.config.js` stubs are leftovers from the Playwright era. The suite now runs on an
-  external Selenium Grid via the Jest runner, so these are unused — they are retained as migration markers and
-  documented in-file rather than removed.
+`site/` is generated output and git-ignored.
 
-### Specific E2E test execution
+### CI
 
-```shell
-# Run all e2e tests in one package
-npm run e2e --workspace setmy-info-less
+`Jenkinsfile` (version 1.1.0, migrated from the org's `jenkinsfile-starter` 1.1.0) runs this same sequence: Inspection
+→ Preparation → Build → E2E → Quality → System/Acceptance → Package → Publish → Deploy → Tag, with the same branch
+gating as the three siblings - `master`, `devel*`, `release*`, `hotfix*`, and feature branches running everything up
+to Package but never Publish/Deploy/Tag. The E2E stage needs the Selenium grid reachable from the agent.
 
-# Run a single test file by name pattern
-npm run e2e:one --workspace setmy-info-less -- --testPathPattern=application
-```
-
-### Check LESS style
-
-```shell
-npm run lint:less --workspaces
-```
-
-### Fix LESS style
-
-```shell
-npm run lint:fix-less --workspaces
-```
-
-### Combined test execution
-
-```shell
-npm run verify --workspaces
-```
-
-### 🌐 Local Development Server
+### 🌐 Local development server / watch
 
 ```shell
-npm start --workspace setmy-info-less
-```
-
-### 🔄 Watch for changes
-
-```shell
-npm run watch --workspace setmy-info-less
-```
-
-### 📦 Packaging
-
-```shell
-npm pack --workspaces
-npm pack --dry-run --workspaces
-```
-
-### 🧹 Cleaning
-
-### Dist folder removal
-
-```shell
-npm run clean --workspaces
-```
-
-### Clean project removal
-
-```shell
-npm run clean:all --workspaces
-```
-
-### 🏗 Full build for CI and build checkup
-
-```shell
-# Clean, install, build, verify, and pack — run from repository root
-# This workflow includes KSS styleguide generation via each workspace build script.
-# `npm run smoke:dist` checks every package produced a dist/main.css and that content packages
-# are non-empty (intentional skeletons are allowed to be empty).
-npm run clean:all --workspaces && npm install && npm run build --workspaces && npm run smoke:dist && npm run verify --workspaces && npm pack --workspaces && npm pack --dry-run --workspaces
+npm run server --workspace setmy-info-less        # serves that package's dist/ on its own port
+npm run stop-server --workspace setmy-info-less
+npm run watch --workspace setmy-info-less         # less-watch-compiler
+npm run watch:pug --workspace setmy-info-less
 ```
 
 ## 📤 Publishing
 
-Login to npm:
+`npm run publish` resolves an npm dist-tag from the branch (`master` → `latest`, `release*` → `release-candidate`,
+`hotfix*` → `hotfix`, `devel*` → `next`, anything else → skipped) and always runs `npm publish --dry-run` unless
+`PUBLISH_EXECUTE=true` is set. Nothing in `Jenkinsfile` sets it. A version that is already on the registry is reported
+as "already published - bump the version" and is **not** a build failure.
 
-```shell
-npm login
-```
+Publish order still matters (a package must exist on the registry before its dependents): base → extended → fancy →
+enterprise → angular-start-project → ide → experimental. `tools/run-workspaces.js` already fans every phase out in
+topological order, so running `npm run publish` from the root does this for you.
 
-Dry run:
+Only the CSS is published: each package's `files` allowlist is `dist/main.css`, `dist/main.min.css`, `README.md`,
+`LICENSE`. The Pug demo pages and the KSS styleguide are **not** shipped any more.
 
-```shell
-npm pack --workspaces --dry-run
-```
+## Known deliberate differences from the sibling repos / Maven
 
-Publish in dependency order. Each package's `package.json` declares its npm dependencies, so a package must be published
-only after every package it depends on already exists on the registry.
-
-Declared dependency edges (from each `package.json`):
-
-| Package                                 | Depends on (npm `dependencies`)               |
-|-----------------------------------------|-----------------------------------------------|
-| `setmy-info-less`                       | — (none, Layer 0 base)                        |
-| `setmy-info-less-extended`              | `setmy-info-less`                             |
-| `setmy-info-less-angular-start-project` | `setmy-info-less-extended`                    |
-| `setmy-info-less-fancy`                 | `setmy-info-less-extended`                    |
-| `setmy-info-less-enterprise`            | `setmy-info-less`, `setmy-info-less-extended` |
-| `setmy-info-less-ide`                   | `setmy-info-less-enterprise`                  |
-| `setmy-info-less-experimental`          | `setmy-info-less-enterprise`                  |
-
-A valid topological publishing order (every dependency precedes its dependents):
-
-```shell
-npm publish --workspace setmy-info-less
-npm publish --workspace setmy-info-less-extended
-#npm publish --workspace setmy-info-less-angular-start-project
-#npm publish --workspace setmy-info-less-fancy
-#npm publish --workspace setmy-info-less-enterprise
-npm publish --workspace setmy-info-less-ide
-npm publish --workspace setmy-info-less-experimental
-```
-
-> Note: `setmy-info-less-experimental` is not intended for public consumption — publish it only if
-> internal distribution requires it.
-
-Or publish all at once (only safe when every dependency's current version is already on npm from a previous release):
-
-```shell
-npm publish --workspaces
-```
-
-### Build vs. publish order
-
-The two orders are governed by different mechanisms — do not conflate them:
-
-- **Build order is not significant.** Each package's `lessc` step reads its dependencies' LESS **source** directly via
-  relative `@import url("../../../../<pkg>/src/main/less/...")`, not their built `dist/`. So
-  `npm run build --workspaces` succeeds regardless of the order npm iterates the workspaces (alphabetical: base,
-  enterprise, experimental, extended, fancy, ide). No package's build depends on another package's `dist/` existing
-  first.
-- **Publish order is significant** and must follow the table above, because `npm install` of a dependent resolves its
-  declared `dependencies` from the registry.
-
-### Publishing only the packages that have content
-
-Some packages are currently **empty skeletons** (zero CSS rules) and should not be published yet. Run
-`npm run smoke:dist` to see which have content:
-
-| Package                                 | Has rules?        | Publish?                            |
-|-----------------------------------------|-------------------|-------------------------------------|
-| `setmy-info-less`                       | ✅ yes            | ✅ publish                          |
-| `setmy-info-less-extended`              | ✅ yes            | ✅ publish                          |
-| `setmy-info-less-ide`                   | ✅ yes            | ✅ publish (see dependency note)    |
-| `setmy-info-less-experimental`          | ✅ yes            | ⚠️ internal only — keep unpublished |
-| `setmy-info-less-angular-start-project` | ❌ empty skeleton | ⏸ skip until it has rules           |
-| `setmy-info-less-fancy`                 | ❌ empty skeleton | ⏸ skip until it has rules           |
-| `setmy-info-less-enterprise`            | ❌ empty skeleton | ⏸ skip until it has rules           |
-
-**1. Block accidental publishes.** Mark the packages you are *not* publishing as private so
-`npm publish --workspaces` skips them (and a stray `npm publish` is refused):
-
-```jsonc
-// packages/setmy-info-less-angular-start-project/package.json, -fancy, -enterprise, -experimental
-{ "private": true }
-```
-
-Remove `"private": true` later, when a package gains real rules and you want to ship it.
-
-**2. Resolve the `ide → enterprise` dependency.** `setmy-info-less-ide` declares a dependency on the empty
-`setmy-info-less-enterprise`, so a consumer installing `ide` needs `enterprise` on the registry. Pick one:
-
-- **Re-point the dependency (recommended):** change `ide`'s dependency from `setmy-info-less-enterprise`
-  to `setmy-info-less` (its real compile/runtime need under the delta model). Then `ide` publishes without the empty
-  placeholder.
-- **Or publish the empty placeholder:** ship `setmy-info-less-enterprise` too (an empty but valid package) so `ide`'s
-  declared dependency resolves.
-
-**3. Restrict tarball contents.** Add a `files` allow-list so only built CSS ships (not `src/`, tests, or configs):
-
-```jsonc
-{ "files": ["dist", "README.md"] }
-```
-
-**4. Build fresh, then dry-run, then publish in dependency order:**
-
-```shell
-# from repository root
-npm run clean:all --workspaces && npm install && npm run build --workspaces && npm run smoke:dist
-
-# inspect exactly what each tarball will contain
-npm pack --dry-run --workspace setmy-info-less
-npm pack --dry-run --workspace setmy-info-less-extended
-npm pack --dry-run --workspace setmy-info-less-ide
-
-# log in once, then publish base → extended → ide (dependency order)
-npm login
-npm publish --workspace setmy-info-less
-npm publish --workspace setmy-info-less-extended
-npm publish --workspace setmy-info-less-ide
-#npm publish --workspace setmy-info-less-angular-start-project
-```
-
-`npm publish --workspaces` (all at once) is only safe once every published package's dependencies are already on the
-registry **and** the skeletons are marked `private` — otherwise it will try to publish the empty packages or fail on the
-unresolved `enterprise` dependency.
+- **`dist/main.css` and `dist/main.min.css` are tracked in git** (the 1.0.0-dist decision), unlike the siblings, which
+  git-ignore all generated output. `clean` therefore removes only the _other_ generated things inside `dist/` and
+  leaves the two tracked CSS files for `build` to rewrite.
+- **LESS files are formatted by stylelint, not prettier.** `stylelint-config-standard`'s `rule-empty-line-before` and
+  prettier disagree about blank lines between rules; one formatter per language, so `.less` is in `.prettierignore`
+  and `npm run lint` / `lint:fix` owns it.
+- **The e2e tier needs external infrastructure** (Java + Selenium Grid) that the siblings' plain-HTTP e2e tests do
+  not. It is a real browser test on purpose - CSS correctness cannot be asserted without a rendering engine.
+- **Packages are versioned and released together** at one version, unlike the siblings' independent versioning.
+- `sign` produces SHA-256 checksums, not real signatures; `publish`/`deploy` are prepared, not wired to real targets.
 
 ## Load order
 
@@ -657,14 +462,14 @@ The actual import tree as of the current codebase (`main.less` → group index �
 
 Some class names were updated after v1.0.0. If you're upgrading, search and replace as needed:
 
-* verticalStrechPanel -> verticalStretchPanel
-* horisontalStrechPanel -> horizontalStretchPanel
+- verticalStrechPanel -> verticalStretchPanel
+- horisontalStrechPanel -> horizontalStretchPanel
 
 (+ other possible minor updates)
 
 ### Behavior changes
 
-* `.verticalStretchPanel` and `.horizontalStretchPanel` no longer use `!important`
+- `.verticalStretchPanel` and `.horizontalStretchPanel` no longer use `!important`
   (`min-height`/`height` and `min-width`/`width` are now plain declarations). These utilities can now be overridden by
   normal CSS load order and specificity. If your application relied on the old
   `!important` to force the stretch behavior over a competing rule, ensure the panel class is loaded after that rule, or
@@ -690,7 +495,7 @@ npx playwright install
 
 ## TODO
 
-* Consider font correctness
+- Consider font correctness
 
 ```
 @fontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -700,7 +505,7 @@ npx playwright install
 ;
 ```
 
-* Eliminate use of !important — proper load order should help avoid it.
+- Eliminate use of !important — proper load order should help avoid it.
 
 sudo dnf install \
 flite \

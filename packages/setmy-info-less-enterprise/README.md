@@ -26,9 +26,9 @@ npm i setmy-info-less-enterprise
 
 Declared dependencies express **load order**, not CSS bundling — load each package's stylesheet in this order:
 
-| Package | Role |
-|---|---|
-| `setmy-info-less` | Base tokens, resets, utility classes |
+| Package                    | Role                                                 |
+| -------------------------- | ---------------------------------------------------- |
+| `setmy-info-less`          | Base tokens, resets, utility classes                 |
 | `setmy-info-less-extended` | Content components (sections, modal, cards, article) |
 
 ## Usage
@@ -36,17 +36,24 @@ Declared dependencies express **load order**, not CSS bundling — load each pac
 Load the dependency stylesheets first, then this package's own CSS (empty for now):
 
 ```html
-<link rel="stylesheet" href="node_modules/setmy-info-less/dist/main.css">
-<link rel="stylesheet" href="node_modules/setmy-info-less-extended/dist/main.css">
-<link rel="stylesheet" href="node_modules/setmy-info-less-enterprise/dist/main.css">
+<link rel="stylesheet" href="node_modules/setmy-info-less/dist/main.css" />
+<link
+    rel="stylesheet"
+    href="node_modules/setmy-info-less-extended/dist/main.css"
+/>
+<link
+    rel="stylesheet"
+    href="node_modules/setmy-info-less-enterprise/dist/main.css"
+/>
 ```
 
 ## Development
 
 ```shell
 npm run build
-npm run lint:less
+npm run lint
 ```
 
 Note: the `e2e` script is intentionally absent while this package has no CSS of its own.
-The repository-root `npm run smoke:dist` treats it as an intentional skeleton (zero rules allowed).
+Its `package.json` declares `config.cssExpectation: "skeleton"`, so the Verify phase accepts zero rules (an
+intentional placeholder) instead of failing.

@@ -1,28 +1,40 @@
 {
     "name": "setmy-info-less-angular-start-project",
     "version": "5.0.0",
-    "description": "SMI LESS for the Angular start template project — application chrome styles (header, side navigation, footer, views) staged for extraction from the Angular workspace",
+    "description": "SMI LESS for the Angular start template project \u2014 application chrome styles (header, side navigation, footer, views) staged for extraction from the Angular workspace",
     "main": "dist/main.min.css",
     "dependencies": {
         "setmy-info-less-extended": "*"
     },
     "scripts": {
-        "build": "npm run css && npm run css-min && npm run html && npm run styleguide",
-        "css": "lessc ./src/main/less/main.less dist/main.css",
-        "css-min": "lessc ./src/main/less/main.less dist/main.min.css --clean-css",
-        "html": "node ../common/test/js/pugBuild.js",
-        "start": "node ../common/test/js/server.js",
+        "clean": "node ../../tools/clean.js",
+        "validate": "node ../../tools/validate.js",
+        "format": "prettier --write .",
+        "lint": "stylelint src/main/less/**/*.less",
+        "lint:fix": "stylelint src/main/less/**/*.less --fix",
+        "resources": "node ../../tools/resources.js",
+        "build": "node ../../tools/build.js",
+        "server": "node ../../tools/http-server.js",
+        "stop-server": "node ../../tools/http-server.js stop",
         "watch": "less-watch-compiler ./src/main/less dist main.less",
-        "watch:pug": "node ../common/test/js/pugWatch.js",
-        "clean": "rimraf dist",
-        "clean:all": "rimraf dist node_modules",
-        "verify": "npm test && npm run e2e && npm run lint:less",
-        "test": "jest",
-        "e2e": "jest --config=jest.e2e.config.js",
-        "e2e:one": "jest --config=jest.e2e.config.js --testNamePattern",
-        "lint:less": "stylelint ./src/main/less/**/*.less",
-        "lint:fix-less": "stylelint ./src/main/less/**/*.less --fix",
-        "styleguide": "npx kss --source src/main/less --destination dist/styleguide --css ../main.css"
+        "watch:pug": "node ../../tools/pugWatch.cjs",
+        "test": "node ../../tools/run-tests.js unit",
+        "pre-integration-test": "node ../../tools/preintegration-test.js",
+        "integration-test": "node ../../tools/integration-test.js",
+        "post-integration-test": "node ../../tools/postintegration-test.js",
+        "pre-e2e-test": "node ../../tools/pree2e-test.js",
+        "e2e-test": "node ../../tools/e2e-test.js",
+        "post-e2e-test": "node ../../tools/poste2e-test.js",
+        "coverage": "node ../../tools/coverage.js",
+        "verify": "node ../../tools/verify.js",
+        "package": "node ../../tools/package.js",
+        "sbom": "node ../../tools/package.js --sbom",
+        "sign": "node ../../tools/sign.js",
+        "install-local": "node ../../tools/install-local.js",
+        "publish": "node ../../tools/publish.js",
+        "deploy": "node ../../tools/deploy.js",
+        "docs": "node ../../tools/docs.js",
+        "site": "node ../../tools/site.js"
     },
     "keywords": [
         "less",
@@ -38,19 +50,21 @@
         "url": "https://github.com/setmy-info/setmy-info-less.git"
     },
     "homepage": "https://github.com/setmy-info/setmy-info-less",
-    "devDependencies": {
-        "express": "^5.2.1",
-        "jest": "^30.4.2",
-        "kss": "^2.4.0",
-        "less": "^4.9.0",
-        "less-plugin-clean-css": "^1.6.0",
-        "less-watch-compiler": "^1.19.9",
-        "postcss-less": "^6.0.0",
-        "pug": "^3.0.4",
-        "rimraf": "^6.1.3",
-        "selenium-webdriver": "^4.47.0",
-        "stylelint": "^17.14.1",
-        "stylelint-config-standard": "^40.0.0",
-        "stylelint-less": "^4.2.1"
+    "style": "dist/main.css",
+    "files": [
+        "dist/main.css",
+        "dist/main.min.css",
+        "README.md",
+        "LICENSE"
+    ],
+    "engines": {
+        "node": ">=24.0.0"
+    },
+    "config": {
+        "server": {
+            "port": 44131,
+            "directory": "dist"
+        },
+        "cssExpectation": "skeleton"
     }
 }

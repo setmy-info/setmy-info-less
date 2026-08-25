@@ -147,3 +147,10 @@ test-results
 
 claude.session.sh
 claude.session.cmd
+
+# Lifecycle tool output (packaged tarballs, deploy descriptors, signatures, site reports)
+.artifacts/
+.deploy/
+.signatures/
+site/
+**/site/

@@ -41,11 +41,11 @@ update their stylesheet load list accordingly. All packages are versioned togeth
 ### Added
 
 - Experimental public-web chrome under `setmy-info-less-experimental/src/main/less/web/`: site header
-  + nav (`.siteHeader`, `.siteHeaderInner`, `.siteLogo`, `.siteNav`, `.siteNavItem`, `.siteNavCta`),
-  hero (`.hero`, `.heroImage`, `.heroOverlay`, `.heroContent`, `.heroTitle`, `.heroSubtitle`), content
-  tiles + grid (`.tileGrid`, `.tile`, `.tileImage`, `.tileTitle`, `.tileMeta`), call-to-action
-  (`.ctaButton`, `.ctaBanner`, `.ctaBannerText`), and footer (`.siteFooter`, `.siteFooterInner`,
-  `.siteFooterInfo`, `.siteFooterNav`, `.siteFooterSocial`, `.siteFooterLink`).
+    - nav (`.siteHeader`, `.siteHeaderInner`, `.siteLogo`, `.siteNav`, `.siteNavItem`, `.siteNavCta`),
+      hero (`.hero`, `.heroImage`, `.heroOverlay`, `.heroContent`, `.heroTitle`, `.heroSubtitle`), content
+      tiles + grid (`.tileGrid`, `.tile`, `.tileImage`, `.tileTitle`, `.tileMeta`), call-to-action
+      (`.ctaButton`, `.ctaBanner`, `.ctaBannerText`), and footer (`.siteFooter`, `.siteFooterInner`,
+      `.siteFooterInfo`, `.siteFooterNav`, `.siteFooterSocial`, `.siteFooterLink`).
 - Small, combinable marketing-SPA blocks (also under `web/`): `.langToggle` (EN/ET language switch),
   `.scrollHint`, `.slogan`, and `.sectionLead`.
 - Experimental content patterns under `ui/`: media object (`.mediaObject`), notice banner
@@ -171,19 +171,11 @@ update their stylesheet load list accordingly. All packages are versioned togeth
 - An initial LESS code from SMI home page and from the other internal projects into one single place.
 
 [unreleased]: https://github.com/setmy-info/setmy-info-less/compare/5.0.0...HEAD
-
 [5.0.0]: https://github.com/setmy-info/setmy-info-less/compare/4.0.0...5.0.0
-
 [4.0.0]: https://github.com/setmy-info/setmy-info-less/compare/3.1.0...4.0.0
-
 [3.1.0]: https://github.com/setmy-info/setmy-info-less/compare/3.0.0...3.1.0
-
 [3.0.0]: https://github.com/setmy-info/setmy-info-less/compare/2.0.0...3.0.0
-
 [2.0.0]: https://github.com/setmy-info/setmy-info-less/releases/tag/2.0.0
-
 [1.1.0]: https://github.com/setmy-info/setmy-info-less/releases/tag/1.1.0
-
 [1.0.0-dist]: https://github.com/setmy-info/setmy-info-less/releases/tag/1.0.0-dist
-
 [1.0.0]: https://github.com/setmy-info/setmy-info-less/releases/tag/1.0.0

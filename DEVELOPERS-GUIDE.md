@@ -60,26 +60,26 @@ managers, and any enterprise web application that uses an IDE-like panel structu
 
 **Frame class reference:**
 
-| Class                    | Purpose                                                          |
-|--------------------------|------------------------------------------------------------------|
-| `body.framesDefaultPadding` | Sets body to fill the full viewport with zero padding         |
-| `.contentHeader`         | Top strip, two-row-height (`header + navigation`)               |
-| `.defaultHeader`         | Top strip, single-row-height                                    |
-| `.content`               | Middle area; height computed as `100% - header - footer`        |
-| `.contentFooter`         | Bottom strip, single-row-height                                 |
-| `.sectionLeft`           | Left pane (30 % of width by default)                            |
-| `.verticalSeparator`     | Thin vertical divider between left and right panes              |
-| `.sectionRight`          | Right pane (70 % of width by default)                           |
-| `.sectionHeader`         | Sub-header strip inside a pane                                  |
-| `.sectionLeftUp`         | Upper portion of the left pane                                  |
-| `.horizontalSeparator`   | Thin horizontal divider inside a pane                           |
-| `.sectionLeftBottom`     | Lower portion of the left pane                                  |
-| `.sectionRightUp`        | Upper portion of the right pane                                 |
-| `.sectionRightBottom`    | Lower portion of the right pane                                 |
-| `.contentLeftUp`         | Inner content area within `.sectionLeftUp`                      |
-| `.contentLeftBottom`     | Inner content area within `.sectionLeftBottom`                  |
-| `.contentRightUp`        | Inner content area within `.sectionRightUp`                     |
-| `.contentRightBottom`    | Inner content area within `.sectionRightBottom`                 |
+| Class                       | Purpose                                                  |
+| --------------------------- | -------------------------------------------------------- |
+| `body.framesDefaultPadding` | Sets body to fill the full viewport with zero padding    |
+| `.contentHeader`            | Top strip, two-row-height (`header + navigation`)        |
+| `.defaultHeader`            | Top strip, single-row-height                             |
+| `.content`                  | Middle area; height computed as `100% - header - footer` |
+| `.contentFooter`            | Bottom strip, single-row-height                          |
+| `.sectionLeft`              | Left pane (30 % of width by default)                     |
+| `.verticalSeparator`        | Thin vertical divider between left and right panes       |
+| `.sectionRight`             | Right pane (70 % of width by default)                    |
+| `.sectionHeader`            | Sub-header strip inside a pane                           |
+| `.sectionLeftUp`            | Upper portion of the left pane                           |
+| `.horizontalSeparator`      | Thin horizontal divider inside a pane                    |
+| `.sectionLeftBottom`        | Lower portion of the left pane                           |
+| `.sectionRightUp`           | Upper portion of the right pane                          |
+| `.sectionRightBottom`       | Lower portion of the right pane                          |
+| `.contentLeftUp`            | Inner content area within `.sectionLeftUp`               |
+| `.contentLeftBottom`        | Inner content area within `.sectionLeftBottom`           |
+| `.contentRightUp`           | Inner content area within `.sectionRightUp`              |
+| `.contentRightBottom`       | Inner content area within `.sectionRightBottom`          |
 
 These classes are framework-agnostic. They work with Angular, Vue, React, or plain HTML.
 The experimental sub-module (`src/main/less/experimental/`) contains color overlays and additional presets
@@ -138,7 +138,6 @@ The framework is mostly built around attaching utility classes to HTML elements.
 Example:
 
 ```html
-
 <div class="hidden"></div>
 <section class="centerBox verticalStretchPanel"></section>
 <nav class="smi-flex-panel smi-flex-panel-row smi-flex-panel-left"></nav>
@@ -183,6 +182,7 @@ Edge (Chromium) around 5 %, and Firefox around 3 %. For developer tools and ente
 Firefox and Chrome/Edge are the dominant pair. Safari matters for users on macOS and iOS.
 
 Practical targets for this framework:
+
 - **Firefox** — primary tested baseline (all E2E tests run here)
 - **Chrome / Edge** — best-effort; add one Chromium Playwright run when cross-browser parity matters
 - **Safari** — best-effort; most modern CSS used here is supported in Safari 15+
@@ -200,21 +200,53 @@ that requirement.
 
 ## Build and verification flow
 
-### CSS and HTML generation
+This repo follows the org's shared **Maven-mirroring build lifecycle** (ADR-0045), the same one
+`setmy.info-js`, `setmy.info-python` and `setmy.info-elixir` implement. Phase names and their order are the Maven
+ones; the tools behind each phase are the LESS/CSS ones. The full ordered command list lives in `README.md`
+("Lifecycle"); `report.md` records the migration itself.
 
-- CSS is compiled from LESS with `lessc`
-- Minified CSS is produced with `--clean-css`
-- Example HTML is generated from Pug
+### CSS and HTML generation (Compile phase)
 
-### Test stack
+- `npm run build` compiles LESS with `lessc` into `dist/main.css`, and again with `--clean-css` into
+  `dist/main.min.css` — then generates the Pug demo/fixture pages into `dist/`.
+- It removes only the files it writes, never `dist/` wholesale: `dist/main.css` / `main.min.css` are tracked
+  artifacts and the Resources phase's output (Maven `process-resources`, which runs immediately before Compile)
+  must survive it.
+- The KSS living styleguide is **not** part of Compile — it is generated documentation, so it belongs to the Site
+  phase (`npm run site`, output in `site/styleguide/`), next to the lint, coverage, security and dependency reports.
 
-- `Jest`: lightweight JavaScript/unit-style tests and placeholders
-- `Playwright`: rendered CSS verification using Firefox
-- Gherkin DTOs: readable BDD scenarios held as data objects (`packages/common/test/js/gherkin`) and
-  executed as Jest e2e tests; `toGherkin()` serializes them back into `.feature` text when needed
-- `stylelint`: LESS linting
+### Test stack, by tier
 
-The `verify` script in each package combines these checks.
+Maven's own `src/main` / `src/test` layout, which this repo already used:
+
+- **Unit** — `src/test/js/unit/*.test.js`, jest. Assertions about the package's own source and manifest; no build
+  output involved. Run by `npm test`.
+- **Integration** — `src/test/js/integration/*.test.js`, jest. Runs against the **built** `dist/main.css`, so it
+  fails if the build was skipped. That is the point of the tier.
+- **E2E** — `src/test/js/e2e/*.e2e.js`, jest + `selenium-webdriver` driving a real Firefox through an external
+  Selenium Grid. `pre-e2e-test` starts the package's static server and `post-e2e-test` stops it; `post-e2e-test`
+  runs even when the tests fail — Maven failsafe's guarantee, implemented in `tools/failsafe.js`: `e2e-test`
+  records a failure marker under `.artifacts/failsafe/` and exits 0, and `post-e2e-test` re-raises it _after_ the
+  teardown. `integration-test` / `post-integration-test` work the same way. Because of that deferral, the test and
+  cleanup lifecycles run fail-at-end across modules (`mvn -fae`) rather than stopping at the first red one — see
+  `failAtEndLifecycles` in `tools/run-workspaces.js`.
+- E2E page serving is currently `tools/pageHelper.cjs`'s own ephemeral express server, started per test file at the
+  `packages/` root so cross-package hrefs like `../../setmy-info-less/dist/main.css` resolve. The `pre-e2e-test`
+  server serves only its own package's `dist`, so no e2e test connects to it today; it is kept for the manual
+  `npm run server` workflow and as the lifecycle slot for when page serving moves out of `pageHelper`.
+- E2E assertions are exact pixel geometry, which is safe for block layout but **not** for text: a shrink-wrapped
+  inline element measures whatever font the grid node actually has installed (`DejaVu Serif` is absent on stock
+  Fedora and most Selenium images, so the stack falls through to Arial). Assert the property under test — the
+  centring, the alignment — not the text's own width. See `centerText.e2e.js`.
+- Gherkin DTOs: readable BDD scenarios held as data objects (`tools/gherkin/`) and executed as Jest e2e tests;
+  `toGherkin()` serializes them back into `.feature` text when needed.
+- `stylelint` is the Lint phase (`npm run lint`) and also owns `.less` formatting — prettier is excluded from
+  `.less` on purpose, see README "Known deliberate differences".
+- Playwright is **not** in use; the `playwright.config.js` stubs are retained migration markers only.
+
+`npm run verify` no longer means "run all the checks". It is the Maven `verify` phase: the built artifacts exist and
+each package's rule count matches its declared `content` / `skeleton` expectation. The checks it used to bundle are
+now their own phases, run in lifecycle order.
 
 ## Code documentation and generation from comments
 
@@ -223,12 +255,14 @@ The `verify` script in each package combines these checks.
 LESS has no native documentation format. Use these conventions consistently:
 
 **File-level header** — first line of every `.less` file, identifies the file:
+
 ```less
 /* spacing.less */
 ```
 
 **Class-level comment** — written above a class when the behavior is non-obvious or the class is part of a
 group. Keep it to one line unless a caveat must be explained:
+
 ```less
 /* Hides element and removes it from layout — use .invisible to keep space reserved */
 .hidden {
@@ -237,12 +271,14 @@ group. Keep it to one line unless a caveat must be explained:
 ```
 
 **Variable comment** — for variables with cross-file impact or deliberately chosen values:
+
 ```less
 /* Base spacing unit used across spacing.less, sizing.less, and frames/index.less */
 @defaultPadding: 10px;
 ```
 
 **Group header** — for a block of related classes:
+
 ```less
 /* --- Scroll helpers --- */
 ```
@@ -255,11 +291,13 @@ KSS (Knyle Style Sheets) reads structured comments and generates an HTML stylegu
 
 `kss` is already installed as a dev dependency in `packages/setmy-info-less-extended/package.json`.
 For the base module, install it if needed:
+
 ```shell
 npm i kss --save-dev
 ```
 
 KSS comment format (add above any class you want in the styleguide):
+
 ```less
 // Flex button row
 //
@@ -279,14 +317,18 @@ KSS comment format (add above any class you want in the styleguide):
 
 .smi-flex-panel {
     display: flex;
-    ...
+    ...;
 }
 ```
 
 Generate the styleguide:
+
 ```shell
-npx kss --source packages/setmy-info-less/src/main/less \
-         --destination docs/styleguide
+# The Docs phase does this for every package, into site/styleguide/
+npm run docs
+
+# ...or for one package only
+npm run docs --workspace setmy-info-less
 ```
 
 ### Generating living examples with Pug (already in the project)
@@ -295,6 +337,7 @@ The project already generates HTML from Pug templates under `src/test/pug/`. Eac
 corresponding HTML page in `dist/` that is both a visual example and a Playwright test fixture.
 
 This is already the primary documentation mechanism. Extend it by:
+
 - Adding one Pug template per new category (e.g., `forms.pug`, `tables.pug`, `feedback.pug`).
 - Showing every class in the category with a code snippet and rendered result on the same page.
 - Running `npm run html --workspaces` to rebuild all example pages.
@@ -303,12 +346,12 @@ Prefer Pug templates over a separate documentation build step until there are ma
 
 ### When to use KSS vs Pug templates
 
-| Situation                                   | Use              |
-|---------------------------------------------|------------------|
-| Visual example of a rendered component      | Pug template     |
-| Searchable, indexed class reference         | KSS styleguide   |
-| AI agent reading source to understand classes | Inline comments |
-| Quick check during development              | Pug + dev server |
+| Situation                                     | Use              |
+| --------------------------------------------- | ---------------- |
+| Visual example of a rendered component        | Pug template     |
+| Searchable, indexed class reference           | KSS styleguide   |
+| AI agent reading source to understand classes | Inline comments  |
+| Quick check during development                | Pug + dev server |
 
 ---
 

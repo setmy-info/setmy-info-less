@@ -1,5 +1,5 @@
-const pageHelper = require('../../../../../common/test/js/pageHelper');
-const getTestPageName = require('../../../../../common/test/js/testPageName');
+const pageHelper = require("../../../../../../tools/pageHelper.cjs");
+const getTestPageName = require("../../../../../../tools/testPageName.cjs");
 
 const pageName = getTestPageName();
 
@@ -9,8 +9,7 @@ const pageName = getTestPageName();
 //   .quarterWidth        ->  25% ->  500px
 //   .threeQuartersWidth  ->  75% -> 1500px
 //   .elementHeight       -> 50px
-describe(pageName + ' sizing utility tests', () => {
-
+describe(pageName + " sizing utility tests", () => {
     beforeAll(async () => {
         pageHelper.pageName(pageName);
         await pageHelper.pageIsRendered();
@@ -20,32 +19,32 @@ describe(pageName + ' sizing utility tests', () => {
         await pageHelper.pageClose();
     });
 
-    test('should load the page and check title', async () => {
-        expect(await pageHelper.getTitle()).toBe('sizing.html');
+    test("should load the page and check title", async () => {
+        expect(await pageHelper.getTitle()).toBe("sizing.html");
     });
 
-    test('.maxWidth is full container width', async () => {
-        await pageHelper.elementIdIs('maxWidth');
+    test(".maxWidth is full container width", async () => {
+        await pageHelper.elementIdIs("maxWidth");
         expect(pageHelper.data.computedStyles.width).toBe(2000);
     });
 
-    test('.halfWidth is 50%', async () => {
-        await pageHelper.elementIdIs('halfWidth');
+    test(".halfWidth is 50%", async () => {
+        await pageHelper.elementIdIs("halfWidth");
         expect(pageHelper.data.computedStyles.width).toBe(1000);
     });
 
-    test('.quarterWidth is 25%', async () => {
-        await pageHelper.elementIdIs('quarterWidth');
+    test(".quarterWidth is 25%", async () => {
+        await pageHelper.elementIdIs("quarterWidth");
         expect(pageHelper.data.computedStyles.width).toBe(500);
     });
 
-    test('.threeQuartersWidth is 75%', async () => {
-        await pageHelper.elementIdIs('threeQuartersWidth');
+    test(".threeQuartersWidth is 75%", async () => {
+        await pageHelper.elementIdIs("threeQuartersWidth");
         expect(pageHelper.data.computedStyles.width).toBe(1500);
     });
 
-    test('.elementHeight is 50px', async () => {
-        await pageHelper.elementIdIs('elementHeight');
+    test(".elementHeight is 50px", async () => {
+        await pageHelper.elementIdIs("elementHeight");
         expect(pageHelper.data.computedStyles.height).toBe(50);
     });
 });

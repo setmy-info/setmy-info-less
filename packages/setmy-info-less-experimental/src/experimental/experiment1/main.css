@@ -1,13 +1,13 @@
 html {
     height: 100%;
-    width:  100%;
+    width: 100%;
     padding: 0px;
     margin: 0px;
 }
 
 body {
     height: calc(100% - 20px);
-    width:  calc(100% - 20px);
+    width: calc(100% - 20px);
     margin: 0px;
     padding: 10px;
     overflow: hidden;
@@ -15,28 +15,28 @@ body {
 
 .bodyContent {
     height: 100%;
-    width:  100%;
+    width: 100%;
     margin: 0px;
     padding: 0px;
 }
 
 .contentHeader {
-    width:  100%;
-    height: 20px;    
+    width: 100%;
+    height: 20px;
 }
 
 .content {
-    width:  100%;
+    width: 100%;
     height: calc(100% - 40px);
 }
 
 .contentLeft {
-    width:  30%;
+    width: 30%;
     height: 100%;
 }
 
 .contentRight {
-    width:  70%;
+    width: 70%;
     height: 100%;
 }
 
@@ -61,8 +61,8 @@ body {
 }
 
 .contentFooter {
-    width:  100%;
-    height: 20px;    
+    width: 100%;
+    height: 20px;
 }
 
 .floatLeft {

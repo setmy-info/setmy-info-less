@@ -1,0 +1,4 @@
+{
+    "cdnBaseUrl": "http://localhost:8080/css",
+    "buildProfile": "local"
+}

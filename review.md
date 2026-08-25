@@ -404,7 +404,7 @@ Depend on tokens and spacing from Level 0/1. Cards started in Level 0; here they
 ## Summary of proposed new categories
 
 | Category         | Domain / area                                | Level | File                                              |
-|------------------|----------------------------------------------|-------|---------------------------------------------------|
+| ---------------- | -------------------------------------------- | ----- | ------------------------------------------------- |
 | `color/`         | Named + semantic color utilities             | 0     | `utility/color.less` + `utility/color-named.less` |
 | `section/`       | Hero, page section, content row              | 0     | `utility/section.less`                            |
 | `button/`        | Base button, button group                    | 0     | `utility/button.less`                             |
@@ -465,7 +465,7 @@ For simple utility classes a single-line comment is sufficient:
 ```
 
 Use the block `/** ... */` form only when the behavior is non-obvious, has important caveats, or the class
-is part of a composition group. Keep comments short — they describe the *why*, not the *what*.
+is part of a composition group. Keep comments short — they describe the _why_, not the _what_.
 
 ### Variable documentation style
 
@@ -508,7 +508,7 @@ Comment format example:
 // Styleguide flex.button-row
 
 .smi-flex-panel {
-...
+    ...;
 }
 ```
 
@@ -577,7 +577,7 @@ Layer 0 (base — never changes its published API):
 ### Package responsibility map
 
 | Package                      | Layer | Contents                                                           |
-|------------------------------|-------|--------------------------------------------------------------------|
+| ---------------------------- | ----- | ------------------------------------------------------------------ |
 | `setmy-info-less`            | 0     | values, html resets, utility, devices, flex, grid stub, components |
 | `setmy-info-less-extended`   | 1     | IDE frames (NetBeans-style panels, separators, header/footer)      |
 | `setmy-info-less-ui`         | 1     | states, typography ext., color helpers, cards, badges, feedback    |
@@ -629,7 +629,7 @@ Layer 0 (base — never changes its published API):
 ### Current E2E test coverage summary
 
 | Test file                 | What it checks                                       | Gaps                         |
-|---------------------------|------------------------------------------------------|------------------------------|
+| ------------------------- | ---------------------------------------------------- | ---------------------------- |
 | `body.e2e.js`             | `body` dimensions, margin, padding, font             | No modifier class checks     |
 | `application.e2e.js`      | `body` + `app` element dimensions                    | No `#application` ID check   |
 | `background.e2e.js`       | background page rendering                            | Unknown — not fully reviewed |
@@ -752,7 +752,7 @@ Layer 0 (base — never changes its published API):
 The following combinations should each have at least one E2E test scenario:
 
 | Combination                                                               | What to verify                           |
-|---------------------------------------------------------------------------|------------------------------------------|
+| ------------------------------------------------------------------------- | ---------------------------------------- |
 | `.smi-flex-panel` + `.smi-flex-panel-row` + `.smi-flex-panel-left`        | flex row, items align left               |
 | `.smi-flex-panel` + `.smi-flex-panel-row` + `.smi-flex-panel-center`      | flex row, items align center             |
 | `.smi-flex-panel` + `.smi-flex-panel-row` + `.smi-flex-panel-right`       | flex row, items align right              |
@@ -777,7 +777,7 @@ The following combinations should each have at least one E2E test scenario:
 ### Missing Cucumber feature files
 
 | Feature file to add         | Classes / scenarios to cover                                  |
-|-----------------------------|---------------------------------------------------------------|
+| --------------------------- | ------------------------------------------------------------- |
 | `visibility.feature`        | `.hidden` — hidden at all viewports                           |
 | `spacing.feature`           | `.noPadding`, `.noMargin`, `.defaultPadding`, `.doubleMargin` |
 | `sizing.feature`            | `.maxWidth`, `.halfWidth`, `.elementHeight`                   |

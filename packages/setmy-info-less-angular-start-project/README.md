@@ -23,10 +23,15 @@ depends on [`setmy-info-less`](../setmy-info-less/README.md).
 Load all three CSS files in order:
 
 ```html
-
-<link rel="stylesheet" href="node_modules/setmy-info-less/dist/main.css">
-<link rel="stylesheet" href="node_modules/setmy-info-less-extended/dist/main.css">
-<link rel="stylesheet" href="node_modules/setmy-info-less-angular-start-project/dist/main.css">
+<link rel="stylesheet" href="node_modules/setmy-info-less/dist/main.css" />
+<link
+    rel="stylesheet"
+    href="node_modules/setmy-info-less-extended/dist/main.css"
+/>
+<link
+    rel="stylesheet"
+    href="node_modules/setmy-info-less-angular-start-project/dist/main.css"
+/>
 ```
 
 ## What is included
@@ -42,6 +47,6 @@ for the migration plan).
 
 ```shell
 npm run build
-npm run lint:less
+npm run lint
 npm run verify
 ```

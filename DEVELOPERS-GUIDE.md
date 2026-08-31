@@ -184,7 +184,7 @@ Firefox and Chrome/Edge are the dominant pair. Safari matters for users on macOS
 Practical targets for this framework:
 
 - **Firefox** — primary tested baseline (all E2E tests run here)
-- **Chrome / Edge** — best-effort; add one Chromium Playwright run when cross-browser parity matters
+- **Chrome / Edge** — best-effort; add a Chromium Selenium run when cross-browser parity matters
 - **Safari** — best-effort; most modern CSS used here is supported in Safari 15+
 - **Internet Explorer** — not supported; no fallbacks are maintained
 
@@ -193,44 +193,38 @@ Important notes:
 - Flexbox-based helpers assume modern browser support.
 - `calc(...)`, `margin-block`, and gradient usage mean very old browsers may not render identically.
 - There is currently no explicit `browserslist` policy and no Autoprefixer pipeline.
-- Playwright tests currently verify Firefox behavior only.
+- Selenium e2e currently verifies Firefox behavior only.
 
 If stronger legacy support is needed, define exact browser versions first and then introduce compatibility work from
 that requirement.
 
 ## Build and verification flow
 
-This repo follows the org's shared **Maven-mirroring build lifecycle** (ADR-0045), the same one
-`setmy.info-js`, `setmy.info-python` and `setmy.info-elixir` implement. Phase names and their order are the Maven
-ones; the tools behind each phase are the LESS/CSS ones. The full ordered command list lives in `README.md`
-("Lifecycle"); `report.md` records the migration itself.
+This repo uses the same **npm command set and Jenkinsfile 1.2.0 stages** as `setmy.info-js`. The tools behind each
+command are the LESS/CSS ones. The full ordered command list lives in `README.md` ("Lifecycle").
 
-### CSS and HTML generation (Compile phase)
+### CSS and HTML generation (`npm run build`)
 
 - `npm run build` compiles LESS with `lessc` into `dist/main.css`, and again with `--clean-css` into
   `dist/main.min.css` — then generates the Pug demo/fixture pages into `dist/`.
 - It removes only the files it writes, never `dist/` wholesale: `dist/main.css` / `main.min.css` are tracked
-  artifacts and the Resources phase's output (Maven `process-resources`, which runs immediately before Compile)
-  must survive it.
-- The KSS living styleguide is **not** part of Compile — it is generated documentation, so it belongs to the Site
-  phase (`npm run site`, output in `site/styleguide/`), next to the lint, coverage, security and dependency reports.
+  artifacts and the resources command's output (`dist/resources/`) must survive it.
+- The KSS living styleguide is **not** part of build — it is generated documentation, so it belongs to
+  `npm run docs` (output in `reports/docs/`), next to the documents from `npm run reports`.
 
 ### Test stack, by tier
 
-Maven's own `src/main` / `src/test` layout, which this repo already used:
+This repo's `src/main` / `src/test` layout:
 
 - **Unit** — `src/test/js/unit/*.test.js`, jest. Assertions about the package's own source and manifest; no build
-  output involved. Run by `npm test`.
+  output involved. Run by `npm test`. Tooling tests under `scripts/test/unit` run with `node --test`.
 - **Integration** — `src/test/js/integration/*.test.js`, jest. Runs against the **built** `dist/main.css`, so it
   fails if the build was skipped. That is the point of the tier.
 - **E2E** — `src/test/js/e2e/*.e2e.js`, jest + `selenium-webdriver` driving a real Firefox through an external
-  Selenium Grid. `pre-e2e-test` starts the package's static server and `post-e2e-test` stops it; `post-e2e-test`
-  runs even when the tests fail — Maven failsafe's guarantee, implemented in `tools/failsafe.js`: `e2e-test`
-  records a failure marker under `.artifacts/failsafe/` and exits 0, and `post-e2e-test` re-raises it _after_ the
-  teardown. `integration-test` / `post-integration-test` work the same way. Because of that deferral, the test and
-  cleanup lifecycles run fail-at-end across modules (`mvn -fae`) rather than stopping at the first red one — see
-  `failAtEndLifecycles` in `tools/run-workspaces.js`.
-- E2E page serving is currently `tools/pageHelper.cjs`'s own ephemeral express server, started per test file at the
+  Selenium Grid. Bracket the tier with `npm run pre-e2e-test` / `post-e2e-test` (defined in
+  `scripts/lifecycle.js`). Post steps are idempotent: CI runs them again after a failed tier, and `npm run clean`
+  runs them first. Jenkins also runs both post phases in `post { always }`.
+- E2E page serving is currently `scripts/pageHelper.cjs`'s own ephemeral express server, started per test file at the
   `packages/` root so cross-package hrefs like `../../setmy-info-less/dist/main.css` resolve. The `pre-e2e-test`
   server serves only its own package's `dist`, so no e2e test connects to it today; it is kept for the manual
   `npm run server` workflow and as the lifecycle slot for when page serving moves out of `pageHelper`.
@@ -238,15 +232,14 @@ Maven's own `src/main` / `src/test` layout, which this repo already used:
   inline element measures whatever font the grid node actually has installed (`DejaVu Serif` is absent on stock
   Fedora and most Selenium images, so the stack falls through to Arial). Assert the property under test — the
   centring, the alignment — not the text's own width. See `centerText.e2e.js`.
-- Gherkin DTOs: readable BDD scenarios held as data objects (`tools/gherkin/`) and executed as Jest e2e tests;
+- Gherkin DTOs: readable BDD scenarios held as data objects (`scripts/gherkin/`) and executed as Jest e2e tests;
   `toGherkin()` serializes them back into `.feature` text when needed.
-- `stylelint` is the Lint phase (`npm run lint`) and also owns `.less` formatting — prettier is excluded from
+- `stylelint` is `npm run lint` and also owns `.less` formatting — prettier is excluded from
   `.less` on purpose, see README "Known deliberate differences".
-- Playwright is **not** in use; the `playwright.config.js` stubs are retained migration markers only.
+- E2E uses Selenium Grid, not Playwright.
 
-`npm run verify` no longer means "run all the checks". It is the Maven `verify` phase: the built artifacts exist and
-each package's rule count matches its declared `content` / `skeleton` expectation. The checks it used to bundle are
-now their own phases, run in lifecycle order.
+`npm run verify` is CSS-specific: the built artifacts exist and each package's rule count matches its declared
+`content` / `skeleton` expectation.
 
 ## Code documentation and generation from comments
 
@@ -289,12 +282,7 @@ Do not write multi-line block comments for things a good name already expresses.
 
 KSS (Knyle Style Sheets) reads structured comments and generates an HTML styleguide from LESS/CSS source.
 
-`kss` is already installed as a dev dependency in `packages/setmy-info-less-extended/package.json`.
-For the base module, install it if needed:
-
-```shell
-npm i kss --save-dev
-```
+`kss` is already installed as a root devDependency. The Docs command runs it for every package.
 
 KSS comment format (add above any class you want in the styleguide):
 
@@ -324,23 +312,20 @@ KSS comment format (add above any class you want in the styleguide):
 Generate the styleguide:
 
 ```shell
-# The Docs phase does this for every package, into site/styleguide/
+# The Docs command does this for every package, into reports/docs/
 npm run docs
-
-# ...or for one package only
-npm run docs --workspace setmy-info-less
 ```
 
 ### Generating living examples with Pug (already in the project)
 
 The project already generates HTML from Pug templates under `src/test/pug/`. Each Pug file produces a
-corresponding HTML page in `dist/` that is both a visual example and a Playwright test fixture.
+corresponding HTML page in `dist/` that is both a visual example and a Selenium e2e fixture.
 
 This is already the primary documentation mechanism. Extend it by:
 
 - Adding one Pug template per new category (e.g., `forms.pug`, `tables.pug`, `feedback.pug`).
 - Showing every class in the category with a code snippet and rendered result on the same page.
-- Running `npm run html --workspaces` to rebuild all example pages.
+- Running `npm run build --workspaces` to rebuild all example pages.
 
 Prefer Pug templates over a separate documentation build step until there are many documented classes.
 

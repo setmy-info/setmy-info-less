@@ -1,3 +1,4 @@
+
 def runCommand(String command) {
     if (isUnix()) {
         sh command
@@ -8,20 +9,20 @@ def runCommand(String command) {
 
 pipeline {
 
-    // version 1.1.0 - migrated from jenkinsfile-starter 1.1.0 for setmy-info-less (npm/node
-    //                 LESS/CSS monorepo). Same stage skeleton, branch gating and HOTFIX_TO_*
-    //                 flags as the setmy.info-js / -python / -elixir siblings; the Maven
-    //                 placeholders are replaced with this repo's npm lifecycle scripts (see
-    //                 README.md "Lifecycle").
-    //
-    // E2E NOTE: the e2e tier drives a real browser through an EXTERNAL Selenium Grid
-    // (SELENIUM_HUB_URL, default http://localhost:4444/wd/hub) plus Java on the grid host.
-    // The agent running this file needs that grid reachable; the grid's session cap is why
-    // jest.e2e.config.js pins maxWorkers: 1. If no grid is available on an agent, gate the
-    // E2E stage behind a `when { expression { env.SELENIUM_HUB_URL } }` rather than dropping
-    // the stage - a missing test tier should be visible, not silent.
-
     /*
+    version 1.2.0 - release* no longer deploys to DEV: the RELEASE_TO_DEV flag and the release
+                    branch of the 'dev' deploy stage are gone. release* deploys to TEST and
+                    PRELIVE only. develop -> DEV is unchanged. Stages kept identical to
+                    jenkinsfile-starter 1.2.0 / setmy.info-js; npm commands are this LESS/CSS
+                    workspace's fill-in (lessc, stylelint, jest, Selenium).
+    version 1.1.0 - pollSCM instead of cron (build on new commits, not on a timer),
+                    quietPeriod + disableConcurrentBuilds(abortPrevious: true) so that a burst
+                    of commits becomes one build of the newest change,
+                    elease* added to Publish/Snapshot: develop, release* and hotfix* all publish
+                    a candidate of unknown quality
+                    TEST environment renamed to the ADR-0041 canonical name
+    version 1.0.1 - fileExists precondition check now actually gates (was a discarded boolean)
+
     Git branches flow: develop -> feature -> develop -> release -> master
 
     Building only the newest change
@@ -66,6 +67,13 @@ pipeline {
     No pull request builds.
 
     [5 branches] x [4 environments]. feature* deploys nowhere: it is built and tested only.
+
+    E2E NOTE: the e2e tier drives a real browser through an EXTERNAL Selenium Grid
+    (SELENIUM_HUB_URL, default http://localhost:4444/wd/hub) plus Java on the grid host.
+    The agent running this file needs that grid reachable. If no grid is available on an
+    agent, gate the e2e commands behind a `when { expression { env.SELENIUM_HUB_URL } }`
+    rather than dropping them from this stage - a missing test tier should be visible, not
+    silent. Do not add or remove stages: the e2e commands stay in Build, like the JS sibling.
     */
 
     agent any
@@ -120,7 +128,8 @@ pipeline {
     }
 
     environment {
-        PATH = "/opt/has/bin:$PATH"
+
+        SMI_PROFILES = 'ci'
 
         MASTER_TO_LIVE = 'DEPLOY'
 
@@ -138,147 +147,144 @@ pipeline {
         stage('Inspection') {
             parallel {
                 stage('Pre-build') {
+                    /*
+                    Stage to get into build logs pre build existing environment conditions, versions, getting CI build
+                    info into log etc.
+                    */
                     steps {
                         echo "Jenkins node: ${env.NODE_NAME}"
                         echo "Operating system: ${isUnix() ? 'Unix/Linux' : 'Windows'}"
 
-                        echo 'Pre build inspection and precondition check.'
                         runCommand 'node --version'
                         runCommand 'npm --version'
-                        // fileExists only RETURNS a boolean - as a bare
-                        // statement its result is discarded and a missing
-                        // file fails nothing. It must be wrapped to gate.
+
                         script {
                             if (!fileExists('README.md')) {
                                 error('README.md missing - checkout incomplete or wrong workspace directory')
                             }
                         }
+
+                        echo 'Pre build inspection and precondition check. Node.js 24+ (with its npm) must be installed on the agent. E2E also needs Java and a reachable Selenium Grid.'
                     }
                 }
+                /*
+                Stage to install build required tools. Build dependencies.
+                */
                 stage('Build tools') {
                     steps {
-                        echo 'Build tools installation and preparation (npm ci)'
-                        runCommand 'npm run bootstrap'
+                        echo 'Build tools installation and preparation (setup, config)'
+                        echo 'Nothing to install: node and npm are the whole toolchain, every other tool is a devDependency the Install stage brings in'
+                        runCommand 'npm config get registry'
                     }
                 }
             }
         }
 
-        // Everything from here down to and including 'Package' runs on every
-        // branch, feature branches included - the point (per our git branching
-        // model) is that a developer on a feature branch gets the same build,
-        // lint, test and quality feedback as devel/release/master, without
-        // ever reaching the Publish/Deploy/Tag stages below, which are gated
-        // to specific branches only.
-
         stage('Preparation') {
-            steps {
-                echo 'Preparing the workspace to be built.'
-                runCommand 'npm run clean'
-                runCommand 'npm run validate'
+            parallel {
+                /*
+                Stage to install language and source, language code dependencies.
+                */
+                stage('Install') {
+                    steps {
+                        echo 'Preparing the software to be built. Installation commands go here.'
+                        runCommand 'npm ci'
+                        echo 'Put here build configuration commands'
+                        // The installed tree matches package-lock.json (missing, extraneous or
+                        // invalid packages fail it) - the `pip check` / `deps.unlock --check-unused`
+                        // of this row.
+                        runCommand 'npm ls --all'
+                    }
+                }
             }
         }
 
+        /*
+        Stage to build code with with executing all needed steps to measure different type of code quality.
+        */
         stage('Build') {
             steps {
-                echo 'Format/lint check (Maven validate phase equivalent)'
-                runCommand 'npm run format:check'
-                runCommand 'npm run lint'
+                echo 'Cleaning command, because in some cases shared directories can have previous build garbage'
+                runCommand 'npm run clean'
 
-                // "ci" is ADR-0041's canonical name for this environment -
-                // Jenkins IS the ci environment here, so resources get
-                // filtered with the ci profile's property values.
-                echo 'Resource filtering (Maven generate-resources/process-resources phase equivalent)'
+                echo 'Put here resource copy commands'
                 runCommand 'npm run resources -- --profile ci'
 
-                echo 'Compile (lessc via tools/run-workspaces.js, Maven compile phase equivalent)'
+                echo 'Put here compilation commands. Can be omitted.'
+                runCommand 'npm run format:check'
                 runCommand 'npm run build'
-
-                echo 'Unit tests'
-                runCommand 'npm test'
-
-                echo 'Integration tests (*IT-equivalent)'
-                runCommand 'npm run pre-integration-test'
-                runCommand 'npm run integration-test'
-            }
-            post {
-                // Guaranteed cleanup even if integration-test fails, the same
-                // way Maven's failsafe plugin always runs post-integration-test
-                // around a possibly failing integration-test goal.
-                always {
-                    runCommand 'npm run post-integration-test'
-                }
-            }
-        }
-
-        stage('E2E') {
-            steps {
-                echo 'e2e tests (-Pe2e equivalent, *E2ET-style)'
-                runCommand 'npm run pre-e2e-test'
-                runCommand 'npm run e2e-test'
-            }
-            post {
-                always {
-                    runCommand 'npm run post-e2e-test'
-                }
-            }
-        }
-
-        stage('Quality') {
-            steps {
-                echo 'Put here mutation tests once a JS mutation-testing tool (e.g. Stryker) is wired in'
-
-                echo 'Coverage, security (dependency-check equivalent), artifact verification'
-                runCommand 'npm run coverage'
-                runCommand 'npm run security'
                 runCommand 'npm run verify'
 
-                echo 'Reporting: docs, lint report, coverage report, security report, dependency tree (mvn site equivalent)'
-                runCommand 'npm run site'
+                echo 'Put here unit tests'
+                runCommand 'npm test'
 
-                // ci.yml's Publish/release-reports job does the real
-                // GitHub-Pages version of this. There's no Jenkins
-                // equivalent of "push to GitHub Pages" without pushing to
-                // GitHub itself as a side effect of a Jenkins build, which
-                // needs its own credentials/target decision - left as a
-                // placeholder here on purpose rather than guessing at one.
-                echo 'Put here site deploy, e.g. publish site/ to an internal reports host'
-            }
-        }
+                echo 'Put here integration tests. Previous steps can be merged here.'
+                // pre-integration-test / integration-test / post-integration-test, the way
+                // Maven's failsafe brackets them. WHAT the pre and post phases do is defined
+                // in one place, scripts/lifecycle.js - in this project they start and stop
+                // each package's static server (dist/, test port = config.server.port + 1).
+                // A failing tier leaves pre's work in place - post { always } below runs the
+                // post phases again; they are idempotent.
+                runCommand 'npm run pre-integration-test'
+                runCommand 'npm run integration-test'
+                runCommand 'npm run post-integration-test'
 
-        stage('System/Acceptance') {
-            steps {
+                echo 'Put here mutation tests'
+                echo 'Not wired in yet'
+
+                echo 'Put here reporting builds steps can include (unit tests coverage, mutation test coverage, findbugs, vuln. checks, )'
+                echo 'Containing here findbug/stopbug, check style, dependencies vulnerability checks, docs gen, etc'
+                // Gates first (each fails the build on a finding), then the documents.
+                // Coverage over the unit tier comes after the e2e commands below so the
+                // Build stage order matches the JS sibling; CSS coverage cannot include the
+                // Selenium tier (that needs the grid).
+                runCommand 'npm run lint'
+                runCommand 'npm run audit'
+                runCommand 'npm run reports'
+                runCommand 'npm run docs'
+
+                echo 'Put here site deploy'
+                echo 'Not wired to a target yet - reports/ (junit, coverage, security, sbom, dependencies, docs) is archived by post { always } below'
+
+                echo 'Put here e2e tests'
+                // pre-e2e-test / e2e-test / post-e2e-test, same shape as the integration tier.
+                // jest + selenium-webdriver, maxWorkers: 1 (grid session cap).
+                runCommand 'npm run pre-e2e-test'
+                runCommand 'npm run e2e-test'
+                runCommand 'npm run post-e2e-test'
+                // Test coverage over the unit tier: the lcov report (reports/coverage/).
+                // Bracketed by the union of both tiers' lifecycle phases - a step shared by
+                // them runs once - so the command sequence stays the same as the JS sibling.
+                runCommand 'node scripts/lifecycle.js pre-integration-test pre-e2e-test'
+                runCommand 'npm run coverage'
+                runCommand 'node scripts/lifecycle.js post-integration-test post-e2e-test'
+
                 echo 'Put here system tests'
                 echo 'Put here acceptance tests'
-            }
-        }
 
-        stage('Package') {
-            steps {
-                echo 'Packaging'
+                echo 'Put here packaging'
                 runCommand 'npm run package'
-                runCommand 'npm run sbom'
-                runCommand 'npm run sign'
+
+                echo 'Put here local publishing'
+                echo 'Nothing to publish locally: npm has no local repository, the tarballs in dist/ are the local result and the Deploy stages install them'
             }
         }
 
-        // comparator: 'REGEXP' below is not decoration. The default GLOB comparator's `*` does
-        // not cross a `/`, so `branch 'release*'` does NOT match `release/1.2.0` and `branch
-        // 'hotfix*'` does NOT match `hotfix/NPE` - every publish and deployment for those two
-        // branches is then silently skipped. It is easy to miss, because `devel*` keeps working:
-        // `develop` has no separator in it. 'release.*' as a regular expression is what the
-        // earlier expression { env.BRANCH_NAME.startsWith('release') } actually meant. Use
-        // branch 'release/*' instead only if every release branch really is named with a slash.
         stage('Publish') {
             parallel {
+                /*
+                Stage to push or upload build packages/artifacts to file storage systems.
+                */
                 stage('Release') {
                     when {
                         branch 'master'
+                        // changeset "**/file/to/be/changed"
                     }
                     steps {
-                        echo 'Software release publish steps'
-                        runCommand 'npm run install-local'
-                        runCommand 'npm run publish'
+                        echo 'Put here software release steps'
+                        withEnv(['NPM_CONFIG_USERCONFIG=.npmrc.publish']) {
+                            runCommand 'npm run release'
+                        }
                     }
                 }
                 stage('Snapshot') {
@@ -286,19 +292,11 @@ pipeline {
                         branch pattern: 'devel.*', comparator: 'REGEXP'
                     }
                     steps {
-                        echo 'Software snapshot publish steps'
-                        runCommand 'npm run install-local'
-                        runCommand 'npm run publish'
-                    }
-                }
-                stage('Hotfix candidate') {
-                    when {
-                        branch pattern: 'hotfix.*', comparator: 'REGEXP'
-                    }
-                    steps {
-                        echo 'Software hotfix-candidate publish steps'
-                        runCommand 'npm run install-local'
-                        runCommand 'npm run publish'
+                        echo 'Put here software snapshot publishing steps'
+                        // The npm registry has no snapshot channel and a version publishes
+                        // exactly once, so develop keeps its tarballs as archived artifacts
+                        // (post { always } below); publishing happens from master.
+                        echo 'No npm snapshot publishing - the Build stage tarballs in dist/ are archived as the snapshot'
                     }
                 }
                 stage('Release reports') {
@@ -306,7 +304,8 @@ pipeline {
                         branch 'master'
                     }
                     steps {
-                        echo 'Put here reports publishing steps (deploy site/ output)'
+                        echo 'Put here reports publishing steps'
+                        echo 'Not wired to a target yet - reports/ is archived by post { always } below'
                     }
                 }
                 stage('Snapshot reports') {
@@ -314,26 +313,28 @@ pipeline {
                         branch pattern: 'devel.*', comparator: 'REGEXP'
                     }
                     steps {
-                        echo 'Put here reports publishing steps (deploy site/ output)'
+                        echo 'Put here reports publishing steps'
+                        echo 'Not wired to a target yet - reports/ is archived by post { always } below'
                     }
                 }
             }
         }
-
         stage('Deploy') {
             parallel {
+                /*
+                Stages to deploy/install artifacts to different environments.
+                The tarballs installed into a fresh prefix per target (scripts/deploy.js), and
+                each package's CSS checked from the installed artifact. Installing them on a
+                real host is not wired up yet.
+                */
                 stage('dev') {
                     when {
                         environment name: 'DEVELOPMENT_TO_DEV', value: 'DEPLOY'
                         branch pattern: 'devel.*', comparator: 'REGEXP'
                     }
                     steps {
-                        echo 'Development environment installation steps'
-                        // withEnv, not a `VAR=value command` shell prefix: that prefix is
-                        // Bourne-shell syntax and does nothing under bat on a Windows agent.
-                        withEnv(['DEPLOY_TARGET=dev']) {
-                            runCommand 'npm run deploy'
-                        }
+                        echo 'Put here software development installations steps'
+                        runCommand 'npm run deploy -- dev'
                     }
                 }
                 stage('test') {
@@ -354,10 +355,8 @@ pipeline {
                         }
                     }
                     steps {
-                        echo 'Test environment installation steps'
-                        withEnv(['DEPLOY_TARGET=test']) {
-                            runCommand 'npm run deploy'
-                        }
+                        echo 'Put here software test installations steps'
+                        runCommand 'npm run deploy -- test'
                     }
                 }
                 stage('prelive') {
@@ -374,10 +373,8 @@ pipeline {
                         }
                     }
                     steps {
-                        echo 'Prelive environment installation steps'
-                        withEnv(['DEPLOY_TARGET=prelive']) {
-                            runCommand 'npm run deploy'
-                        }
+                        echo 'Put here software prelive installations steps'
+                        runCommand 'npm run deploy -- prelive'
                     }
                 }
                 stage('live') {
@@ -386,15 +383,15 @@ pipeline {
                         branch 'master'
                     }
                     steps {
-                        echo 'Production environment installation steps'
-                        withEnv(['DEPLOY_TARGET=live']) {
-                            runCommand 'npm run deploy'
-                        }
+                        echo 'Put here software production installations steps'
+                        runCommand 'npm run deploy -- live'
                     }
                 }
             }
         }
-
+        /*
+        Stage to make SCM tag. As all results are succeeded then tag reflects FULL build success.
+        */
         stage('Tag') {
             when {
                 environment name: 'MASTER_TO_LIVE', value: 'DEPLOY'
@@ -410,8 +407,11 @@ pipeline {
 
     post {
         always {
-            // junit '**/target/*-reports/*.xml'
-            runCommand 'echo "Always"'
+            catchError(buildResult: null, stageResult: null) {
+                runCommand 'node scripts/lifecycle.js post-integration-test post-e2e-test'
+            }
+            junit allowEmptyResults: true, testResults: 'reports/junit/*.xml'
+            archiveArtifacts artifacts: 'dist/*.tgz, dist/*.sha256, reports/**, build/servers/*.json', allowEmptyArchive: true, fingerprint: true
         }
 
         success {

@@ -97,8 +97,8 @@ depends on `setmy-info-less-enterprise`, so all stable tokens and rules stay in 
 between it and any stable module straightforward. Its `ui/`, `forms/`, and `data/` subdirectories keep the names of the
 removed packages they came from. Do not take a production dependency on it.
 
-- Developer documentation: `devlopers-guide.md` (`developers-guide.md` contains the same content)
-- Review notes: `review.md`, `review2.md`
+- Developer documentation: `DEVELOPERS-GUIDE.md`
+- Review notes: `review.md`, `review3.md` (historical)
 
 ## Usage
 
@@ -263,10 +263,7 @@ Using:
 
 ```shell
 # Install all workspace dependencies (run from the repository ROOT, never from a package)
-npm install
-
-# Or, reproducibly, from the lock file - this is the Bootstrap phase below
-npm run bootstrap
+npm ci
 ```
 
 The whole toolchain (lessc, stylelint, kss, jest, prettier, selenium-webdriver, pug) is declared **once at the
@@ -286,112 +283,117 @@ export SELENIUM_BROWSER_BINARY="/path/to/librewolf"     # resolved on the GRID N
 
 ## Lifecycle
 
-This repo follows the org's shared build lifecycle: the
-[Maven default lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#default-lifecycle)
-phase names and ordering, implemented in npm, exactly as `setmy.info-js`, `setmy.info-python` and `setmy.info-elixir`
-do. See **ADR-0045** for the maintained cross-language phase table and `setmy.info-js/requirements-rules.md` for the
-language-agnostic spec. A developer moving between any of these repos - or from a Java/Maven project - uses the same
-phase names in the same order.
+A plain **Node.js 24+ / npm workspaces** repository, the same command set as `setmy.info-js`: every package under
+`packages/` is independently publishable, tests are three tiers with Maven-shaped pre/post around the slower ones,
+and the Jenkinsfile is stage-for-stage `jenkinsfile-starter` 1.2.0. Maven's phases are not emulated; the tools behind
+each command are the LESS/CSS ones (lessc, stylelint, KSS, Pug, jest, Selenium).
+
+Formatting is a **local** concern: `npm run format` (Prettier) rewrites the files, CI only verifies with
+`npm run format:check`. LESS formatting belongs to stylelint (`npm run lint` / `lint:fix`).
 
 Run from the repository root, in order:
 
 ```shell
-npm run bootstrap          # npm ci
+npm ci                                 # every workspace and the tooling, from package-lock.json
 npm run clean
-npm run validate
-npm run format:check       # or: npm run format to auto-fix
-npm run lint               # stylelint over every package's src/main/less
-npm run resources -- --profile <local|dev|ci|test|prelive|live>
-npm run build              # LESS -> dist/main.css + dist/main.min.css, Pug -> demo pages
-npm test                   # unit tier
+npm run resources -- --profile ci      # optional; no package has resources/ yet
+npm run format:check                   # or: npm run format to auto-fix
+npm run build                          # LESS -> dist/main.css + dist/main.min.css, Pug -> demo pages
+npm run verify                         # CSS artifacts exist; rule count matches content/skeleton
+npm test                               # unit tier
 npm run pre-integration-test
-npm run integration-test
+npm run integration-test               # against the built dist/main.css
 npm run post-integration-test
+npm run lint                           # stylelint
+npm run audit                          # npm audit --audit-level=high
+npm run reports                        # audit JSON, CycloneDX SBOM, dependency tree -> reports/
+npm run docs                           # KSS living styleguide -> reports/docs/
 npm run pre-e2e-test
-npm run e2e-test           # Selenium, needs the grid above
+npm run e2e-test                       # Selenium, needs the grid above
 npm run post-e2e-test
-npm run coverage
-npm run security
-npm run verify
-npm run package
-npm run sbom
-npm run sign
-npm run install-local
-npm run publish
-DEPLOY_TARGET=dev npm run deploy   # target is required: dev|test|prelive|live
-npm run site
+npm run coverage                       # unit tier under coverage
+npm run package                        # npm pack -> dist/*.tgz + SHA-256
+npm run deploy -- dev                  # target is required: dev|test|prelive|live
 ```
 
-Everything except the Selenium e2e tier has been run clean end to end on Linux/Node 24 (`EXIT 0`).
+`WHAT` the pre and post phases do is defined in exactly one place, `scripts/lifecycle.js`. Post steps are
+idempotent: CI runs them again after a failed tier, and `npm run clean` runs them first.
 
-Any single phase can be run for one package only:
+Any single package can still be built or linted on its own:
 
 ```shell
 npm run build --workspace setmy-info-less
 npm run lint --workspace setmy-info-less-ide
 ```
 
-### What each phase means here
+### What each command means here
 
-| Phase                 | LESS/CSS implementation                                                                                                                                             |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Bootstrap             | `npm ci` - lockfile-exact install                                                                                                                                   |
-| Clean                 | per package: `site/`, `coverage/`, `dist/styleguide/`; root: `.artifacts/`, `.deploy/`, `.signatures/`, `site/`, and it stops any test HTTP server still registered |
-| Validate              | manifest structure (`main`, `style`, `files`), LESS entry point exists, `stylelint.config.js` present                                                               |
-| Format / Format check | `prettier` over js/cjs/json/md/yml. **LESS formatting belongs to stylelint**, see "Known deliberate differences"                                                    |
-| Lint                  | `stylelint src/main/less/**/*.less` - this module type's checkstyle equivalent                                                                                      |
-| Resources             | `${token}` filtering of a package's optional `resources/` dir from `profiles/<name>.json` (ADR-0041/0042 names)                                                     |
-| Compile/Build         | `lessc` → `dist/main.css` + `dist/main.min.css` (`--clean-css`), plus Pug → demo/fixture pages in `dist/`                                                           |
-| Unit test             | `src/test/js/unit` via jest; the build tooling's own tests run via `node --test tools/test/unit`                                                                    |
-| Integration test      | `src/test/js/integration` via jest - asserts against the **built** `dist/main.css`, never against LESS source                                                       |
-| E2E test              | `src/test/js/e2e` via jest + Selenium against a real browser, with a static server started/stopped around it                                                        |
-| Coverage              | jest `--coverage` over the unit tier only                                                                                                                           |
-| Security              | `npm audit --audit-level=high`                                                                                                                                      |
-| Verify                | both CSS artifacts exist and the rule count matches the package's declared `content`/`skeleton` expectation                                                         |
-| Package               | `npm pack` into `.artifacts/<package>/`                                                                                                                             |
-| SBOM / Sign           | CycloneDX-shaped JSON; SHA-256 checksums of the **packed tarball** (a labelled placeholder, not a real signature)                                                   |
-| Install (local)       | installs the packed tarball (+ transitive local ones) into a throwaway project and checks the CSS really arrived                                                    |
-| Publish               | branch → dist-tag, always `--dry-run` unless `PUBLISH_EXECUTE=true`                                                                                                 |
-| Deploy                | writes a `prepared-not-executed` descriptor per target                                                                                                              |
-| Site                  | per-package + aggregated root report site                                                                                                                           |
+| Command                             | Tool                           | What                                                                                                                             |
+| ----------------------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `npm ci`                            | npm                            | lockfile-exact install (Jenkins Preparation / Install)                                                                           |
+| `npm run clean`                     | `scripts/clean.js`             | stops test servers; removes `reports/`, `build/`, root `dist/`; leaves tracked `dist/main.css` / `main.min.css`                  |
+| `npm run format:check`              | Prettier                       | formatting gate (js/cjs/json/md/yml)                                                                                             |
+| `npm run lint`                      | stylelint                      | LESS checkstyle equivalent                                                                                                       |
+| `npm run resources -- --profile ci` | `scripts/resources.js`         | `${token}` filtering of an optional `resources/` dir from `profiles/<name>.json` (ADR-0041/0042). `SMI_PROFILES` is accepted too |
+| `npm run build`                     | lessc + Pug                    | `dist/main.css` + `dist/main.min.css` (`--clean-css`), Pug → demo/fixture pages                                                  |
+| `npm run verify`                    | `scripts/verify.js`            | CSS-specific: artifacts exist, rule count matches `content` / `skeleton`                                                         |
+| `npm test`                          | jest + `node --test`           | unit tier (`src/test/js/unit` + `scripts/test/unit`)                                                                             |
+| `npm run integration-test`          | jest                           | against the **built** `dist/main.css`, never against LESS source                                                                 |
+| `npm run e2e-test`                  | jest + Selenium                | real Firefox through an external Selenium Grid                                                                                   |
+| `npm run coverage`                  | jest `--coverage`              | unit tier only (e2e needs the grid) → `reports/coverage/`                                                                        |
+| `npm run audit`                     | `npm audit --audit-level=high` | dependency vulnerability gate                                                                                                    |
+| `npm run reports`                   | npm                            | `reports/security/`, CycloneDX SBOM, `reports/dependencies.txt`                                                                  |
+| `npm run docs`                      | KSS                            | living styleguide from LESS comments → `reports/docs/`                                                                           |
+| `npm run package`                   | `npm pack --workspaces`        | one tarball per package into `dist/`, plus SHA-256 checksums                                                                     |
+| `npm run release`                   | `scripts/release.js`           | `npm publish` on `master` (`latest`); already-published versions are skipped, not a failure                                      |
+| `npm run deploy -- <env>`           | `scripts/deploy.js`            | install the tarballs into `build/deploy/<env>/` and check the CSS really arrived                                                 |
 
 ### Test pyramid
 
-Maven's own `src/main` / `src/test` layout, which this repo already used:
+This repo's `src/main` / `src/test` layout:
 
 - `src/main/less/` - the LESS sources, `main.less` is every package's single entry point
 - `src/test/pug/` - Pug sources for the demo/fixture pages built into `dist/`
 - `src/test/js/unit/` - unit tier (manifest/source assertions, no build output)
 - `src/test/js/integration/` - integration tier, against the built `dist/main.css`
-- `src/test/js/e2e/` - e2e tier, Selenium against a real browser and a running server
+- `src/test/js/e2e/` - e2e tier, Selenium against a real browser
 
-`pre-integration-test` / `pre-e2e-test` start a static server on the package's own port
+`pre-integration-test` / `pre-e2e-test` start a static server on each package's test port
 (`config.server.port` + 1, so a manually started `npm run server` never collides), and the paired
-`post-*` phases stop it - the guarantee Maven's failsafe plugin gives, and the reason `Jenkinsfile`
-runs those in `post { always { ... } }`.
+`post-*` phases stop it. Jenkins also runs both post phases in `post { always }`.
+
+Every jest run writes **JUnit XML** to `reports/junit/<tier>.xml` - what Jenkins' `junit` step reads.
 
 ### Profiles and resources
 
 `npm run resources -- --profile <name>` filters `${token}`s in a package's optional `resources/` directory using
-`profiles/<name>.json`. `--profile` is required and hard-validated against exactly the six ADR-0041 canonical
-environments (`local`, `dev`, `ci`, `test`, `prelive`, `live`); anything else is an error, per ADR-0042. No package
-has a `resources/` directory yet, so the phase is currently a documented no-op for all seven.
-
-### Site (reports)
-
-`npm run site` builds `packages/<pkg>/site/` plus an aggregated root `site/index.html`, the `mvn site` equivalent:
-
-- **Living styleguide (KSS)** - generated from the LESS source comments
-- Lint report (stylelint), coverage report, security report (`npm audit`), dependency tree, SBOM link
-
-`site/` is generated output and git-ignored.
+`profiles/<name>.json`. `--profile` (or `SMI_PROFILES`) is hard-validated against exactly the six
+ADR-0041 canonical environments (`local`, `dev`, `ci`, `test`, `prelive`, `live`); anything else is an error, per
+ADR-0042. No package has a `resources/` directory yet, so the command is currently a documented no-op for all seven.
 
 ### CI
 
-`Jenkinsfile` (version 1.1.0, migrated from the org's `jenkinsfile-starter` 1.1.0) runs this same sequence: Inspection
-→ Preparation → Build → E2E → Quality → System/Acceptance → Package → Publish → Deploy → Tag, with the same branch
-gating as the three siblings - `master`, `devel*`, `release*`, `hotfix*`, and feature branches running everything up
-to Package but never Publish/Deploy/Tag. The E2E stage needs the Selenium grid reachable from the agent.
+`Jenkinsfile` is the single CI definition, kept stage-for-stage in sync with `jenkinsfile-starter` 1.2.0 (no stages
+added or removed, the placeholders filled): Inspection (pre-build checks ‖ build tools) → Preparation (`npm ci`,
+`npm ls --all`) → Build → Publish → Deploy → Tag, with the org's standard branch gating (`master` / `devel*` /
+`release*` / `hotfix*`). `SMI_PROFILES=ci` is set for the whole build. The Build stage runs, in order: `npm run clean`,
+resources, format check, build, verify, the unit tier, the integration tier bracketed by its pre/post phases, the
+quality gates and documents (`lint`, `audit`, `reports`, `docs`), the e2e tier bracketed the same way, coverage,
+then `npm run package`. Each is its own line, so the build log names what failed. `post { always }` runs both post
+phases again, feeds `reports/junit/*.xml` to Jenkins' `junit` step and archives `dist/*.tgz`, `reports/` and server
+state. Publish (`master` only - the npm registry has no snapshot channel and a version publishes exactly once) runs
+`npm run release` with the token npm reads from `NPM_TOKEN` through the committed `.npmrc.publish`. Deploy runs
+`npm run deploy -- <env>` per target. The same `npm` commands, in the same order, are the whole build on a developer
+machine too. No GitHub Actions workflow.
+
+The E2E commands in Build need the Selenium grid reachable from the agent.
+
+### Hotfix branches (`hotfix*`)
+
+A `hotfix*` branch - branched from `master`, one fix, quick review - runs the exact same Inspection → Build path as
+every other branch (all test tiers, quality, packaging), is not published (only `master` publishes), and deploys to
+`test` and `prelive` (`HOTFIX_TO_TEST` / `HOTFIX_TO_PRELIVE`). It never deploys `dev` or `live` and never tags -
+merging it to `master` is what does that, through the normal master build.
 
 ### 🌐 Local development server / watch
 
@@ -404,19 +406,18 @@ npm run watch:pug --workspace setmy-info-less
 
 ## 📤 Publishing
 
-`npm run publish` resolves an npm dist-tag from the branch (`master` → `latest`, `release*` → `release-candidate`,
-`hotfix*` → `hotfix`, `devel*` → `next`, anything else → skipped) and always runs `npm publish --dry-run` unless
-`PUBLISH_EXECUTE=true` is set. Nothing in `Jenkinsfile` sets it. A version that is already on the registry is reported
-as "already published - bump the version" and is **not** a build failure.
+`npm run release` publishes on `master` to dist-tag `latest`. Jenkins runs it from the Release stage with
+`NPM_CONFIG_USERCONFIG=.npmrc.publish` (token from `NPM_TOKEN`). A version that is already on the registry is
+reported as "already published - bump the version" and is **not** a build failure. Other branches skip publish:
+the npm registry has no snapshot channel, so develop keeps its tarballs as archived artifacts.
 
 Publish order still matters (a package must exist on the registry before its dependents): base → extended → fancy →
-enterprise → angular-start-project → ide → experimental. `tools/run-workspaces.js` already fans every phase out in
-topological order, so running `npm run publish` from the root does this for you.
+enterprise → angular-start-project → ide → experimental. `scripts/release.js` publishes in topological order.
 
 Only the CSS is published: each package's `files` allowlist is `dist/main.css`, `dist/main.min.css`, `README.md`,
-`LICENSE`. The Pug demo pages and the KSS styleguide are **not** shipped any more.
+`LICENSE`. The Pug demo pages and the KSS styleguide are **not** shipped.
 
-## Known deliberate differences from the sibling repos / Maven
+## Known deliberate differences from the JS sibling
 
 - **`dist/main.css` and `dist/main.min.css` are tracked in git** (the 1.0.0-dist decision), unlike the siblings, which
   git-ignore all generated output. `clean` therefore removes only the _other_ generated things inside `dist/` and
@@ -424,10 +425,13 @@ Only the CSS is published: each package's `files` allowlist is `dist/main.css`, 
 - **LESS files are formatted by stylelint, not prettier.** `stylelint-config-standard`'s `rule-empty-line-before` and
   prettier disagree about blank lines between rules; one formatter per language, so `.less` is in `.prettierignore`
   and `npm run lint` / `lint:fix` owns it.
-- **The e2e tier needs external infrastructure** (Java + Selenium Grid) that the siblings' plain-HTTP e2e tests do
+- **The e2e tier needs external infrastructure** (Java + Selenium Grid) that the JS sibling's plain-HTTP e2e tests do
   not. It is a real browser test on purpose - CSS correctness cannot be asserted without a rendering engine.
-- **Packages are versioned and released together** at one version, unlike the siblings' independent versioning.
-- `sign` produces SHA-256 checksums, not real signatures; `publish`/`deploy` are prepared, not wired to real targets.
+- **Packages are versioned and released together** at one version, unlike the JS sibling's independent versioning.
+- **No TypeScript**, so there is no `typecheck` command; `verify` is the CSS stand-in (artifacts + rule count).
+- **Coverage is the unit tier only**, because e2e needs the Selenium grid.
+- SHA-256 checksums of the packed tarball live next to it in `dist/`; they are a labelled placeholder, not a real
+  signature. Deploy installs tarballs into `build/deploy/<env>/` and is not wired to a real host yet.
 
 ## Load order
 

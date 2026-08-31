@@ -2,6 +2,9 @@ package-lock.json
 node_modules
 **/dist/**
 **/site/**
+reports/
+build/
+.claude/
 
 # LESS formatting is owned by stylelint (`npm run lint` / `lint:fix`), not by
 # prettier: stylelint-config-standard's rule-empty-line-before and prettier

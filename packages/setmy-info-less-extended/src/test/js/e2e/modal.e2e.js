@@ -1,5 +1,5 @@
-const pageHelper = require("../../../../../../tools/pageHelper.cjs");
-const getTestPageName = require("../../../../../../tools/testPageName.cjs");
+const pageHelper = require("../../../../../../scripts/pageHelper.cjs");
+const getTestPageName = require("../../../../../../scripts/testPageName.cjs");
 
 const pageName = getTestPageName();
 

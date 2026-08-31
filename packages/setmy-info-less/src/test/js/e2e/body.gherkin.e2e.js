@@ -5,7 +5,7 @@ const {
     when,
     then,
     runFeature,
-} = require("../../../../../../tools/gherkin/index.cjs");
+} = require("../../../../../../scripts/gherkin/index.cjs");
 
 const bodyFeature = feature(
     "body page",

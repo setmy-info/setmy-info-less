@@ -234,8 +234,9 @@ This repo's `src/main` / `src/test` layout:
   centring, the alignment — not the text's own width. See `centerText.e2e.js`.
 - Gherkin DTOs: readable BDD scenarios held as data objects (`scripts/gherkin/`) and executed as Jest e2e tests;
   `toGherkin()` serializes them back into `.feature` text when needed.
-- `prettier` is first in `npm run format` / `format:check` on `.less` (this repo's main sources), then on
-  js/cjs/json/md/yml. `stylelint` is `npm run lint`.
+- `prettier` then `stylelint --fix` in `npm run format` / `format:check` on `.less` (this repo's main sources), then
+  prettier on js/cjs/json/md/yml. Stylelint-config-standard is not relaxed for Prettier; `--fix` plus source
+  edits must leave a tree that already passes `npm run lint` (stylelint without `--fix`).
 - E2E uses Selenium Grid, not Playwright.
 
 `npm run verify` is CSS-specific: the built artifacts exist and each package's rule count matches its declared

@@ -6,6 +6,55 @@ the SMI standard browser is Firefox, values can be taken directly from Firefox D
 
 This workspace contains the following modules.
 
+## Development
+
+- node v24.19.0
+- npm 11.17.0
+
+### Lifecycle
+
+This repo follows the org template family (JS, Python, Elixir, LESS, jenkinsfile-starter)
+Run from the repository root, in order:
+
+```shell
+npm install
+npm ci
+npm ls --all
+npm run clean
+#npm run format:check # sequential check: prettier on LESS, then prettier on the rest (CI)
+#npm run format                           # same list, write
+npm run resources                      # profile "local" by default; override with --profile or SMI_PROFILES
+npm run build                          # ng build / lessc / library load check (same profile resolution)
+npm run verify                         # CSS artifacts, ng dist, library Angular/RxJS ban
+npm test                               # unit tier
+npm run pre-integration-test
+npm run integration-test
+npm run post-integration-test
+smi-selenium-hub
+smi-selenium-node
+npm run pre-e2e-test                   # serves the BUILT app; needs Java + Selenium Grid
+npm run e2e-test
+npm run post-e2e-test
+npm run coverage                       # unit tier only (Selenium stays out of coverage)
+#npm run lint
+npm run audit
+npm run audit --fix
+npm run reports
+npm run docs
+npm run package                        # app -> dist/*.tar.gz; libraries -> dist/*.tgz
+npm run deploy -- <dev|test|prelive|live>
+npm run release                        # master only
+
+npm run server --workspace setmy-info-less        # serves that package's dist/ on its own port
+npm run stop-server --workspace setmy-info-less
+npm run watch --workspace setmy-info-less         # less-watch-compiler
+npm run watch:pug --workspace setmy-info-less
+
+npm i setmy-info-less
+npm run build --workspace setmy-info-less
+npm run lint --workspace setmy-info-less-ide
+```
+
 ### Dependency graph
 
 ```mermaid
@@ -101,14 +150,6 @@ removed packages they came from. Do not take a production dependency on it.
 - Review notes: `review.md`, `review3.md` (historical)
 
 ## Usage
-
-### NPM
-
-Base module:
-
-```shell
-npm i setmy-info-less
-```
 
 - https://www.npmjs.com/package/setmy-info-less
 
@@ -259,74 +300,7 @@ Using:
 - [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
-### 🔧 Setup
-
-```shell
-# Install all workspace dependencies (run from the repository ROOT, never from a package)
-npm ci
-```
-
-The whole toolchain (lessc, stylelint, kss, jest, prettier, selenium-webdriver, pug) is declared **once at the
-repository root** and hoisted into the single root `node_modules`. Packages declare no devDependencies of their own -
-one toolchain, one version, like the `setmy.info-js` / `-python` / `-elixir` siblings.
-
-E2E tests additionally need **Java** and an external **Selenium Grid** running before `npm run e2e-test`:
-
-```shell
-smi-selenium-hub
-smi-selenium-node
-
-export SELENIUM_HUB_URL=http://localhost:4444/wd/hub   # optional overrides
-export SELENIUM_BROWSER=firefox
-export SELENIUM_BROWSER_BINARY="/path/to/librewolf"     # resolved on the GRID NODE, not locally
-```
-
 ## Lifecycle
-
-A plain **Node.js 24+ / npm workspaces** repository, the same command set as `setmy.info-js`: every package under
-`packages/` is independently publishable, tests are three tiers with Maven-shaped pre/post around the slower ones,
-and the Jenkinsfile is stage-for-stage `jenkinsfile-starter` 1.2.0. Maven's phases are not emulated; the tools behind
-each command are the LESS/CSS ones (lessc, stylelint, KSS, Pug, jest, Selenium).
-
-Formatting is a **local** concern: `npm run format` rewrites the files, CI only verifies with
-`npm run format:check`. Both run the sequential list in `scripts/format.js` (the same extension point as the JS
-template): Prettier first on `packages/*/src/main/less/**/*.less` (this repo's main sources), then Prettier on the
-rest (js/cjs/json/md/yml). Stylelint stays on `npm run lint`.
-
-Run from the repository root, in order:
-
-```shell
-npm ci                                 # every workspace and the tooling, from package-lock.json
-npm run clean
-npm run resources                      # profile "local" by default; override with --profile or SMI_PROFILES
-npm run format:check                   # or: npm run format to auto-fix
-npm run build                          # LESS -> dist/main.css + dist/main.min.css, Pug -> demo pages
-npm run verify                         # CSS artifacts exist; rule count matches content/skeleton
-npm test                               # unit tier
-npm run pre-integration-test
-npm run integration-test               # against the built dist/main.css
-npm run post-integration-test
-npm run lint                           # stylelint
-npm run audit                          # npm audit --audit-level=high
-npm run reports                        # audit JSON, CycloneDX SBOM, dependency tree -> reports/
-npm run docs                           # KSS living styleguide -> reports/docs/
-npm run pre-e2e-test
-npm run e2e-test                       # Selenium, needs the grid above
-npm run post-e2e-test
-npm run coverage                       # unit tier under coverage
-npm run package                        # npm pack -> dist/*.tgz + SHA-256
-npm run deploy -- dev                  # target is required: dev|test|prelive|live
-```
-
-`WHAT` the pre and post phases do is defined in exactly one place, `scripts/lifecycle.js`. Post steps are
-idempotent: CI runs them again after a failed tier, and `npm run clean` runs them first.
-
-Any single package can still be built or linted on its own:
-
-```shell
-npm run build --workspace setmy-info-less
-npm run lint --workspace setmy-info-less-ide
-```
 
 ### What each command means here
 
@@ -350,63 +324,6 @@ npm run lint --workspace setmy-info-less-ide
 | `npm run release`          | `scripts/release.js`           | `npm publish` on `master` (`latest`); already-published versions are skipped, not a failure                                                                            |
 | `npm run deploy -- <env>`  | `scripts/deploy.js`            | install the tarballs into `build/deploy/<env>/` and check the CSS really arrived                                                                                       |
 
-### Test pyramid
-
-This repo's `src/main` / `src/test` layout:
-
-- `src/main/less/` - the LESS sources, `main.less` is every package's single entry point
-- `src/test/pug/` - Pug sources for the demo/fixture pages built into `dist/`
-- `src/test/js/unit/` - unit tier (manifest/source assertions, no build output)
-- `src/test/js/integration/` - integration tier, against the built `dist/main.css`
-- `src/test/js/e2e/` - e2e tier, Selenium against a real browser
-
-`pre-integration-test` / `pre-e2e-test` start a static server on each package's test port
-(`config.server.port` + 1, so a manually started `npm run server` never collides), and the paired
-`post-*` phases stop it. Jenkins also runs both post phases in `post { always }`.
-
-Every jest run writes **JUnit XML** to `reports/junit/<tier>.xml` - what Jenkins' `junit` step reads.
-
-### Profiles and resources
-
-`npm run resources` filters `${token}`s in a package's optional `resources/` directory using
-`profiles/<name>.json`. **Default profile is `local`** (developer machine); override with `--profile <name>` or
-`SMI_PROFILES`. Jenkins sets `SMI_PROFILES=ci`. Profiles are hard-validated against exactly the six
-ADR-0041 canonical environments (`local`, `dev`, `ci`, `test`, `prelive`, `live`); anything else is an error, per
-ADR-0042. No package has a `resources/` directory yet, so the command is currently a documented no-op for all seven.
-
-### CI
-
-`Jenkinsfile` is the single CI definition, kept stage-for-stage in sync with `jenkinsfile-starter` 1.2.0 (no stages
-added or removed, the placeholders filled): Inspection (pre-build checks ‖ build tools) → Preparation (`npm ci`,
-`npm ls --all`) → Build → Publish → Deploy → Tag, with the org's standard branch gating (`master` / `devel*` /
-`release*` / `hotfix*`). `SMI_PROFILES=ci` is set for the whole build. The Build stage runs, in order: `npm run clean`,
-resources, format check, build, verify, the unit tier, the integration tier bracketed by its pre/post phases, the
-quality gates and documents (`lint`, `audit`, `reports`, `docs`), the e2e tier bracketed the same way, coverage,
-then `npm run package`. Each is its own line, so the build log names what failed. `post { always }` runs both post
-phases again, feeds `reports/junit/*.xml` to Jenkins' `junit` step and archives `dist/*.tgz`, `reports/` and server
-state. Publish (`master` only - the npm registry has no snapshot channel and a version publishes exactly once) runs
-`npm run release` with the token npm reads from `NPM_TOKEN` through the committed `.npmrc.publish`. Deploy runs
-`npm run deploy -- <env>` per target. The same `npm` commands, in the same order, are the whole build on a developer
-machine too. No GitHub Actions workflow.
-
-The E2E commands in Build need the Selenium grid reachable from the agent.
-
-### Hotfix branches (`hotfix*`)
-
-A `hotfix*` branch - branched from `master`, one fix, quick review - runs the exact same Inspection → Build path as
-every other branch (all test tiers, quality, packaging), is not published (only `master` publishes), and deploys to
-`test` and `prelive` (`HOTFIX_TO_TEST` / `HOTFIX_TO_PRELIVE`). It never deploys `dev` or `live` and never tags -
-merging it to `master` is what does that, through the normal master build.
-
-### 🌐 Local development server / watch
-
-```shell
-npm run server --workspace setmy-info-less        # serves that package's dist/ on its own port
-npm run stop-server --workspace setmy-info-less
-npm run watch --workspace setmy-info-less         # less-watch-compiler
-npm run watch:pug --workspace setmy-info-less
-```
-
 ## 📤 Publishing
 
 `npm run release` publishes on `master` to dist-tag `latest`. Jenkins runs it from the Release stage with
@@ -426,8 +343,9 @@ Only the CSS is published: each package's `files` allowlist is `dist/main.css`, 
   git-ignore all generated output. `clean` therefore removes only the _other_ generated things inside `dist/` and
   leaves the two tracked CSS files for `build` to rewrite.
 - **LESS files are formatted by Prettier, then linted by stylelint.** Stylelint 17 does not rewrite indent or
-  spacing. `scripts/format.js` runs Prettier on `.less` first, then on the rest. `npm run lint` is stylelint.
-  Per-package `lint:fix` remains for a single workspace.
+  spacing. `scripts/format.js` runs Prettier on `.less` first, then on the rest. `npm run lint` is stylelint;
+  `rule-empty-line-before` is off because Prettier owns blank lines between rules. Per-package `lint:fix` remains
+  for a single workspace.
 - **The e2e tier needs external infrastructure** (Java + Selenium Grid) that the JS sibling's plain-HTTP e2e tests do
   not. It is a real browser test on purpose - CSS correctness cannot be asserted without a rendering engine.
 - **Packages are versioned and released together** at one version, unlike the JS sibling's independent versioning.
@@ -435,35 +353,6 @@ Only the CSS is published: each package's `files` allowlist is `dist/main.css`, 
 - **Coverage is the unit tier only**, because e2e needs the Selenium grid.
 - SHA-256 checksums of the packed tarball live next to it in `dist/`; they are a labelled placeholder, not a real
   signature. Deploy installs tarballs into `build/deploy/<env>/` and is not wired to a real host yet.
-
-## Load order
-
-The actual import tree as of the current codebase (`main.less` → group index → individual files):
-
-    main.less
-      values/index.less
-        colors/index.less
-        fonts/index.less
-      html/index.less
-        html.less
-      utility/index.less
-        visibility.less
-        spacing.less
-        sizing.less
-        layout.less
-        scroll.less
-        text.less
-        cursor.less
-        panels.less
-        visual-style.less
-        notes.less
-      devices/index.less
-        print.less
-        watch.less
-        phone.less
-        pad.less
-      components/index.less
-        application.less
 
 ## Changed
 
@@ -513,9 +402,3 @@ npx playwright install
 ```
 
 - Eliminate use of !important — proper load order should help avoid it.
-
-sudo dnf install \
-flite \
-libavif \
-libjpeg-turbo \
-libmanette

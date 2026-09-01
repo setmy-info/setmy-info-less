@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 // Sequential formatters. Each tool owns one file set. This list is the
-// extension point from the JS template (scripts/format.js): add tools next
-// to prettier. LESS is this repo's main sources, so prettier runs on .less
-// first, then on the rest (js/cjs/json/md/yml). Stylelint stays on
-// `npm run lint` - it does not format.
+// extension point from the JS template (scripts/format.js). LESS is this
+// repo's main sources: prettier first (indent/wrapping), then stylelint
+// --fix so the tree matches stylelint-config-standard (blank lines, media
+// notation, ...). Prettier keeps a single blank line between rules, so a
+// later prettier pass does not undo stylelint. Stylelint check is also
+// `npm run lint`.
 //
 //     npm run format            write
 //     npm run format:check      check only (CI)
@@ -20,6 +22,11 @@ export const FORMATTERS = [
         name: "less",
         write: ["prettier", "--write", LESS_GLOB],
         check: ["prettier", "--check", LESS_GLOB],
+    },
+    {
+        name: "stylelint",
+        write: ["stylelint", LESS_GLOB, "--fix"],
+        check: ["stylelint", LESS_GLOB],
     },
     {
         name: "prettier",

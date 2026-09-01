@@ -296,7 +296,7 @@ Run from the repository root, in order:
 ```shell
 npm ci                                 # every workspace and the tooling, from package-lock.json
 npm run clean
-npm run resources -- --profile ci      # optional; no package has resources/ yet
+npm run resources                      # profile "local" by default; override with --profile or SMI_PROFILES
 npm run format:check                   # or: npm run format to auto-fix
 npm run build                          # LESS -> dist/main.css + dist/main.min.css, Pug -> demo pages
 npm run verify                         # CSS artifacts exist; rule count matches content/skeleton
@@ -328,25 +328,25 @@ npm run lint --workspace setmy-info-less-ide
 
 ### What each command means here
 
-| Command                             | Tool                           | What                                                                                                                             |
-| ----------------------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| `npm ci`                            | npm                            | lockfile-exact install (Jenkins Preparation / Install)                                                                           |
-| `npm run clean`                     | `scripts/clean.js`             | stops test servers; removes `reports/`, `build/`, root `dist/`; leaves tracked `dist/main.css` / `main.min.css`                  |
-| `npm run format:check`              | Prettier                       | formatting gate (js/cjs/json/md/yml)                                                                                             |
-| `npm run lint`                      | stylelint                      | LESS checkstyle equivalent                                                                                                       |
-| `npm run resources -- --profile ci` | `scripts/resources.js`         | `${token}` filtering of an optional `resources/` dir from `profiles/<name>.json` (ADR-0041/0042). `SMI_PROFILES` is accepted too |
-| `npm run build`                     | lessc + Pug                    | `dist/main.css` + `dist/main.min.css` (`--clean-css`), Pug → demo/fixture pages                                                  |
-| `npm run verify`                    | `scripts/verify.js`            | CSS-specific: artifacts exist, rule count matches `content` / `skeleton`                                                         |
-| `npm test`                          | jest + `node --test`           | unit tier (`src/test/js/unit` + `scripts/test/unit`)                                                                             |
-| `npm run integration-test`          | jest                           | against the **built** `dist/main.css`, never against LESS source                                                                 |
-| `npm run e2e-test`                  | jest + Selenium                | real Firefox through an external Selenium Grid                                                                                   |
-| `npm run coverage`                  | jest `--coverage`              | unit tier only (e2e needs the grid) → `reports/coverage/`                                                                        |
-| `npm run audit`                     | `npm audit --audit-level=high` | dependency vulnerability gate                                                                                                    |
-| `npm run reports`                   | npm                            | `reports/security/`, CycloneDX SBOM, `reports/dependencies.txt`                                                                  |
-| `npm run docs`                      | KSS                            | living styleguide from LESS comments → `reports/docs/`                                                                           |
-| `npm run package`                   | `npm pack --workspaces`        | one tarball per package into `dist/`, plus SHA-256 checksums                                                                     |
-| `npm run release`                   | `scripts/release.js`           | `npm publish` on `master` (`latest`); already-published versions are skipped, not a failure                                      |
-| `npm run deploy -- <env>`           | `scripts/deploy.js`            | install the tarballs into `build/deploy/<env>/` and check the CSS really arrived                                                 |
+| Command                    | Tool                           | What                                                                                                                                                                   |
+| -------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm ci`                   | npm                            | lockfile-exact install (Jenkins Preparation / Install)                                                                                                                 |
+| `npm run clean`            | `scripts/clean.js`             | stops test servers; removes `reports/`, `build/`, root `dist/`; leaves tracked `dist/main.css` / `main.min.css`                                                        |
+| `npm run format:check`     | Prettier                       | formatting gate (js/cjs/json/md/yml)                                                                                                                                   |
+| `npm run lint`             | stylelint                      | LESS checkstyle equivalent                                                                                                                                             |
+| `npm run resources`        | `scripts/resources.js`         | `${token}` filtering of an optional `resources/` dir from `profiles/<name>.json` (ADR-0041/0042). Default profile `local`; override with `--profile` or `SMI_PROFILES` |
+| `npm run build`            | lessc + Pug                    | `dist/main.css` + `dist/main.min.css` (`--clean-css`), Pug → demo/fixture pages                                                                                        |
+| `npm run verify`           | `scripts/verify.js`            | CSS-specific: artifacts exist, rule count matches `content` / `skeleton`                                                                                               |
+| `npm test`                 | jest + `node --test`           | unit tier (`src/test/js/unit` + `scripts/test/unit`)                                                                                                                   |
+| `npm run integration-test` | jest                           | against the **built** `dist/main.css`, never against LESS source                                                                                                       |
+| `npm run e2e-test`         | jest + Selenium                | real Firefox through an external Selenium Grid                                                                                                                         |
+| `npm run coverage`         | jest `--coverage`              | unit tier only (e2e needs the grid) → `reports/coverage/`                                                                                                              |
+| `npm run audit`            | `npm audit --audit-level=high` | dependency vulnerability gate                                                                                                                                          |
+| `npm run reports`          | npm                            | `reports/security/`, CycloneDX SBOM, `reports/dependencies.txt`                                                                                                        |
+| `npm run docs`             | KSS                            | living styleguide from LESS comments → `reports/docs/`                                                                                                                 |
+| `npm run package`          | `npm pack --workspaces`        | one tarball per package into `dist/`, plus SHA-256 checksums                                                                                                           |
+| `npm run release`          | `scripts/release.js`           | `npm publish` on `master` (`latest`); already-published versions are skipped, not a failure                                                                            |
+| `npm run deploy -- <env>`  | `scripts/deploy.js`            | install the tarballs into `build/deploy/<env>/` and check the CSS really arrived                                                                                       |
 
 ### Test pyramid
 
@@ -366,8 +366,9 @@ Every jest run writes **JUnit XML** to `reports/junit/<tier>.xml` - what Jenkins
 
 ### Profiles and resources
 
-`npm run resources -- --profile <name>` filters `${token}`s in a package's optional `resources/` directory using
-`profiles/<name>.json`. `--profile` (or `SMI_PROFILES`) is hard-validated against exactly the six
+`npm run resources` filters `${token}`s in a package's optional `resources/` directory using
+`profiles/<name>.json`. **Default profile is `local`** (developer machine); override with `--profile <name>` or
+`SMI_PROFILES`. Jenkins sets `SMI_PROFILES=ci`. Profiles are hard-validated against exactly the six
 ADR-0041 canonical environments (`local`, `dev`, `ci`, `test`, `prelive`, `live`); anything else is an error, per
 ADR-0042. No package has a `resources/` directory yet, so the command is currently a documented no-op for all seven.
 

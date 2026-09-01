@@ -17,6 +17,9 @@ export const CANONICAL_PROFILES = [
     "live",
 ];
 
+// Developer machines assume local work unless --profile or SMI_PROFILES overrides.
+export const DEFAULT_PROFILE = "local";
+
 // Pure: throws on an invalid profile rather than calling process.exit
 // itself, so this stays unit-testable in-process. The CLI-facing caller
 // (scripts/resources.js) is responsible for catching and exiting.
@@ -41,8 +44,9 @@ export function requireCanonicalProfile(value) {
 export function resolveProfileArg(argv) {
     const flagIndex = argv.indexOf("--profile");
     const fromFlag = flagIndex !== -1 ? argv[flagIndex + 1] : undefined;
+    const fromEnv = process.env.SMI_PROFILES?.trim() || undefined;
 
-    return requireCanonicalProfile(fromFlag ?? process.env.SMI_PROFILES);
+    return requireCanonicalProfile(fromFlag ?? fromEnv ?? DEFAULT_PROFILE);
 }
 
 // Root profiles/<name>.json provides shared defaults; an optional

@@ -288,8 +288,10 @@ A plain **Node.js 24+ / npm workspaces** repository, the same command set as `se
 and the Jenkinsfile is stage-for-stage `jenkinsfile-starter` 1.2.0. Maven's phases are not emulated; the tools behind
 each command are the LESS/CSS ones (lessc, stylelint, KSS, Pug, jest, Selenium).
 
-Formatting is a **local** concern: `npm run format` (Prettier) rewrites the files, CI only verifies with
-`npm run format:check`. LESS formatting belongs to stylelint (`npm run lint` / `lint:fix`).
+Formatting is a **local** concern: `npm run format` rewrites the files, CI only verifies with
+`npm run format:check`. Both run the sequential list in `scripts/format.js` (the same extension point as the JS
+template): Prettier first on `packages/*/src/main/less/**/*.less` (this repo's main sources), then Prettier on the
+rest (js/cjs/json/md/yml). Stylelint stays on `npm run lint`.
 
 Run from the repository root, in order:
 
@@ -332,7 +334,7 @@ npm run lint --workspace setmy-info-less-ide
 | -------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `npm ci`                   | npm                            | lockfile-exact install (Jenkins Preparation / Install)                                                                                                                 |
 | `npm run clean`            | `scripts/clean.js`             | stops test servers; removes `reports/`, `build/`, root `dist/`; leaves tracked `dist/main.css` / `main.min.css`                                                        |
-| `npm run format:check`     | Prettier                       | formatting gate (js/cjs/json/md/yml)                                                                                                                                   |
+| `npm run format:check`     | `scripts/format.js`            | sequential formatters, check half (gate): Prettier on LESS, then Prettier on js/cjs/json/md/yml                                                                        |
 | `npm run lint`             | stylelint                      | LESS checkstyle equivalent                                                                                                                                             |
 | `npm run resources`        | `scripts/resources.js`         | `${token}` filtering of an optional `resources/` dir from `profiles/<name>.json` (ADR-0041/0042). Default profile `local`; override with `--profile` or `SMI_PROFILES` |
 | `npm run build`            | lessc + Pug                    | `dist/main.css` + `dist/main.min.css` (`--clean-css`), Pug → demo/fixture pages                                                                                        |
@@ -423,9 +425,9 @@ Only the CSS is published: each package's `files` allowlist is `dist/main.css`, 
 - **`dist/main.css` and `dist/main.min.css` are tracked in git** (the 1.0.0-dist decision), unlike the siblings, which
   git-ignore all generated output. `clean` therefore removes only the _other_ generated things inside `dist/` and
   leaves the two tracked CSS files for `build` to rewrite.
-- **LESS files are formatted by stylelint, not prettier.** `stylelint-config-standard`'s `rule-empty-line-before` and
-  prettier disagree about blank lines between rules; one formatter per language, so `.less` is in `.prettierignore`
-  and `npm run lint` / `lint:fix` owns it.
+- **LESS files are formatted by Prettier, then linted by stylelint.** Stylelint 17 does not rewrite indent or
+  spacing. `scripts/format.js` runs Prettier on `.less` first, then on the rest. `npm run lint` is stylelint.
+  Per-package `lint:fix` remains for a single workspace.
 - **The e2e tier needs external infrastructure** (Java + Selenium Grid) that the JS sibling's plain-HTTP e2e tests do
   not. It is a real browser test on purpose - CSS correctness cannot be asserted without a rendering engine.
 - **Packages are versioned and released together** at one version, unlike the JS sibling's independent versioning.

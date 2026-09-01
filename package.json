@@ -6,8 +6,8 @@
     ],
     "scripts": {
         "clean": "node scripts/clean.js",
-        "format": "prettier --write .",
-        "format:check": "prettier --check .",
+        "format": "node scripts/format.js",
+        "format:check": "node scripts/format.js --check",
         "lint": "stylelint \"packages/*/src/main/less/**/*.less\"",
         "build": "npm run build --workspaces --if-present",
         "resources": "node scripts/resources.js",

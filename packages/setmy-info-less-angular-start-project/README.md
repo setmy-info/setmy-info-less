@@ -43,6 +43,7 @@ the two projects without being renamed or re-pathed:
 
     components/
         background/
+        detail-level-panel/
         layout/          consent-panel, footer-panel, header-panel (header/, navigation/),
                          main-panel, modal-body-panel, pwa-panel,
                          side-navigation-panel (header/, content/)
@@ -59,7 +60,9 @@ What changed on the way over, and nothing else:
   imports the base tokens once for the whole delta;
 - the literal `DejaVu Serif, Roboto, …` font stack is now the base `@fontFamily` token it
   already matched exactly;
-- one duplicated `#sideNavigationHeaderPanel` block was collapsed into one copy.
+- one duplicated `#sideNavigationHeaderPanel` block was collapsed into one copy;
+- `detail-level-panel`'s `:host` selector became `app-detail-level-panel` — `:host` only exists
+  inside Angular's view encapsulation.
 
 The Angular components still hold their own copies for now; this module is where the CSS is
 managed from here on.

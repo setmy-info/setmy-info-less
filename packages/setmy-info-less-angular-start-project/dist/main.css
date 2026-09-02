@@ -34,6 +34,53 @@ component; here every rule is global CSS, which is why the selectors are kept
 exactly as the components already write them.
 */
 /* Base tokens are imported once by main.less — do not re-import them here. */
+/*
+Angular custom element hosts default to display: inline. `:host` only exists inside Angular's
+view encapsulation, so outside it the same rule is written against the element itself.
+*/
+app-detail-level-panel {
+  display: block;
+}
+/*
+ * Sits at the top right of a view's section, where the old app's "kompaktne" / "detailne" button
+ * list was. Same construction as that list: a .floatRight wrapper around an inline-block <ul>,
+ * closed by a .floatClear sibling in the template — floats and inline-block only, no flex.
+ */
+ul.detailsLevelList {
+  height: 50px;
+  margin-left: 0;
+  list-style: none;
+}
+ul.detailsLevelList > li {
+  height: 50px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 50px;
+  color: #696969;
+}
+/* Spacing between the items, in place of the old list's per-button margins. */
+ul.detailsLevelList > li + li {
+  margin-left: 10px;
+}
+/* Reserves room for the longest level name so the floated list does not shift as the slider
+   moves and the name below it changes length. */
+li.detailsLevelValueItem {
+  min-width: 90px;
+}
+.detailsLevelLabel {
+  font-size: 14px;
+}
+.detailsLevelSlider {
+  width: 120px;
+  vertical-align: middle;
+  cursor: pointer;
+  /* Same green as the left border `.detailed` content carries (setmy-info-less notes.less). */
+  accent-color: #73d073;
+}
+.detailsLevelValue {
+  font-size: 14px;
+  font-weight: bold;
+}
 /* Application chrome: the panels that surround the routed view. */
 /* Base tokens are imported once by main.less — do not re-import them here. */
 #consentBody {
@@ -91,7 +138,7 @@ footer > div > ul > li > i {
   display: table-cell;
   padding-left: 10px;
   padding-right: 5px;
-  text-rendering: optimizelegibility;
+  text-rendering: optimizeLegibility;
 }
 footer > div > ul > li > a {
   height: 50px;
@@ -177,7 +224,7 @@ header > ul > li > button > i {
   display: table-cell;
   padding-left: 5px;
   padding-right: 10px;
-  text-rendering: optimizelegibility;
+  text-rendering: optimizeLegibility;
 }
 header > ul > li > span {
   height: 50px;
@@ -376,7 +423,7 @@ main {
   white-space: nowrap;
   direction: ltr;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizelegibility;
+  text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "liga";
   vertical-align: middle;
@@ -449,7 +496,7 @@ main {
   font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizelegibility;
+  text-rendering: optimizeLegibility;
   margin-right: 20px;
 }
 .sideNavMenuItems > li > a {

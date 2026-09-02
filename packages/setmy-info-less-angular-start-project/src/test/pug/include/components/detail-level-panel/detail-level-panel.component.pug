@@ -1,0 +1,23 @@
+//- Mirrors detail-level-panel/detail-level-panel.component.html — the reading-depth slider a
+//- view drops at the top of its section. Rendered inside its own custom element, the way
+//- Angular renders it, because that is what the display:block rule targets.
+mixin detailLevelPanelComponent()
+    app-detail-level-panel(id="detailLevelPanel")
+        div(class="floatRight")
+            ul(id="detailsLevelList", class="detailsLevelList")
+                li(id="detailsLevelLabelItem", class="detailsLevelLabelItem")
+                    label(class="detailsLevelLabel", for="detailsLevelSlider") Detail level
+                li(class="detailsLevelSliderItem")
+                    input(
+                        id="detailsLevelSlider",
+                        class="detailsLevelSlider",
+                        type="range",
+                        step="1",
+                        min="1",
+                        max="3",
+                        value="1",
+                        aria-valuetext="compact"
+                    )
+                li(id="detailsLevelValueItem", class="detailsLevelValueItem")
+                    span(id="detailsLevelValue", class="detailsLevelValue firstAsUppercase") compact
+        div(class="floatClear")

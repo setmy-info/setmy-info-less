@@ -17,7 +17,18 @@ function createStylelintConfig({ extraRules = {}, ignoreFiles } = {}) {
             "selector-type-no-unknown": [
                 true,
                 {
-                    ignoreTypes: ["app"],
+                    // "app" is the application shell element; "app-*" are the
+                    // Angular components this framework styles from outside
+                    // Angular, where :host does not exist.
+                    ignoreTypes: ["app", "/^app-/"],
+                },
+            ],
+            // text-rendering's values are spelled camelCase by the SVG spec
+            // (optimizeLegibility, optimizeSpeed, geometricPrecision).
+            "value-keyword-case": [
+                "lower",
+                {
+                    camelCaseSvgKeywords: true,
                 },
             ],
             // Colours stay in the legacy comma form: `rgb(0 0 0 / 50%)` and

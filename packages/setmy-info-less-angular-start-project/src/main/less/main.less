@@ -7,14 +7,17 @@ extended CSS. Consumers load the stylesheets in dependency order:
 
     setmy-info-less  ->  setmy-info-less-extended  ->  setmy-info-less-angular-start-project
 
-This package is currently a skeleton: it has no rules of its own yet. It is the future home of
-the application chrome styles that today live inside the Angular start template workspace
-(angular-start-project-style/src/less/index.less and the per-component *.less files: header
-panel, side navigation panel, modal overlay, footer, views). The base module's
-`values/index.less` is imported for TOKENS ONLY (LESS variables produce no CSS output), so
-future rules can reference shared tokens without re-emitting base or extended styles here.
-The dependency on `setmy-info-less-extended` is a load-order relationship declared in
-package.json, not a CSS import — extended's rules must not be bundled into this delta.
+This package holds the application chrome and view styles of the Angular start template
+project. `components/` mirrors the Angular workspace's `src/app/components/` tree 1:1, so a
+LESS file moves between the two projects without being renamed or re-pathed. The Angular
+components keep their own copies for now; this module is where the CSS is managed and where
+it can be combined.
+
+The base module's `values/index.less` is imported here for TOKENS ONLY (LESS variables
+produce no CSS output), once for the whole delta — the component files that used to pull it
+in through node_modules no longer do. The dependency on `setmy-info-less-extended` is a
+load-order relationship declared in package.json, not a CSS import — extended's rules must
+not be bundled into this delta.
 */
 
 // Angular start project module
@@ -29,5 +32,5 @@ package.json, not a CSS import — extended's rules must not be bundled into thi
 /* Base tokens only (no CSS output) — gives future rules access to shared variables */
 @import url("../../../../setmy-info-less/src/main/less/values/index.less");
 
-/* This package's own rules (empty skeleton — add files via utility/index.less) */
-@import url("utility/index.less");
+/* This package's own rules — mirrors src/app/components/ of the Angular workspace */
+@import url("components/index.less");

@@ -1,0 +1,10 @@
+doctype html
+html(lang="en")
+    include include/head.pug
+    include include/components/layout/header-panel/header-panel.component.pug
+    include include/components/layout/side-navigation-panel/side-navigation-panel.component.pug
+    body(id="body")
+        +headerPanelComponent()
+        +sideNavigationPanelComponent()
+        script
+            include include/js/side-navigation-panel.js

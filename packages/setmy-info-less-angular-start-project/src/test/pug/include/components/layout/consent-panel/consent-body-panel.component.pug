@@ -1,0 +1,11 @@
+//- Mirrors layout/consent-panel/consent-body-panel.component.html, in its visible state
+//- (the Angular component hides it once consent has been given).
+mixin consentBodyPanelComponent()
+    div(id="consentBody", class="consentBody")
+        p This site uses cookies.
+        p
+            | See the
+            a(href="#") terms
+            | .
+        p
+            button(id="consentAcceptButton", type="button") Accept

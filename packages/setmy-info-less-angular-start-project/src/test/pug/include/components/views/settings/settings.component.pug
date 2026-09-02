@@ -1,0 +1,24 @@
+//- Mirrors views/settings/settings.component.html. The tenant switch is the .controlRow case
+//- that settings.component.less opts out of the fixed 40px line.
+include ../contact/contact.component.pug
+
+mixin settingsComponent()
+    div(class="settingsPage applicationContentMain")
+        article(class="articleBody")
+            div(class="articleSectionPanel")
+                section
+                    h1 Settings
+                    +detailRow("tag", "Version", "5.0.0")
+                    +detailRow("language", "Language", "en")
+                    +detailRow("dns", "Environment", "local (http://localhost:8080)")
+                    div(id="tenantControlRow", class="controlRow")
+                        div(class="iconPanel")
+                            i(class="material-symbols-outlined") apartment
+                        div(class="labelPanel")
+                            small
+                                span Tenant
+                        div(class="textPanel")
+                            select
+                                option(value="first", selected) First tenant
+                                option(value="second") Second tenant
+                    p(class="settingsHint") The tenant switch is available in development builds only.

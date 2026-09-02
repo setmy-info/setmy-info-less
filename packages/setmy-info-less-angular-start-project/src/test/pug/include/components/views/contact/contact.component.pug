@@ -1,0 +1,29 @@
+//- Mirrors views/contact/contact.component.html — icon / label / value rows styled by
+//- views/shared/detail-rows.less.
+mixin contactComponent()
+    div(class="contactsPage applicationContentMain")
+        article(class="articleBody")
+            div(class="articleSectionPanel")
+                section
+                    +detailRow("work", "Organisation", "Example organisation")
+                    +detailRow("place", "Address", "Example street 1, Tallinn")
+                    +detailRow("phone", "Phone", "+372 0000000")
+                    +detailRow("email", "E-mail", "info@example.com")
+                    div(id="contactLinkRow")
+                        div(class="iconPanel")
+                            i(class="material-symbols-outlined") link
+                        div(class="labelPanel")
+                            small
+                                span Links
+                        div(class="textPanel")
+                            a(href="#") Facebook
+                            a(href="#") GitHub
+
+mixin detailRow(icon, label, value)
+    div
+        div(class="iconPanel")
+            i(class="material-symbols-outlined")= icon
+        div(class="labelPanel")
+            small
+                span= label
+        div(class="textPanel")= value

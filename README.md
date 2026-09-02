@@ -63,13 +63,15 @@ classDiagram
     class base["✅ setmy-info-less"]
     class extended["✅ setmy-info-less-extended"]
     class fancy["✅🚧 setmy-info-less-fancy"]
-    class angular["✅🎯🚧 setmy-info-less-angular-start-project"]
+    class brandpage["🧪🎯🚧 setmy-info-less-brandpage"]
+    class angular["✅🎯 setmy-info-less-angular-start-project"]
     class enterprise["✅🚧 setmy-info-less-enterprise"]
     class ide["✅ setmy-info-less-ide"]
     class experimental["🧪 setmy-info-less-experimental"]
 
     base <|-- extended
     extended <|-- fancy
+    fancy <|-- brandpage
     extended <|-- angular
     extended <|-- enterprise
     enterprise <|-- ide
@@ -90,12 +92,18 @@ bundling.
 - **[setmy-info-less-fancy](packages/setmy-info-less-fancy/README.md)** - Layer 2. Visually rich, polished patterns for
   public-facing web pages — most of the design elements for richer UI/UX work. _Audience: web designers and front-end
   developers building consumer sites._
+- **[setmy-info-less-brandpage](packages/setmy-info-less-brandpage/README.md)** - Layer 3, targeted, unstable.
+  LESS/CSS collection for fancy, nice looking, wide-variety UI/UX brand pages — the CSS of one specific brand page
+  created for product promo and advertisement. Empty skeleton under development; the rules of the existing targeted
+  pages are moved here step by step. _Audience: designers and front-end developers building brand, promo, and
+  advertisement pages._
 - **[setmy-info-less-enterprise](packages/setmy-info-less-enterprise/README.md)** - Layer 2. Distribution layer for
   enterprise intranet and internal applications. _Audience: enterprise application developers._
 - **[setmy-info-less-angular-start-project](packages/setmy-info-less-angular-start-project/README.md)** - Layer 2,
   project-specific. Application chrome for the Angular start template project: header panel, side navigation, modal
-  overlay, footer, views, pending extraction from the Angular workspace. _Audience: developers building on the Angular
-  start template project._
+  overlay, footer, views. `src/main/less/components/` mirrors the Angular workspace's `src/app/components/` tree file
+  for file, so LESS moves between the two projects unchanged. _Audience: developers building on the Angular start
+  template project._
 - **[setmy-info-less-ide](packages/setmy-info-less-ide/README.md)** - Layer 3. IDE-like (NetBeans style) developer-tool
   UI compositions; currently frame presets. _Audience: developers building browser-based IDEs, dashboards, or admin
   consoles._
@@ -125,7 +133,8 @@ dependency order.
 | `setmy-info-less` (base)                | nothing cross-package       | ✅ yes          | resets, tokens, single-purpose utilities                  |
 | `setmy-info-less-extended`              | base `values` (tokens only) | ❌ delta        | content components (section/modal/card/article)           |
 | `setmy-info-less-fancy`                 | base `values` (tokens only) | ❌ delta        | (skeleton — empty for now)                                |
-| `setmy-info-less-angular-start-project` | base `values` (tokens only) | ❌ delta        | (skeleton — empty for now)                                |
+| `setmy-info-less-brandpage`             | base `values` (tokens only) | ❌ delta        | (skeleton — empty for now)                                |
+| `setmy-info-less-angular-start-project` | base `values` (tokens only) | ❌ delta        | application chrome and view styles (components/)          |
 | `setmy-info-less-enterprise`            | base `values` (tokens only) | ❌ delta        | (skeleton — empty for now)                                |
 | `setmy-info-less-ide`                   | base `values` (tokens only) | ❌ delta        | frame presets only                                        |
 | `setmy-info-less-experimental`          | base `values` (tokens only) | ❌ delta        | staged prototypes (utilities, flex, patterns, web chrome) |
@@ -141,10 +150,16 @@ Stable modules follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 token names, LESS variable names): breaking changes require a major version bump, and every change is documented in
 `CHANGELOG.md`. Production use is supported and encouraged.
 
-The unstable module gives no such guarantees — class names, file layout, and import paths may change in any release. It
-depends on `setmy-info-less-enterprise`, so all stable tokens and rules stay in scope, which also makes moving code
-between it and any stable module straightforward. Its `ui/`, `forms/`, and `data/` subdirectories keep the names of the
-removed packages they came from. Do not take a production dependency on it.
+The unstable modules give no such guarantees — class names, file layout, and import paths may change in any release. Do
+not take a production dependency on them.
+
+`setmy-info-less-experimental` depends on `setmy-info-less-enterprise`, so all stable tokens and rules stay in scope,
+which also makes moving code between it and any stable module straightforward. Its `ui/`, `forms/`, and `data/`
+subdirectories keep the names of the removed packages they came from.
+
+`setmy-info-less-brandpage` depends on `setmy-info-less-fancy` and is under development: it is the destination for the
+LESS/CSS of the existing targeted brand pages, which is moved in step by step. It stays unstable until that migration
+settles.
 
 - Developer documentation: `DEVELOPERS-GUIDE.md`
 - Review notes: `review.md`, `review3.md` (historical)

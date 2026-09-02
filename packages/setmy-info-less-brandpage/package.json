@@ -1,0 +1,50 @@
+{
+    "name": "setmy-info-less-brandpage",
+    "version": "5.0.0",
+    "description": "SMI LESS brand page — CSS for product promo, advertisement and campaign brand pages",
+    "main": "dist/main.min.css",
+    "dependencies": {
+        "setmy-info-less-fancy": "*"
+    },
+    "scripts": {
+        "format": "prettier --write .",
+        "lint": "stylelint \"src/main/less/**/*.less\"",
+        "lint:fix": "stylelint \"src/main/less/**/*.less\" --fix",
+        "build": "node ../../scripts/build.js",
+        "server": "node ../../scripts/http-server.js",
+        "stop-server": "node ../../scripts/http-server.js stop",
+        "watch": "less-watch-compiler ./src/main/less dist main.less",
+        "watch:pug": "node ../../scripts/pugWatch.cjs"
+    },
+    "keywords": [
+        "less",
+        "css",
+        "brand",
+        "promo",
+        "landing"
+    ],
+    "author": "Imre Tabur <imre.tabur@mail.ee>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/setmy-info/setmy-info-less.git"
+    },
+    "homepage": "https://github.com/setmy-info/setmy-info-less",
+    "style": "dist/main.css",
+    "files": [
+        "dist/main.css",
+        "dist/main.min.css",
+        "README.md",
+        "LICENSE"
+    ],
+    "engines": {
+        "node": ">=24.0.0"
+    },
+    "config": {
+        "server": {
+            "port": 44231,
+            "directory": "dist"
+        },
+        "cssExpectation": "skeleton"
+    }
+}

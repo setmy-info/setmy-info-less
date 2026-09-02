@@ -1,0 +1,9 @@
+//- Mirrors layout/main-panel/main-panel.component.html. <router-outlet /> becomes the mixin
+//- block, so a page passes the routed view it wants to show.
+include ../footer-panel/footer-panel.component.pug
+
+mixin mainPanelComponent()
+    main(id="main")
+        block
+        div(id="footerPanel")
+            +footerPanelComponent()

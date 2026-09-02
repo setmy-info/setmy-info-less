@@ -1,0 +1,28 @@
+//- Mirrors layout/header-panel/header-panel.component.html of the Angular workspace.
+//- The Angular bindings are replaced by their rendered result; ids are added only where a
+//- test has to click something.
+mixin headerPanelComponent()
+    div(id="headerPanel")
+        header(id="header")
+            ul
+                li
+                    button(id="menuButton", type="button")
+                        i menu
+                li(class="hidden")
+                    button(type="button", disabled, aria-label="Offline", title="Offline")
+                        i(class="alertMaterialIcon") signal_wifi_off
+                li
+                    span Application title
+            ul
+                li
+                    button(type="button", disabled, class="active") EN
+                li
+                    button(type="button") ET
+        nav(id="navigation", class="phone-hidden")
+            ul
+                li
+                    a(href="#", class="active") Home
+                li
+                    a(href="#") Products
+                li
+                    a(href="#") Contact

@@ -1,0 +1,7 @@
+doctype html
+html(lang="en")
+    include include/head.pug
+    include include/components/layout/main-panel/main-panel.component.pug
+    body(id="body")
+        +mainPanelComponent()
+            div(id="routedView") Routed view content.

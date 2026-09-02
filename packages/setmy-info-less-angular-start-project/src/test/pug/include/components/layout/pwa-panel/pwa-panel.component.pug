@@ -1,0 +1,13 @@
+//- Mirrors layout/pwa-panel/pwa-panel.component.html. The Angular component renders at most
+//- one banner at a time; the page shows both variants so the CSS of each can be measured.
+mixin pwaPanelComponent()
+    div(id="pwaPanel")
+        div(id="pwaUpdateBanner", class="pwaBanner", role="status", aria-live="polite")
+            p A new version is available.
+            p
+                button(type="button") Reload
+                button(type="button", disabled) Later
+        div(id="pwaAlertBanner", class="pwaBanner pwaBannerAlert", role="alert")
+            p The update could not be applied.
+            p
+                button(type="button") Reload

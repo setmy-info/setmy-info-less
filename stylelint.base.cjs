@@ -20,6 +20,13 @@ function createStylelintConfig({ extraRules = {}, ignoreFiles } = {}) {
                     ignoreTypes: ["app"],
                 },
             ],
+            // Colours stay in the legacy comma form: `rgb(0 0 0 / 50%)` and
+            // percentage alphas are CSS Color 4 and are not understood by the
+            // old browsers this framework still supports. The base module's
+            // colour tokens are written this way too.
+            "color-function-notation": "legacy",
+            "color-function-alias-notation": "with-alpha",
+            "alpha-value-notation": "number",
             ...extraRules,
         },
         ignoreFiles,

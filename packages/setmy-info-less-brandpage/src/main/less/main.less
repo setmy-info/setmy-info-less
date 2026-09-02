@@ -1,0 +1,34 @@
+/*
+Main entry point for the brand page module.
+
+Distribution model: STANDALONE / DELTA.
+`dist/main.css` contains ONLY this package's own rules — it does not bundle the base,
+extended or fancy CSS. Consumers load the stylesheets in dependency order:
+
+    setmy-info-less  ->  setmy-info-less-extended  ->  setmy-info-less-fancy  ->
+    setmy-info-less-brandpage
+
+This package is currently a skeleton: it has no rules of its own yet. It is the future home
+of the brand page CSS that today lives inside the individual targeted promo pages — the
+per-brand-page LESS/CSS is moved here step by step. The base module's `values/index.less` is
+imported for TOKENS ONLY (LESS variables produce no CSS output), so future rules can
+reference shared tokens without re-emitting base, extended or fancy styles here. The
+dependency on `setmy-info-less-fancy` is a load-order relationship declared in package.json,
+not a CSS import — fancy's rules must not be bundled into this delta.
+*/
+
+// Brand page module
+//
+// Brand page presentation: fancy, distinctive, wide-variety UI/UX looks for product promo,
+// advertisement and campaign pages, layered on top of the base, extended and fancy modules.
+// Load the base, extended and fancy CSS before this file.
+//
+// Markup: <div class="smi-panel"></div>
+//
+// Styleguide: packages.brandpage
+
+/* Base tokens only (no CSS output) — gives future rules access to shared variables */
+@import url("../../../../setmy-info-less/src/main/less/values/index.less");
+
+/* This package's own rules (empty skeleton — add files via utility/index.less) */
+@import url("utility/index.less");

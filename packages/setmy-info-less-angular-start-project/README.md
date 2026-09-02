@@ -36,12 +36,42 @@ Load all three CSS files in order:
 
 ## What is included
 
-Currently a **skeleton** — no rules of its own yet. It is the planned future home of the
-application chrome styles that today live inside the Angular start template workspace
-(`angular-start-project-style` and the per-component `*.less` files: header panel, side
-navigation panel, modal overlay, footer, views). Those rules will be moved here step by step
-during the LESS cleanup and refactoring (see `unused.md` in the Angular start template project
-for the migration plan).
+The LESS of the Angular start template project's components, transferred out of the Angular
+workspace so it is managed in one place and can be combined later. `src/main/less/components/`
+mirrors `src/app/components/` of `angular-start-project` file for file, so a rule moves between
+the two projects without being renamed or re-pathed:
+
+    components/
+        background/
+        layout/          consent-panel, footer-panel, header-panel (header/, navigation/),
+                         main-panel, modal-body-panel, pwa-panel,
+                         side-navigation-panel (header/, content/)
+        views/           one directory per routed view, plus shared/detail-rows.less
+
+Files that are still empty in the Angular workspace are carried over as empty placeholders, so
+each one keeps its home here from the moment it grows a rule. `index.less` in `components/`,
+`components/layout/` and `components/views/` is the only thing added on top of the mirror: it
+wires the tree into `main.less`.
+
+What changed on the way over, and nothing else:
+
+- the per-file `@import url("setmy-info-less/…/values/index.less")` is gone — `main.less`
+  imports the base tokens once for the whole delta;
+- the literal `DejaVu Serif, Roboto, …` font stack is now the base `@fontFamily` token it
+  already matched exactly;
+- one duplicated `#sideNavigationHeaderPanel` block was collapsed into one copy.
+
+The Angular components still hold their own copies for now; this module is where the CSS is
+managed from here on.
+
+### Test pages
+
+`src/test/pug/` mirrors the same component tree: `include/components/**.component.pug` is one
+mixin per Angular template, and the pages at the top level compose them the way the application
+does (`application.pug` is the full shell). `include/js/side-navigation-panel.js` is plain
+browser JS — no Angular — that stands in for `ModalService`: it opens the side navigation from
+the header's hamburger and closes it from the panel's close button, so the e2e suite can measure
+both the closed and the open state.
 
 ## Development
 

@@ -5,8 +5,8 @@
     "main": "dist/main.min.css",
     "scripts": {
         "format": "prettier --write .",
-        "lint": "stylelint src/main/less/**/*.less",
-        "lint:fix": "stylelint src/main/less/**/*.less --fix",
+        "lint": "stylelint \"src/main/less/**/*.less\"",
+        "lint:fix": "stylelint \"src/main/less/**/*.less\" --fix",
         "build": "node ../../scripts/build.js",
         "server": "node ../../scripts/http-server.js",
         "stop-server": "node ../../scripts/http-server.js stop",

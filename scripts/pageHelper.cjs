@@ -1,5 +1,5 @@
 const path = require("path");
-const { Builder } = require("selenium-webdriver");
+const { Builder, By } = require("selenium-webdriver");
 const firefox = require("selenium-webdriver/firefox");
 const express = require("express");
 const http = require("http");
@@ -211,6 +211,17 @@ async function elementIdIs(elementId) {
     }
 }
 
+// Click an element by id and wait for the click handler to have run. Used by the pages that
+// carry a plain-JS behaviour helper (e.g. the Angular start project's side navigation), so an
+// e2e test can measure the CSS of the open state as well as the closed one.
+async function clickElementId(elementId) {
+    const element = await data.driver.findElement(By.css(`#${elementId}`));
+    await element.click();
+    // The helpers are synchronous DOM code; one round trip is enough to order the next command
+    // after the handler, without a fixed sleep.
+    await data.driver.executeScript("return document.readyState;");
+}
+
 function expectations(ex) {
     /* global expect */
     expect(data.computedStyles.margin).toBe(ex.margin);
@@ -270,6 +281,7 @@ module.exports = {
     pageIsRendered,
     setViewport,
     elementIdIs,
+    clickElementId,
     data,
     expectations,
     elementExpectations,

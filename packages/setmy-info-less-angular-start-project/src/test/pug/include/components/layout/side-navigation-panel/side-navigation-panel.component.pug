@@ -1,0 +1,32 @@
+//- Mirrors layout/side-navigation-panel/side-navigation-panel.component.html.
+//- Starts hidden, the way ModalService renders it when the menu is closed; include
+//- js/side-navigation-panel.js on the page to make the buttons open and close it.
+mixin sideNavigationPanelComponent()
+    div(id="sidenav", class="sideNavigationPanel", style="display: none")
+        div(id="sideNavigationHeaderPanel")
+            ul
+                li
+                    button(id="sideNavigationCloseButton", type="button", aria-label="Close navigation menu")
+                        i close
+                li
+                    span Menu
+        div(id="sideNavigationContentPanel")
+            ul
+                li(class="sideNavMenuItems")
+                    a(href="#", class="active")
+                        i(class="material-symbols-outlined") home
+                        | Home
+                li(class="sideNavMenuItems")
+                    a(href="#")
+                        i(class="material-symbols-outlined") info
+                        | About
+                li(class="sideNavThinMenuItems")
+                    hr
+                li(class="sideNavMenuItems")
+                    a(href="javaScript:void(0);", class="noHover textCursor")
+                        i language
+                        | Language:
+                    div
+                        select
+                            option(value="en", selected) EN
+                            option(value="et") ET

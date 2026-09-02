@@ -7,18 +7,610 @@ extended CSS. Consumers load the stylesheets in dependency order:
 
     setmy-info-less  ->  setmy-info-less-extended  ->  setmy-info-less-angular-start-project
 
-This package is currently a skeleton: it has no rules of its own yet. It is the future home of
-the application chrome styles that today live inside the Angular start template workspace
-(angular-start-project-style/src/less/index.less and the per-component *.less files: header
-panel, side navigation panel, modal overlay, footer, views). The base module's
-`values/index.less` is imported for TOKENS ONLY (LESS variables produce no CSS output), so
-future rules can reference shared tokens without re-emitting base or extended styles here.
-The dependency on `setmy-info-less-extended` is a load-order relationship declared in
-package.json, not a CSS import — extended's rules must not be bundled into this delta.
+This package holds the application chrome and view styles of the Angular start template
+project. `components/` mirrors the Angular workspace's `src/app/components/` tree 1:1, so a
+LESS file moves between the two projects without being renamed or re-pathed. The Angular
+components keep their own copies for now; this module is where the CSS is managed and where
+it can be combined.
+
+The base module's `values/index.less` is imported here for TOKENS ONLY (LESS variables
+produce no CSS output), once for the whole delta — the component files that used to pull it
+in through node_modules no longer do. The dependency on `setmy-info-less-extended` is a
+load-order relationship declared in package.json, not a CSS import — extended's rules must
+not be bundled into this delta.
 */
 /* Base tokens only (no CSS output) — gives future rules access to shared variables */
 /* values/main.less */
 /* values/colors/main.less */
 /* values/fonts/main.less */
-/* This package's own rules (empty skeleton — add files via utility/index.less) */
-/* Angular start project utility classes — add imports here as the module grows. */
+/* This package's own rules — mirrors src/app/components/ of the Angular workspace */
+/*
+Angular start project components.
+
+The directory layout mirrors the Angular workspace 1:1
+(`src/app/components/` in angular-start-project), so a file can be moved here — or
+back — without renaming anything. Angular scopes a component's styles to that
+component; here every rule is global CSS, which is why the selectors are kept
+exactly as the components already write them.
+*/
+/* Base tokens are imported once by main.less — do not re-import them here. */
+/* Application chrome: the panels that surround the routed view. */
+/* Base tokens are imported once by main.less — do not re-import them here. */
+#consentBody {
+  margin: auto;
+  max-width: 1024px;
+  width: auto;
+  background: lightyellow;
+  color: #4b4b4bde;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-weight: 900;
+  padding: 10px;
+}
+#consentBody p {
+  display: inline;
+}
+#consentBody button {
+  border-radius: 5px;
+  border: solid gray 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 28px;
+  vertical-align: middle;
+  font-weight: 900;
+  background-color: #d3d3d3;
+  color: green;
+  cursor: pointer;
+}
+/* Base tokens are imported once by main.less — do not re-import them here. */
+footer {
+  margin: auto;
+  max-width: 1024px;
+  width: auto;
+  height: 50px;
+  background: white;
+  color: #4b4b4bde;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+footer > div {
+  width: 100%;
+  max-width: 100%;
+  float: left;
+}
+footer > div > ul {
+  width: 100%;
+}
+footer > div > ul > li {
+  float: left;
+  list-style-type: none;
+  display: table;
+}
+footer > div > ul > li > i {
+  height: 50px;
+  display: table-cell;
+  padding-left: 10px;
+  padding-right: 5px;
+  text-rendering: optimizelegibility;
+}
+footer > div > ul > li > a {
+  height: 50px;
+  display: table-cell;
+  vertical-align: middle;
+  outline: none;
+  color: #4b4b4bde;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+footer > div > ul > li.envBadge {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+footer > div > ul > li > div.envBadge {
+  display: inline-block;
+  line-height: normal;
+  vertical-align: middle;
+  text-transform: uppercase;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown -- LESS variable in a shorthand */
+  padding: 2px 5px;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown -- LESS variable in a shorthand */
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+}
+/* Base tokens are imported once by main.less — do not re-import them here. */
+#headerPanel {
+  height: auto;
+}
+header {
+  margin: auto;
+  max-width: 1024px;
+  width: auto;
+  height: 50px;
+  background: white;
+  color: #4b4b4bde;
+  font-size: 14px;
+  font-weight: 800;
+}
+header > ul {
+  width: 50%;
+  height: 50px;
+  overflow: hidden;
+}
+header > ul > li {
+  height: 50px;
+  float: left;
+  list-style-type: none;
+  display: table;
+}
+header > ul > li.hidden {
+  display: none;
+}
+header > ul > li > button {
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: gray;
+  outline: none;
+}
+header > ul > li > button > i {
+  font-family: "Material Symbols Outlined", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  /* stylelint-disable-next-line property-no-deprecated -- IE-compatible alias of overflow-wrap */
+  word-wrap: normal;
+  direction: ltr;
+  vertical-align: middle;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  height: 50px;
+  display: table-cell;
+  padding-left: 5px;
+  padding-right: 10px;
+  text-rendering: optimizelegibility;
+}
+header > ul > li > span {
+  height: 50px;
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: 900;
+}
+header > ul:first-child {
+  width: calc(100% - 110px);
+  height: 50px;
+  float: left;
+}
+header > ul:last-child {
+  width: 100px;
+  height: 50px;
+  float: right;
+  margin-right: 10px;
+}
+header > ul:last-child > li {
+  height: 50px;
+  float: right;
+}
+/* Active (currently selected) language: pressed-in / sunken look, so the state reads as
+   "this one is already selected" instead of just a grayed-out button. The inset shadows form
+   the sunken frame: dark on the top/left edge, light on the bottom/right edge. */
+header > ul:last-child > li > button:disabled,
+header > ul:last-child > li > button.active {
+  background-color: #d3d3d3;
+  color: green;
+  box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.35), inset -1px -1px 2px rgba(255, 255, 255, 0.7);
+}
+header > ul:last-child > li:first-child > button {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-right: solid gray 1px;
+}
+header > ul:last-child > li:last-child > button {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-left: solid gray 1px;
+}
+header > ul:last-child > li > button {
+  border-top: solid gray 1px;
+  border-bottom: solid gray 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 28px;
+  vertical-align: middle;
+  font-weight: 900;
+  color: #696969;
+}
+header > ul > li > button > i.alertMaterialIcon {
+  color: #ef4444;
+}
+nav {
+  margin: auto;
+  max-width: 1024px;
+  width: auto;
+  height: 50px;
+  background: white;
+  color: #4b4b4bde;
+  font-weight: 900;
+}
+nav > ul {
+  height: 50px;
+  background: white;
+}
+nav > ul > li {
+  height: 50px;
+  float: left;
+  list-style-type: none;
+  display: table;
+}
+nav > ul > li > a {
+  height: 46px;
+  padding-left: 10px;
+  padding-right: 10px;
+  outline: none;
+  color: #191970;
+  border-bottom: solid 4px white;
+  display: table-cell;
+  vertical-align: middle;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+nav > ul > li > a.active {
+  height: 46px;
+  border-bottom: solid 4px rgba(237, 38, 61, 0.87);
+  color: #2f4f4f;
+}
+nav > ul > li > a:hover {
+  border-bottom: solid 4px rgba(255, 157, 0, 0.87);
+}
+/* Base tokens are imported once by main.less — do not re-import them here. */
+main {
+  height: calc(100% - 100px);
+  min-height: calc(100% - 100px);
+  overflow-x: hidden;
+}
+#footerPanel {
+  width: 100%;
+  height: 50px;
+  background: white;
+}
+/* modal-overlay.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* Base tokens are imported once by main.less — do not re-import them here. */
+/* Same visual language as #consentBody (consent-body-panel.component.less) — this is the other
+   dismissible strip the app shows above its content, and the two must not look like two
+   different applications when they happen to appear at once. */
+#pwaPanel .pwaBanner {
+  margin: auto;
+  max-width: 1024px;
+  width: auto;
+  background: lightyellow;
+  color: #4b4b4bde;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-weight: 900;
+  padding: 10px;
+}
+#pwaPanel .pwaBannerAlert {
+  background: #ffe0e0;
+}
+#pwaPanel .pwaBanner p {
+  display: inline;
+}
+#pwaPanel .pwaBanner button {
+  border-radius: 5px;
+  border: solid gray 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  height: 28px;
+  vertical-align: middle;
+  font-weight: 900;
+  background-color: #d3d3d3;
+  color: green;
+  cursor: pointer;
+}
+#pwaPanel .pwaBanner button[disabled] {
+  color: gray;
+  cursor: default;
+}
+/* Base tokens are imported once by main.less — do not re-import them here. */
+#sidenav {
+  width: 290px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: white;
+  opacity: 1;
+}
+#sideNavigationHeaderPanel {
+  width: 100%;
+  background: gray;
+  height: 50px;
+}
+#sideNavigationHeaderPanel > ul {
+  height: 50px;
+  width: 100%;
+  color: #ffffffde;
+  font-size: 14px;
+  font-weight: 800;
+}
+#sideNavigationHeaderPanel > ul > li {
+  float: left;
+  height: 50px;
+  list-style-type: none;
+  display: table;
+}
+#sideNavigationHeaderPanel > ul > li > button {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #fff;
+  outline: none;
+  border-radius: 50%;
+}
+#sideNavigationHeaderPanel > ul > li > button > i {
+  font-family: "Material Symbols Outlined", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  /* stylelint-disable-next-line property-no-deprecated -- IE-compatible alias of overflow-wrap */
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+  vertical-align: middle;
+}
+#sideNavigationHeaderPanel > ul > li > span {
+  height: 50px;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: table-cell;
+  vertical-align: middle;
+}
+#sideNavigationContentPanel {
+  width: 100%;
+  height: calc(100% - 50px);
+  min-height: calc(100% - 50px);
+  overflow-y: auto;
+}
+#sideNavigationContentPanel > ul {
+  width: 100%;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 0;
+  margin: 0;
+}
+#sideNavigationContentPanel > ul li.sideNavMenuItems {
+  height: 50px;
+  width: 100%;
+  list-style-type: none;
+  display: table;
+  padding: 0;
+  margin: 0;
+}
+#sideNavigationContentPanel > ul li.sideNavMenuItems > a {
+  height: 50px;
+  border-left: solid 4px white;
+  width: calc(100% - 14px);
+  color: #696969;
+  vertical-align: middle;
+  text-transform: uppercase;
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  list-style-type: none;
+  outline: none;
+  text-decoration: none;
+  display: table-cell;
+  padding: 0 0 0 10px;
+  margin: 0;
+}
+#sideNavigationContentPanel > ul li.sideNavMenuItems > a.active {
+  border-left: solid 4px rgba(237, 38, 61, 0.87);
+  width: calc(100% - 4px);
+}
+#sideNavigationContentPanel > ul li.sideNavMenuItems > a > i {
+  font-family: "Material Symbols Outlined", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  /* stylelint-disable-next-line property-no-deprecated -- IE-compatible alias of overflow-wrap */
+  word-wrap: normal;
+  direction: ltr;
+  vertical-align: middle;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizelegibility;
+  margin-right: 20px;
+}
+.sideNavMenuItems > li > a {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 50px;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown -- LESS variable in a shorthand */
+  padding: 0 10px;
+  color: black;
+  text-decoration: none;
+  border-left: 4px solid transparent;
+  box-sizing: border-box;
+}
+.sideNavMenuItems > li > a.active {
+  border-left-color: rgba(237, 38, 61, 0.87);
+  font-weight: bold;
+}
+.sideNavMenuItems > li > a:hover {
+  background: green;
+}
+#sideNavigationContentPanel > ul li.sideNavMenuItems > a.noHover:hover {
+  border-left: solid 4px white !important;
+  background: white;
+}
+#sideNavigationContentPanel > ul li.sideNavMenuItems > a:hover {
+  border-left: solid 4px rgba(255, 157, 0, 0.87) !important;
+  background: lightyellow;
+}
+#sideNavigationContentPanel > ul li:last-child {
+  margin-bottom: 10px;
+}
+#sideNavigationContentPanel > ul li.sideNavThinMenuItems {
+  height: 4px;
+  display: table;
+  width: 100%;
+}
+#sideNavigationContentPanel > ul li > hr {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(76, 123, 168, 0), rgba(76, 123, 168, 0.75), rgba(76, 123, 168, 0));
+}
+#sideNavigationContentPanel > ul li > div {
+  padding-right: 10px;
+}
+#sideNavigationContentPanel > ul li > div > select {
+  height: 37px;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: table-cell;
+  vertical-align: middle;
+}
+/*
+Routed views. Most view files are still empty placeholders in the Angular workspace and are
+carried over as such, so a view keeps its home here from the moment it grows its first rule.
+`shared/detail-rows.less` is a partial imported by the views that use it (LESS imports once,
+so importing it from several views does not duplicate the rules).
+*/
+/* about.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* ads.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* articles.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* auth-callback.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* commercials.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* Icon / label / value line style, shared with the settings view. */
+/*
+ * Icon / label / value rows shared by the contact and the settings views.
+ *
+ * One fact per 40px line: a material icon and its label floated left, the value floated
+ * right on the same baseline. Both views import this partial so the two pages stay in
+ * step — Angular scopes component styles per component, so the rules cannot simply be
+ * inherited from one of them.
+ */
+.applicationContentMain > article > div.articleSectionPanel > section > div {
+  width: 100%;
+  height: 40px;
+  display: table;
+}
+.applicationContentMain > article > div.articleSectionPanel > section > div > div.iconPanel {
+  float: left;
+  width: 24px;
+  height: 40px;
+  color: #696969;
+  line-height: 40px;
+  margin-right: 10px;
+}
+.applicationContentMain > article > div.articleSectionPanel > section > div > div.labelPanel {
+  float: left;
+  height: 40px;
+  color: #696969;
+  line-height: 40px;
+  margin-right: 10px;
+}
+/*
+.applicationContentMain > article > div.articleSectionPanel > section > div > div.iconPanel > i {
+    font-size: 24px;
+    color: #696969;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    display: table-cell !important;
+}
+*/
+.applicationContentMain > article > div.articleSectionPanel > section > div > div.textPanel {
+  float: right;
+  height: 40px;
+  color: #696969;
+  line-height: 40px;
+  max-width: 60%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.applicationContentMain article a {
+  text-decoration: none;
+}
+.applicationContentMain article a:link {
+  color: #696969;
+}
+.applicationContentMain article a:visited {
+  color: #696969;
+}
+.applicationContentMain > article > div.articleSectionPanel > section > div > div.textPanel > a {
+  font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+.applicationContentMain > article > div.articleSectionPanel > section > div > div.textPanel > a + a {
+  margin-left: 10px;
+}
+/* help.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* home.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* news.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* privacy.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* products-services.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* profile.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* Icon / label / value line style, shared with the contact view. */
+/*
+ * The tenant switch is the one row that carries controls instead of a plain value, so it
+ * opts out of the fixed 40px line and lets its value column wrap.
+ */
+.applicationContentMain > article > div.articleSectionPanel > section > div.controlRow {
+  height: auto;
+  min-height: 40px;
+}
+.applicationContentMain > article > div.articleSectionPanel > section > div.controlRow > div.textPanel {
+  height: auto;
+  max-width: 60%;
+  overflow: visible;
+  white-space: normal;
+}
+.settingsHint {
+  margin: 0 0 10px;
+  color: #696969;
+  font-size: 12px;
+  line-height: 16px;
+}
+/* sponsors.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* template-page.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* terms.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* tools.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* view-not-found.component — no rules yet; mirrors the empty file in the Angular workspace. */

@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+    include include/head.pug
+    include include/components/background/background.component.pug
+    include include/components/layout/header-panel/header-panel.component.pug
+    include include/components/layout/side-navigation-panel/side-navigation-panel.component.pug
+    include include/components/layout/main-panel/main-panel.component.pug
+    include include/components/layout/consent-panel/consent-body-panel.component.pug
+    body(id="body")
+        +backgroundComponent()
+        div(id="application")
+            +headerPanelComponent()
+            +consentBodyPanelComponent()
+            +sideNavigationPanelComponent()
+            +mainPanelComponent()
+                div(id="routedView") Routed view content.
+        script
+            include include/js/side-navigation-panel.js

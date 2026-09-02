@@ -11,6 +11,7 @@ const ACTIONS = {
     pageNameIs: (name) => pageHelper.pageName(name),
     pageIsRendered: () => pageHelper.pageIsRendered(),
     pageElementIdIs: (elementId) => pageHelper.elementIdIs(elementId),
+    pageElementIdIsClicked: (elementId) => pageHelper.clickElementId(elementId),
     pageShouldHaveTitle: async (title) =>
         expect(await pageHelper.getTitle()).toBe(title),
     pageElementMarginShouldBe: (margin) =>

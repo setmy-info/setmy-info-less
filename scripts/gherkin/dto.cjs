@@ -13,6 +13,8 @@ const SENTENCES = {
     pageNameIs: (name) => `page name is "${name}"`,
     pageIsRendered: () => "page is rendered",
     pageElementIdIs: (elementId) => `page element ID is "${elementId}"`,
+    pageElementIdIsClicked: (elementId) =>
+        `page element ID "${elementId}" is clicked`,
     pageShouldHaveTitle: (title) => `page should have title "${title}"`,
     pageElementMarginShouldBe: (margin) =>
         `page element margin should be "${margin}"`,
@@ -50,6 +52,8 @@ const given = {
 const when = {
     pageIsRendered: () => step("When", "pageIsRendered"),
     pageElementIdIs: (elementId) => step("When", "pageElementIdIs", elementId),
+    pageElementIdIsClicked: (elementId) =>
+        step("When", "pageElementIdIsClicked", elementId),
 };
 
 const then = {

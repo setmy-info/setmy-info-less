@@ -5,7 +5,7 @@ const path = require("path");
 // integration tests import dist/index.js rather than src/. Fails if the
 // build was skipped, which is the point.
 const distDir = path.join(__dirname, "../../../../dist");
-const expectation = "skeleton";
+const expectation = "content";
 
 function countRules(css) {
     return (css.replace(/\/\*[\s\S]*?\*\//g, "").match(/\{/g) || []).length;

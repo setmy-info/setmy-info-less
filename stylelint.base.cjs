@@ -27,6 +27,18 @@ function createStylelintConfig({ extraRules = {}, ignoreFiles } = {}) {
             "color-function-notation": "legacy",
             "color-function-alias-notation": "with-alpha",
             "alpha-value-notation": "number",
+            // Media queries stay in the min-/max- prefix form. Range notation
+            // (`(width >= 640px)`) is Media Queries 4 and is ignored by the old
+            // browsers this framework still supports, which would silently drop
+            // the whole query rather than degrade.
+            "media-feature-range-notation": "prefix",
+            // `inset` is a logical-property shorthand and `overflow: x y` is the
+            // two-value form; both are newer than the top/left/right/bottom and
+            // single-value spellings this framework writes on purpose.
+            "declaration-block-no-redundant-longhand-properties": [
+                true,
+                { ignoreShorthands: ["inset", "overflow"] },
+            ],
             ...extraRules,
         },
         ignoreFiles,

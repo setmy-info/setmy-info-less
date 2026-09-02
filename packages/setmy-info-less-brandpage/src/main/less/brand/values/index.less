@@ -1,0 +1,43 @@
+/*
+Brand page design tokens.
+
+The source pages carried these as `:root` custom properties (`--red`, `--H`, …). Nothing in
+the HTML or the page script read them back, so they are LESS variables here: they resolve at
+compile time, which keeps the emitted CSS readable by the old browsers this framework targets
+and lets a value be reused in a calculation (`@brandHeaderHeight + 26px`) instead of `calc()`.
+*/
+
+/* Base tokens (no CSS output) — @headerHeight and the @z-index-* steps are reused below. */
+@import url("../../../../../../setmy-info-less/src/main/less/values/index.less");
+
+@brandRed: rgba(237, 38, 61, 0.87);
+@brandOrange: rgba(255, 157, 0, 0.87);
+@brandBlue: midnightblue;
+@brandSteel: steelblue;
+@brandGray: dimgray;
+@brandGreen: #73d073;
+
+@brandBackgroundColor: #fff;
+@brandAlternateBackgroundColor: #f6f8fa;
+@brandChipBackgroundColor: #dfe7f2;
+
+/* The bar height the whole page is laid out around — the base module's header height. */
+@brandHeaderHeight: @headerHeight;
+@brandPanelTransitionDuration: 950ms;
+
+/* Derived, so a rule never repeats the arithmetic. */
+@brandContentTopPadding: @brandHeaderHeight + 26px;
+@brandContentTopPaddingPhone: @brandHeaderHeight + 14px;
+
+/*
+Stacking order, bottom to top: the panels, the dot rail, the brand bar, the consent bar, the
+privacy overlay. Only the three that land on a base @z-index-* step use the token.
+*/
+@brandStageZIndex: 10;
+@brandDotsZIndex: 190;
+
+/* Tints used often enough to be worth a name. */
+@brandSteelBorderColor: rgba(70, 130, 180, 0.22);
+@brandSteelLineColor: rgba(70, 130, 180, 0.2);
+@brandSteelTextColor: rgba(76, 123, 168, 0.85);
+@brandGhostNumberColor: rgba(70, 130, 180, 0.08);

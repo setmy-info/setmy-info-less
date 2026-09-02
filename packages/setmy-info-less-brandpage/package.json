@@ -45,6 +45,6 @@
             "port": 44231,
             "directory": "dist"
         },
-        "cssExpectation": "skeleton"
+        "cssExpectation": "content"
     }
 }

@@ -1,0 +1,9 @@
+//- brand/slogan — .srow zigzag rows: picture on one side, numbered slogan on the other.
+mixin brandSloganRow(id, number, reversed)
+    div(id=id, class=reversed ? "srow rev" : "srow")
+        div(id=id + "Img", class="simg")
+            img(src="", alt="", loading="lazy", decoding="async")
+        div(id=id + "Text", class="stx")
+            span(class="sn", aria-hidden="true")= number
+            h2(class="st") Lorem ipsum dolor
+            p(class="sd") Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.

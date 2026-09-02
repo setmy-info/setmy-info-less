@@ -1,0 +1,38 @@
+/*
+about.html — one prose panel plus the shared chrome. No title band, no zigzag rows, no contact
+column; it adds the running text column instead.
+
+The three declarations at the bottom are the only places where this page disagrees with the
+others. They are scoped to the page's body class, because all three pages are served from one
+stylesheet: without the scope the about values would leak onto index and process. The page's
+<body> therefore needs class="brandAboutPage".
+*/
+@import url("../brand/values/index.less");
+@import url("../brand/base/index.less");
+@import url("../brand/header/index.less");
+@import url("../brand/dots/index.less");
+@import url("../brand/stage/index.less");
+@import url("../brand/panel/index.less");
+@import url("../brand/heading/index.less");
+@import url("../brand/prose/index.less");
+@import url("../brand/hint/index.less");
+@import url("../brand/note/index.less");
+@import url("../brand/page-link/index.less");
+@import url("../brand/preview/index.less");
+@import url("../brand/consent/index.less");
+
+.brandAboutPage {
+    /* More air under the heading rule than the other pages take. */
+    .ph::after {
+        margin-bottom: 32px;
+    }
+
+    /* The prose column is longer, so the nudge and the footnote sit lower. */
+    .hint {
+        padding-top: 20px;
+    }
+
+    .cf {
+        margin-top: 36px;
+    }
+}

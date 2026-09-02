@@ -1,0 +1,127 @@
+/*
+Zigzag rows: a picture on one side, a numbered slogan on the other, sides swapped on every
+second row by `.rev`. Built on display:table rather than flex or grid so the layout also holds
+in the old browsers this framework targets; `direction: rtl` is what mirrors the row, and each
+cell puts itself back to `ltr`.
+
+Used by the pages that present a numbered list of points (index, process).
+*/
+.srow {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    padding: 36px 0;
+    box-sizing: border-box;
+}
+
+.srow.rev {
+    direction: rtl;
+}
+
+.simg {
+    display: table-cell;
+    width: 44%;
+    vertical-align: middle;
+    direction: ltr;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #162540, #0e1c33);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+}
+
+.simg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.stx {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 42px;
+    direction: ltr;
+    text-align: left;
+}
+
+.srow.rev .stx {
+    padding-left: 0;
+    padding-right: 42px;
+}
+
+.sn {
+    font-size: clamp(2.8em, 5.5vw, 4.4em);
+    font-weight: 800;
+    color: @brandGhostNumberColor;
+    line-height: 0.85;
+    display: block;
+    margin-bottom: 5px;
+    letter-spacing: -0.02em;
+}
+
+.st {
+    display: inline-block;
+    color: @brandBlue;
+    font-size: clamp(1em, 2vw, 1.38em);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin: 0 0 10px;
+}
+
+.st::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: @brandRed;
+    border-radius: 2px;
+    margin-top: 7px;
+}
+
+.sd {
+    color: @brandGray;
+    font-size: 0.87em;
+    line-height: 1.72;
+    margin: 0;
+}
+
+/* Phone: the two cells become one column, picture first. */
+@media only screen and (max-width: 639px) {
+    .srow,
+    .srow.rev {
+        display: block;
+        direction: ltr;
+        padding: 26px 0;
+    }
+
+    .srow .simg,
+    .srow.rev .simg {
+        display: block;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .srow .stx,
+    .srow.rev .stx {
+        display: block;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+/* Pad: keep the two cells, tighten the gap between them. */
+@media only screen and (min-width: 640px) and (max-width: 1023px) {
+    .simg {
+        width: 42%;
+    }
+
+    .srow .stx {
+        padding-left: 26px;
+    }
+
+    .srow.rev .stx {
+        padding-right: 26px;
+        padding-left: 0;
+    }
+}

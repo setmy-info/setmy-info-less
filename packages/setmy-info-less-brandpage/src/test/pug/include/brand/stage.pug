@@ -1,0 +1,12 @@
+//- brand/stage + brand/panel — the panel stack, and one panel's scrolling body and centred
+//- content column. The body and column get derived ids (p1Body, p1Content) so a test can
+//- address them.
+mixin brandPanel(id)
+    div(id=id, class="panel")
+        div(id=id + "Body", class="pb")
+            div(id=id + "Content", class="pc")
+                block
+
+mixin brandStage()
+    div(id="stage")
+        block

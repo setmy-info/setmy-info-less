@@ -1,0 +1,101 @@
+/*
+Full-screen privacy / terms overlay: its own bar, a scrolling body, and quoted sections down
+the left edge. Hidden until `.open` is set. Used by every brand page.
+*/
+#prv {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: @z-index-8;
+    background: @brandBackgroundColor;
+    display: none;
+    overflow: hidden;
+}
+
+#prv.open {
+    display: block;
+}
+
+.pvh {
+    height: @brandHeaderHeight;
+    background: rgba(255, 255, 255, 0.97);
+    /* stylelint-disable-next-line declaration-property-value-no-unknown -- LESS variable in a shorthand */
+    border-bottom: 1px solid @brandSteelLineColor;
+    padding: 0 20px;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pvt {
+    color: @brandBlue;
+    font-weight: 300;
+    font-size: 0.96em;
+    overflow: hidden;
+}
+
+.pvx {
+    margin-top: 11px;
+    background: none;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown -- LESS variable in a shorthand */
+    border: 1px solid @brandSteel;
+    border-radius: 4px;
+    color: @brandBlue;
+    cursor: pointer;
+    font-size: 0.82em;
+    padding: 5px 14px;
+    line-height: 1.4;
+    transition:
+        background 0.18s,
+        color 0.18s;
+}
+
+.pvx:hover {
+    background: @brandRed;
+    border-color: @brandRed;
+    color: #fff;
+}
+
+.pvb {
+    position: absolute;
+    top: @brandHeaderHeight;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    padding: 36px 20px 60px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.pvc {
+    display: inline-block;
+    text-align: left;
+    max-width: 700px;
+    width: 100%;
+}
+
+.pvs {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown -- LESS variable in a shorthand */
+    border-left: 5px solid @brandGreen;
+    padding-left: 15px;
+    margin: 22px 0;
+}
+
+.pvs p {
+    color: @brandGray;
+    font-size: 0.88em;
+    line-height: 1.65;
+    margin: 7px 0;
+}
+
+.pvn {
+    color: @brandGray;
+    font-size: 0.76em;
+    margin-top: 28px;
+    text-align: right;
+}

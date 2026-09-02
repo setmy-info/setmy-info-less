@@ -63,7 +63,7 @@ classDiagram
     class base["✅ setmy-info-less"]
     class extended["✅ setmy-info-less-extended"]
     class fancy["✅🚧 setmy-info-less-fancy"]
-    class brandpage["🧪🎯🚧 setmy-info-less-brandpage"]
+    class brandpage["🧪🎯 setmy-info-less-brandpage"]
     class angular["✅🎯 setmy-info-less-angular-start-project"]
     class enterprise["✅🚧 setmy-info-less-enterprise"]
     class ide["✅ setmy-info-less-ide"]
@@ -94,9 +94,9 @@ bundling.
   developers building consumer sites._
 - **[setmy-info-less-brandpage](packages/setmy-info-less-brandpage/README.md)** - Layer 3, targeted, unstable.
   LESS/CSS collection for fancy, nice looking, wide-variety UI/UX brand pages — the CSS of one specific brand page
-  created for product promo and advertisement. Empty skeleton under development; the rules of the existing targeted
-  pages are moved here step by step. _Audience: designers and front-end developers building brand, promo, and
-  advertisement pages._
+  created for product promo and advertisement. Holds the setmy.info brand site CSS: `brand/` is one directory per part
+  of the page, `pages/` says which parts each page uses and in which order. _Audience: designers and front-end
+  developers building brand, promo, and advertisement pages._
 - **[setmy-info-less-enterprise](packages/setmy-info-less-enterprise/README.md)** - Layer 2. Distribution layer for
   enterprise intranet and internal applications. _Audience: enterprise application developers._
 - **[setmy-info-less-angular-start-project](packages/setmy-info-less-angular-start-project/README.md)** - Layer 2,
@@ -133,7 +133,7 @@ dependency order.
 | `setmy-info-less` (base)                | nothing cross-package       | ✅ yes          | resets, tokens, single-purpose utilities                  |
 | `setmy-info-less-extended`              | base `values` (tokens only) | ❌ delta        | content components (section/modal/card/article)           |
 | `setmy-info-less-fancy`                 | base `values` (tokens only) | ❌ delta        | (skeleton — empty for now)                                |
-| `setmy-info-less-brandpage`             | base `values` (tokens only) | ❌ delta        | (skeleton — empty for now)                                |
+| `setmy-info-less-brandpage`             | base `values` (tokens only) | ❌ delta        | brand page chrome, panels, slogan rows, overlays          |
 | `setmy-info-less-angular-start-project` | base `values` (tokens only) | ❌ delta        | application chrome and view styles (components/)          |
 | `setmy-info-less-enterprise`            | base `values` (tokens only) | ❌ delta        | (skeleton — empty for now)                                |
 | `setmy-info-less-ide`                   | base `values` (tokens only) | ❌ delta        | frame presets only                                        |
@@ -158,8 +158,8 @@ which also makes moving code between it and any stable module straightforward. I
 subdirectories keep the names of the removed packages they came from.
 
 `setmy-info-less-brandpage` depends on `setmy-info-less-fancy` and is under development: it is the destination for the
-LESS/CSS of the existing targeted brand pages, which is moved in step by step. It stays unstable until that migration
-settles.
+LESS/CSS of the existing targeted brand pages, which is moved in step by step — the setmy.info brand site is in. It
+stays unstable until that migration settles.
 
 - Developer documentation: `DEVELOPERS-GUIDE.md`
 - Review notes: `review.md`, `review3.md` (historical)

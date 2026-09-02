@@ -1,0 +1,44 @@
+/*
+The stacked panels the page scrolls between. Each panel fills the viewport and is moved by the
+page script; the z-index order is what makes a panel slide over the one below it.
+Every brand page has #p1; the ones that stack further add #p2 and #p3.
+*/
+#stage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: @brandStageZIndex;
+    overflow: hidden;
+}
+
+.panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    will-change: transform, opacity;
+    /* stylelint-disable declaration-property-value-no-unknown -- LESS variable in a shorthand */
+    transition:
+        transform @brandPanelTransitionDuration cubic-bezier(0.4, 0, 0.2, 1),
+        opacity @brandPanelTransitionDuration ease;
+    /* stylelint-enable declaration-property-value-no-unknown */
+    box-shadow: 0 -5px 28px rgba(0, 0, 0, 0.13);
+}
+
+#p1 {
+    z-index: 1;
+    background: @brandBackgroundColor;
+}
+
+#p2 {
+    z-index: 2;
+    background: @brandAlternateBackgroundColor;
+}
+
+#p3 {
+    z-index: 3;
+    background: @brandBackgroundColor;
+}

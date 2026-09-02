@@ -1,0 +1,30 @@
+/*
+Resets the brand page needs on top of setmy-info-less.
+
+The base module locks the document to the viewport and gives `a`, `button` and `span` a fixed
+50px height, which suits an application shell but not a scrolling marketing page. These rules
+win on load order at equal specificity, which is why the brand stylesheet must be linked after
+the base one.
+*/
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+html body {
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    height: auto;
+    line-height: inherit;
+    display: inline;
+}
+
+button,
+span {
+    height: auto;
+}

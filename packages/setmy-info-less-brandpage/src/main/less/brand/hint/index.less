@@ -1,0 +1,25 @@
+/*
+"Scroll on" nudge at the bottom of a panel, breathing so it reads as an invitation.
+Used by the pages whose panel continues below the fold (index, about).
+*/
+.hint {
+    text-align: center;
+    color: @brandGray;
+    font-size: 0.73em;
+    opacity: 0.5;
+    padding: 12px 0 0;
+    animation: nb 2.5s ease-in-out infinite;
+}
+
+@keyframes nb {
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: translateY(5px);
+    }
+}

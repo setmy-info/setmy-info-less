@@ -1,0 +1,60 @@
+/*
+Fixed brand bar: the page title on the left, the language buttons on the right.
+Used by every brand page.
+*/
+#hdr {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: @z-index-2;
+    height: @brandHeaderHeight;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(6px);
+    /* stylelint-disable-next-line declaration-property-value-no-unknown -- LESS variable in a shorthand */
+    border-bottom: 1px solid @brandSteelBorderColor;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.07);
+    padding: 0 20px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.bm {
+    color: @brandBlue;
+    font-size: 0.97em;
+    letter-spacing: 0.09em;
+    display: block;
+    line-height: @brandHeaderHeight;
+    overflow: hidden;
+}
+
+.bm b {
+    color: @brandRed;
+}
+
+.lsw {
+    padding-top: 14px;
+}
+
+.lb {
+    background: none;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown -- LESS variable in a shorthand */
+    border: 1px solid @brandSteel;
+    border-radius: 3px;
+    color: @brandBlue;
+    cursor: pointer;
+    font-size: 0.75em;
+    padding: 3px 8px;
+    margin-left: 4px;
+    transition:
+        background 0.18s,
+        color 0.18s,
+        border-color 0.18s;
+}
+
+.lb.on,
+.lb:hover {
+    background: @brandRed;
+    border-color: @brandRed;
+    color: #fff;
+}

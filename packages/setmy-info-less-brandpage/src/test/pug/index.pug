@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+    include include/head.pug
+    include include/brand/index.pug
+    //- index.html — three stacked panels: slogans, services, contacts.
+    //- Parts used: header, dots, stage, panel, band, slogan, hint, heading, contact, note,
+    //- page-link, preview, consent.
+    body(id="body", class="brandIndexPage")
+        +brandHeader()
+        +brandDots()
+        +brandStage()
+            +brandPanel("p1")
+                +brandBand("btop")
+                +brandSloganRow("srow1", "01", false)
+                +brandSloganRow("srow2", "02", true)
+                +brandHint()
+            +brandPanel("p2")
+                +brandHeading("ph", true)
+                +brandSloganRow("srow3", "03", false)
+            +brandPanel("p3")
+                +brandContact()
+                +brandNote()
+        +brandPreview()
+        +brandConsent()
+        script
+            include include/js/brand-page.js

@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+    include include/head.pug
+    include include/brand/index.pug
+    //- process.html — one panel: a title band over the zigzag rows.
+    //- Parts used: header, stage, panel, band, slogan, note, page-link, preview, consent.
+    body(id="body", class="brandProcessPage")
+        +brandHeader()
+        +brandStage()
+            +brandPanel("p1")
+                +brandBand("btop")
+                +brandSloganRow("srow1", "01", false)
+                +brandSloganRow("srow2", "02", true)
+                +brandNote()
+        +brandPreview()
+        +brandConsent()
+        script
+            include include/js/brand-page.js

@@ -1,0 +1,37 @@
+/*
+Inside of a panel: .pb is the scrolling body, .pc the centred content column that clears the
+fixed brand bar. Used by every brand page.
+*/
+.pb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: @brandSteelLineColor transparent;
+}
+
+.pb::-webkit-scrollbar {
+    width: 3px;
+}
+
+.pb::-webkit-scrollbar-thumb {
+    background: @brandSteelLineColor;
+}
+
+.pc {
+    max-width: 1040px;
+    margin: 0 auto;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown -- LESS variable in a shorthand */
+    padding: @brandContentTopPadding 28px 50px;
+}
+
+@media only screen and (max-width: 639px) {
+    .pc {
+        /* stylelint-disable-next-line declaration-property-value-no-unknown -- LESS variable in a shorthand */
+        padding: @brandContentTopPaddingPhone 16px 36px;
+    }
+}

@@ -1,0 +1,21 @@
+doctype html
+html(lang="en")
+    include include/head.pug
+    include include/brand/index.pug
+    //- about.html — one prose panel plus the shared chrome. Carries brandAboutPage on <body>,
+    //- which is what the page's own overrides in pages/about.less are scoped to.
+    //- Parts used: header, dots, stage, panel, heading, prose, hint, note, page-link,
+    //- preview, consent.
+    body(id="body", class="brandAboutPage")
+        +brandHeader()
+        +brandDots()
+        +brandStage()
+            +brandPanel("p1")
+                +brandHeading("ph", false)
+                +brandProse()
+                +brandHint()
+                +brandNote()
+        +brandPreview()
+        +brandConsent()
+        script
+            include include/js/brand-page.js

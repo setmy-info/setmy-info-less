@@ -1,0 +1,29 @@
+/*
+Section heading with a short green rule under it, and the lead paragraph that may follow.
+Used by the pages that open a panel with a heading instead of a title band (index, about).
+*/
+.ph {
+    color: @brandBlue;
+    font-size: clamp(1.2em, 2.6vw, 1.75em);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin: 0;
+}
+
+.ph::after {
+    content: "";
+    display: block;
+    width: 46px;
+    height: 3px;
+    background: @brandGreen;
+    border-radius: 2px;
+    margin: 10px auto 22px;
+}
+
+.plead {
+    text-align: center;
+    color: @brandSteelTextColor;
+    font-size: 0.88em;
+    margin: 0 0 26px;
+}

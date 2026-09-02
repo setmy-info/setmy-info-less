@@ -1,0 +1,42 @@
+/*
+Consent bar pinned to the bottom of the viewport, above everything but the privacy overlay.
+Used by every brand page.
+*/
+#gb {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: @z-index-6;
+    background: rgba(255, 255, 255, 0.97);
+    /* stylelint-disable-next-line declaration-property-value-no-unknown -- LESS variable in a shorthand */
+    border-top: 2px solid @brandSteel;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+    padding: 9px 18px;
+    overflow: hidden;
+    font-size: 0.83em;
+}
+
+#gb p {
+    margin: 0;
+    color: @brandGray;
+    line-height: 1.4;
+    display: inline;
+}
+
+.ga {
+    margin-left: 9px;
+    background: @brandRed;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 17px;
+    cursor: pointer;
+    font-size: 0.9em;
+    line-height: 1.4;
+    transition: background 0.18s;
+}
+
+.ga:hover {
+    background: @brandOrange;
+}

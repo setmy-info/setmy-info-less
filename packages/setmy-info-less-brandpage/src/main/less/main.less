@@ -2,33 +2,34 @@
 Main entry point for the brand page module.
 
 Distribution model: STANDALONE / DELTA.
-`dist/main.css` contains ONLY this package's own rules — it does not bundle the base,
-extended or fancy CSS. Consumers load the stylesheets in dependency order:
+`dist/main.css` contains ONLY this package's own rules — it does not bundle the base, extended
+or fancy CSS. Consumers load the stylesheets in dependency order:
 
     setmy-info-less  ->  setmy-info-less-extended  ->  setmy-info-less-fancy  ->
     setmy-info-less-brandpage
 
-This package is currently a skeleton: it has no rules of its own yet. It is the future home
-of the brand page CSS that today lives inside the individual targeted promo pages — the
-per-brand-page LESS/CSS is moved here step by step. The base module's `values/index.less` is
-imported for TOKENS ONLY (LESS variables produce no CSS output), so future rules can
-reference shared tokens without re-emitting base, extended or fancy styles here. The
-dependency on `setmy-info-less-fancy` is a load-order relationship declared in package.json,
-not a CSS import — fancy's rules must not be bundled into this delta.
+WHAT IS IN HERE, AND IN WHICH ORDER
+
+`brand/` holds one directory per part of the page. `pages/` holds one file per brand page,
+listing the parts that page uses in the order that page's own \3c style> block had them — the
+source pages were single hand-written style blocks, so their cascade was pure document order
+and a bundle has to reproduce it.
+
+This file loads the three page files. LESS imports a file once, so the first page to ask for a
+part fixes its position and the later pages only append what they alone need. The result is the
+union of all three pages, in the main page's order:
+
+    values -> base -> header -> dots -> stage -> panel -> band -> slogan -> hint -> heading
+           -> contact -> note -> page-link -> preview -> consent          (from pages/index)
+           -> prose -> .brandAboutPage overrides                          (from pages/about)
+                                                                          (process adds none)
+
+Responsive rules live with the part they change (`dots`, `panel`, `slogan`), not in one block
+at the end, so every @media rule sits directly below the rules it overrides.
+
+A page that is served this bundle must carry its page class on <body> — `brandAboutPage` for
+about.html — otherwise that page's own overrides do not apply. See pages/about.less.
 */
-
-// Brand page module
-//
-// Brand page presentation: fancy, distinctive, wide-variety UI/UX looks for product promo,
-// advertisement and campaign pages, layered on top of the base, extended and fancy modules.
-// Load the base, extended and fancy CSS before this file.
-//
-// Markup: <div class="smi-panel"></div>
-//
-// Styleguide: packages.brandpage
-
-/* Base tokens only (no CSS output) — gives future rules access to shared variables */
-@import url("../../../../setmy-info-less/src/main/less/values/index.less");
-
-/* This package's own rules (empty skeleton — add files via utility/index.less) */
-@import url("utility/index.less");
+@import url("pages/index.less");
+@import url("pages/about.less");
+@import url("pages/process.less");

@@ -18,6 +18,8 @@ Run from the repository root, in order:
 
 ```shell
 npm install
+npm run audit
+npm run audit fix
 npm ci
 npm ls --all
 npm run clean
@@ -30,20 +32,26 @@ npm test                               # unit tier
 npm run pre-integration-test
 npm run integration-test
 npm run post-integration-test
-smi-selenium-hub
-smi-selenium-node
+#smi-selenium-hub
+#smi-selenium-node
 npm run pre-e2e-test                   # serves the BUILT app; needs Java + Selenium Grid
 npm run e2e-test
 npm run post-e2e-test
 npm run coverage                       # unit tier only (Selenium stays out of coverage)
 #npm run lint
 npm run audit
-npm run audit --fix
+npm run audit fix
 npm run reports
 npm run docs
 npm run package                        # app -> dist/*.tar.gz; libraries -> dist/*.tgz
 npm run deploy -- <dev|test|prelive|live>
 npm run release                        # master only
+
+npm pkg fix --workspaces
+
+npm login
+npm publish --workspaces --dry-run
+npm publish --workspaces
 
 npm run server --workspace setmy-info-less        # serves that package's dist/ on its own port
 npm run stop-server --workspace setmy-info-less

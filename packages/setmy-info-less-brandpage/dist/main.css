@@ -11,7 +11,7 @@ or fancy CSS. Consumers load the stylesheets in dependency order:
 WHAT IS IN HERE, AND IN WHICH ORDER
 
 `brand/` holds one directory per part of the page. `pages/` holds one file per brand page,
-listing the parts that page uses in the order that page's own \3c style> block had them — the
+listing the parts that page uses in the order that page's own style block had them — the
 source pages were single hand-written style blocks, so their cascade was pure document order
 and a bundle has to reproduce it.
 

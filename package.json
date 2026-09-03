@@ -29,7 +29,7 @@
         "server": "node scripts/http-server.js",
         "stop-server": "node scripts/http-server.js stop"
     },
-    "version": "5.0.0",
+    "version": "5.1.0",
     "description": "SMI LESS/CSS framework monorepo - layered LESS modules",
     "license": "MIT",
     "author": "Imre Tabur <imre.tabur@mail.ee>",

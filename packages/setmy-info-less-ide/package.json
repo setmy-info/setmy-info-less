@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less-ide",
-    "version": "5.0.0",
+    "version": "5.1.0",
     "description": "SMI LESS IDE \u2014 developer tool and IDE-style UI patterns, builds on the enterprise package",
     "main": "dist/main.min.css",
     "dependencies": {
@@ -27,7 +27,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/setmy-info/setmy-info-less.git"
+        "url": "git+https://github.com/setmy-info/setmy-info-less.git"
     },
     "homepage": "https://github.com/setmy-info/setmy-info-less",
     "style": "dist/main.css",

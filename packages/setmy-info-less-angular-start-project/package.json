@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less-angular-start-project",
-    "version": "5.0.0",
+    "version": "5.1.0",
     "description": "SMI LESS for the Angular start template project \u2014 application chrome styles (header, side navigation, footer, views) staged for extraction from the Angular workspace",
     "main": "dist/main.min.css",
     "dependencies": {
@@ -27,7 +27,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/setmy-info/setmy-info-less.git"
+        "url": "git+https://github.com/setmy-info/setmy-info-less.git"
     },
     "homepage": "https://github.com/setmy-info/setmy-info-less",
     "style": "dist/main.css",

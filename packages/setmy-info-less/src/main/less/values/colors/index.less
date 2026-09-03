@@ -106,3 +106,20 @@
 @cursorSelectableMenuItemColor: rgba(255, 157, 0, 0.87);
 
 @overlayBackgroundColor: rgba(0, 0, 0, 0.5);
+
+// Utility colours. These used to be literals inside the utility rules; they are tokens so the
+// dark theme can re-point them (see values/colors/dark.less and theme/themed.less).
+@importantNoteColor: red;
+@timeLabelColor: orangered;
+@detailedBorderColor: #73d073;
+@normalBackgroundColor: @secondaryColor;
+@defaultBorderColor: steelblue;
+@defaultShadowColor: #333333;
+@rulerColor: #333333;
+@rulerHighlightColor: #cccccc;
+
+// Extended-module colours. Tokens live here, in the base module, the same way
+// @sideNavHeaderBackgroundColor does: this file is the one place a theme has to look.
+@codeBackgroundColor: @gray-100;
+@quoteBorderColor: @blue-300;
+@modalScreenBackgroundColor: grey;

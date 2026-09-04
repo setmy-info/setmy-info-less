@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less-angular-start-project",
-    "version": "5.1.0",
+    "version": "5.1.1",
     "description": "SMI LESS for the Angular start template project \u2014 application chrome styles (header, side navigation, footer, views) staged for extraction from the Angular workspace",
     "main": "dist/main.min.css",
     "dependencies": {
@@ -34,6 +34,7 @@
     "files": [
         "dist/main.css",
         "dist/main.min.css",
+        "src/main/less/**/*.less",
         "README.md",
         "LICENSE"
     ],

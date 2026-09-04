@@ -1,5 +1,10 @@
 {
     "name": "setmy-info-less-modules",
+    "version": "5.1.1",
+    "description": "SMI LESS/CSS framework monorepo - layered LESS modules",
+    "license": "MIT",
+    "author": "Imre Tabur <imre.tabur@mail.ee>",
+    "type": "module",
     "private": true,
     "workspaces": [
         "packages/*"
@@ -29,11 +34,6 @@
         "server": "node scripts/http-server.js",
         "stop-server": "node scripts/http-server.js stop"
     },
-    "version": "5.1.0",
-    "description": "SMI LESS/CSS framework monorepo - layered LESS modules",
-    "license": "MIT",
-    "author": "Imre Tabur <imre.tabur@mail.ee>",
-    "type": "module",
     "engines": {
         "node": ">=24.0.0"
     },

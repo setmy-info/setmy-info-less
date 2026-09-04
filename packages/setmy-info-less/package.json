@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less",
-    "version": "5.1.0",
+    "version": "5.1.1",
     "description": "SMI LESS project",
     "main": "dist/main.min.css",
     "scripts": {
@@ -31,6 +31,7 @@
     "files": [
         "dist/main.css",
         "dist/main.min.css",
+        "src/main/less/**/*.less",
         "README.md",
         "LICENSE"
     ],

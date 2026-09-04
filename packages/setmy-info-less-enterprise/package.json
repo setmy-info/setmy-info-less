@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less-enterprise",
-    "version": "5.1.0",
+    "version": "5.1.1",
     "description": "SMI LESS enterprise \u2014 stable distribution layer for enterprise intranet and internal applications",
     "main": "dist/main.min.css",
     "dependencies": {
@@ -33,6 +33,7 @@
     "files": [
         "dist/main.css",
         "dist/main.min.css",
+        "src/main/less/**/*.less",
         "README.md",
         "LICENSE"
     ],

@@ -16,9 +16,8 @@ import {
 //   dist/main.css      - readable
 //   dist/main.min.css  - minified via less-plugin-clean-css
 //
-// This removes ONLY the files it writes — never the whole dist/ — so
-// dist/resources/ from `npm run resources` survives, and so do the tracked
-// CSS artifacts until they are rewritten.
+// This removes ONLY the files it writes — never the whole dist/ — so the
+// tracked CSS artifacts survive until they are rewritten.
 
 const workspace = getWorkspaceInfo();
 const lesscBin = resolveLocalBin("lessc");

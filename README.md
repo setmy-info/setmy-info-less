@@ -19,33 +19,32 @@ Run from the repository root, in order:
 ```shell
 npm install
 npm run audit
-npm run audit fix
+npm audit fix
 npm ci
 npm ls --all
 npm run clean
 #npm run format:check # sequential check: prettier on LESS, then prettier on the rest (CI)
 #npm run format                           # same list, write
-npm run resources                      # profile "local" by default; override with --profile or SMI_PROFILES
-npm run build                          # ng build / lessc / library load check (same profile resolution)
-npm run verify                         # CSS artifacts, ng dist, library Angular/RxJS ban
+npm run build                          # lessc per package -> dist/main.css + dist/main.min.css
+npm run verify                         # CSS artifacts
 npm test                               # unit tier
 npm run pre-integration-test
 npm run integration-test
 npm run post-integration-test
 #smi-selenium-hub
 #smi-selenium-node
-npm run pre-e2e-test                   # serves the BUILT app; needs Java + Selenium Grid
+npm run pre-e2e-test                   # serves each package's built dist/; needs a Selenium Grid
 npm run e2e-test
 npm run post-e2e-test
 npm run coverage                       # unit tier only (Selenium stays out of coverage)
 #npm run lint
 npm run audit
-npm run audit fix
+npm audit fix
 npm run reports
 npm run docs
-npm run package                        # app -> dist/*.tar.gz; libraries -> dist/*.tgz
+npm run package                        # dist/*.tgz, one tarball per package
 npm run deploy -- <dev|test|prelive|live>
-npm run release                        # master only
+npm run release                        # devel* -> -SNAPSHOT to the snapshot registry; master -> release to the release registry
 
 npm pkg fix --workspaces
 
@@ -327,25 +326,24 @@ Using:
 
 ### What each command means here
 
-| Command                    | Tool                           | What                                                                                                                                                                   |
-| -------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm ci`                   | npm                            | lockfile-exact install (Jenkins Preparation / Install)                                                                                                                 |
-| `npm run clean`            | `scripts/clean.js`             | stops test servers; removes `reports/`, `build/`, root `dist/`; leaves tracked `dist/main.css` / `main.min.css`                                                        |
-| `npm run format:check`     | `scripts/format.js`            | sequential formatters, check half (gate): Prettier on LESS, then Prettier on js/cjs/json/md/yml                                                                        |
-| `npm run lint`             | stylelint                      | LESS checkstyle equivalent                                                                                                                                             |
-| `npm run resources`        | `scripts/resources.js`         | `${token}` filtering of an optional `resources/` dir from `profiles/<name>.json` (ADR-0041/0042). Default profile `local`; override with `--profile` or `SMI_PROFILES` |
-| `npm run build`            | lessc + Pug                    | `dist/main.css` + `dist/main.min.css` (`--clean-css`), Pug → demo/fixture pages                                                                                        |
-| `npm run verify`           | `scripts/verify.js`            | CSS-specific: artifacts exist, rule count matches `content` / `skeleton`                                                                                               |
-| `npm test`                 | jest + `node --test`           | unit tier (`src/test/js/unit` + `scripts/test/unit`)                                                                                                                   |
-| `npm run integration-test` | jest                           | against the **built** `dist/main.css`, never against LESS source                                                                                                       |
-| `npm run e2e-test`         | jest + Selenium                | real Firefox through an external Selenium Grid                                                                                                                         |
-| `npm run coverage`         | jest `--coverage`              | unit tier only (e2e needs the grid) → `reports/coverage/`                                                                                                              |
-| `npm run audit`            | `npm audit --audit-level=high` | dependency vulnerability gate                                                                                                                                          |
-| `npm run reports`          | npm                            | `reports/security/`, CycloneDX SBOM, `reports/dependencies.txt`                                                                                                        |
-| `npm run docs`             | KSS                            | living styleguide from LESS comments → `reports/docs/`                                                                                                                 |
-| `npm run package`          | `npm pack --workspaces`        | one tarball per package into `dist/`, plus SHA-256 checksums                                                                                                           |
-| `npm run release`          | `scripts/release.js`           | `npm publish` on `master` (`latest`); already-published versions are skipped, not a failure                                                                            |
-| `npm run deploy -- <env>`  | `scripts/deploy.js`            | install the tarballs into `build/deploy/<env>/` and check the CSS really arrived                                                                                       |
+| Command                    | Tool                           | What                                                                                                            |
+| -------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| `npm ci`                   | npm                            | lockfile-exact install (Jenkins Preparation / Install)                                                          |
+| `npm run clean`            | `scripts/clean.js`             | stops test servers; removes `reports/`, `build/`, root `dist/`; leaves tracked `dist/main.css` / `main.min.css` |
+| `npm run format:check`     | `scripts/format.js`            | sequential formatters, check half (gate): Prettier on LESS, then Prettier on js/cjs/json/md/yml                 |
+| `npm run lint`             | stylelint                      | LESS checkstyle equivalent                                                                                      |
+| `npm run build`            | lessc + Pug                    | `dist/main.css` + `dist/main.min.css` (`--clean-css`), Pug → demo/fixture pages                                 |
+| `npm run verify`           | `scripts/verify.js`            | CSS-specific: artifacts exist, rule count matches `content` / `skeleton`                                        |
+| `npm test`                 | jest + `node --test`           | unit tier (`src/test/js/unit` + `scripts/test/unit`)                                                            |
+| `npm run integration-test` | jest                           | against the **built** `dist/main.css`, never against LESS source                                                |
+| `npm run e2e-test`         | jest + Selenium                | real Firefox through an external Selenium Grid                                                                  |
+| `npm run coverage`         | jest `--coverage`              | unit tier only (e2e needs the grid) → `reports/coverage/`                                                       |
+| `npm run audit`            | `npm audit --audit-level=high` | dependency vulnerability gate                                                                                   |
+| `npm run reports`          | npm                            | `reports/security/`, CycloneDX SBOM, `reports/dependencies.txt`                                                 |
+| `npm run docs`             | KSS                            | living styleguide from LESS comments → `reports/docs/`                                                          |
+| `npm run package`          | `npm pack --workspaces`        | one tarball per package into `dist/`, plus SHA-256 checksums                                                    |
+| `npm run release`          | `scripts/release.js`           | `npm publish` on `master` (`latest`); already-published versions are skipped, not a failure                     |
+| `npm run deploy -- <env>`  | `scripts/deploy.js`            | install the tarballs into `build/deploy/<env>/` and check the CSS really arrived                                |
 
 ## 📤 Publishing
 

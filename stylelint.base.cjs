@@ -12,6 +12,9 @@ function createStylelintConfig({ extraRules = {}, ignoreFiles } = {}) {
         configBasedir: "src/main/less",
         extends: ["stylelint-config-standard"],
         rules: {
+            // Empty rule blocks (`app {}`, `input {}`, the print `body {}`) are deliberate
+            // skeleton placeholders in this design system, not mistakes.
+            "block-no-empty": null,
             "selector-class-pattern": classAndIdPattern,
             "selector-id-pattern": classAndIdPattern,
             "selector-type-no-unknown": [

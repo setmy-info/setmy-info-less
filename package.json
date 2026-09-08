@@ -15,7 +15,6 @@
         "format:check": "node scripts/format.js --check",
         "lint": "stylelint \"packages/*/src/main/less/**/*.less\"",
         "build": "npm run build --workspaces --if-present",
-        "resources": "node scripts/resources.js",
         "verify": "node scripts/verify.js",
         "pre-integration-test": "node scripts/lifecycle.js pre-integration-test",
         "post-integration-test": "node scripts/lifecycle.js post-integration-test",

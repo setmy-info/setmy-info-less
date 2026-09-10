@@ -2,6 +2,7 @@
     "name": "setmy-info-less-ide",
     "version": "5.1.1",
     "description": "SMI LESS IDE \u2014 developer tool and IDE-style UI patterns, builds on the enterprise package",
+<<<<<<< Updated upstream
     "main": "dist/main.min.css",
     "dependencies": {
         "setmy-info-less-enterprise": "*"
@@ -16,6 +17,10 @@
         "watch": "less-watch-compiler ./src/main/less dist main.less",
         "watch:pug": "node ../../scripts/pugWatch.cjs"
     },
+=======
+    "license": "MIT",
+    "author": "Imre Tabur <imre.tabur@mail.ee>",
+>>>>>>> Stashed changes
     "keywords": [
         "less",
         "css",
@@ -23,13 +28,15 @@
         "developer",
         "tools"
     ],
-    "author": "Imre Tabur <imre.tabur@mail.ee>",
-    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/setmy-info/setmy-info-less.git"
     },
     "homepage": "https://github.com/setmy-info/setmy-info-less",
+    "engines": {
+        "node": ">=24.0.0"
+    },
+    "main": "dist/main.min.css",
     "style": "dist/main.css",
     "files": [
         "dist/main.css",
@@ -39,23 +46,26 @@
         "LICENSE",
         "dist/experimental.css"
     ],
-    "engines": {
-        "node": ">=24.0.0"
+    "dependencies": {
+        "setmy-info-less-enterprise": "*"
     },
-    "config": {
-        "server": {
-            "port": 43931,
-            "directory": "dist"
-        },
-        "cssExpectation": "content",
-        "less": {
-            "additionalEntries": [
-                {
-                    "input": "src/main/less/experimental/main.less",
-                    "output": "experimental.css",
-                    "minify": false
-                }
-            ]
-        }
+    "scripts": {
+        "clean": "rimraf --glob \"dist/*.html\" dist/experimental.css coverage docs",
+        "format": "prettier --write .",
+        "lint": "stylelint \"src/main/less/**/*.less\"",
+        "lint:fix": "stylelint \"src/main/less/**/*.less\" --fix",
+        "build:css": "lessc src/main/less/main.less dist/main.css",
+        "build:css:min": "lessc src/main/less/main.less dist/main.min.css --clean-css",
+        "build:css:experimental": "lessc src/main/less/experimental/main.less dist/experimental.css",
+        "build:html": "node ../../tools/pugBuild.cjs",
+        "build": "npm run build:css && npm run build:css:min && npm run build:css:experimental && npm run build:html",
+        "server": "http-server dist -p 43931 -c-1",
+        "watch": "less-watch-compiler ./src/main/less dist main.less",
+        "watch:html": "node ../../tools/pugWatch.cjs",
+        "test": "jest --testMatch \"**/src/test/js/unit/**/*.test.js\"",
+        "integration-test": "jest --testMatch \"**/src/test/js/integration/**/*.test.js\"",
+        "e2e-test": "jest --testMatch \"**/src/test/js/e2e/**/*.e2e.js\" --testTimeout=60000 --maxWorkers=1",
+        "coverage": "jest --testMatch \"**/src/test/js/unit/**/*.test.js\" --coverage --coverageDirectory=coverage",
+        "docs": "kss --source src/main/less --destination docs --css ../dist/main.css"
     }
 }

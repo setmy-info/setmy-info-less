@@ -62,5 +62,6 @@ CSS is not bundled). Load the base stylesheet before this one.
 ```shell
 npm run build
 npm run lint
-npm run verify
+npm run test
+npm run integration-test
 ```

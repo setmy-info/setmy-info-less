@@ -54,6 +54,5 @@ npm run build
 npm run lint
 ```
 
-Note: the `e2e` script is intentionally absent while this package has no CSS of its own.
-Its `package.json` declares `config.cssExpectation: "skeleton"`, so the Verify phase accepts zero rules (an
-intentional placeholder) instead of failing.
+Note: this package is a skeleton - it is wired into the load order but emits no CSS rules of its
+own yet, so `dist/main.css` is intentionally empty.

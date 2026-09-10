@@ -27,5 +27,6 @@ build production CSS on top of this package.
 ```shell
 npm run build
 npm run lint
-npm run verify
+npm run test
+npm run integration-test
 ```

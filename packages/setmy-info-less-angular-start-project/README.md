@@ -81,5 +81,6 @@ both the closed and the open state.
 ```shell
 npm run build
 npm run lint
-npm run verify
+npm run test
+npm run integration-test
 ```

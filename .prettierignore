@@ -1,7 +1,20 @@
+node_modules/
 package-lock.json
+<<<<<<< Updated upstream
 node_modules
 **/dist/**
 **/site/**
 reports/
 build/
 .claude/
+=======
+**/dist/
+**/docs/
+**/coverage/
+
+# LESS formatting is owned by stylelint (`npm run lint` / `lint:fix`), not by
+# prettier: stylelint-config-standard's rule-empty-line-before and prettier
+# disagree about blank lines between rules, and a repo must have exactly one
+# formatter per language. Prettier owns js/cjs/json/md/yml here.
+**/*.less
+>>>>>>> Stashed changes

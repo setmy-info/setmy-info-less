@@ -38,5 +38,6 @@ The IDE package now owns the NetBeans-style frame selectors such as
 ```shell
 npm run build
 npm run lint
-npm run verify
+npm run test
+npm run integration-test
 ```

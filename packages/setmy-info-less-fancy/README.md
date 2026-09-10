@@ -46,5 +46,6 @@ until they pass the refactorial validation process; they will be promoted back h
 ```shell
 npm run build
 npm run lint
-npm run verify
+npm run test
+npm run integration-test
 ```

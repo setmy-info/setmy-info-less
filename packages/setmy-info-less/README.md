@@ -107,7 +107,7 @@ never overlap:
 npm run build
 npm run lint
 npm run test
-npm run verify
+npm run integration-test
 ```
 
 E2E tests require a running Selenium Grid. Start it before calling `npm run e2e`:

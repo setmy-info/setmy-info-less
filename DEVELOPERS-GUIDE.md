@@ -184,7 +184,11 @@ Firefox and Chrome/Edge are the dominant pair. Safari matters for users on macOS
 Practical targets for this framework:
 
 - **Firefox** — primary tested baseline (all E2E tests run here)
+<<<<<<< Updated upstream
 - **Chrome / Edge** — best-effort; add a Chromium Selenium run when cross-browser parity matters
+=======
+- **Chrome / Edge** — best-effort; add one Chromium grid node when cross-browser parity matters
+>>>>>>> Stashed changes
 - **Safari** — best-effort; most modern CSS used here is supported in Safari 15+
 - **Internet Explorer** — not supported; no fallbacks are maintained
 
@@ -193,13 +197,18 @@ Important notes:
 - Flexbox-based helpers assume modern browser support.
 - `calc(...)`, `margin-block`, and gradient usage mean very old browsers may not render identically.
 - There is currently no explicit `browserslist` policy and no Autoprefixer pipeline.
+<<<<<<< Updated upstream
 - Selenium e2e currently verifies Firefox behavior only.
+=======
+- E2E tests currently verify Firefox behavior only.
+>>>>>>> Stashed changes
 
 If stronger legacy support is needed, define exact browser versions first and then introduce compatibility work from
 that requirement.
 
 ## Build and verification flow
 
+<<<<<<< Updated upstream
 This repo uses the same **npm command set and Jenkinsfile 1.2.0 stages** as `setmy.info-js`. The tools behind each
 command are the LESS/CSS ones. The full ordered command list lives in `README.md` ("Lifecycle").
 
@@ -215,12 +224,32 @@ command are the LESS/CSS ones. The full ordered command list lives in `README.md
 ### Test stack, by tier
 
 This repo's `src/main` / `src/test` layout:
+=======
+This is a plain npm-workspaces monorepo: every step is an ordinary npm script, run from the root and fanned out
+over the packages with `--workspaces --if-present`. The full command list lives in `README.md` ("Root commands"),
+and `./build.sh` runs them in order.
+
+### CSS and HTML generation
+
+- `npm run build` compiles LESS with `lessc` into `dist/main.css`, and again with `--clean-css` into
+  `dist/main.min.css` — then generates the Pug demo/fixture pages into `dist/`.
+- `npm run clean` removes only what the build generates on top of the tracked artifacts — the Pug demo pages
+  (`dist/*.html`), the ide package's `dist/experimental.css`, plus `coverage/` and `docs/`. `dist/main.css` and
+  `dist/main.min.css` are tracked in git and are simply rewritten by the next build.
+- The KSS living styleguide is **not** part of the build — it is generated documentation, produced by
+  `npm run docs` into each package's git-ignored `docs/`.
+
+### Test stack, by tier
+
+The `src/main` / `src/test` layout this repo has always used:
+>>>>>>> Stashed changes
 
 - **Unit** — `src/test/js/unit/*.test.js`, jest. Assertions about the package's own source and manifest; no build
   output involved. Run by `npm test`. Tooling tests under `scripts/test/unit` run with `node --test`.
 - **Integration** — `src/test/js/integration/*.test.js`, jest. Runs against the **built** `dist/main.css`, so it
   fails if the build was skipped. That is the point of the tier.
 - **E2E** — `src/test/js/e2e/*.e2e.js`, jest + `selenium-webdriver` driving a real Firefox through an external
+<<<<<<< Updated upstream
   Selenium Grid. Bracket the tier with `npm run pre-e2e-test` / `post-e2e-test` (defined in
   `scripts/lifecycle.js`). Post steps are idempotent: CI runs them again after a failed tier, and `npm run clean`
   runs them first. Jenkins also runs both post phases in `post { always }`.
@@ -228,12 +257,22 @@ This repo's `src/main` / `src/test` layout:
   `packages/` root so cross-package hrefs like `../../setmy-info-less/dist/main.css` resolve. The `pre-e2e-test`
   server serves only its own package's `dist`, so no e2e test connects to it today; it is kept for the manual
   `npm run server` workflow and as the lifecycle slot for when page serving moves out of `pageHelper`.
+=======
+  Selenium Grid. The `e2e-test` script pins `--maxWorkers=1`: the grid has a session cap and `pageHelper.cjs`
+  keeps module-level state, so e2e suites must not run in parallel. It also raises `--testTimeout` to 60s,
+  because a real browser round-trip does not fit the 5s default.
+- E2E page serving is `tools/pageHelper.cjs`'s own ephemeral express server, started per test file at the
+  `packages/` root so cross-package hrefs like `../../setmy-info-less/dist/main.css` resolve, and torn down in
+  `pageClose()`. Nothing has to be started or stopped around `npm run e2e-test`. For browsing the pages by hand,
+  `npm run server --workspace <pkg>` serves that package's `dist/` on its own port (see README "Ports").
+>>>>>>> Stashed changes
 - E2E assertions are exact pixel geometry, which is safe for block layout but **not** for text: a shrink-wrapped
   inline element measures whatever font the grid node actually has installed (`DejaVu Serif` is absent on stock
   Fedora and most Selenium images, so the stack falls through to Arial). Assert the property under test — the
   centring, the alignment — not the text's own width. See `centerText.e2e.js`.
 - Gherkin DTOs: readable BDD scenarios held as data objects (`scripts/gherkin/`) and executed as Jest e2e tests;
   `toGherkin()` serializes them back into `.feature` text when needed.
+<<<<<<< Updated upstream
 - `prettier` then `stylelint --fix` in `npm run format` / `format:check` on `.less` (this repo's main sources), then
   prettier on js/cjs/json/md/yml. Stylelint-config-standard is not relaxed for Prettier; `--fix` plus source
   edits must leave a tree that already passes `npm run lint` (stylelint without `--fix`).
@@ -241,6 +280,15 @@ This repo's `src/main` / `src/test` layout:
 
 `npm run verify` is CSS-specific: the built artifacts exist and each package's rule count matches its declared
 `content` / `skeleton` expectation.
+=======
+- `stylelint` is the lint gate (`npm run lint`) and also owns `.less` formatting — prettier is excluded from
+  `.less` on purpose, see README "Notes".
+- Playwright is **not** in use.
+
+Each check is its own command — `format:check`, `lint`, `test`, `integration-test`, `e2e-test`, `coverage`,
+`audit`, `docs`. `npm run validate` is the quick pre-commit pair (`format:check` + `lint`); `./build.sh` runs
+everything in order.
+>>>>>>> Stashed changes
 
 ## Code documentation and generation from comments
 
@@ -313,14 +361,22 @@ KSS comment format (add above any class you want in the styleguide):
 Generate the styleguide:
 
 ```shell
+<<<<<<< Updated upstream
 # The Docs command does this for every package, into reports/docs/
+=======
+# Does this for every package, into that package's docs/
+>>>>>>> Stashed changes
 npm run docs
 ```
 
 ### Generating living examples with Pug (already in the project)
 
 The project already generates HTML from Pug templates under `src/test/pug/`. Each Pug file produces a
+<<<<<<< Updated upstream
 corresponding HTML page in `dist/` that is both a visual example and a Selenium e2e fixture.
+=======
+corresponding HTML page in `dist/` that is both a visual example and an e2e test fixture.
+>>>>>>> Stashed changes
 
 This is already the primary documentation mechanism. Extend it by:
 

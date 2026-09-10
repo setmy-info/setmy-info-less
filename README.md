@@ -160,6 +160,7 @@ token names, LESS variable names): breaking changes require a major version bump
 The unstable modules give no such guarantees — class names, file layout, and import paths may change in any release. Do
 not take a production dependency on them.
 
+<<<<<<< Updated upstream
 `setmy-info-less-experimental` depends on `setmy-info-less-enterprise`, so all stable tokens and rules stay in scope,
 which also makes moving code between it and any stable module straightforward. Its `ui/`, `forms/`, and `data/`
 subdirectories keep the names of the removed packages they came from.
@@ -170,6 +171,9 @@ stays unstable until that migration settles.
 
 - Developer documentation: `DEVELOPERS-GUIDE.md`
 - Review notes: `review.md`, `review3.md` (historical)
+=======
+- Developer documentation: `DEVELOPERS-GUIDE.md`
+>>>>>>> Stashed changes
 
 ## Usage
 
@@ -322,6 +326,7 @@ Using:
 - [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+<<<<<<< Updated upstream
 ## Lifecycle
 
 ### What each command means here
@@ -374,6 +379,181 @@ Only the CSS is published: each package's `files` allowlist is `dist/main.css`, 
 - **Coverage is the unit tier only**, because e2e needs the Selenium grid.
 - SHA-256 checksums of the packed tarball live next to it in `dist/`; they are a labelled placeholder, not a real
   signature. Deploy installs tarballs into `build/deploy/<env>/` and is not wired to a real host yet.
+=======
+### 🔧 Setup
+
+```shell
+# Install all workspace dependencies (run from the repository ROOT, never from a package)
+npm install
+
+# Or, reproducibly, from the lock file
+npm ci
+```
+
+The whole toolchain (lessc, stylelint, kss, jest, prettier, selenium-webdriver, pug) is declared **once at the
+repository root** and hoisted into the single root `node_modules`. Packages declare no devDependencies of their own -
+one toolchain, one version, like the `setmy.info-js` / `-python` / `-elixir` siblings.
+
+E2E tests additionally need **Java** and an external **Selenium Grid** running before `npm run e2e-test`:
+
+```shell
+smi-selenium-hub
+smi-selenium-node
+
+export SELENIUM_HUB_URL=http://localhost:4444/wd/hub   # optional overrides
+export SELENIUM_BROWSER=firefox
+export SELENIUM_BROWSER_BINARY="/path/to/librewolf"     # resolved on the GRID NODE, not locally
+```
+
+## Scripts
+
+    ./build.sh                  # every step below, in order
+    ./clean.sh                  # npm run clean + remove node_modules
+    ./release.sh                # ./build.sh + npm publish --dry-run
+
+## Root commands
+
+Run from the repository root. Each one fans out over every workspace package.
+
+    npm ci
+    npm run clean
+    npm run format
+    npm run format:check
+    npm run lint                # stylelint over every package's src/main/less
+    npm run lint:fix
+    npm run validate            # format:check + lint
+    npm run build               # LESS -> dist/main.css + dist/main.min.css, Pug -> demo pages
+    npm test                    # unit tier
+    npm run integration-test    # integration tier
+    npm run e2e-test            # e2e tier, needs the Selenium grid
+    npm run coverage
+    npm run audit               # npm audit --audit-level=high
+    npm run docs                # KSS living styleguide
+    npm run release             # npm publish --workspaces
+
+The three test tiers are separate commands and are always run one at a time, in that order.
+
+## Single module
+
+    npm run build --workspace setmy-info-less
+    npm run lint --workspace setmy-info-less-ide
+    npm test --workspace setmy-info-less
+    npm run integration-test --workspace setmy-info-less
+    npm run e2e-test --workspace setmy-info-less
+    npm run coverage --workspace setmy-info-less
+    npm run docs --workspace setmy-info-less
+    npm run server --workspace setmy-info-less    # http://127.0.0.1:43531
+
+## Module scripts
+
+    clean build:css build:css:min build:html build server
+    test integration-test e2e-test coverage
+    format lint lint:fix docs
+    watch watch:html
+
+`setmy-info-less-ide` additionally has `build:css:experimental`, which compiles its second,
+non-minified `dist/experimental.css` bundle.
+
+## Ports
+
+    setmy-info-less                          server 43531
+    setmy-info-less-extended                 server 43631
+    setmy-info-less-fancy                    server 43731
+    setmy-info-less-enterprise               server 43831
+    setmy-info-less-ide                      server 43931
+    setmy-info-less-experimental             server 44031
+    setmy-info-less-angular-start-project    server 44131
+
+## Quality tooling
+
+| Concern             | Tool                        | Command                           |
+| ------------------- | --------------------------- | --------------------------------- |
+| Formatting          | prettier (js/cjs/json/md)   | `npm run format` / `format:check` |
+| CSS lint / format   | stylelint + stylelint-less  | `npm run lint` / `lint:fix`       |
+| Unit tests          | jest                        | `npm test`                        |
+| Integration tests   | jest, against built `dist/` | `npm run integration-test`        |
+| E2E tests           | jest + Selenium WebDriver   | `npm run e2e-test`                |
+| Coverage            | jest `--coverage` (lcov)    | `npm run coverage`                |
+| Dependency security | `npm audit`                 | `npm run audit`                   |
+| Documentation       | KSS living styleguide       | `npm run docs`                    |
+
+`coverage/` and `docs/` are generated per package and git-ignored.
+
+Configuration lives in two places only, and there is none inside the packages:
+
+- `stylelint.config.mjs` at the repository root - one lint configuration for every package,
+  the same way the sibling `setmy.info-js` repo keeps a single root `eslint.config.mjs`.
+- the jest test globs, written directly into each package's `test` / `integration-test` /
+  `e2e-test` / `coverage` scripts, so the tier a command runs is readable from `package.json`
+  without opening a config file.
+
+## Test pyramid
+
+- `src/main/less/` - the LESS sources, `main.less` is every package's single entry point
+- `src/test/pug/` - Pug sources for the demo/fixture pages built into `dist/`
+- `src/test/js/unit/` - unit tier (manifest/source assertions, no build output)
+- `src/test/js/integration/` - integration tier, against the built `dist/main.css`
+- `src/test/js/e2e/` - e2e tier, Selenium against a real browser
+
+The e2e tier serves the built pages itself (`tools/pageHelper.cjs` starts an Express static
+server on an ephemeral port per suite and tears it down afterwards), so no server has to be
+started or stopped around `npm run e2e-test`.
+
+E2E specs come in two flavours that assert the same things: a plain jest style (`*.e2e.js`) and
+a Gherkin-style DSL (`*.gherkin.e2e.js`, see `tools/gherkin/`).
+
+## 📤 Publishing
+
+`npm run release` runs `npm publish --workspaces`; `./release.sh` builds first and then does a
+`--dry-run`. Publish order matters (a package must exist on the registry before its dependents):
+base → extended → fancy → enterprise → angular-start-project → ide → experimental.
+
+Only the CSS is published: each package's `files` allowlist is `dist/main.css`,
+`dist/main.min.css`, `README.md`, `LICENSE`. The Pug demo pages and the KSS styleguide are not
+shipped.
+
+## Notes
+
+- **`dist/main.css` and `dist/main.min.css` are tracked in git** (the 1.0.0-dist decision).
+  `clean` therefore removes only the _other_ generated things inside `dist/` (the Pug demo
+  pages, and `experimental.css` in the ide package) and leaves the two tracked CSS files for
+  `build` to rewrite.
+- **LESS files are formatted by stylelint, not prettier.** `stylelint-config-standard`'s
+  `rule-empty-line-before` and prettier disagree about blank lines between rules; one formatter
+  per language, so `.less` is in `.prettierignore` and `npm run lint` / `lint:fix` owns it.
+- **The e2e tier needs external infrastructure** (Java + Selenium Grid). It is a real browser
+  test on purpose - CSS correctness cannot be asserted without a rendering engine.
+- **Packages are versioned and released together** at one version.
+
+## Load order
+
+The actual import tree as of the current codebase (`main.less` → group index → individual files):
+
+    main.less
+      values/index.less
+        colors/index.less
+        fonts/index.less
+      html/index.less
+        html.less
+      utility/index.less
+        visibility.less
+        spacing.less
+        sizing.less
+        layout.less
+        scroll.less
+        text.less
+        cursor.less
+        panels.less
+        visual-style.less
+        notes.less
+      devices/index.less
+        print.less
+        watch.less
+        phone.less
+        pad.less
+      components/index.less
+        application.less
+>>>>>>> Stashed changes
 
 ## Changed
 
@@ -392,23 +572,22 @@ Some class names were updated after v1.0.0. If you're upgrading, search and repl
   `!important` to force the stretch behavior over a competing rule, ensure the panel class is loaded after that rule, or
   raise its selector specificity.
 
-## Project was created
+## Toolchain
 
-Project creation steps and commands:
+The whole toolchain is declared once at the repository root and hoisted into a single
+`node_modules`; the packages declare no devDependencies of their own.
 
 ```shell
-npm init --yes
-npm i less --save-dev
-npm i less-plugin-clean-css --save-dev
-npm i less-watch-compiler --save-dev
-npm i express --save-dev
-npm i jest --save-dev
-npm i playwright --save-dev
-npm i @playwright/test@latest --save-dev
-npm i pug --save-dev
-npm i rimraf --save-dev
-npx playwright install
+npm i --save-dev less less-plugin-clean-css less-watch-compiler   # LESS -> CSS
+npm i --save-dev stylelint stylelint-config-standard stylelint-less postcss-less
+npm i --save-dev prettier                                          # js/cjs/json/md/yml
+npm i --save-dev jest selenium-webdriver express                   # test tiers
+npm i --save-dev pug                                               # demo/fixture pages
+npm i --save-dev kss                                               # living styleguide
+npm i --save-dev http-server rimraf
 ```
+
+Playwright was used for e2e before the move to Selenium Grid and is no longer a dependency.
 
 ## TODO
 

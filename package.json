@@ -1,5 +1,6 @@
 {
     "name": "setmy-info-less-modules",
+<<<<<<< Updated upstream
     "version": "5.1.1",
     "description": "SMI LESS/CSS framework monorepo - layered LESS modules",
     "license": "MIT",
@@ -33,11 +34,45 @@
         "server": "node scripts/http-server.js",
         "stop-server": "node scripts/http-server.js stop"
     },
+=======
+    "version": "5.0.0",
+    "description": "SMI LESS/CSS framework monorepo - layered LESS modules",
+    "license": "MIT",
+    "private": true,
+    "packageManager": "npm@10.9.2",
+    "keywords": [
+        "less",
+        "css",
+        "framework"
+    ],
+    "author": "Imre Tabur <imre.tabur@mail.ee>",
+    "type": "module",
+>>>>>>> Stashed changes
     "engines": {
         "node": ">=24.0.0"
     },
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "clean": "npm run clean --workspaces --if-present",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "lint": "npm run lint --workspaces --if-present",
+        "lint:fix": "npm run lint:fix --workspaces --if-present",
+        "validate": "npm run format:check && npm run lint",
+        "build": "npm run build --workspaces --if-present",
+        "test": "npm run test --workspaces --if-present",
+        "integration-test": "npm run integration-test --workspaces --if-present",
+        "e2e-test": "npm run e2e-test --workspaces --if-present",
+        "coverage": "npm run coverage --workspaces --if-present",
+        "audit": "npm audit --audit-level=high",
+        "docs": "npm run docs --workspaces --if-present",
+        "release": "npm publish --workspaces"
+    },
     "devDependencies": {
         "express": "^5.2.1",
+        "http-server": "^14.1.1",
         "jest": "^30.4.2",
         "jest-junit": "^17.0.0",
         "kss": "^3.1.0",

@@ -74,6 +74,8 @@ pipeline {
 
     E2E NOTE: the e2e tier drives a real browser through an EXTERNAL Selenium Grid
     (SELENIUM_HUB_URL, default http://localhost:4444/wd/hub) plus Java on the grid host.
+    The browser runs headless by default (SELENIUM_HEADLESS=false for visible windows), so the
+    grid host needs no display.
     The agent running this file needs that grid reachable. If no grid is available on an
     agent, gate the e2e commands behind a `when { expression { env.SELENIUM_HUB_URL } }`
     rather than dropping them from this stage - a missing test tier should be visible, not

@@ -167,6 +167,9 @@ footer > div > ul > li > div.envBadge {
   border: 1px solid #cccccc;
   border-radius: 6px;
 }
+footer > div > ul > li > i.material-symbols-outlined {
+  line-height: 50px;
+}
 /* Base tokens are imported once by main.less — do not re-import them here. */
 #headerPanel {
   height: auto;
@@ -411,7 +414,7 @@ main {
   border-radius: 50%;
 }
 #sideNavigationHeaderPanel > ul > li > button > i {
-  font-family: "Material Symbols Outlined", sans-serif;
+  font-family: "Material Symbols Outlined";
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -661,3 +664,113 @@ so importing it from several views does not duplicate the rules).
 /* terms.component — no rules yet; mirrors the empty file in the Angular workspace. */
 /* tools.component — no rules yet; mirrors the empty file in the Angular workspace. */
 /* view-not-found.component — no rules yet; mirrors the empty file in the Angular workspace. */
+.articleBody img {
+  display: block;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  margin: 20px 0;
+}
+.applicationContentMain {
+  min-height: calc(100% - 70px);
+  padding: 10px;
+  margin: 0;
+  overflow-x: auto;
+}
+.applicationContentMain article {
+  margin: auto;
+  max-width: 1024px;
+  width: auto;
+  box-shadow: 0 0 2px #333;
+  background: white;
+  color: #141412;
+  font-size: 105%;
+  line-height: 1.7;
+}
+.applicationContentMain article > div.articleSectionPanel {
+  padding: 10px;
+}
+.applicationContentMain article > div.articleSectionPanel > section > :last-child {
+  margin-bottom: 0;
+}
+.applicationContentMain article > div.articleSectionPanel > section > :first-child {
+  margin-top: 0;
+}
+.applicationContentMain article > div.sectionHeaderPicture {
+  padding: 0;
+  margin: 0;
+}
+.sectionHeaderPicture {
+  height: 450px;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: calc(100% - 20px);
+  border-top: solid 10px white;
+  border-left: solid 10px white;
+  border-right: solid 10px white;
+}
+.applicationContentMain article > div.articleSectionPanel > section ul:not(.detailsLevelList),
+.applicationContentMain article > div.articleSectionPanel > section ol {
+  margin-left: 17px;
+}
+.articleOverviewContentBox {
+  width: 255px;
+  height: 200px;
+  margin: 8px;
+  padding: 5px;
+  overflow: hidden;
+  font-weight: normal;
+}
+.articleOverviewContentBox:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+.articleOverviewContentBoxWindow {
+  width: 100%;
+  height: 130px;
+  overflow: hidden;
+}
+.articleOverviewContentBoxPicture {
+  width: 100%;
+  height: 130px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.articleOverviewContentBoxPicture:hover {
+  transform: scale(1.1);
+  transition-duration: 0.25s;
+}
+.articleOverviewContentBoxShadow {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+}
+.articleOverviewContentBoxText {
+  padding: 10px;
+}
+.applicationContentMain article > div.articleSectionPanel > section > div.articleOverviewGrid {
+  display: block;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+}
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: block;
+  src: url('/fonts/material-symbols-outlined.woff2') format('woff2');
+}
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  direction: ltr;
+  vertical-align: middle;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 1;
+}

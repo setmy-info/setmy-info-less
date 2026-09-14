@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+- E2E tests now drive the browser **headless** by default (`scripts/pageHelper.cjs`), so a run opens
+  no browser windows and the same command works on a headless CI agent. Set `SELENIUM_HEADLESS=false`
+  (or `0`/`no`/`off`) to get visible windows back for watching a layout.
+
+### Fixed
+
+- `pageHelper`'s `allStyles` computed-style snapshot now backfills CSS **shorthands** via
+  `getPropertyValue()`. `getComputedStyle`'s indexed list enumerates longhands only, so when Firefox
+  155 made `vertical-align` a shorthand (for `baseline-source` / `alignment-baseline` /
+  `baseline-shift`, CSS Inline Layout 3) the detail-level-panel e2e and Gherkin tests began failing
+  with `undefined` on a browser upgrade alone, with no CSS change behind it.
+
 ## [5.0.0] - 2026-07-12
 
 Major, **backwards-incompatible** release. All packages are versioned together at `5.0.0`.

@@ -228,6 +228,14 @@ This repo's `src/main` / `src/test` layout:
   `packages/` root so cross-package hrefs like `../../setmy-info-less/dist/main.css` resolve. The `pre-e2e-test`
   server serves only its own package's `dist`, so no e2e test connects to it today; it is kept for the manual
   `npm run server` workflow and as the lifecycle slot for when page serving moves out of `pageHelper`.
+- E2E runs the browser **headless** by default, so a run opens no windows and works unchanged on a headless CI
+  agent. Set `SELENIUM_HEADLESS=false` (also `0`/`no`/`off`) for a visible browser when a layout has to be watched
+  rather than only asserted. Headless Gecko uses the same layout engine, so the geometry and computed styles the
+  tests assert are identical.
+- `pageHelper`'s `allStyles` snapshot is built from `getComputedStyle`'s indexed list, which enumerates
+  **longhands only**; shorthands are backfilled explicitly via `getPropertyValue()`. Assert longhands where you
+  can — a shorthand missing from the snapshot reads back as `undefined`, which looks like broken CSS but is not.
+  Which properties are shorthands moves with the browser: Firefox 155 turned `vertical-align` into one.
 - E2E assertions are exact pixel geometry, which is safe for block layout but **not** for text: a shrink-wrapped
   inline element measures whatever font the grid node actually has installed (`DejaVu Serif` is absent on stock
   Fedora and most Selenium images, so the stack falls through to Arial). Assert the property under test — the

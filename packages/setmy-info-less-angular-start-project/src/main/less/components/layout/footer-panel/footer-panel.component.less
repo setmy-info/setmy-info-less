@@ -69,3 +69,23 @@ footer > div > ul > li > div.envBadge {
     border: 1px solid @tertiaryColor;
     border-radius: @defaultBorderRadius;
 }
+
+// ============================================================
+// FOOTER COPYRIGHT ICON
+// ============================================================
+// The © in the footer is painted about 13px above the text beside it. `footer > div > ul > li >
+// i` intends the icon to be a 50px table-cell, but the icon also carries
+// `.material-symbols-outlined`, whose `display: inline-block` outranks that rule (0,1,0 beats
+// 0,0,5). It therefore stays an inline-block that is 50px tall — the height DOES apply, nothing
+// overrides it — with a 24px line box sitting at the TOP of those 50px, so the glyph rides high
+// while its sibling <a>, a real table-cell with `vertical-align: middle`, is centred.
+//
+// Giving the line box the full height centres the glyph within it. The selector carries the
+// class so it outranks `.material-symbols-outlined { line-height: 1 }`, which the plain element
+// selector would lose to.
+//
+// The proper home for this is setmy-info-less-angular-start-project, alongside the rule it
+// corrects; it lives here until that module is released with the fix.
+footer > div > ul > li > i.material-symbols-outlined {
+    line-height: 50px;
+}

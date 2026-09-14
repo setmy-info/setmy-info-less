@@ -15,6 +15,14 @@ const BROWSER_BINARY = process.env.SELENIUM_BROWSER_BINARY || "";
 // Open-EID machines) must be accepted once by hand and then stay accepted. Also resolved ON THE
 // GRID NODE. The profile is used in place, so no other browser may hold it open during a run.
 const BROWSER_PROFILE = process.env.SELENIUM_BROWSER_PROFILE || "";
+// Run the browser HEADLESS (the default) so an e2e run does not steal focus or open windows on the
+// grid node's desktop, and so the same command works on a headless CI agent. Set
+// SELENIUM_HEADLESS=false (or 0/no/off) to get visible windows back when a layout has to be WATCHED
+// rather than only asserted. Headless Gecko renders through the same layout engine, so geometry,
+// fonts and computed styles — what these tests assert — are unchanged.
+const HEADLESS = !/^(0|false|no|off)$/i.test(
+    process.env.SELENIUM_HEADLESS ?? "true",
+);
 const WINDOW_WIDTH = 2000;
 const WINDOW_HEIGHT = 1200;
 
@@ -125,6 +133,12 @@ async function pageIsRendered() {
     getPath();
 
     const options = new firefox.Options();
+    if (HEADLESS) {
+        // Gecko's own single-dash flag. selenium-webdriver dropped Options#setHeadless in 4.10,
+        // so the argument is the supported route; it is also what the Chromium-side
+        // "--headless" maps to, should BROWSER ever be switched.
+        options.addArguments("-headless");
+    }
     if (BROWSER_BINARY) {
         options.setBinary(BROWSER_BINARY);
     }
@@ -189,6 +203,26 @@ async function elementIdIs(elementId) {
             "var rect = el.getBoundingClientRect();" +
             "var allStyles = {};" +
             "for (var i = 0; i < style.length; i++) { var p = style[i]; allStyles[p] = style.getPropertyValue(p); }" +
+            // getComputedStyle's INDEXED list enumerates longhands only, so a shorthand asserted
+            // by name is simply absent from allStyles and reads back as undefined — an assertion
+            // failure that looks like broken CSS but is not. Which properties count as shorthands
+            // is a moving target: Firefox 155 turned `vertical-align` into one (for
+            // baseline-source / alignment-baseline / baseline-shift, CSS Inline Layout 3), so a
+            // test that had passed for releases started failing on a browser upgrade alone.
+            // getPropertyValue() resolves shorthands regardless, so backfill the ones tests are
+            // likely to name. Unknown/unsupported properties return "" and are skipped.
+            "var shorthands = ['vertical-align', 'margin', 'padding', 'border', 'border-width'," +
+            " 'border-style', 'border-color', 'border-radius', 'background', 'font', 'flex'," +
+            " 'flex-flow', 'gap', 'grid', 'grid-area', 'grid-template', 'inset', 'overflow'," +
+            " 'place-items', 'place-content', 'list-style', 'transition', 'animation'," +
+            " 'text-decoration', 'outline', 'columns'];" +
+            "for (var j = 0; j < shorthands.length; j++) {" +
+            "  var sp = shorthands[j];" +
+            "  if (allStyles[sp] === undefined) {" +
+            "    var sv = style.getPropertyValue(sp);" +
+            '    if (sv !== "" && sv !== null) { allStyles[sp] = sv; }' +
+            "  }" +
+            "}" +
             "return {" +
             '  margin: style.marginTop + " " + style.marginRight + " " + style.marginBottom + " " + style.marginLeft,' +
             '  padding: style.paddingTop + " " + style.paddingRight + " " + style.paddingBottom + " " + style.paddingLeft,' +

@@ -625,6 +625,15 @@ so importing it from several views does not duplicate the rules).
 .applicationContentMain article a:visited {
   color: #696969;
 }
+.applicationContentMain article a:active {
+  color: lime;
+}
+.applicationContentMain article a:link:hover {
+  background-color: white;
+}
+.applicationContentMain article a:visited:hover {
+  background-color: white;
+}
 .applicationContentMain > article > div.articleSectionPanel > section > div > div.textPanel > a {
   font-family: DejaVu Serif, Roboto, Arial, Noto Sans, Noto, sans-serif;
   font-size: 14px;

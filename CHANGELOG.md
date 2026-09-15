@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.2.4] - 2026-09-15
+
+### Fixed
+
+- `setmy-info-less-angular-start-project`: the article link states `a:link:hover`,
+  `a:visited:hover` (white background) and `a:active` (lime text) from the old site's
+  `article.less` are back in `views/shared/detail-rows.less`; only `a`, `a:link` and `a:visited`
+  had been carried over, so the article overview cards no longer turned lime on mouse-down.
+
+## [5.2.3] - 2026-09-15
+
 ### Added
 
 - `setmy-info-less-angular-start-project`: the home view's section-opening picture

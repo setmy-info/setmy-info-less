@@ -65,6 +65,23 @@
     color: #696969;
 }
 
+// The remaining link states of the old site's article.less. The hover rules paint the link's
+// background the article's own white, so on the article they are invisible — they exist so a
+// link never inherits some other background on hover. `:active` is the one that shows: the
+// article overview cards (a whole card is one <a>) turn their caption lime while the mouse
+// button is down, which is the visual cue that the card has been grabbed.
+.applicationContentMain article a:active {
+    color: lime;
+}
+
+.applicationContentMain article a:link:hover {
+    background-color: white;
+}
+
+.applicationContentMain article a:visited:hover {
+    background-color: white;
+}
+
 .applicationContentMain > article > div.articleSectionPanel > section > div > div.textPanel > a {
     font-family: @fontFamily;
     font-size: 14px;

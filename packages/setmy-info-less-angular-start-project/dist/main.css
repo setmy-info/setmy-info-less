@@ -703,12 +703,6 @@ so importing it from several views does not duplicate the rules).
 /* terms.component — no rules yet; mirrors the empty file in the Angular workspace. */
 /* tools.component — no rules yet; mirrors the empty file in the Angular workspace. */
 /* view-not-found.component — no rules yet; mirrors the empty file in the Angular workspace. */
-.articleBody img {
-  display: block;
-  border: 1px solid #cccccc;
-  border-radius: 6px;
-  margin: 20px 0;
-}
 .applicationContentMain {
   min-height: calc(100% - 70px);
   padding: 10px;

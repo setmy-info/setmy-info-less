@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Removed
+
+- `setmy-info-less-angular-start-project`: the `.articleBody img` placeholder rule in `misc.less`.
+  The Angular start project's views render a bare `<article>`; nothing sets the `articleBody`
+  class any more, so the rule matched nothing.
+
 ## [5.2.4] - 2026-09-15
 
 ### Fixed

@@ -1,1 +1,75 @@
-/* home.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* home.component */
+
+// Both rules below are ports from the old site's LESS (style/src/less/components/article.less
+// and style/src/less/pages/homePage.less). Tokens come from the base `values/index.less` that
+// main.less imports once for the whole delta; the two values with no base token are declared
+// here, the way misc.less declares the article overview box sizes.
+
+// Width of the picture that opens a section; the old site's `div.imagePanel { max-width: 350px }`.
+@sectionImageWidth: 350px;
+// Text colour of the home page pull-quote and its attribution; the old site's darkslategray.
+@quoteTextColor: darkslategray;
+
+// ============================================================
+// SECTION-OPENING PICTURE
+// ============================================================
+// `<div class="imagePanel"><img class="sectionImage"></div>` in front of the prose. The picture
+// sits in the section's top-left corner, the text runs up its right side and closes underneath
+// once it passes the image height.
+//
+// The float lives on the img, not on the .imagePanel wrapper — exactly as the old rule had it.
+// The wrapper stays an unfloated block so it collapses to zero height, which is what lets the
+// following prose start alongside the image instead of below the wrapper.
+.applicationContentMain article > div.articleSectionPanel > section {
+    div.imagePanel {
+        // detail-rows.less styles EVERY direct div child of a section as a 40px icon/label/value
+        // row (`… > section > div { width: 100%; height: 40px; display: table }`), and that
+        // catches .imagePanel too. `display: table` establishes a block formatting context, which
+        // CONTAINS the float instead of letting it escape, and the row height pins the box — so
+        // the picture ends up boxed above the prose. The three resets are load-bearing, not
+        // tidiness: without them the float never reaches the text. On the old site those row
+        // rules were scoped to the contact page's own LESS, so they never touched the home page.
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: @sectionImageWidth;
+
+        img.sectionImage {
+            float: left;
+            width: 100%;
+            display: inline-block;
+            padding-right: @defaultPadding;
+        }
+    }
+
+    // With the picture in front, the section's first child is .imagePanel, and the heading
+    // behind it is nobody's first child — the old site's heading sat first inside a per-language
+    // wrapper div and was zeroed by `*:first-child` there. Without this, its `margin-block`
+    // collapses up through the zero-height wrapper and pushes the whole section, picture
+    // included, down by a heading margin.
+    div.imagePanel + * {
+        margin-top: 0;
+    }
+}
+
+// ============================================================
+// PULL-QUOTE
+// ============================================================
+// `<figure><blockquote>…</blockquote><figcaption>…</figcaption></figure>` in the home page prose.
+// setmy-info-less-extended ships a `.blockquote` CLASS, which never matches the bare
+// <blockquote> ELEMENT this markup uses, and nothing styles <figcaption> at all — without these
+// the quote renders as ordinary prose at the browser's default 40px indent.
+.applicationContentMain.homePage > article > div.articleSectionPanel > section {
+    blockquote {
+        margin-left: @defaultMargin;
+        margin-right: @defaultMargin;
+        font-style: italic;
+        color: @quoteTextColor;
+    }
+
+    figcaption {
+        margin-left: @defaultMargin;
+        color: @quoteTextColor;
+        font-weight: bold;
+    }
+}

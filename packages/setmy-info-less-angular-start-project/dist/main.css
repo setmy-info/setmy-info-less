@@ -566,6 +566,7 @@ so importing it from several views does not duplicate the rules).
 /* articles.component — no rules yet; mirrors the empty file in the Angular workspace. */
 /* auth-callback.component — no rules yet; mirrors the empty file in the Angular workspace. */
 /* commercials.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* contact.component */
 /* Icon / label / value line style, shared with the settings view. */
 /*
  * Icon / label / value rows shared by the contact and the settings views.
@@ -632,8 +633,37 @@ so importing it from several views does not duplicate the rules).
 .applicationContentMain > article > div.articleSectionPanel > section > div > div.textPanel > a + a {
   margin-left: 10px;
 }
+.applicationContentMain.contactsPage > article > div.articleSectionPanel > section > div > div.textPanel > img {
+  vertical-align: middle;
+}
 /* help.component — no rules yet; mirrors the empty file in the Angular workspace. */
-/* home.component — no rules yet; mirrors the empty file in the Angular workspace. */
+/* home.component */
+.applicationContentMain article > div.articleSectionPanel > section div.imagePanel {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 350px;
+}
+.applicationContentMain article > div.articleSectionPanel > section div.imagePanel img.sectionImage {
+  float: left;
+  width: 100%;
+  display: inline-block;
+  padding-right: 10px;
+}
+.applicationContentMain article > div.articleSectionPanel > section div.imagePanel + * {
+  margin-top: 0;
+}
+.applicationContentMain.homePage > article > div.articleSectionPanel > section blockquote {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-style: italic;
+  color: darkslategray;
+}
+.applicationContentMain.homePage > article > div.articleSectionPanel > section figcaption {
+  margin-left: 10px;
+  color: darkslategray;
+  font-weight: bold;
+}
 /* news.component — no rules yet; mirrors the empty file in the Angular workspace. */
 /* privacy.component — no rules yet; mirrors the empty file in the Angular workspace. */
 /* products-services.component — no rules yet; mirrors the empty file in the Angular workspace. */
@@ -689,10 +719,10 @@ so importing it from several views does not duplicate the rules).
 .applicationContentMain article > div.articleSectionPanel {
   padding: 10px;
 }
-.applicationContentMain article > div.articleSectionPanel > section > :last-child {
+.applicationContentMain article > div.articleSectionPanel > section *:last-child {
   margin-bottom: 0;
 }
-.applicationContentMain article > div.articleSectionPanel > section > :first-child {
+.applicationContentMain article > div.articleSectionPanel > section *:first-child {
   margin-top: 0;
 }
 .applicationContentMain article > div.sectionHeaderPicture {

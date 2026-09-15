@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- `setmy-info-less-angular-start-project`: the home view's section-opening picture
+  (`div.imagePanel` / `img.sectionImage` — floated left, prose running up its right side and
+  closing underneath) and pull-quote (`blockquote` / `figcaption` inside the article section),
+  ported from the old site's `article.less` / `homePage.less`. Lives in
+  `views/home/home.component.less`, which was an empty placeholder until now.
+- `setmy-info-less-angular-start-project`: the contact view's `textPanel > img` vertical
+  alignment, so the e-mail address's `@` image sits on the row's middle instead of the text
+  baseline (`views/contact/contact.component.less`).
+
 ### Changed
 
 - E2E tests now drive the browser **headless** by default (`scripts/pageHelper.cjs`), so a run opens
@@ -17,6 +28,14 @@ All notable changes to this project will be documented in this file.
   155 made `vertical-align` a shorthand (for `baseline-source` / `alignment-baseline` /
   `baseline-shift`, CSS Inline Layout 3) the detail-level-panel e2e and Gherkin tests began failing
   with `undefined` on a browser upgrade alone, with no CSS change behind it.
+- `setmy-info-less-angular-start-project`: the article section's margin reset in `misc.less`
+  matches descendants again (`section *:first-child` / `*:last-child`), as the old site's
+  `article.less` did, instead of direct children only. Narrowed to `> :first-child`, every heading
+  that opened a wrapper kept its own top margin — `<div class="detailed"><h2>` gained ~21px inside
+  the green border and sat off the top of its own box.
+- `setmy-info-less-angular-start-project`: `div.imagePanel` explicitly resets the `display: table`
+  / fixed height that `detail-rows.less` puts on every direct `div` child of a section; without
+  that the row rule boxed the floated picture above the prose instead of letting the text wrap it.
 
 ## [5.0.0] - 2026-07-12
 

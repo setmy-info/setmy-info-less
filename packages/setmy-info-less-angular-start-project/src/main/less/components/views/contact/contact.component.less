@@ -1,2 +1,19 @@
+/* contact.component */
+
 /* Icon / label / value line style, shared with the settings view. */
 @import url("../shared/detail-rows.less");
+
+// The e-mail address is printed with its `@` as a small image, so the plain address never sits
+// in the markup for harvesters — `info<img src="…/p.jpg">setmy.info`, as the old site did it.
+// detail-rows.less styles `div.textPanel` and `div.textPanel > a` but has no rule for `> img`, so
+// the image lands on the text baseline and rides visibly high in the row. Port of the old site's
+// style/src/less/pages/contactsPage.less `> img` rule.
+.applicationContentMain.contactsPage
+    > article
+    > div.articleSectionPanel
+    > section
+    > div
+    > div.textPanel
+    > img {
+    vertical-align: middle;
+}

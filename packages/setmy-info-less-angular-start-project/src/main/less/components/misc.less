@@ -43,11 +43,16 @@
     padding: 10px;
 }
 
-.applicationContentMain article > div.articleSectionPanel > section > :last-child {
+// Descendant match on purpose, not `> :first-child`. The old site's article.less used
+// `section *:first-child`, so the first element inside ANY wrapper — a `div.detailed` note, a
+// per-language wrapper div — lost its top margin too. Narrowed to direct children, every heading
+// that opens a wrapper keeps its own margin: `<div class="detailed"><h2>Kuidas?</h2>` gained ~21px
+// inside the green border and the heading sat off the top of its own box.
+.applicationContentMain article > div.articleSectionPanel > section *:last-child {
     margin-bottom: 0;
 }
 
-.applicationContentMain article > div.articleSectionPanel > section > :first-child {
+.applicationContentMain article > div.articleSectionPanel > section *:first-child {
     margin-top: 0;
 }
 

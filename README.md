@@ -109,8 +109,9 @@ bundling.
 - **[setmy-info-less-angular-start-project](packages/setmy-info-less-angular-start-project/README.md)** - Layer 2,
   project-specific. Application chrome for the Angular start template project: header panel, side navigation, modal
   overlay, footer, views. `src/main/less/components/` mirrors the Angular workspace's `src/app/components/` tree file
-  for file, so LESS moves between the two projects unchanged. _Audience: developers building on the Angular start
-  template project._
+  for file, so LESS moves between the two projects unchanged. In that application `<article> … <section>` is the main
+  content area — what `<body>` is to an HTML document — and the view rules here are written against that structure.
+  _Audience: developers building on the Angular start template project._
 - **[setmy-info-less-ide](packages/setmy-info-less-ide/README.md)** - Layer 3. IDE-like (NetBeans style) developer-tool
   UI compositions; currently frame presets. _Audience: developers building browser-based IDEs, dashboards, or admin
   consoles._

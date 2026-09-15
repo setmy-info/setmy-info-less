@@ -49,6 +49,26 @@ the two projects without being renamed or re-pathed:
                          side-navigation-panel (header/, content/)
         views/           one directory per routed view, plus shared/detail-rows.less
 
+Every routed view of that application renders into the same frame, and the view rules in
+`components/views/` (and the shared article rules in `components/misc.less`) are written against
+it:
+
+    <div class="<viewName>Page applicationContentMain">
+        <article>
+            <div class="sectionHeaderPicture">…</div>      optional banner
+            <div class="articleSectionPanel">
+                <section>… the page's content …</section>
+            </div>
+        </article>
+    </div>
+
+`<article> … <section>` is the main content area of the application — what `<body>` is to an
+HTML document. The shell (header, side navigation, footer) sits outside it; everything a page says
+sits inside the `<section>`. The article box (width, shadow, padding), the margin reset on the
+first and last element, list indents, the section-opening picture and the pull-quote all assume
+exactly this nesting, and the `<viewName>Page` class on the outer `div` is the hook for
+view-specific rules.
+
 Files that are still empty in the Angular workspace are carried over as empty placeholders, so
 each one keeps its home here from the moment it grows a rule. `index.less` in `components/`,
 `components/layout/` and `components/views/` is the only thing added on top of the mirror: it

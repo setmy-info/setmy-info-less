@@ -1,11 +1,24 @@
 const path = require("path");
+const dgram = require("node:dgram");
+const os = require("node:os");
 const { Builder, By } = require("selenium-webdriver");
 const firefox = require("selenium-webdriver/firefox");
 const express = require("express");
 const http = require("http");
 
+// The Selenium Grid is a separate machine (selenium.gintra), not this one. Override with
+// SELENIUM_HUB_URL to point at a local standalone grid, e.g.
+// SELENIUM_HUB_URL=http://localhost:4444/wd/hub.
 const SELENIUM_HUB_URL =
-    process.env.SELENIUM_HUB_URL || "http://localhost:4444/wd/hub";
+    process.env.SELENIUM_HUB_URL || "http://selenium.gintra:4444/wd/hub";
+// Host the GRID NODE uses to fetch the fixture pages from the ephemeral server below. It must be
+// an address that resolves and routes FROM THE NODE: "localhost" there is the node's own loopback,
+// where nothing is listening, so with a remote hub every page load would fail with a connection
+// error that looks like a broken fixture. Left empty it is derived in resolvePageHost().
+const PAGE_HOST = process.env.E2E_PAGE_HOST || "";
+// Fixed port for that server, so a remote grid only needs one hole in this machine's firewall.
+// 0 (the default) takes any free port, which is fine when the browser runs here.
+const PAGE_PORT = Number(process.env.E2E_PAGE_PORT) || 0;
 const BROWSER = process.env.SELENIUM_BROWSER || "firefox";
 // Optional path to a specific Gecko-based browser binary (e.g. LibreWolf) instead of the node's
 // default Firefox. The path is resolved ON THE GRID NODE, not on the machine running Jest.
@@ -95,9 +108,95 @@ function inferPackageName() {
 }
 
 function getPath() {
-    const url = `http://localhost:${data.serverPort}/${data.packageName}/dist/${data.name}.html`;
+    const url = `http://${data.pageHost}:${data.serverPort}/${data.packageName}/dist/${data.name}.html`;
     data.url = url;
     return url;
+}
+
+function hubHostname() {
+    try {
+        return new URL(SELENIUM_HUB_URL).hostname;
+    } catch {
+        return "localhost";
+    }
+}
+
+function isLoopbackHost(host) {
+    return host === "localhost" || host === "127.0.0.1" || host === "::1";
+}
+
+// First non-internal IPv4 of this machine, preferring a real LAN interface: a container bridge
+// (docker0 at 172.17.0.1 here) is up but routes nowhere useful for an external grid node.
+function firstExternalIPv4() {
+    const interfaces = Object.entries(os.networkInterfaces());
+    const candidates = [];
+    for (const [name, addresses] of interfaces) {
+        for (const address of addresses ?? []) {
+            if (address.family === "IPv4" && !address.internal) {
+                candidates.push({ name, address: address.address });
+            }
+        }
+    }
+    const lan = candidates.find(
+        (candidate) =>
+            !/^(docker|br-|veth|virbr|podman|cni)/.test(candidate.name),
+    );
+    return (lan ?? candidates[0])?.address ?? "localhost";
+}
+
+// The local address on the route toward `host`, which is what the grid node must call back on.
+// A connected UDP socket is the cheap way to ask the kernel: connect() on a datagram socket only
+// fixes the peer and selects the route, it sends no packet, so this answers even while the grid
+// itself is down — it just has to RESOLVE.
+function localAddressToward(host) {
+    return new Promise((resolve) => {
+        let socket;
+        const fallback = () => {
+            try {
+                socket?.close();
+            } catch {
+                /* already closed */
+            }
+            resolve(firstExternalIPv4());
+        };
+        try {
+            socket = dgram.createSocket("udp4");
+        } catch {
+            resolve(firstExternalIPv4());
+            return;
+        }
+        socket.once("error", fallback);
+        try {
+            socket.connect(53, host, () => {
+                let address;
+                try {
+                    address = socket.address().address;
+                } catch {
+                    address = undefined;
+                }
+                socket.close();
+                resolve(
+                    address && address !== "0.0.0.0"
+                        ? address
+                        : firstExternalIPv4(),
+                );
+            });
+        } catch {
+            fallback();
+        }
+    });
+}
+
+async function resolvePageHost() {
+    if (PAGE_HOST) {
+        return PAGE_HOST;
+    }
+    // A grid on this machine reaches the server over loopback, which needs no interface guessing
+    // and keeps working on a laptop with no network at all.
+    if (isLoopbackHost(hubHostname())) {
+        return "localhost";
+    }
+    return localAddressToward(hubHostname());
 }
 
 async function startServer() {
@@ -115,10 +214,13 @@ async function startServer() {
         sockets.add(socket);
         socket.on("close", () => sockets.delete(socket));
     });
-    await new Promise((resolve) => server.listen(0, resolve));
+    // No host argument: bind every interface, so a browser on the grid node can reach the page
+    // and not only a browser on this machine.
+    await new Promise((resolve) => server.listen(PAGE_PORT, resolve));
     data.server = server;
     data.sockets = sockets;
     data.serverPort = server.address().port;
+    data.pageHost = await resolvePageHost();
     data.packageName = inferPackageName();
 }
 
@@ -312,6 +414,10 @@ async function pageClose() {
 module.exports = {
     pageName,
     getPath,
+    hubHostname,
+    isLoopbackHost,
+    firstExternalIPv4,
+    resolvePageHost,
     pageIsRendered,
     setViewport,
     elementIdIs,

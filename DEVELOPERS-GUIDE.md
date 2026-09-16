@@ -224,6 +224,14 @@ This repo's `src/main` / `src/test` layout:
   Selenium Grid. Bracket the tier with `npm run pre-e2e-test` / `post-e2e-test` (defined in
   `scripts/lifecycle.js`). Post steps are idempotent: CI runs them again after a failed tier, and `npm run clean`
   runs them first. Jenkins also runs both post phases in `post { always }`.
+- The grid is a separate machine: `SELENIUM_HUB_URL` defaults to `http://selenium.gintra:4444/wd/hub`. Point it at
+  `http://localhost:4444/wd/hub` for a local standalone grid.
+- Because the browser runs THERE, the fixture URL cannot say `localhost` — that is the grid node's own loopback, and
+  every page load would fail with what looks like a broken fixture. `pageHelper` therefore serves on all interfaces
+  and builds the URL from this machine's address on the route toward the hub (a connected UDP socket asks the kernel
+  for it, sending nothing, so it answers even while the grid is down). Override with `E2E_PAGE_HOST` when the node
+  needs a different name, and set `E2E_PAGE_PORT` to pin the port so the grid only needs one firewall hole — the
+  default port 0 picks any free one, which is fine only when the browser runs locally.
 - E2E page serving is currently `scripts/pageHelper.cjs`'s own ephemeral express server, started per test file at the
   `packages/` root so cross-package hrefs like `../../setmy-info-less/dist/main.css` resolve. The `pre-e2e-test`
   server serves only its own package's `dist`, so no e2e test connects to it today; it is kept for the manual
@@ -249,6 +257,75 @@ This repo's `src/main` / `src/test` layout:
 
 `npm run verify` is CSS-specific: the built artifacts exist and each package's rule count matches its declared
 `content` / `skeleton` expectation.
+
+### E2E network and firewall requirements
+
+The e2e tier is a **two-machine, two-direction** setup, and the second direction is the one that gets blocked:
+
+| Direction   | From              | To                | Port                    | What breaks without it                                                                |
+| ----------- | ----------------- | ----------------- | ----------------------- | ------------------------------------------------------------------------------------- |
+| Outbound    | this machine      | `selenium.gintra` | TCP 4444                | `Builder().build()` hangs, then fails to reach the hub                                |
+| **Inbound** | `selenium.gintra` | this machine      | the fixture server port | the session starts, then every `driver.get()` fails and tests read as broken fixtures |
+
+The inbound leg exists because `pageHelper` serves the Pug fixtures from an express server on the machine running
+Jest, and the browser fetches them from the grid node. Nothing is published to the grid.
+
+**Pin the port first.** The server defaults to port `0` (any free port), which cannot be firewalled sensibly. Choose
+one port and keep it:
+
+```bash
+export E2E_PAGE_PORT=44444        # any free, non-privileged port
+npm run e2e-test
+```
+
+**Then open exactly that port, to exactly that source.** These need `sudo`, and they are the machine owner's call —
+nothing in this repo changes a firewall. On Fedora with firewalld, first see which zone the LAN interface is in
+(`eno1` is in `internal` on the current dev machine, while `public` is the default zone, so the zone must be named
+explicitly):
+
+```bash
+firewall-cmd --get-active-zones
+sudo firewall-cmd --zone=internal --list-all
+```
+
+Then allow the grid host alone, rather than opening the port to the whole zone:
+
+```bash
+sudo firewall-cmd --permanent --zone=internal \
+  --add-rich-rule='rule family="ipv4" source address="192.168.1.15/32" port port="44444" protocol="tcp" accept'
+sudo firewall-cmd --reload
+sudo firewall-cmd --zone=internal --list-rich-rules      # confirm it is there
+```
+
+**Verify the inbound leg on its own**, before blaming a test. The express server only lives for the duration of a
+run, so stand up a throwaway one on the same port here:
+
+```bash
+python3 -m http.server 44444 --directory packages
+```
+
+and from the grid host:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' http://192.168.1.10:44444/setmy-info-less/dist/body.html
+```
+
+`200` means the hole is open. A hang or `No route to host` means it is not, and no amount of test debugging will
+help. Check the outbound leg from here with
+`curl -s http://selenium.gintra:4444/status` — Selenium 4 answers on `/status` as well as the legacy
+`/wd/hub/status`.
+
+**If inbound cannot be opened at all**, two ways round it without a firewall change:
+
+- Reverse-tunnel the port to the grid node, so the browser really can use its own loopback:
+  `ssh -N -R 44444:localhost:44444 selenium.gintra`, then run with
+  `E2E_PAGE_HOST=localhost E2E_PAGE_PORT=44444`.
+- Run a local standalone grid instead: `SELENIUM_HUB_URL=http://localhost:4444/wd/hub`, which needs no inbound rule
+  because both halves are on one machine.
+
+Addresses on the current setup: this machine is `helium` / `192.168.1.10`, the grid is `selenium.gintra` /
+`192.168.1.15`. Substitute your own — `E2E_PAGE_HOST` exists precisely for the case where the derived address is
+not the one the grid node can reach.
 
 ## Code documentation and generation from comments
 

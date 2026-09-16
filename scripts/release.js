@@ -1,8 +1,14 @@
 #!/usr/bin/env node
 // Publish every workspace, the Maven way: two deployables, decided by the branch.
 //
-//     devel.*  -> the -SNAPSHOT version, dist-tag "snapshot", to NPM_SNAPSHOT_REGISTRY
-//     master   -> the release version (no prerelease suffix), dist-tag "latest", to NPM_RELEASE_REGISTRY
+//     devel.* / release.* / hotfix.*  -> the -SNAPSHOT version, dist-tag "snapshot",
+//                                        to NPM_SNAPSHOT_REGISTRY
+//     master                          -> the release version (no prerelease suffix),
+//                                        dist-tag "latest", to NPM_RELEASE_REGISTRY
+//
+// develop, release* and hotfix* all publish a candidate of unknown quality, which is the
+// branch set the Jenkinsfile's Snapshot stage matches (its version 1.1.0 note); only master
+// publishes something meant to be installed by default.
 //
 // Publishing goes through npm's STAGED publishing (`npm stage publish`, npm >= 11.6):
 // the tarball lands on the registry in a non-public state and a maintainer releases it
@@ -58,7 +64,7 @@ export function resolvePublishTarget(branchName, version) {
         }
         return { tag: "latest", registryEnv: "NPM_RELEASE_REGISTRY" };
     }
-    if (/^devel/.test(branchName)) {
+    if (/^(devel|release|hotfix)/.test(branchName)) {
         if (!snapshot) {
             throw new Error(
                 `${branchName} publishes snapshots - the version must end in -SNAPSHOT or -SNAPSHOT-<n> (${version})`,
@@ -107,6 +113,8 @@ function publishWorkspace(workspace, target, registry, execute) {
         process.stdout.write(result.stdout ?? "");
         return;
     }
+    // npm's own pre-flight check, inherited by `npm stage publish` from `npm publish`
+    // (lib/commands/publish.js): the version is already in the PUBLIC packument.
     if (output.includes("cannot publish over")) {
         console.log(
             `Skipping ${workspace.packageName}@${workspace.packageJson.version}: this version is already published — bump the version to release a new one.`,
@@ -114,6 +122,13 @@ function publishWorkspace(workspace, target, registry, execute) {
         return;
     }
     process.stderr.write(output);
+    // A version already STAGED and awaiting approval is invisible to that check - staged
+    // versions are not in the public packument - so the registry rejects the POST instead,
+    // with wording npm does not author and this script therefore cannot match on. Say what
+    // to look at rather than let the operator guess at a bare registry error.
+    console.error(
+        `\nStaging ${workspace.packageName}@${workspace.packageJson.version} failed. If this version is already staged and waiting for approval, it holds its semver slot: run "npm stage list ${workspace.packageName}" and then either "npm stage approve <stage-id>" to release it or "npm stage reject <stage-id>" to free the version.`,
+    );
     process.exit(result.status ?? 1);
 }
 
@@ -131,7 +146,7 @@ function main() {
     }
     if (!target) {
         console.log(
-            `Skipping publish: branch "${branch}" is not a publish branch (devel.* or master).`,
+            `Skipping publish: branch "${branch}" is not a publish branch (devel.*, release.*, hotfix.* or master).`,
         );
         return;
     }

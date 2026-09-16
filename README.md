@@ -51,6 +51,8 @@ npm pkg fix --workspaces
 npm login
 npm publish --workspaces --dry-run
 npm publish --workspaces
+npm publish stage --workspaces --dry-run
+npm publish stage --workspaces
 
 npm run server --workspace setmy-info-less        # serves that package's dist/ on its own port
 npm run stop-server --workspace setmy-info-less

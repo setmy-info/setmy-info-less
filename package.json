@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less-modules",
-    "version": "5.2.6-SNAPSHOT-1",
+    "version": "5.2.6",
     "description": "SMI LESS/CSS framework monorepo - layered LESS modules",
     "license": "MIT",
     "author": "Imre Tabur <imre.tabur@mail.ee>",

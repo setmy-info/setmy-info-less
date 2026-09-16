@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less-brandpage",
-    "version": "5.2.6-SNAPSHOT-1",
+    "version": "5.2.6",
     "description": "SMI LESS brand page — CSS for product promo, advertisement and campaign brand pages",
     "main": "dist/main.min.css",
     "dependencies": {

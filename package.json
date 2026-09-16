@@ -29,7 +29,7 @@
         "docs": "node scripts/docs.js",
         "package": "node scripts/package.js",
         "deploy": "node scripts/deploy.js",
-        "release": "node scripts/release.js",
+        "smi-new-tag": "smi-new-tag $npm_package_version",
         "server": "node scripts/http-server.js",
         "stop-server": "node scripts/http-server.js stop"
     },

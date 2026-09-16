@@ -44,15 +44,14 @@ npm run reports
 npm run docs
 npm run package                        # dist/*.tgz, one tarball per package
 npm run deploy -- <dev|test|prelive|live>
-npm run release                        # devel* -> -SNAPSHOT to the snapshot registry; master -> release to the release registry
 
 npm pkg fix --workspaces
 
 npm login
 npm publish --workspaces --dry-run
 npm publish --workspaces
-npm publish stage --workspaces --dry-run
-npm publish stage --workspaces
+npm stage publish --workspaces --dry-run
+npm stage publish --workspaces
 
 npm run server --workspace setmy-info-less        # serves that package's dist/ on its own port
 npm run stop-server --workspace setmy-info-less
@@ -345,18 +344,9 @@ Using:
 | `npm run reports`          | npm                            | `reports/security/`, CycloneDX SBOM, `reports/dependencies.txt`                                                 |
 | `npm run docs`             | KSS                            | living styleguide from LESS comments → `reports/docs/`                                                          |
 | `npm run package`          | `npm pack --workspaces`        | one tarball per package into `dist/`, plus SHA-256 checksums                                                    |
-| `npm run release`          | `scripts/release.js`           | `npm publish` on `master` (`latest`); already-published versions are skipped, not a failure                     |
 | `npm run deploy -- <env>`  | `scripts/deploy.js`            | install the tarballs into `build/deploy/<env>/` and check the CSS really arrived                                |
 
 ## 📤 Publishing
-
-`npm run release` publishes on `master` to dist-tag `latest`. Jenkins runs it from the Release stage with
-`NPM_CONFIG_USERCONFIG=.npmrc.publish` (token from `NPM_TOKEN`). A version that is already on the registry is
-reported as "already published - bump the version" and is **not** a build failure. Other branches skip publish:
-the npm registry has no snapshot channel, so develop keeps its tarballs as archived artifacts.
-
-Publish order still matters (a package must exist on the registry before its dependents): base → extended → fancy →
-enterprise → angular-start-project → ide → experimental. `scripts/release.js` publishes in topological order.
 
 Only the CSS is published: each package's `files` allowlist is `dist/main.css`, `dist/main.min.css`, `README.md`,
 `LICENSE`. The Pug demo pages and the KSS styleguide are **not** shipped.

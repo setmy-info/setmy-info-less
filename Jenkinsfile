@@ -149,11 +149,8 @@ pipeline {
                         withCredentials([
                             string(credentialsId: 'NPMToken', variable: 'NPM_TOKEN')
                         ]) {
-                            withEnv(['NPM_CONFIG_USERCONFIG=.npmrc.publish']) {
-                                ////runCommand 'npm run release'
-                                runCommand 'npm publish stage --workspaces --dry-run'
-                                runCommand 'npm publish stage'
-                            }
+                            runCommand 'env "npm_config_//registry.npmjs.org/:_authToken=$NPM_TOKEN" npm stage publish --workspaces --dry-run'
+                            runCommand 'env "npm_config_//registry.npmjs.org/:_authToken=$NPM_TOKEN" npm stage publish --workspaces'
                         }
                     }
                 }
@@ -166,11 +163,8 @@ pipeline {
                         withCredentials([
                             string(credentialsId: 'NPMToken', variable: 'NPM_TOKEN')
                         ]) {
-                            withEnv(['NPM_CONFIG_USERCONFIG=.npmrc.publish']) {
-                                ////runCommand 'npm run release'
-                                //runCommand 'npm publish stage --workspaces --dry-run'
-                                //runCommand 'npm publish stage'
-                            }
+                            //runCommand 'env "npm_config_//registry.npmjs.org/:_authToken=$NPM_TOKEN" npm stage publish --workspaces --dry-run'
+                            //runCommand 'env "npm_config_//registry.npmjs.org/:_authToken=$NPM_TOKEN" npm stage publish --workspaces'
                         }
                     }
                 }
@@ -264,9 +258,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                echo 'Put here tagging. For example: '
-                echo 'smi-new-tag 1.2.3'
-                echo 'And logic to get tag from source files for example.'
+                runCommand 'npm run smi-new-tag'
             }
         }
     }

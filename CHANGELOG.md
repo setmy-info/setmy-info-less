@@ -34,19 +34,6 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Publishing now goes through npm's **staged publishing** (`npm stage publish`, `scripts/release.js`).
-  Staging needs no 2FA prompt, so Jenkins can publish unattended, while the version stays
-  non-public on npmjs until a maintainer runs `npm stage approve <stage-id>`. Both Publish stages
-  take the `NPMToken` credential as `NPM_TOKEN`, which is also what arms a real (non-dry-run)
-  publish — an unset `NPM_SNAPSHOT_REGISTRY` / `NPM_RELEASE_REGISTRY` no longer forces a dry run,
-  because staging targets registry.npmjs.org itself.
-- `devel.*` versions may now end in `-SNAPSHOT-<n>` as well as `-SNAPSHOT`: a staged version holds
-  its semver slot until it is approved or rejected, so re-staging the same candidate needs a fresh
-  number. `master` now refuses **any** prerelease suffix — testing only for `-SNAPSHOT` let a
-  version like `5.2.6-SNAPSHOT-1` through and it would have been staged onto the `latest` tag.
-- The Snapshot stage (and `scripts/release.js`) now match `release.*` and `hotfix.*` as well as
-  `devel.*`, the branch set the Jenkinsfile's own version 1.1.0 note already described. Before
-  this, a `hotfix*` build published nothing at all.
 - E2E tests now run against the Selenium Grid on **selenium.gintra** (`SELENIUM_HUB_URL` default);
   point it at `http://localhost:4444/wd/hub` for a local standalone grid. Because the browser runs
   on another machine, the fixture URL can no longer say `localhost` — that is the grid node's own

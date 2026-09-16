@@ -10,6 +10,12 @@ def runCommand(String command) {
 pipeline {
 
     /*
+    version 1.2.2 - Publish goes through npm STAGED publishing: scripts/release.js runs
+                    `npm stage publish`, which needs no 2FA prompt and so works unattended,
+                    and leaves the version on npmjs unreleased until a maintainer runs
+                    `npm stage approve <stage-id>`. Both Publish stages now take the NPMToken
+                    credential as NPM_TOKEN, which is also what arms a real (non-dry-run)
+                    publish - see scripts/release.js.
     version 1.2.1 - no build-time profile layer (SMI_PROFILES / profiles/ / resources are gone:
                     LESS packages have no environments). Snapshot (devel.*) publishes the
                     -SNAPSHOT version and Release (master) the release version, each to its own
@@ -285,8 +291,18 @@ pipeline {
                     }
                     steps {
                         echo 'Put here software release steps'
-                        withEnv(['NPM_CONFIG_USERCONFIG=.npmrc.publish']) {
-                            runCommand 'npm run release'
+                        // scripts/release.js stages the release version (dist-tag "latest") on
+                        // npmjs with `npm stage publish`. Staging needs no 2FA, so this stage
+                        // runs unattended; the version stays non-public until a maintainer
+                        // approves it (`npm stage list`, then `npm stage approve <stage-id>`,
+                        // which does prompt for 2FA). NPM_TOKEN both authenticates through
+                        // .npmrc.publish and arms the publish - without it the script dry-runs.
+                        withCredentials([
+                            string(credentialsId: 'NPMToken', variable: 'NPM_TOKEN')
+                        ]) {
+                            withEnv(['NPM_CONFIG_USERCONFIG=.npmrc.publish']) {
+                                runCommand 'npm run release'
+                            }
                         }
                     }
                 }
@@ -296,11 +312,16 @@ pipeline {
                     }
                     steps {
                         echo 'Put here software snapshot publishing steps'
-                        // scripts/release.js publishes the -SNAPSHOT version to
-                        // NPM_SNAPSHOT_REGISTRY from devel.* (and the release version to
-                        // NPM_RELEASE_REGISTRY from master). Without the registry it dry-runs.
-                        withEnv(['NPM_CONFIG_USERCONFIG=.npmrc.publish']) {
-                            runCommand 'npm run release'
+                        // Same script, snapshot side: the -SNAPSHOT / -SNAPSHOT-<n> version is
+                        // staged under dist-tag "snapshot". A staged version holds its semver
+                        // slot until approved or rejected, which is what the -SNAPSHOT-<n>
+                        // counter is for - re-staging the same number is refused.
+                        withCredentials([
+                            string(credentialsId: 'NPMToken', variable: 'NPM_TOKEN')
+                        ]) {
+                            withEnv(['NPM_CONFIG_USERCONFIG=.npmrc.publish']) {
+                                runCommand 'npm run release'
+                            }
                         }
                     }
                 }

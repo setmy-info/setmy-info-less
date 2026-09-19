@@ -22,7 +22,7 @@ pipeline {
                 artifactNumToKeepStr: '10'
             )
         )
-        quietPeriod(15)
+        //quietPeriod(15)
         disableConcurrentBuilds(abortPrevious: true)
     }
 

@@ -145,6 +145,12 @@ pipeline {
                         // changeset "**/file/to/be/changed"
                     }
                     steps {
+                        withCredentials([string(credentialsId: 'NPMToken', variable: 'NPM_TOKEN')]) {
+                            sh 'env NPM_CONFIG_USERCONFIG=/tmp/no-such-npmrc "npm_config_//registry.npmjs.org/:_authToken=$NPM_TOKEN" npm whoami'
+                            sh 'env NPM_CONFIG_USERCONFIG=/tmp/no-such-npmrc "npm_config_//registry.npmjs.org/:_authToken=$NPM_TOKEN" npm stage list setmy-info-less'
+                        }
+                    }
+                    steps {
                         echo 'Put here software release steps'
                         withCredentials([
                             string(credentialsId: 'NPMToken', variable: 'NPM_TOKEN')

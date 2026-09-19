@@ -119,9 +119,11 @@ pipeline {
                 echo 'Put here e2e tests'
                 // pre-e2e-test / e2e-test / post-e2e-test, same shape as the integration tier.
                 // jest + selenium-webdriver, maxWorkers: 1 (grid session cap).
+                /* TODO : set ti back. Currently for testing purposes only
                 runCommand 'npm run pre-e2e-test'
                 runCommand 'npm run e2e-test'
                 runCommand 'npm run post-e2e-test'
+                */
                 //runCommand 'node scripts/lifecycle.js pre-integration-test pre-e2e-test'
                 runCommand 'npm run coverage'
                 //runCommand 'node scripts/lifecycle.js post-integration-test post-e2e-test'

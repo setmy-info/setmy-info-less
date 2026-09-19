@@ -1,6 +1,6 @@
 {
     "name": "setmy-info-less-experimental",
-    "version": "5.2.6",
+    "version": "5.2.7",
     "description": "SMI LESS experimental \u2014 prototype and in-progress CSS for framework developers only",
     "main": "dist/main.min.css",
     "dependencies": {

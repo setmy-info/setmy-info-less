@@ -151,7 +151,6 @@ pipeline {
                         withCredentials([
                             string(credentialsId: 'NPMToken', variable: 'NPM_TOKEN')
                         ]) {
-                            runCommand 'sh scripts/token-fingerprint.sh NPM_TOKEN'
                             runCommand 'env "npm_config_//registry.npmjs.org/:_authToken=$NPM_TOKEN" npm stage publish --workspaces --dry-run'
                             runCommand 'env "npm_config_//registry.npmjs.org/:_authToken=$NPM_TOKEN" npm stage publish --workspaces'
                         }
